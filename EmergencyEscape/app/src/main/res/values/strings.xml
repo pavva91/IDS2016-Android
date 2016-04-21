@@ -30,4 +30,6 @@
     <string name="title_activity_qr">QrActivity</string>
     <string name="title_activity_destination">DestinationActivity</string>
     <string name="title_activity_text_no_emergency">TextNoEmergencyActivity</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="mappa">mappa</string>
 </resources>
