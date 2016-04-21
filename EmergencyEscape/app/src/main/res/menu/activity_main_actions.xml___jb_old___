@@ -5,7 +5,7 @@
         android:title="@string/action_emergency">
         <menu>
             <item android:id= "@+id/action_emergency"
-                android:title="SubMenuEmergency">subMenuEmergency</item>
+                android:title="Porco dio">camadonna</item>
         </menu>
     </item>
 
