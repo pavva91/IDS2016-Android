@@ -6,9 +6,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.emergencyescape.MainActivityFragment"
-    tools:showIn="@layout/activity_main">
-
+    tools:context="com.emergencyescape.NoemQrActivityFragment"
+    tools:showIn="@layout/activity_noemqr">
 
 
 </RelativeLayout>

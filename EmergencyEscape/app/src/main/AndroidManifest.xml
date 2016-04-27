@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.valer.emergencyescape">
+    package="com.emergencyescape">
 
     <!-- To auto-complete the email text field in the login form with the user's emails -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
@@ -10,7 +10,7 @@
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
-         location permissions for the 'MyLocation' functionality. 
+         location permissions for the 'MyLocation' functionality.
     -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
@@ -31,59 +31,81 @@
         </activity>
         <activity
             android:name=".MainActivity"
-            android:label="@string/title_activity_main"
+            android:label=" "
             android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
-            android:name=".EmergencyActivity"
-            android:label="@string/title_activity_emergency"
+            android:name=".EmTextActivity"
+            android:label=" "
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.valer.emergencyescape.MainActivity" />
+                android:value="com.emergencyescape.MainActivity" />
         </activity>
         <activity
-            android:name=".NoEmergencyActivity"
-            android:label="@string/title_activity_no_emergency"
+            android:name=".NoemTextActivity"
+            android:label=" "
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.valer.emergencyescape.MainActivity" />
+                android:value="com.emergencyescape.MainActivity" />
         </activity>
         <activity
-            android:name=".TextActivity"
-            android:label="@string/title_activity_text"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:name=".EmTapActivity"
+            android:label=" "
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.emergencyescape.MainActivity" />
+        </activity>
         <activity
-            android:name=".TapActivity"
-            android:label="@string/title_activity_tap"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:name=".NoemTapActivity"
+            android:label=" "
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.emergencyescape.MainActivity" />
+        </activity>
         <activity
-            android:name=".QrActivity"
-            android:label="@string/title_activity_qr"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:name=".EmQrActivity"
+            android:label=" "
+            android:theme="@style/AppTheme.NoActionBar" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.emergencyescape.MainActivity" />
+        </activity>
+        <activity
+            android:name=".NoemQrActivity"
+            android:label=" "
+            android:theme="@style/AppTheme.NoActionBar" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.emergencyescape.MainActivity" />
+        </activity>
         <activity
             android:name=".DestinationActivity"
-            android:label="@string/title_activity_destination"
+            android:label=" "
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.valer.emergencyescape.TextNoEmergencyActivity" />
+                android:value="com.emergencyescape.MainActivity" />
         </activity>
         <activity
-            android:name=".TextNoEmergencyActivity"
-            android:label="@string/title_activity_text_no_emergency"
+            android:name=".ItineraryActivity"
+            android:label=" "
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.valer.emergencyescape.NoEmergencyActivity" />
+                android:value="com.emergencyescape.MainActivity" />
         </activity>
+
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
              Note that the API key is linked to the encryption key used to sign the APK.
              You need a different API key for each encryption key, including the release key that is used to
              sign the APK for publishing.
-             You can define the keys for the debug and release targets in src/debug/ and src/release/. 
+             You can define the keys for the debug and release targets in src/debug/ and src/release/.
         -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"

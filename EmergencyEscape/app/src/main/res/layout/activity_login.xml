@@ -8,7 +8,18 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.valer.emergencyescape.LoginActivity">
+    tools:context="com.emergencyescape.LoginActivity">
+
+
+    <TextView android:text="Benvenuto!"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textview"
+        android:layout_marginTop="30dp"
+        android:textSize="40dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
 
     <!-- Login progress -->
     <ProgressBar
@@ -16,10 +27,12 @@
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="30dp"
+        android:layout_marginTop="30dp"
         android:visibility="gone" />
 
-    <ScrollView
+    <!-- modificato da scrollView a LinearLayout -->
+    <LinearLayout
         android:id="@+id/login_form"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -34,20 +47,24 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <AutoCompleteTextView
-                    android:id="@+id/email"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/prompt_email"
-                    android:inputType="textEmailAddress"
-                    android:maxLines="1"
-                    android:singleLine="true" />
 
-            </android.support.design.widget.TextInputLayout>
+
+            <AutoCompleteTextView
+                android:id="@+id/email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/prompt_email"
+                android:inputType="textEmailAddress"
+                android:maxLines="1"
+                android:singleLine="true" />
+
+        </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
+
 
                 <EditText
                     android:id="@+id/password"
@@ -72,6 +89,25 @@
                 android:text="@string/action_sign_in"
                 android:textStyle="bold" />
 
+
+            <TextView android:id="@+id/link_reg"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:layout_marginBottom="40dp"
+                android:text="registrati"
+                android:gravity="center"
+                android:textSize="20dip"/>
+
+
         </LinearLayout>
-    </ScrollView>
+
+
+
+    </LinearLayout>
+
+
+
+
+
 </LinearLayout>

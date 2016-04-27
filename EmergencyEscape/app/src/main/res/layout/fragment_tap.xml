@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/imageView"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/q145"
+        android:src="@drawable/ic_action_help"
         android:layout_alignParentTop="true"
         android:contentDescription="@string/mappa" />
 </RelativeLayout>
