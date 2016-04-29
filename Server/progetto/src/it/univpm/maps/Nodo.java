@@ -2,24 +2,20 @@ package it.univpm.maps;
 
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlElement;
 
 @XmlAccessorType(XmlAccessType.FIELD) 
 public class Nodo {
 
 	//attributi
-	@XmlElement
 	private String mappa; //mappa a cui appartiene il nodo
-	@XmlElement
 	private int id; //codice indentificativo nodo
-	@XmlElement
 	private String codice; //codice nodo
 	private String descrizione; //nome esteso nodo ***** serve ? **************
 	private int quota; //quota in metri s.l.m.
 	private int x; //coordinata x
 	private int y; //coordinata y
 	private double larghezza; //larghezza in metri
-	public enum tiponodo {uscita, uscita_emergenza, altro};
+	static enum tiponodo {uscita, uscita_emergenza, altro};
 	private tiponodo tipo;
 	
 	//costruttore

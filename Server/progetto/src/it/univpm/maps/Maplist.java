@@ -11,6 +11,9 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+
 import com.sun.jersey.spi.resource.Singleton;
 
 import it.univpm.maps.Nodo.tiponodo;
@@ -55,7 +58,7 @@ public class Maplist{
 	@GET
 	@Path("{name}")
 	@Produces("application/json")
-	public Mappa getMappa(@PathParam("name") String nome){
+	public Response getMappa(@PathParam("name") String nome){
 		Mappa m=new Mappa(nome);
 		try{
 			Database db = new Database();
@@ -75,10 +78,10 @@ public class Maplist{
 					n.setX(rs.getInt("x"));
 					n.setY(rs.getInt("y"));
 					n.setLarghezza(rs.getDouble("larghezza"));
-					n.setTipo(tiponodo.values()[rs.getInt("tipo")]);
+					n.setTipo(tiponodo.valueOf(rs.getString("tipo")));
 					m.AggiungiNodo(n);
 				}
-				stmt = con.prepareStatement("SELECT * FROM nodi");
+				stmt = con.prepareStatement("SELECT * FROM archi");
 				rs = stmt.executeQuery();
 				while(rs.next()){
 					Arco a = new Arco();
@@ -95,13 +98,17 @@ public class Maplist{
 				
 			}else{
 				//errore mappa non trovata //restituire 404
+				return Response.status(Response.Status.NOT_FOUND).entity("ERRORE: Mappa non trovata!").build();
 			}
 				
 		}catch (Exception e){
 			e.printStackTrace();
 		}
 		
-		
-		return m;
+		return Response.ok(m, MediaType.APPLICATION_JSON).build();
+		//return m;
 	}
+	
+
+	
 }

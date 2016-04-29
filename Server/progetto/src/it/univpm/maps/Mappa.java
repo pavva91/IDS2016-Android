@@ -11,7 +11,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class Mappa {
 	//attributi
-	@XmlElement
 	private String nome;
 	@XmlElement
 	private ArrayList<Nodo> nodi = new ArrayList<Nodo>();

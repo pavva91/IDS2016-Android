@@ -102,14 +102,44 @@ public class AccessDB {
         }
 	}
 	public Boolean cercaMappa(Connection con, String nome) throws SQLException{
-		int numRecord;
 		PreparedStatement stmt = con.prepareStatement("SELECT nome FROM mappe where nome=?");
 		stmt.setString(1, nome);
+		ResultSet rs = stmt.executeQuery();
+		while (rs.next()){
+			if(nome.equals(rs.getString("nome"))) {
+				return true;
+			}
+        }
+		return false;
+	}
+	
+	public Boolean insertUtente(Connection con, Utente u) throws SQLException{
+		int numRecord;
+		String username = u.getUsername();
+		String password = u.getPassword();
+		String token = u.getToken();
+		PreparedStatement stmt = con.prepareStatement("INSERT INTO utenti (username, password, token) VALUES(?,?,?)");
+		stmt.setString(1, username);
+		stmt.setString(2, password);
+		stmt.setString(3, token);
 		numRecord = stmt.executeUpdate();
         if (numRecord == 1) {
             return true;
         }else{
         	return false;
         }
+	}
+	
+	public String loginUtente(Connection con, Utente u) throws SQLException{
+		String username = u.getUsername();
+		String password = u.getPassword();
+		PreparedStatement stmt = con.prepareStatement("SELECT token FROM utenti WHERE username=? AND password=?");
+		stmt.setString(1, username);
+		stmt.setString(2, password);
+		ResultSet rs = stmt.executeQuery();
+		if(rs.next()){
+			return rs.getString("token");
+		}
+		throw new SQLException("Login non riuscito! Username o password errati!");
 	}
 }
