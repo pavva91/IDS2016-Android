@@ -130,9 +130,7 @@ public class AccessDB {
         }
 	}
 	
-	public String loginUtente(Connection con, Utente u) throws SQLException{
-		String username = u.getUsername();
-		String password = u.getPassword();
+	public String loginUtente(Connection con, String username, String password) throws SQLException{
 		PreparedStatement stmt = con.prepareStatement("SELECT token FROM utenti WHERE username=? AND password=?");
 		stmt.setString(1, username);
 		stmt.setString(2, password);

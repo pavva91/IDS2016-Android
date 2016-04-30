@@ -6,10 +6,13 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -25,7 +28,7 @@ public class Userlist {
 	}
 	
 	
-	@PUT
+	@POST
 	@Consumes("application/json")
 	@Produces("application/json")
 	public Response CreaUtente(Utente u){
@@ -42,23 +45,22 @@ public class Userlist {
 		}
 		return Response.ok(u.getToken(), MediaType.APPLICATION_JSON).build();	
 	}
-	@POST
-	@Consumes("application/json")
-	@Produces("application/json")
-	public Response LoginUtente(Utente u){
+
+	@GET
+	@Path("{username}/login")
+	@Produces("text/plain")
+	public Response LoginUtente(@PathParam("username")String username, @QueryParam("password")String password){
 		String token;
 		try{
 			Database db = new Database();
 			Connection con = db.getConnection();
 			AccessDB access = new AccessDB();
-			token = access.loginUtente(con, u);
+			token = access.loginUtente(con, username, password);
 		}catch (SQLException sqlex){
-			return Response.status(Response.Status.NOT_FOUND).entity("ERRORE: Accesso al db non riuscito!").build();
+			return Response.status(Response.Status.FORBIDDEN).entity(sqlex.toString()).build();
 		}catch (Exception e){
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("ERRORE: Accesso al db non riuscito!").build();
 		}
-		u.setPassword("");
-		u.setToken(token);
-		return Response.ok(u, MediaType.APPLICATION_JSON).build();
+		return Response.ok(token, MediaType.APPLICATION_JSON).build();
 	}
 }

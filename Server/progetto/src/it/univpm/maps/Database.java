@@ -5,8 +5,8 @@ import java.sql.DriverManager;
 public class Database {
 
 	//parametri di connessione al DB MySQL
-	private static final String usernameDB = "root";
-	private static final String passwordDB = "";
+	private static final String usernameDB = "univpm";
+	private static final String passwordDB = "univpm";
 	private static final String ipDB = "localhost";
 	private static final String portDB = "3306";
 	private static final String urlDB = "/progetto";
