@@ -1,8 +1,6 @@
 package it.univpm.maps;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.ws.rs.Consumes;
@@ -11,94 +9,84 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-
 import com.sun.jersey.spi.resource.Singleton;
-
-import it.univpm.maps.Nodo.tiponodo;
 
 
 @Path("maps")
 @Singleton
 public class Maplist{
+	
 	@POST
 	@Consumes("application/json")
-	@Produces("text/plain")
-	public String CreaMappa(Mappa m){
+	@Produces("application/json")
+	public Response CreaMappa(Mappa m){
 		try{
 			Database db = new Database();
 			Connection con = db.getConnection();
 			AccessDB access = new AccessDB();
-			access.insertMappa(con, m);
+			if(access.verificaToken(con, AccessDB.tokenAdmin))
+				if(access.CercaMappa(con, m.getNome())){
+					access.inserisciMappa(con, m);
+				}else{
+					access.cancellaMappa(con, m);
+					//errore mappa già esistente
+					return Response.status(Response.Status.CONFLICT).entity("ERRORE: Nome mappa già esistente!").build();
+				}	
+			else
+				//errore utente non autorizzato a caricare mappe
+				return Response.status(Response.Status.FORBIDDEN).entity("ERRORE: Utente non autorizzato a caricare mappe!").build();
 		}catch(SQLException esql){
-			return esql.getMessage();
+			//errore inserimento mappa //restituire 409
+			return Response.status(Response.Status.CONFLICT).entity(esql.getMessage()).build();
 		}catch (Exception e){
 			System.out.println(e);
 		}
-		return m.getNome();
+		return Response.ok(m.getNome(), MediaType.APPLICATION_JSON).build();
 	}
 	
 
 	@GET
 	@Produces("application/json")
-	public ArrayList<Mappa> ElencaMappe(){
+	public Response ElencaMappe(@QueryParam("token")String token){
 		ArrayList<Mappa> listaMappe = new ArrayList<Mappa>();
 		try{
 			Database db = new Database();
 			Connection con = db.getConnection();
 			AccessDB access = new AccessDB();
-			listaMappe = access.getMappe(con);
+			if(access.verificaToken(con, token)){
+				listaMappe = access.getMappe(con);
+			}else{
+				//errore mappa non trovata //restituire 403
+				return Response.status(Response.Status.FORBIDDEN).entity("ERRORE: Utente non loggato!").build();
+			}	
 		}catch (Exception e){
 			e.printStackTrace();
 		}
-		return listaMappe;
+		return Response.ok(listaMappe, MediaType.APPLICATION_JSON).build();
 	}
 	
 	@GET
 	@Path("{name}")
 	@Produces("application/json")
-	public Response getMappa(@PathParam("name") String nome){
+	public Response getMappa(@PathParam("name") String nome, @QueryParam("token")String token){
+		AccessDB access = new AccessDB();
 		Mappa m=new Mappa(nome);
 		try{
 			Database db = new Database();
 			Connection con = db.getConnection();
-			AccessDB access = new AccessDB();
-			PreparedStatement stmt;
-			ResultSet rs;
-			if(access.cercaMappa(con, nome)){
-				stmt = con.prepareStatement("SELECT * FROM nodi");
-				rs = stmt.executeQuery();
-				while(rs.next()){
-					Nodo n = new Nodo();
-					n.setMappa(m.getNome());
-					n.setCodice(rs.getString("codice"));
-					n.setDescrizione(rs.getString("descrizione"));
-					n.setQuota(rs.getInt("quota"));
-					n.setX(rs.getInt("x"));
-					n.setY(rs.getInt("y"));
-					n.setLarghezza(rs.getDouble("larghezza"));
-					n.setTipo(tiponodo.valueOf(rs.getString("tipo")));
-					m.AggiungiNodo(n);
+			if(access.verificaToken(con, token)){
+				if(access.CercaMappa(con, nome)){
+					m=access.OttieniMappa(con, nome, token);
+				}else{
+					//errore mappa non trovata //restituire 404
+					return Response.status(Response.Status.NOT_FOUND).entity("ERRORE: Mappa non trovata!").build();
 				}
-				stmt = con.prepareStatement("SELECT * FROM archi");
-				rs = stmt.executeQuery();
-				while(rs.next()){
-					Arco a = new Arco();
-					a.setMappa(m.getNome());
-					a.setPartenza(rs.getString("partenza"));
-					a.setDestinazione(rs.getString("destinazione"));
-					a.setLunghezza(rs.getDouble("lunghezza"));
-					a.setV(rs.getDouble("v"));
-					a.setI(rs.getDouble("i"));
-					a.setC(rs.getDouble("c"));
-					a.setSuperficie(rs.getDouble("superficie"));
-					m.AggiungiArco(a);
-				}
-				
 			}else{
-				//errore mappa non trovata //restituire 404
-				return Response.status(Response.Status.NOT_FOUND).entity("ERRORE: Mappa non trovata!").build();
+				//errore mappa non trovata //restituire 403
+				return Response.status(Response.Status.FORBIDDEN).entity("ERRORE: Utente non loggato!").build();
 			}
 				
 		}catch (Exception e){

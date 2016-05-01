@@ -4,11 +4,9 @@ import java.math.BigInteger;
 import java.security.SecureRandom;
 import java.sql.Connection;
 import java.sql.SQLException;
-
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -63,4 +61,26 @@ public class Userlist {
 		}
 		return Response.ok(token, MediaType.APPLICATION_JSON).build();
 	}
+	
+	@POST
+	@Consumes("application/json")
+	@Path("{username}/posizione")
+	@Produces("application/json")
+	public Response posizioneUtente(String nuovaPosizione, @QueryParam("token")String token){
+		Utente u= new Utente();
+		try{
+			Database db = new Database();
+			Connection con = db.getConnection();
+			AccessDB access = new AccessDB();
+			access.verificaToken(con, token);
+			u = access.getUtente(con, token); //recupero utente dal DB
+			access.aggiornaPosizioneUtente(con, u, nuovaPosizione); //aggiorno posizione utente
+			u = access.getUtente(con, token); //recupero utente aggiornato dal DB
+		}catch (Exception e){
+			return Response.status(Response.Status.CONFLICT).entity("ERRORE: Aggiornamento posizione utente impossibile!").build();
+		}
+		return Response.ok(u, MediaType.APPLICATION_JSON).build();	
+	}
+	
+	
 }
