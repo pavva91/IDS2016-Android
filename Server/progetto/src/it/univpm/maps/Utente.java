@@ -14,6 +14,7 @@ public class Utente {
 	//DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss"); //formato data-ora
 	String username; //nome utente
 	String password; //password utente
+	String salt; //salt usato per crittografia password con funzione hashUtente
 	String posizione; //posizione dell'utente (codice nodo)
 	String token; //token da usare per la comunicazione con il server
 	Date aggiornamentoMappa; //data e ora dell'ultimo invio mappa all'utente
@@ -22,18 +23,6 @@ public class Utente {
 	public Utente(){
 		
 	}
-	
-	//costruttore con parametri
-	public Utente(String username, String password,	String posizione, String token,	Date aggiornamentoMappa){
-		this.username=username;
-		this.password=password;
-		this.posizione=posizione;
-		this.token=token;
-		this.aggiornamentoMappa=aggiornamentoMappa;
-	}
-
-
-	
 	
 	public String getUsername() {
 		return username;
@@ -49,6 +38,14 @@ public class Utente {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	
+	public String getSalt(){
+		return this.salt;
+	}
+	
+	public void setSalt(String salt){
+		this.salt=salt;
 	}
 
 	public String getPosizione() {
@@ -74,5 +71,6 @@ public class Utente {
 	public void setAggiornamentoMappa(Date aggiornamentoMappa) {
 		this.aggiornamentoMappa = aggiornamentoMappa;
 	}
+	
 	
 }

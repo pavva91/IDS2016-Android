@@ -7,43 +7,19 @@ import javax.xml.bind.annotation.XmlAccessorType;
 public class Arco {
 
 	//attributi
-	private int id; //identificativo univoco dell'arco
-	private String mappa; //nome mappa (foreign key)
 	private double v; //vulnerabilità del tratto
 	private double i; //rischi per la vita
 	private double los; //presenza di persone
 	private double c; //dati variabili
 	private double lunghezza; //lunghezza arco in metri
-	private String partenza; //id nodo partenza (foreign key)
-	private String destinazione; //id nodo destinazione (foreign key)
+	String partenza; //id nodo partenza (foreign key)
+	String destinazione; //id nodo destinazione (foreign key)
 	private double superficie; //superficie arco in mq
 	
 	
-	//costruttore
-	public Arco(String mappa, double v, double i, double los, double c, double lunghezza, String partenza, String destinazione, double superficie){
-		this.mappa=mappa;
-		this.v=v;
-		this.c=c;
-		this.i=i;
-		this.los=los;
-		this.lunghezza=lunghezza;
-		this.partenza=partenza;
-		this.destinazione=destinazione;
-		this.superficie=superficie;
-	}
 	//costruttore senza parametri
 	public Arco(){
 		
-	}
-
-	public int getId() {
-		return this.id;
-	}
-	public String getMappa() {
-		return this.mappa;
-	}
-	public void setMappa(String mappa) {
-		this.mappa = mappa;
 	}
 	public double getV() {
 		return this.v;

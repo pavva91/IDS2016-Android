@@ -5,10 +5,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import com.mysql.jdbc.Statement;
+
 import it.univpm.maps.Nodo.tiponodo;
 
 public class AccessDB {
-	static String tokenAdmin="todaqhn374hh22tac143c2rll0";
+	static String tokenAdmin="12m2t7oc43godndv767tkj9hue";
 	static String defLos="IF (superficie/(num_persone+0.01)>=3.7, 0,"
 			+"IF (superficie/(num_persone+0.01)<3.7 AND superficie/(num_persone+0.01)>=2.2, 0.33,"
 			+"IF (superficie/(num_persone+0.01)<2.2 AND superficie/(num_persone+0.01)>=1.4, 0.6,"
@@ -36,21 +38,21 @@ public class AccessDB {
 	
 	public void inserisciMappa(Connection con, Mappa m) throws SQLException{
 		int numRecord;
-	
-			PreparedStatement stmt = con.prepareStatement("INSERT INTO mappe (nome) VALUES (?)");
-			stmt.setString(1, m.getNome());
-			numRecord = stmt.executeUpdate();
-	        if (numRecord == 0) {
-	            throw new SQLException("Errore inserimento mappa! Nome mappa già esistente!");
-	        }
-	        for(Nodo n: m.getNodi()) //ciclo su ogni nodo in lista
-	        	insertNodo(con, m, n); //inserisce nuovo nodo
-	        for(Arco a: m.getArchi()) //ciclo su ogni arco in lista
-	        	insertArco(con, m, a); //inserisce nuovo arco
+		PreparedStatement stmt = con.prepareStatement("INSERT INTO mappe (nome) VALUES (?)");
+		stmt.setString(1, m.getNome());
+		numRecord = stmt.executeUpdate();
+        if (numRecord == 0) {
+            throw new SQLException("Errore inserimento mappa!");
+        }        
+        for(Nodo n: m.getNodi()) //ciclo su ogni nodo in lista
+        	n = insertNodo(con, m, n); //inserisce nuovo nodo
+        for(Arco a: m.getArchi()) //ciclo su ogni arco in lista
+        	a = insertArco(con, m, a); //inserisce nuovo arco
+        
 
 	}
 	
-	public void insertNodo(Connection con, Mappa m, Nodo n) throws SQLException{
+	public Nodo insertNodo(Connection con, Mappa m, Nodo n) throws SQLException{
 		int numRecord;
 		String mappa = m.getNome();
 		String codice = n.getCodice();
@@ -60,7 +62,7 @@ public class AccessDB {
 		int y = n.getY();
 		double larghezza = n.getLarghezza();
 		String tipo = n.getTipo().toString();
-		PreparedStatement stmt = con.prepareStatement("INSERT INTO nodi (mappa, codice, descrizione, quota, x, y, larghezza, tipo) VALUES(?,?,?,?,?,?,?,?)");
+		PreparedStatement stmt = con.prepareStatement("INSERT INTO nodi (mappa, codice, descrizione, quota, x, y, larghezza, tipo) VALUES(?,?,?,?,?,?,?,?)",Statement.RETURN_GENERATED_KEYS);
 		stmt.setString(1, mappa);
 		stmt.setString(2, codice);
 		stmt.setString(3, descrizione);
@@ -73,36 +75,42 @@ public class AccessDB {
         if (numRecord == 0) {
             throw new SQLException("Errore inserimento nodo!");
         }
+        ResultSet rs = stmt.getGeneratedKeys();
+        if(rs.next())
+        {
+            int id = rs.getInt(1);
+            n.setId(id);
+        }
+        return n;
 	}
 	
-	public void insertArco(Connection con, Mappa m, Arco a) throws SQLException{
+	public Arco insertArco(Connection con, Mappa m, Arco a) throws SQLException{
 		int numRecord;
-		String mappa = m.getNome();
-		String partenza = a.getPartenza();
-		String destinazione = a.getDestinazione();
+		int partenza = GetIdNodo(con, m, a.getPartenza());
+		int destinazione = GetIdNodo(con, m, a.getDestinazione());
 		double lunghezza = a.getLunghezza();
 		double v = a.getV();
 		double i = a.getI();
 		double c = a.getC();
 		double superficie = a.getSuperficie();
-		PreparedStatement stmt = con.prepareStatement("INSERT INTO archi (mappa, partenza, destinazione, lunghezza, v, i, c, superficie) VALUES(?,?,?,?,?,?,?,?)");
-		stmt.setString(1, mappa);
-		stmt.setString(2, partenza);
-		stmt.setString(3, destinazione);
-		stmt.setDouble(4, lunghezza);
-		stmt.setDouble(5, v);
-		stmt.setDouble(6, i);
-		stmt.setDouble(7, c);
-		stmt.setDouble(8, superficie);
+		PreparedStatement stmt = con.prepareStatement("INSERT INTO archi (partenza, destinazione, lunghezza, v, i, c, superficie) VALUES(?,?,?,?,?,?,?)");
+		stmt.setInt(1, partenza);
+		stmt.setInt(2, destinazione);
+		stmt.setDouble(3, lunghezza);
+		stmt.setDouble(4, v);
+		stmt.setDouble(5, i);
+		stmt.setDouble(6, c);
+		stmt.setDouble(7, superficie);
 		numRecord = stmt.executeUpdate();
         if (numRecord == 0) {
             throw new SQLException("Errore inserimento arco!");
         }
+        return a;
 	}
 	
 	public void cancellaMappa(Connection con, Mappa m) throws SQLException{
 		int numRecord;
-		PreparedStatement stmt = con.prepareStatement("DELETE * FROM mappe where nome=?");
+		PreparedStatement stmt = con.prepareStatement("DELETE FROM mappe where nome=?");
 		stmt.setString(1, m.getNome());
 		numRecord = stmt.executeUpdate();
         if (numRecord == 0) {
@@ -121,17 +129,40 @@ public class AccessDB {
         }
 		return false;
 	}
+	public String getSaltUtente(Connection con, String nome) throws SQLException{
+		PreparedStatement stmt = con.prepareStatement("SELECT salt FROM utenti WHERE username=?");
+		stmt.setString(1, nome);
+		ResultSet rs = stmt.executeQuery();
+		if (rs.next()){
+			return rs.getString("salt");
+        }
+		return null;
+	}
+	
+	//metodo che recupera l'id di un nodo a partire dal suo nome (codice) e dalla mappa
+	//ritorna id nodo, se nodo non esiste ritorna zero
+	public int GetIdNodo(Connection con, Mappa m, String nome) throws SQLException{
+		PreparedStatement stmt = con.prepareStatement("SELECT id FROM nodi where codice=? AND mappa=?");
+		stmt.setString(1, nome);
+		stmt.setString(2, m.getNome());
+		ResultSet rs = stmt.executeQuery();
+		if (rs.next()){
+			return rs.getInt("id");
+        }
+		return 0;
+	}
 	
 	public Mappa OttieniMappa(Connection con, String nome, String token) throws SQLException{
-		
 		PreparedStatement stmt;
 		ResultSet rs;
 		Mappa m=new Mappa(nome);
 		int numRecord;
-		stmt = con.prepareStatement("SELECT * FROM nodi");
+		stmt = con.prepareStatement("SELECT * FROM nodi WHERE mappa=?");
+		stmt.setString(1, nome);
 		rs = stmt.executeQuery();
 		while(rs.next()){
 			Nodo n = new Nodo();
+			n.setId(rs.getInt("id"));
 			n.setMappa(m.getNome());
 			n.setCodice(rs.getString("codice"));
 			n.setDescrizione(rs.getString("descrizione"));
@@ -142,11 +173,13 @@ public class AccessDB {
 			n.setTipo(tiponodo.valueOf(rs.getString("tipo")));
 			m.AggiungiNodo(n);
 		}
-		stmt = con.prepareStatement("SELECT * FROM archi");
+		stmt = con.prepareStatement("SELECT n1.codice AS partenza, n2.codice AS destinazione, a.v, a.i, a.c,"
+									+" a.los, a.lunghezza, a.superficie  FROM archi AS a, nodi AS n1, nodi AS n2"
+									+" WHERE a.partenza=n1.id AND a.destinazione=n2.id and n1.mappa=?");
+		stmt.setString(1, nome);
 		rs = stmt.executeQuery();
 		while(rs.next()){
 			Arco a = new Arco();
-			a.setMappa(m.getNome());
 			a.setPartenza(rs.getString("partenza"));
 			a.setDestinazione(rs.getString("destinazione"));
 			a.setLunghezza(rs.getDouble("lunghezza"));
@@ -179,10 +212,12 @@ public class AccessDB {
 		String username = u.getUsername();
 		String password = u.getPassword();
 		String token = u.getToken();
-		PreparedStatement stmt = con.prepareStatement("INSERT INTO utenti (username, password, token) VALUES(?,?,?)");
+		String salt = u.getSalt();
+		PreparedStatement stmt = con.prepareStatement("INSERT INTO utenti (username, password, token, salt) VALUES(?,?,?,?)");
 		stmt.setString(1, username);
 		stmt.setString(2, password);
 		stmt.setString(3, token);
+		stmt.setString(4, salt);
 		numRecord = stmt.executeUpdate();
         if (numRecord == 1) {
             return true;
