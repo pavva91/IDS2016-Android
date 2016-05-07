@@ -9,9 +9,18 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 public class NoemTextActivity extends CommonMenuActivity {
 
+
+    public void sendInfo(View view) {
+        Intent intent = new Intent(this, DestinationActivity.class);
+        EditText editText = (EditText) findViewById(R.id.editPartenza);
+        String message = editText.getText().toString();
+        intent.putExtra("aula", message);
+        startActivity(intent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,13 +31,15 @@ public class NoemTextActivity extends CommonMenuActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
+
         //attività bottone
-        Button button = (Button) findViewById(R.id.btnNoemPartenza);
+       /* Button button = (Button) findViewById(R.id.btnNoemPartenza);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 startActivity(new Intent(NoemTextActivity.this, DestinationActivity.class));
             }
-        });
+        });*/
+
 
 
     }

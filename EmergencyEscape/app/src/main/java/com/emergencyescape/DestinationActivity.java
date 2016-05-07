@@ -9,8 +9,14 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 public class DestinationActivity extends CommonMenuActivity {
+
+    TextView partenza;
+    //TextView quotap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,6 +25,21 @@ public class DestinationActivity extends CommonMenuActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        //visualizza quota partenza
+       /* quotap = (TextView) findViewById(R.id.quotap);
+        Intent intento = getIntent();
+        String quotap = intento.getStringExtra("quotap");
+        partenza.setText("Quota di partenza: " + quotap);*/
+
+        String quotap = getIntent().getExtras().getString("quotap");
+        System.out.println("quota " + String.valueOf(quotap));
+
+        //visualizza aula partenza
+        partenza = (TextView) findViewById(R.id.partenza);
+        Intent intent = getIntent();
+        String part = intent.getStringExtra("aula");
+        partenza.setText("Aula di partenza: " + part);
 
         //attività bottone
         Button button = (Button) findViewById(R.id.btnDestinazione);
