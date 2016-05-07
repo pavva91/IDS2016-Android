@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MotionEvent;
@@ -16,39 +17,39 @@ import android.widget.Toast;
 public class MapTapActivity extends CommonMenuActivity {
 
     private Bitmap bitmap;
-    String quota;
+
 
     int aulamagna=-8355841;
     int dacs= -8388896;
     int dardus=-4129024;
     int g1= -8462337;
     int g2= -8462337;
-    /*int 1454= ; //forse uguale a 150/1 controlla
-    int 1455= ; //forse uguale a 150/1 controlla
-    int 150st2= ;*/
+    /*int 1454= ; #7edfff
+    int 1455= ; #7edfff
+    int 150st2= ;#81deff*/
     int dipmeccanica= -2293595;
     int isac= -9446035;
-    int q1501= -8462595;
-   // int 1502= ;
-    int salalettura= -753482;
+  //  int q1501= -8462337; #7edfff
+   // int 1502= ; #7cdfff
+    int salalettura= -32832;
     int atelierinformatica= -2302976;
     int csal= -11889571;
     int biblioteca= -4629321;
     int dippatologia= -2200064;
     int dipbiochimica= -32866;
-    int assstud= -6029096;
+   // int assstud= ; //#a501db
     int fimet= -16741704;
     int serfotocopie= -8388704;
     int dipscmat= -33024;
     int at1= -8462337;
     int at2= -8462337;
-   // int aulafisica= ;
-  //  int s8= ;
+   // int aulafisica= ; #7de1ff
+  //  int s8= ;#7fddf9
     int bar= -8388704;
     int cesmi= -2237184;
     int banca= -9648936;
   //  int 15510= ;
-  //  int ecdl= ;
+  //  int ecdl= ;#80deff
     int q155d1= -8527106;  //d2 d3 d4 2-3 4 5-6 7
     int dipbiomed =-8388609;
 
@@ -94,7 +95,6 @@ public class MapTapActivity extends CommonMenuActivity {
                         String hexColor = String.format("#%06X", (0xFFFFFF & pixel));
                         System.out.println("hex " + String.valueOf(hexColor));
 
-
                         switch (event.getActionMasked()) {
 
                             case MotionEvent.ACTION_DOWN:
@@ -133,8 +133,8 @@ public class MapTapActivity extends CommonMenuActivity {
                                         Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
                                         a.putExtra("aula", "G2");
                                         startActivity(a);
-                                    }*/
-                                   /* if (pixel == q1454) {
+                                    }
+                                    if (pixel == q1454) {
                                         Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
                                         a.putExtra("aula", "145/4");
                                         startActivity(a);
@@ -187,7 +187,11 @@ public class MapTapActivity extends CommonMenuActivity {
 
                     if (event.getAction() == MotionEvent.ACTION_DOWN) {
                         bitmap = imgView.getDrawingCache();
+
                         int pixel = bitmap.getPixel((int) event.getX(), (int) event.getY());
+                        System.out.println("pixel " + String.valueOf(pixel));
+                        String hexColor = String.format("#%06X", (0xFFFFFF & pixel));
+                        System.out.println("hex " + String.valueOf(hexColor));
 
                         switch (event.getActionMasked()) {
 
@@ -215,8 +219,8 @@ public class MapTapActivity extends CommonMenuActivity {
                                         Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
                                         a.putExtra("aula", "G2");
                                         startActivity(a);
-                                    }*/
-                                   /* if (pixel == q1502) {
+                                    }
+                                    if (pixel == q1502) {
                                         Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
                                         a.putExtra("aula", "150/2");
                                         startActivity(a);
@@ -227,12 +231,12 @@ public class MapTapActivity extends CommonMenuActivity {
                                     a.putExtra("quotap", "150");
                                     startActivity(a);
                                 }
-                                if (pixel == q1501) {
+                               /* if (pixel == q1501) {
                                     Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
                                     a.putExtra("aula", "150/1");
                                     a.putExtra("quotap", "150");
                                     startActivity(a);
-                                }
+                                }*/
                                 if (pixel == atelierinformatica) {
                                     Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
                                     a.putExtra("aula", "Atelier informatica");
@@ -254,22 +258,22 @@ public class MapTapActivity extends CommonMenuActivity {
                                 }
                                 if (pixel == dipbiochimica) {
                                     Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
-                                    a.putExtra("aula", "Dip biochimica");
+                                    a.putExtra("aula", "Dipartimento biochimica");
                                     a.putExtra("quotap", "150");
                                     startActivity(a);
                                 }
                                 if (pixel == dippatologia) {
                                     Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
-                                    a.putExtra("aula", "Dip patologia");
+                                    a.putExtra("aula", "Dipartimento patologia");
                                     a.putExtra("quota", "150");
                                     startActivity(a);
                                 }
-                                if (pixel == assstud) {
+                                /*if (pixel == assstud) {
                                     Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
                                     a.putExtra("aula", "Associazioni studentesche");
                                     a.putExtra("quotap", "150");
                                     startActivity(a);
-                                }
+                                }*/
                         }
 
                     }
@@ -293,6 +297,11 @@ public class MapTapActivity extends CommonMenuActivity {
                     if (event.getAction() == MotionEvent.ACTION_DOWN) {
                         bitmap = imgView.getDrawingCache();
                         int pixel = bitmap.getPixel((int) event.getX(), (int) event.getY());
+
+                        System.out.println("pixel " + String.valueOf(pixel));
+                        String hexColor = String.format("#%06X", (0xFFFFFF & pixel));
+                        System.out.println("hex " + String.valueOf(hexColor));
+
                         switch (event.getActionMasked()) {
 
                             case MotionEvent.ACTION_DOWN:
@@ -364,19 +373,19 @@ public class MapTapActivity extends CommonMenuActivity {
                                 }
                                 if (pixel == dipscmat) {
                                     Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
-                                    a.putExtra("aula", "Dip scienze matematiche");
+                                    a.putExtra("aula", "Dipartimento scienze matematiche");
                                     a.putExtra("quotap", "155");
                                     startActivity(a);
                                 }
                                 if (pixel == dipmeccanica) {
                                     Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
-                                    a.putExtra("aula", "Dip meccanica");
+                                    a.putExtra("aula", "Dipartimento meccanica");
                                     a.putExtra("quotap", "155");
                                     startActivity(a);
                                 }
                                 if (pixel == dipbiomed) {
                                     Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
-                                    a.putExtra("aula", "Dip scienze biomediche");
+                                    a.putExtra("aula", "Dipartimento scienze biomediche");
                                     a.putExtra("quotap", "155");
                                     startActivity(a);
                                 }
