@@ -1,8 +1,6 @@
 package it.univpm.maps;
 
 import java.util.Date;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -15,7 +13,7 @@ public class Utente {
 	String username; //nome utente
 	String password; //password utente
 	String salt; //salt usato per crittografia password con funzione hashUtente
-	String posizione; //posizione dell'utente (codice nodo)
+	int posizione; //posizione dell'utente (id codice nodo)
 	String token; //token da usare per la comunicazione con il server
 	Date aggiornamentoMappa; //data e ora dell'ultimo invio mappa all'utente
 	
@@ -48,11 +46,11 @@ public class Utente {
 		this.salt=salt;
 	}
 
-	public String getPosizione() {
+	public int getPosizione() {
 		return posizione;
 	}
 
-	public void setPosizione(String posizione) {
+	public void setPosizione(int posizione) {
 		this.posizione = posizione;
 	}
 

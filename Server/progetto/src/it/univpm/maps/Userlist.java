@@ -79,16 +79,17 @@ public class Userlist {
 	@Consumes("application/json")
 	@Path("{username}/posizione")
 	@Produces("application/json")
-	public Response posizioneUtente(String nuovaPosizione, @QueryParam("token")String token){
-		Utente u= new Utente();
+	public Response posizioneUtente(Utente u, @QueryParam("token")String token){
+		//Utente u= new Utente();
+		int nuovaPosizione=u.getPosizione();
 		try{
 			Database db = new Database();
 			Connection con = db.getConnection();
 			AccessDB access = new AccessDB();
 			access.verificaToken(con, token);
-			u = access.getUtente(con, token); //recupero utente dal DB
-			access.aggiornaPosizioneUtente(con, u, nuovaPosizione); //aggiorno posizione utente
-			u = access.getUtente(con, token); //recupero utente aggiornato dal DB
+			//u = access.getUtente(con, token); //recupero utente dal DB
+			u = access.aggiornaPosizioneUtente(con, u, nuovaPosizione); //aggiorno posizione utente
+			//u = access.getUtente(con, token); //recupero utente aggiornato dal DB
 		}catch (Exception e){
 			return Response.status(Response.Status.CONFLICT).entity("ERRORE: Aggiornamento posizione utente impossibile!").build();
 		}
@@ -107,10 +108,9 @@ public class Userlist {
 				}
 			    password=hexString.toString();
 			} catch (NoSuchAlgorithmException e) {
-				// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			    return password;
+				e.printStackTrace();
+			}
+		    return password;
 		}
 	
 }

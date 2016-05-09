@@ -245,7 +245,10 @@ public class AccessDB {
 		if(rs.next()){
 			u.setUsername(rs.getString("username"));
 			u.setPassword(rs.getString("password"));
-			u.setPosizione(rs.getString("posizione"));
+			if (rs.getInt("posizione")>=0)
+				u.setPosizione(rs.getInt("posizione"));
+			else
+				u.setPosizione(-1);
 			u.setToken(rs.getString("token"));
 			u.setAggiornamentoMappa(rs.getTimestamp("aggiornamento_mappa"));
 			return u;
@@ -253,40 +256,51 @@ public class AccessDB {
 		throw new SQLException("ERRORE: Utente non trovato!");
 	}
 	
-	public void aggiornaPosizioneUtente(Connection con, Utente u, String nuovaPosizione) throws SQLException{
+	public Utente aggiornaPosizioneUtente(Connection con, Utente u, int nuovaPosizione) throws SQLException{
 		PreparedStatement stmt;
 		String mappa;
-		String vecchiaPosizione = u.getPosizione();
-		//se l'utente non aveva una posizione nota allora non devo rimuovere una persona dagli archi
-		if(u.getPosizione()!=null){
+		int vecchiaPosizione = u.getPosizione();
+		//se l'utente non aveva una posizione nota allora...
+		if(vecchiaPosizione==-1){
 			//rimuovo una persona da tutti gli archi adiacenti la vecchia posizione dell'utente e aggiorno il LOS
 			stmt = con.prepareStatement("UPDATE archi SET num_persone=num_persone-1 ,los="+defLos+" WHERE partenza=? OR destinazione=?");
-			stmt.setString(1, vecchiaPosizione);
-			stmt.setString(2, vecchiaPosizione);
+			stmt.setInt(1, vecchiaPosizione);
+			stmt.setInt(2, vecchiaPosizione);
+			stmt.executeUpdate();
+		
+		//se l'utente va in una posizione nota allora...
+		}else{
+			//aggiungo una persona in tutti gli archi adiacenti la nuova posizione dell'utente e aggiorno il LOS
+			stmt = con.prepareStatement("UPDATE archi SET num_persone=num_persone+1, los="+defLos+" WHERE partenza=? OR destinazione=?");
+			stmt.setInt(1, nuovaPosizione);
+			stmt.setInt(2, nuovaPosizione);
 			stmt.executeUpdate();
 		}
-		//aggiungo una persona in tutti gli archi adiacenti la nuova posizione dell'utente e aggiorno il LOS
-		stmt = con.prepareStatement("UPDATE archi SET num_persone=num_persone+1, los="+defLos+" WHERE partenza=? OR destinazione=?");
-		stmt.setString(1, nuovaPosizione);
-		stmt.setString(2, nuovaPosizione);
-		stmt.executeUpdate();
 		//aggiorno posizione utente su tabella utenti
-		stmt = con.prepareStatement("UPDATE utenti SET posizione=? WHERE token=?");
-		stmt.setString(1, nuovaPosizione);
-		stmt.setString(2, u.getToken());
+		
+		if(nuovaPosizione!=-1){
+			stmt = con.prepareStatement("UPDATE utenti SET posizione=? WHERE token=?");
+			stmt.setInt(1, nuovaPosizione);
+			stmt.setString(2, u.getToken());
+		}
+		if(nuovaPosizione==-1){
+			stmt = con.prepareStatement("UPDATE utenti SET posizione=null WHERE token=?");
+			stmt.setString(1, u.getToken());
+		}
 		stmt.executeUpdate();
 		//ricavo mappa da codice nodo
-		stmt = con.prepareStatement("SELECT mappa FROM nodi WHERE codice=?");
-		stmt.setString(1, nuovaPosizione);
+		stmt = con.prepareStatement("SELECT mappa FROM nodi WHERE id=?");
+		stmt.setInt(1, nuovaPosizione);
 		ResultSet rs = stmt.executeQuery();
 		if(!rs.next()){
-			new SQLException("ERRORE: il nodo fa riferimento ad una mappa non trovata!");
+			new SQLException("ERRORE: nodo nullo o non trovato!");
 		}
 		mappa=rs.getString("mappa");
 		//aggiorno data mappa
 		stmt = con.prepareStatement("UPDATE mappe SET data_aggiornamento=NOW() WHERE nome=?");
 		stmt.setString(1, mappa);
 		stmt.executeUpdate();
+		return u;
 	}
 	
 }
