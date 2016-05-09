@@ -15,4 +15,3 @@ public interface MessageView {
     // Navigation methods
     void goToUserProfile(User user);
 }
-    
