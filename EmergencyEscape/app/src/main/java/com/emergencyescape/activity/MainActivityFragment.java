@@ -1,4 +1,4 @@
-package com.emergencyescape;
+package com.emergencyescape.activity;
 
 import android.content.Intent;
 import android.support.v4.app.Fragment;
@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+
+import com.emergencyescape.R;
 
 import java.util.ArrayList;
 import java.util.Collection;

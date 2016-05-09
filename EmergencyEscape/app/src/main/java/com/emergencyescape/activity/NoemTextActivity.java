@@ -1,34 +1,37 @@
-package com.emergencyescape;
+package com.emergencyescape.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
-public class DestinationActivity extends CommonMenuActivity {
+import com.emergencyescape.R;
+
+public class NoemTextActivity extends CommonMenuActivity {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_destination);
+        setContentView(R.layout.activity_noemtext);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+
         //attività bottone
-        Button button = (Button) findViewById(R.id.btnDestinazione);
+        Button button = (Button) findViewById(R.id.btnNoemPartenza);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                startActivity(new Intent(DestinationActivity.this, ItineraryActivity.class));
+                startActivity(new Intent(NoemTextActivity.this, DestinationActivity.class));
             }
         });
 
-           }
+
+    }
 
     //action bar
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -39,7 +42,6 @@ public class DestinationActivity extends CommonMenuActivity {
 
 
     }
-
 
 
 

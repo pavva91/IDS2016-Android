@@ -1,8 +1,10 @@
-package com.emergencyescape;
+package com.emergencyescape.activity;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+
+import com.emergencyescape.R;
 
 /**
  * Created by valerio on 27/04/2016.
