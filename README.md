@@ -12,3 +12,6 @@ I merge/push sul master li facciamo una volta che le modifiche fatte sul branch 
 
 ##CODING STANDARD
 - [Google Java Style standard] (https://google.github.io/styleguide/javaguide.html).
+
+##IMPLEMENTAZIONE MVP
+- Applicazione di esempio per uso MVP pattern: [Applicazione esempio MVP] (https://github.com/ajitsing/ExpenseManager/tree/master/app/src/main/java/ajitsingh/com/expensemanager).
