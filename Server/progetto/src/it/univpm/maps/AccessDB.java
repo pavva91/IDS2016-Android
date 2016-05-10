@@ -303,4 +303,33 @@ public class AccessDB {
 		return u;
 	}
 	
+	public void aggiornaImmagineMappa(Connection con, String mapName, int quota, String url) throws SQLException{
+		PreparedStatement stmt;
+		Boolean imageExist = false;
+		//verifico se esiste già un record per la mappa e la quota passati come parametri
+		stmt = con.prepareStatement("SELECT * FROM immagini WHERE mappa=? AND quota=?");
+		stmt.setString(1, mapName);
+		stmt.setInt(2, quota);
+		ResultSet rs = stmt.executeQuery();
+		if(rs.next())
+			imageExist=true;
+		if(imageExist){
+			//se l'immagine esiste già allora faccio un update
+			stmt = con.prepareStatement("UPDATE immagini SET url=? WHERE mappa=? OR quota=?");
+			stmt.setString(1, url);
+			stmt.setString(2, mapName);
+			stmt.setInt(3, quota);
+			stmt.executeUpdate();
+		}else{
+			//se l'immagine non esiste allora la inserisco	
+			stmt = con.prepareStatement("INSERT INTO immagini (url, mappa, quota) VALUES (?,?,?)");
+			stmt.setString(1, url);
+			stmt.setString(2, mapName);
+			stmt.setInt(3, quota);
+			stmt.executeUpdate();	
+		}
+
+		
+	}
+	
 }
