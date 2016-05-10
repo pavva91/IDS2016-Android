@@ -25,6 +25,7 @@ public class EmTextActivity extends CommonMenuActivity {
         Button button = (Button) findViewById(R.id.btnPartenza);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                //TODO: Richiamare funzione del presenter dedicato per delegare la business logic.
                 startActivity(new Intent(EmTextActivity.this, ItineraryActivity.class));
             }
         });

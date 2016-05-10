@@ -13,5 +13,5 @@ public interface MessageView {
     void showTranslationButton(boolean shouldShow);
 
     // Navigation methods
-    void goToUserProfile(User user);
+   /* void goToUserProfile(User user);*/
 }

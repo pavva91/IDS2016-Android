@@ -5,13 +5,13 @@ package com.emergencyescape.model;
  */
 public interface UserDAO {
 
-    get(String id);
-    create(User user);
+ /*   get(String id);
+    create(User user);*/
 
 }
 
 
-
+/*
 MongoUserDAO implements UserDAO
 
 public User get(String id) {
@@ -24,3 +24,5 @@ public User get(String id) {
         loginActivity(UserDAO dao) {
         this.dao = dao;
         }
+
+        */
