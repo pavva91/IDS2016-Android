@@ -3,6 +3,8 @@ package it.univpm.maps;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -11,25 +13,26 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import com.sun.jersey.spi.resource.Singleton;
 
 
-@Path("maps")
+@Path("maps/")
 @Singleton
 public class Maplist{
 	
 	@POST
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Response CreaMappa(Mappa m){
+	public Response CreaMappa(Mappa m, @QueryParam("token")String token){
 		try{
 			Database db = new Database();
 			Connection con = db.getConnection();
 			AccessDB access = new AccessDB();
-			if(access.verificaToken(con, AccessDB.tokenAdmin))
+			if(access.getUtente(con, token).getUsername().equals(Config.ADMINISTRATOR_USER))
 				if(!access.CercaMappa(con, m.getNome())){
 					access.inserisciMappa(con, m);
 				}else{
@@ -52,19 +55,21 @@ public class Maplist{
 	@DELETE
 	@Path("{nome}")
 	@Produces("application/json")
-	public Response CancellaMappa(@PathParam("nome") String nome, @QueryParam("token")String token){
+	public Response CancellaMappa(@PathParam("nome") String nome, @QueryParam("token")String token, @Context HttpServletRequest request){
 		try{
 			Database db = new Database();
 			Connection con = db.getConnection();
 			AccessDB access = new AccessDB();
+			FileUpload fileHandler = new FileUpload();
 			Mappa m = new Mappa();
 			m.setNome(nome);
-			if(access.verificaToken(con, AccessDB.tokenAdmin))
+			if(access.getUtente(con, token).getUsername().equals(Config.ADMINISTRATOR_USER))
 				if(access.CercaMappa(con, nome)){
 					access.cancellaMappa(con, m);
+					fileHandler.deleteFolder(request, nome);
 				}else{
 					//errore mappa non trovata
-					return Response.status(Response.Status.NOT_FOUND).entity("ERRORE: Nome mappa non trovata!").build();
+					return Response.status(Response.Status.NOT_FOUND).entity("ERRORE: Mappa non trovata!").build();
 				}	
 			else
 				//errore utente non autorizzato a caricare mappe
@@ -75,7 +80,7 @@ public class Maplist{
 		}catch (Exception e){
 			System.out.println(e);
 		}
-		return Response.ok("Mappa '"+nome+"' cancellata!", MediaType.APPLICATION_JSON).build();
+		return Response.ok("Mappa cancellata!").build();
 	}
 
 	@GET
@@ -96,7 +101,7 @@ public class Maplist{
 			e.printStackTrace();
 		}
 		GenericEntity entity = new GenericEntity<ArrayList<Mappa>>(listaMappe) {};
-		//return Response.ok(listaMappe, MediaType.APPLICATION_JSON).build();
+
 		return Response.ok(entity, MediaType.APPLICATION_JSON).build();
 	}
 	

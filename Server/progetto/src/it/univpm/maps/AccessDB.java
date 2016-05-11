@@ -10,11 +10,7 @@ import com.mysql.jdbc.Statement;
 import it.univpm.maps.Nodo.tiponodo;
 
 public class AccessDB {
-	static String tokenAdmin="12m2t7oc43godndv767tkj9hue";
-	static String defLos="IF (superficie/(num_persone+0.01)>=3.7, 0,"
-			+"IF (superficie/(num_persone+0.01)<3.7 AND superficie/(num_persone+0.01)>=2.2, 0.33,"
-			+"IF (superficie/(num_persone+0.01)<2.2 AND superficie/(num_persone+0.01)>=1.4, 0.6,"
-			+"IF (superficie/(num_persone+0.01)<1.4 AND superficie/(num_persone+0.01)>=0.75, 1.0, 3.0))))";
+
 	//costruttore
 	public AccessDB(){
 		
@@ -194,12 +190,31 @@ public class AccessDB {
 		numRecord = stmt.executeUpdate();
 		if (numRecord!=1)
 			new SQLException("ERRORE: sono stati trovati "+numRecord+" utenti con lo stesso token!");
+		
+		
+		stmt = con.prepareStatement("SELECT * FROM immagini WHERE mappa=?");
+		stmt.setString(1, nome);
+		rs = stmt.executeQuery();
+		while(rs.next()){
+			m.AggiungiImmagine(rs.getString("url"));
+		}
 		return m;
 	}
 	
 	public Boolean verificaToken(Connection con, String token) throws SQLException{
 		PreparedStatement stmt = con.prepareStatement("SELECT * FROM utenti where token=?");
 		stmt.setString(1, token);
+		ResultSet rs = stmt.executeQuery();
+		while (rs.next()){
+			return true;
+        }
+		return false;
+	}
+	
+	public Boolean verificaQuota(Connection con, String mapName, int quota) throws SQLException{
+		PreparedStatement stmt = con.prepareStatement("SELECT quota FROM nodi WHERE mappa=? AND quota=?");
+		stmt.setString(1, mapName);
+		stmt.setInt(2, quota);
 		ResultSet rs = stmt.executeQuery();
 		while (rs.next()){
 			return true;
@@ -253,7 +268,7 @@ public class AccessDB {
 			u.setAggiornamentoMappa(rs.getTimestamp("aggiornamento_mappa"));
 			return u;
 		}
-		throw new SQLException("ERRORE: Utente non trovato!");
+		throw new SQLException("ERRORE!");
 	}
 	
 	public Utente aggiornaPosizioneUtente(Connection con, Utente u, int nuovaPosizione) throws SQLException{
@@ -263,7 +278,7 @@ public class AccessDB {
 		//se l'utente non aveva una posizione nota allora...
 		if(vecchiaPosizione==-1){
 			//rimuovo una persona da tutti gli archi adiacenti la vecchia posizione dell'utente e aggiorno il LOS
-			stmt = con.prepareStatement("UPDATE archi SET num_persone=num_persone-1 ,los="+defLos+" WHERE partenza=? OR destinazione=?");
+			stmt = con.prepareStatement("UPDATE archi SET num_persone=num_persone-1 ,los="+Config.DEF_LOS+" WHERE partenza=? OR destinazione=?");
 			stmt.setInt(1, vecchiaPosizione);
 			stmt.setInt(2, vecchiaPosizione);
 			stmt.executeUpdate();
@@ -271,7 +286,7 @@ public class AccessDB {
 		//se l'utente va in una posizione nota allora...
 		}else{
 			//aggiungo una persona in tutti gli archi adiacenti la nuova posizione dell'utente e aggiorno il LOS
-			stmt = con.prepareStatement("UPDATE archi SET num_persone=num_persone+1, los="+defLos+" WHERE partenza=? OR destinazione=?");
+			stmt = con.prepareStatement("UPDATE archi SET num_persone=num_persone+1, los="+Config.DEF_LOS+" WHERE partenza=? OR destinazione=?");
 			stmt.setInt(1, nuovaPosizione);
 			stmt.setInt(2, nuovaPosizione);
 			stmt.executeUpdate();
@@ -315,7 +330,7 @@ public class AccessDB {
 			imageExist=true;
 		if(imageExist){
 			//se l'immagine esiste già allora faccio un update
-			stmt = con.prepareStatement("UPDATE immagini SET url=? WHERE mappa=? OR quota=?");
+			stmt = con.prepareStatement("UPDATE immagini SET url=? WHERE mappa=? AND quota=?");
 			stmt.setString(1, url);
 			stmt.setString(2, mapName);
 			stmt.setInt(3, quota);
@@ -328,6 +343,7 @@ public class AccessDB {
 			stmt.setInt(3, quota);
 			stmt.executeUpdate();	
 		}
+		stmt.close();
 
 		
 	}
