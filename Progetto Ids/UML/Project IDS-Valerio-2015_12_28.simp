@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<sim-project version="9.05" multi-file="no">
+<sim-project version="9.15" multi-file="no">
   <meta>
     <name>Project IDS</name>
     <authors> Valerio Mattioli, Federica Mambella, Elisabetta Cipriani</authors>
@@ -127,7 +127,7 @@
       </counter>
       <counter>
         <item-type stereotype="" type="AbstractElementGroup" />
-        <value>191</value>
+        <value>23</value>
       </counter>
     </entity-ids>
     <diagrams>
@@ -145,6 +145,10 @@
       </counter>
       <counter>
         <type>SoftwareIdeasModeler.Core.Diagrams.UmlDiagrams.UmlStateMachineDiagram</type>
+        <value>1</value>
+      </counter>
+      <counter>
+        <type>SoftwareIdeasModeler.Core.Diagrams.UmlDiagrams.UmlComponentDiagram</type>
         <value>1</value>
       </counter>
     </diagrams>
@@ -244,12 +248,6 @@
       <lifeline classifier-name="Mappa" classifier-ref="di947252046110962335" is-active="false" is-multi-object="false" />
     </item>
     <item id="di912636654806037291" cid="AC001" type="actor" name=":Utente" style-class="" visibility="package" creator="P3cd2b21314f24b8bbd8e2d6ea95cc12e" creation-date="12/01/2015 15:16:05">
-      <owned-items>
-        <owned-item ref="di855168333314534789" />
-        <owned-item ref="di808085954813254255" />
-        <owned-item ref="di999360805523122184" />
-        <owned-item ref="di570094579199847789" />
-      </owned-items>
       <style class="default" />
     </item>
     <item id="di764518723911634951" cid="LL002" type="lifeline" name="partenza" style-class="" visibility="package" creator="P3cd2b21314f24b8bbd8e2d6ea95cc12e" creation-date="12/01/2015 15:17:12">
@@ -294,9 +292,6 @@
       <lifeline classifier-name="Posizione" classifier-ref="di436457968151671345" is-active="false" is-multi-object="false" />
     </item>
     <item id="di853876543194036506" cid="AC001" type="actor" name=":Utente" style-class="" visibility="package" creator="P3cd2b21314f24b8bbd8e2d6ea95cc12e" creation-date="12/01/2015 15:16:05">
-      <owned-items>
-        <owned-item ref="di477877950848688008" />
-      </owned-items>
       <style class="default" />
     </item>
     <item id="di592206931667128760" cid="LL002" type="lifeline" name="" style-class="" visibility="package" creator="P3cd2b21314f24b8bbd8e2d6ea95cc12e" creation-date="12/01/2015 15:17:12">
@@ -314,9 +309,6 @@
       <lifeline classifier-name="Posizione" classifier-ref="di436457968151671345" is-active="false" is-multi-object="false" />
     </item>
     <item id="di500346732366423540" cid="AC001" type="actor" name=":Utente" style-class="" visibility="package" creator="P3cd2b21314f24b8bbd8e2d6ea95cc12e" creation-date="12/01/2015 15:16:05">
-      <owned-items>
-        <owned-item ref="di337384353291662078" />
-      </owned-items>
       <style class="default" />
     </item>
     <item id="di593888807891950658" cid="LL002" type="lifeline" name="" style-class="" visibility="package" creator="P3cd2b21314f24b8bbd8e2d6ea95cc12e" creation-date="12/01/2015 15:17:12">
@@ -334,9 +326,6 @@
       <lifeline classifier-name="Posizione" classifier-ref="di436457968151671345" is-active="false" is-multi-object="false" />
     </item>
     <item id="di857719672791863433" cid="AC001" type="actor" name=":Utente" style-class="" visibility="package" creator="P3cd2b21314f24b8bbd8e2d6ea95cc12e" creation-date="12/01/2015 15:16:05">
-      <owned-items>
-        <owned-item ref="di910624536532621979" />
-      </owned-items>
       <style class="default" />
     </item>
     <item id="di220522677934355532" cid="LL002" type="lifeline" name="" style-class="" visibility="package" creator="P3cd2b21314f24b8bbd8e2d6ea95cc12e" creation-date="12/01/2015 15:17:12">
@@ -346,15 +335,15 @@
       <style class="default" />
       <lifeline classifier-name="Mappa" classifier-ref="di947252046110962335" is-active="false" is-multi-object="false" />
     </item>
-    <item id="di338890739786640645" cid="AB060" type="activation-bar" name="ExecutionOccurrence53" style-class="" visibility="package" creation-date="12/01/2015 17:30:17">
+    <item id="di338890739786640645" cid="AB060" type="activation-bar" name="ExecutionOccurrence53" style-class="" owner="di219180549261110793" visibility="package" creation-date="12/01/2015 17:30:17">
       <style class="default" />
       <activation-bar lifeline-ref="di219180549261110793" />
     </item>
-    <item id="di806082050860188541" cid="AB063" type="activation-bar" name="ExecutionOccurrence56" style-class="" visibility="package" creation-date="12/01/2015 17:36:04">
+    <item id="di806082050860188541" cid="AB063" type="activation-bar" name="ExecutionOccurrence56" style-class="" owner="di109668358184433564" visibility="package" creation-date="12/01/2015 17:36:04">
       <style class="default" />
       <activation-bar lifeline-ref="di109668358184433564" />
     </item>
-    <item id="di986674502610500934" cid="AB065" type="activation-bar" name="ExecutionOccurrence58" style-class="" visibility="package" creation-date="12/01/2015 17:37:14">
+    <item id="di986674502610500934" cid="AB065" type="activation-bar" name="ExecutionOccurrence58" style-class="" owner="di337496060351991875" visibility="package" creation-date="12/01/2015 17:37:14">
       <style class="default" />
       <activation-bar lifeline-ref="di337496060351991875" />
     </item>
@@ -369,54 +358,29 @@
       <style class="default" />
     </item>
     <item id="di980607453516271749" cid="LL005" type="lifeline" name="Mockup 1" style-class="" visibility="package" creation-date="12/01/2015 17:27:20">
-      <owned-items>
-        <owned-item ref="di740833718976434807" />
-      </owned-items>
       <style class="default" />
       <lifeline classifier-name="" is-active="false" is-multi-object="false" />
     </item>
     <item id="di230477815702200281" cid="AC002" type="actor" name=":Utente" style-class="" visibility="package" creation-date="12/01/2015 17:27:39">
-      <owned-items>
-        <owned-item ref="di635103102154186532" />
-        <owned-item ref="di882322077422711029" />
-        <owned-item ref="di834966534254871015" />
-      </owned-items>
       <style class="default" />
     </item>
     <item id="di573831616125070794" cid="LL006" type="lifeline" name="Mockup 5" style-class="" visibility="package" creation-date="12/01/2015 17:27:49">
-      <owned-items>
-        <owned-item ref="di709800925538211345" />
-      </owned-items>
       <style class="default" />
       <lifeline classifier-name="" is-active="false" is-multi-object="false" />
     </item>
     <item id="di468505931771698526" cid="LL006" type="lifeline" name="Mockup 7" style-class="" visibility="package" creation-date="12/01/2015 17:27:49">
-      <owned-items>
-        <owned-item ref="di778919532644245095" />
-        <owned-item ref="di171728948194872450" />
-      </owned-items>
       <style class="default" />
       <lifeline classifier-name="" is-active="false" is-multi-object="false" />
     </item>
     <item id="di810620082569223082" cid="LL006" type="lifeline" name="Mockup 7" style-class="" visibility="package" creation-date="12/01/2015 17:27:49">
-      <owned-items>
-        <owned-item ref="di627309976856803561" />
-        <owned-item ref="di879514887658147298" />
-      </owned-items>
       <style class="default" />
       <lifeline classifier-name="" is-active="false" is-multi-object="false" />
     </item>
     <item id="di515269675335150101" cid="LL008" type="lifeline" name="Mockup 8" style-class="" visibility="package" creation-date="12/01/2015 17:28:16">
-      <owned-items>
-        <owned-item ref="di267919046672596627" />
-      </owned-items>
       <style class="default" />
       <lifeline classifier-name="" is-active="false" is-multi-object="false" />
     </item>
     <item id="di388109752329229438" cid="LL006" type="lifeline" name="Mockup 5" style-class="" visibility="package" creation-date="12/01/2015 17:27:49">
-      <owned-items>
-        <owned-item ref="di494317786597298434" />
-      </owned-items>
       <style class="default" />
       <lifeline classifier-name="" is-active="false" is-multi-object="false" />
     </item>
@@ -442,17 +406,9 @@
       <style class="default" />
     </item>
     <item id="di974344428321037157" cid="AC002" type="actor" name=":Utente" style-class="" visibility="package" creation-date="12/01/2015 17:27:39">
-      <owned-items>
-        <owned-item ref="di329279888754325592" />
-        <owned-item ref="di880642346825924443" />
-        <owned-item ref="di732897969512853962" />
-      </owned-items>
       <style class="default" />
     </item>
     <item id="di180974468502296468" cid="LL008" type="lifeline" name="Mockup 8" style-class="" visibility="package" creation-date="12/01/2015 17:28:16">
-      <owned-items>
-        <owned-item ref="di334109575310787216" />
-      </owned-items>
       <style class="default" />
       <lifeline classifier-name="" is-active="false" is-multi-object="false" />
     </item>
@@ -536,10 +492,6 @@
       <stereotypes>
         <stereotype name="boundary" />
       </stereotypes>
-      <owned-items>
-        <owned-item ref="di170775958706201779" />
-        <owned-item ref="di526699621756292606" />
-      </owned-items>
       <style class="default" />
       <lifeline classifier-name="Gui Utente" classifier-ref="di150783650693176398" is-active="false" is-multi-object="false" />
     </item>
@@ -550,18 +502,10 @@
       <stereotypes>
         <stereotype name="boundary" />
       </stereotypes>
-      <owned-items>
-        <owned-item ref="di897345195570312467" />
-        <owned-item ref="di612698853862995958" />
-        <owned-item ref="di332668009545023318" />
-      </owned-items>
       <style class="default" />
       <lifeline classifier-name="Gui Utente" classifier-ref="di150783650693176398" is-active="false" is-multi-object="false" />
     </item>
     <item id="di154922356371528629" cid="AC001" type="actor" name=":Utente" style-class="" visibility="package" creator="P3cd2b21314f24b8bbd8e2d6ea95cc12e" creation-date="12/01/2015 15:16:05">
-      <owned-items>
-        <owned-item ref="di104058634835985929" />
-      </owned-items>
       <style class="default" />
     </item>
     <item id="di758490326750625640" cid="ELEM424" type="group" name="Group" style-class="" visibility="package" creator="P3cd2b21314f24b8bbd8e2d6ea95cc12e" creation-date="12/01/2015 16:24:39">
@@ -571,11 +515,6 @@
       <stereotypes>
         <stereotype name="boundary" />
       </stereotypes>
-      <owned-items>
-        <owned-item ref="di379794399187558648" />
-        <owned-item ref="di329482810834508757" />
-        <owned-item ref="di974824878694766261" />
-      </owned-items>
       <style class="default" />
       <lifeline classifier-name="Gui Utente" classifier-ref="di150783650693176398" is-active="false" is-multi-object="false" />
     </item>
@@ -586,10 +525,6 @@
       <stereotypes>
         <stereotype name="boundary" />
       </stereotypes>
-      <owned-items>
-        <owned-item ref="di153629885695607432" />
-        <owned-item ref="di994550443791636675" />
-      </owned-items>
       <style class="default" />
       <lifeline classifier-name="Gui Utente" classifier-ref="di150783650693176398" is-active="false" is-multi-object="false" />
     </item>
@@ -639,7 +574,7 @@
         </operation>
       </operations>
     </item>
-    <item id="di962860650178610280" cid="REL005" type="relationship" name="calcolo" style-class="" visibility="package" creation-date="12/02/2015 15:52:41">
+    <item id="di962860650178610280" cid="REL005" type="relationship" name="calcolo" style-class="" visibility="package" creation-date="12/02/2015 15:52:41" from="di476959204608963044" to="di238243233299284071">
       <style class="default" />
       <relation from="di476959204608963044" to="di238243233299284071">
         <start-role id="" name="" multiplicity="1..*" navigability="" association-type="association" visibility="private" />
@@ -692,7 +627,7 @@
               </attribute>
             </attributes>
           </item>
-          <item id="di291869814977458024" cid="REL001" type="relationship" name="" style-class="" visibility="package" creator="P3cd2b21314f24b8bbd8e2d6ea95cc12e" creation-date="12/01/2015 15:06:38">
+          <item id="di291869814977458024" cid="REL001" type="relationship" name="" style-class="" visibility="package" creator="P3cd2b21314f24b8bbd8e2d6ea95cc12e" creation-date="12/01/2015 15:06:38" from="di724891875278453423" to="di150783650693176398">
             <style class="default" />
             <relation from="di724891875278453423" to="di150783650693176398">
               <start-role id="" name="" multiplicity="0..1" navigability="" association-type="association" visibility="private" />
@@ -718,7 +653,7 @@
               </operation>
             </operations>
           </item>
-          <item id="di198720439526054186" cid="REL002" type="relationship" name="visualizzazione" style-class="" visibility="package" creator="P3cd2b21314f24b8bbd8e2d6ea95cc12e" creation-date="12/01/2015 15:09:03">
+          <item id="di198720439526054186" cid="REL002" type="relationship" name="visualizzazione" style-class="" visibility="package" creator="P3cd2b21314f24b8bbd8e2d6ea95cc12e" creation-date="12/01/2015 15:09:03" from="di724891875278453423" to="di544776945223867522">
             <style class="default" />
             <relation from="di724891875278453423" to="di544776945223867522">
               <start-role id="" name="" multiplicity="0..*" navigability="" association-type="association" visibility="private" />
@@ -759,7 +694,7 @@
               </operation>
             </operations>
           </item>
-          <item id="di890558829703122215" cid="REL003" type="relationship" name="" style-class="" visibility="package" creator="P3cd2b21314f24b8bbd8e2d6ea95cc12e" creation-date="12/01/2015 15:11:30">
+          <item id="di890558829703122215" cid="REL003" type="relationship" name="" style-class="" visibility="package" creator="P3cd2b21314f24b8bbd8e2d6ea95cc12e" creation-date="12/01/2015 15:11:30" from="di436457968151671345" to="di724891875278453423">
             <style class="default" />
             <relation from="di436457968151671345" to="di724891875278453423">
               <start-role id="" name="" multiplicity="0..1" navigability="" association-type="aggregation" visibility="private" />
@@ -834,15 +769,6 @@
             <stereotypes>
               <stereotype name="boundary" />
             </stereotypes>
-            <owned-items>
-              <owned-item ref="di422473961314320260" />
-              <owned-item ref="di963332611161259852" />
-              <owned-item ref="di120546056997478879" />
-              <owned-item ref="di890729042135406239" />
-              <owned-item ref="di972877300629614102" />
-              <owned-item ref="di111184442409043148" />
-              <owned-item ref="di684247877421221370" />
-            </owned-items>
             <style class="default" />
             <lifeline classifier-name="Gui Utente" classifier-ref="di150783650693176398" is-active="false" is-multi-object="false" />
           </item>
@@ -853,37 +779,33 @@
             <style class="default" />
             <lifeline classifier-name="Mappa" classifier-ref="di947252046110962335" is-active="false" is-multi-object="false" />
           </item>
-          <item id="di808085954813254255" cid="AB086" type="activation-bar" name="ExecutionOccurrence76" style-class="" visibility="package" creation-date="12/14/2015 16:31:03">
+          <item id="di808085954813254255" cid="AB086" type="activation-bar" name="ExecutionOccurrence76" style-class="" owner="di912636654806037291" visibility="package" creation-date="12/14/2015 16:31:03">
             <style class="default" />
           </item>
           <item id="di744326646641591354" cid="LL004" type="lifeline" name="" style-class="" visibility="package" creator="P3cd2b21314f24b8bbd8e2d6ea95cc12e" creation-date="12/01/2015 15:18:37">
             <stereotypes>
               <stereotype name="entity" />
             </stereotypes>
-            <owned-items>
-              <owned-item ref="di109455455836631115" />
-              <owned-item ref="di235131749568002989" />
-            </owned-items>
             <style class="default" />
             <lifeline classifier-name="Percorso" is-active="false" is-multi-object="false" />
           </item>
           <item id="di277743970462270321" cid="SM039" type="sequence-action" name="Message39" style-class="" visibility="package" creator="P3cd2b21314f24b8bbd8e2d6ea95cc12e" creation-date="12/01/2015 16:13:43">
             <style class="default" />
-            <sequence-action type="reply" message="" is-asynchronous="false" from="di422473961314320260" return-value="" assign-to-variable="">
+            <sequence-action type="reply" message="" is-asynchronous="false" from="di422473961314320260" to="di684721214510358757" return-value="" assign-to-variable="">
               <parameters />
             </sequence-action>
           </item>
-          <item id="di422473961314320260" cid="AB029" type="activation-bar" name="ExecutionOccurrence25" style-class="" visibility="package" creator="P3cd2b21314f24b8bbd8e2d6ea95cc12e" creation-date="12/01/2015 16:13:38">
+          <item id="di422473961314320260" cid="AB029" type="activation-bar" name="ExecutionOccurrence25" style-class="" owner="di152973112807091322" visibility="package" creator="P3cd2b21314f24b8bbd8e2d6ea95cc12e" creation-date="12/01/2015 16:13:38">
             <style class="default" />
             <activation-bar lifeline-ref="di152973112807091322" />
           </item>
           <item id="di858545453246879301" cid="SM040" type="sequence-action" name="Message40" style-class="" visibility="package" creator="P3cd2b21314f24b8bbd8e2d6ea95cc12e" creation-date="12/01/2015 16:14:08">
             <style class="default" />
-            <sequence-action type="call" message="" is-asynchronous="false" to="di963332611161259852" operation-ref="of52023d039c84656ade789d1b6e4077e859" return-value="" assign-to-variable="">
+            <sequence-action type="call" message="" is-asynchronous="false" from="di684721214510358757" to="di963332611161259852" operation-ref="of52023d039c84656ade789d1b6e4077e859" return-value="" assign-to-variable="">
               <parameters />
             </sequence-action>
           </item>
-          <item id="di963332611161259852" cid="AB030" type="activation-bar" name="ExecutionOccurrence26" style-class="" visibility="package" creator="P3cd2b21314f24b8bbd8e2d6ea95cc12e" creation-date="12/01/2015 16:14:10">
+          <item id="di963332611161259852" cid="AB030" type="activation-bar" name="ExecutionOccurrence26" style-class="" owner="di152973112807091322" visibility="package" creator="P3cd2b21314f24b8bbd8e2d6ea95cc12e" creation-date="12/01/2015 16:14:10">
             <style class="default" />
             <activation-bar lifeline-ref="di152973112807091322" />
           </item>
@@ -904,7 +826,7 @@
               <operands />
             </fragment>
           </item>
-          <item id="di120546056997478879" cid="AB031" type="activation-bar" name="ExecutionOccurrence27" style-class="" visibility="package" creator="P3cd2b21314f24b8bbd8e2d6ea95cc12e" creation-date="12/01/2015 16:16:00">
+          <item id="di120546056997478879" cid="AB031" type="activation-bar" name="ExecutionOccurrence27" style-class="" owner="di152973112807091322" visibility="package" creator="P3cd2b21314f24b8bbd8e2d6ea95cc12e" creation-date="12/01/2015 16:16:00">
             <style class="default" />
             <activation-bar lifeline-ref="di152973112807091322" />
           </item>
@@ -929,7 +851,7 @@
               <parameters />
             </sequence-action>
           </item>
-          <item id="di855168333314534789" cid="AB083" type="activation-bar" name="ExecutionOccurrence75" style-class="" visibility="package" creation-date="12/14/2015 16:21:53">
+          <item id="di855168333314534789" cid="AB083" type="activation-bar" name="ExecutionOccurrence75" style-class="" owner="di912636654806037291" visibility="package" creation-date="12/14/2015 16:21:53">
             <style class="default" />
           </item>
           <item id="di703298796898873703" cid="SM120" type="sequence-action" name="Message120" style-class="" visibility="package" creation-date="12/14/2015 16:31:00">
@@ -944,23 +866,23 @@
               <parameters />
             </sequence-action>
           </item>
-          <item id="di684247877421221370" cid="AB024" type="activation-bar" name="ExecutionOccurrence20" style-class="" visibility="package" creator="P3cd2b21314f24b8bbd8e2d6ea95cc12e" creation-date="12/01/2015 15:38:07">
+          <item id="di684247877421221370" cid="AB024" type="activation-bar" name="ExecutionOccurrence20" style-class="" owner="di152973112807091322" visibility="package" creator="P3cd2b21314f24b8bbd8e2d6ea95cc12e" creation-date="12/01/2015 15:38:07">
             <style class="default" />
             <activation-bar lifeline-ref="di152973112807091322" />
           </item>
           <item id="di649030078645848659" cid="SM030" type="sequence-action" name="Message30" style-class="" visibility="package" creator="P3cd2b21314f24b8bbd8e2d6ea95cc12e" creation-date="12/01/2015 15:38:06">
             <style class="default" />
-            <sequence-action type="call" message="" is-asynchronous="false" to="di684247877421221370" operation-ref="o3a95fef86af14f7a8bcc93e67a6490b8293" return-value="" assign-to-variable="">
+            <sequence-action type="call" message="" is-asynchronous="false" from="di684721214510358757" to="di684247877421221370" operation-ref="o3a95fef86af14f7a8bcc93e67a6490b8293" return-value="" assign-to-variable="">
               <parameters />
             </sequence-action>
           </item>
           <item id="di794608923643444386" cid="SM038" type="sequence-action" name="Message38" style-class="" visibility="package" creator="P3cd2b21314f24b8bbd8e2d6ea95cc12e" creation-date="12/01/2015 16:13:36">
             <style class="default" />
-            <sequence-action type="call" message="" is-asynchronous="false" to="di422473961314320260" operation-ref="o8df4441d81224e36b2ec3ae7931a939b391" return-value="" assign-to-variable="">
+            <sequence-action type="call" message="" is-asynchronous="false" from="di684721214510358757" to="di422473961314320260" operation-ref="o8df4441d81224e36b2ec3ae7931a939b391" return-value="" assign-to-variable="">
               <parameters />
             </sequence-action>
           </item>
-          <item id="di111184442409043148" cid="AB036" type="activation-bar" name="ExecutionOccurrence32" style-class="" visibility="package" creator="P3cd2b21314f24b8bbd8e2d6ea95cc12e" creation-date="12/01/2015 16:26:57">
+          <item id="di111184442409043148" cid="AB036" type="activation-bar" name="ExecutionOccurrence32" style-class="" owner="di152973112807091322" visibility="package" creator="P3cd2b21314f24b8bbd8e2d6ea95cc12e" creation-date="12/01/2015 16:26:57">
             <style class="default" />
             <activation-bar lifeline-ref="di152973112807091322" />
           </item>
@@ -970,7 +892,7 @@
               <parameters />
             </sequence-action>
           </item>
-          <item id="di890729042135406239" cid="AB037" type="activation-bar" name="ExecutionOccurrence33" style-class="" visibility="package" creator="P3cd2b21314f24b8bbd8e2d6ea95cc12e" creation-date="12/01/2015 16:31:24">
+          <item id="di890729042135406239" cid="AB037" type="activation-bar" name="ExecutionOccurrence33" style-class="" owner="di152973112807091322" visibility="package" creator="P3cd2b21314f24b8bbd8e2d6ea95cc12e" creation-date="12/01/2015 16:31:24">
             <style class="default" />
             <activation-bar lifeline-ref="di152973112807091322" />
           </item>
@@ -980,7 +902,7 @@
               <parameters />
             </sequence-action>
           </item>
-          <item id="di999360805523122184" cid="AB087" type="activation-bar" name="ExecutionOccurrence77" style-class="" visibility="package" creation-date="12/14/2015 16:32:56">
+          <item id="di999360805523122184" cid="AB087" type="activation-bar" name="ExecutionOccurrence77" style-class="" owner="di912636654806037291" visibility="package" creation-date="12/14/2015 16:32:56">
             <style class="default" />
           </item>
           <item id="di101445564588667449" cid="SM122" type="sequence-action" name="Message122" style-class="" visibility="package" creation-date="12/14/2015 16:33:06">
@@ -1005,7 +927,7 @@
           <item id="di317927787940094521" cid="AB042" type="activation-bar" name="ExecutionOccurrence35" style-class="" visibility="package" creator="P3cd2b21314f24b8bbd8e2d6ea95cc12e" creation-date="12/01/2015 16:43:41">
             <style class="default" />
           </item>
-          <item id="di570094579199847789" cid="AB088" type="activation-bar" name="ExecutionOccurrence78" style-class="" visibility="package" creation-date="12/14/2015 16:33:57">
+          <item id="di570094579199847789" cid="AB088" type="activation-bar" name="ExecutionOccurrence78" style-class="" owner="di912636654806037291" visibility="package" creation-date="12/14/2015 16:33:57">
             <style class="default" />
           </item>
           <item id="di521115043231497805" cid="AB043" type="activation-bar" name="ExecutionOccurrence36" style-class="" visibility="package" creator="P3cd2b21314f24b8bbd8e2d6ea95cc12e" creation-date="12/01/2015 16:43:51">
@@ -1029,11 +951,11 @@
               <parameters />
             </sequence-action>
           </item>
-          <item id="di109455455836631115" cid="AB044" type="activation-bar" name="ExecutionOccurrence37" style-class="" visibility="package" creator="P3cd2b21314f24b8bbd8e2d6ea95cc12e" creation-date="12/01/2015 16:45:37">
+          <item id="di109455455836631115" cid="AB044" type="activation-bar" name="ExecutionOccurrence37" style-class="" owner="di744326646641591354" visibility="package" creator="P3cd2b21314f24b8bbd8e2d6ea95cc12e" creation-date="12/01/2015 16:45:37">
             <style class="default" />
             <activation-bar lifeline-ref="di744326646641591354" />
           </item>
-          <item id="di235131749568002989" cid="AB045" type="activation-bar" name="ExecutionOccurrence38" style-class="" visibility="package" creator="P3cd2b21314f24b8bbd8e2d6ea95cc12e" creation-date="12/01/2015 16:46:56">
+          <item id="di235131749568002989" cid="AB045" type="activation-bar" name="ExecutionOccurrence38" style-class="" owner="di744326646641591354" visibility="package" creator="P3cd2b21314f24b8bbd8e2d6ea95cc12e" creation-date="12/01/2015 16:46:56">
             <style class="default" />
             <activation-bar lifeline-ref="di744326646641591354" />
           </item>
@@ -1049,7 +971,7 @@
               <parameters />
             </sequence-action>
           </item>
-          <item id="di972877300629614102" cid="AB047" type="activation-bar" name="ExecutionOccurrence40" style-class="" visibility="package" creator="P3cd2b21314f24b8bbd8e2d6ea95cc12e" creation-date="12/01/2015 16:49:02">
+          <item id="di972877300629614102" cid="AB047" type="activation-bar" name="ExecutionOccurrence40" style-class="" owner="di152973112807091322" visibility="package" creator="P3cd2b21314f24b8bbd8e2d6ea95cc12e" creation-date="12/01/2015 16:49:02">
             <style class="default" />
             <activation-bar lifeline-ref="di152973112807091322" />
           </item>
@@ -1307,7 +1229,7 @@
           <item id="di664406132291926397" cid="AB084" type="activation-bar" name="ExecutionOccurrence2" style-class="" visibility="package" creation-date="12/14/2015 16:26:42">
             <style class="default" />
           </item>
-          <item id="di104058634835985929" cid="AB083" type="activation-bar" name="ExecutionOccurrence75" style-class="" visibility="package" creation-date="12/14/2015 16:21:53">
+          <item id="di104058634835985929" cid="AB083" type="activation-bar" name="ExecutionOccurrence75" style-class="" owner="di154922356371528629" visibility="package" creation-date="12/14/2015 16:21:53">
             <style class="default" />
           </item>
           <item id="di871315074407934403" cid="SM107" type="sequence-action" name="Message107" style-class="" visibility="package" creation-date="12/14/2015 16:21:48">
@@ -1351,7 +1273,7 @@
           </item>
           <item id="di163123761398214778" cid="SM076" type="sequence-action" name="Message76" style-class="" visibility="package" creator="P3cd2b21314f24b8bbd8e2d6ea95cc12e" creation-date="12/01/2015 16:48:41">
             <style class="default" />
-            <sequence-action type="reply" message="cammino" is-asynchronous="false" from="di140413755598642368" return-value="" assign-to-variable="">
+            <sequence-action type="reply" message="cammino" is-asynchronous="false" from="di140413755598642368" to="di656826877476762128" return-value="" assign-to-variable="">
               <parameters />
             </sequence-action>
           </item>
@@ -1361,11 +1283,11 @@
               <parameters />
             </sequence-action>
           </item>
-          <item id="di371433620509775769" cid="AB045" type="activation-bar" name="ExecutionOccurrence38" style-class="" visibility="package" creator="P3cd2b21314f24b8bbd8e2d6ea95cc12e" creation-date="12/01/2015 16:46:56">
+          <item id="di371433620509775769" cid="AB045" type="activation-bar" name="ExecutionOccurrence38" style-class="" owner="di114711108277104987" visibility="package" creator="P3cd2b21314f24b8bbd8e2d6ea95cc12e" creation-date="12/01/2015 16:46:56">
             <style class="default" />
             <activation-bar lifeline-ref="di114711108277104987" />
           </item>
-          <item id="di140413755598642368" cid="AB044" type="activation-bar" name="ExecutionOccurrence37" style-class="" visibility="package" creator="P3cd2b21314f24b8bbd8e2d6ea95cc12e" creation-date="12/01/2015 16:45:37">
+          <item id="di140413755598642368" cid="AB044" type="activation-bar" name="ExecutionOccurrence37" style-class="" owner="di114711108277104987" visibility="package" creator="P3cd2b21314f24b8bbd8e2d6ea95cc12e" creation-date="12/01/2015 16:45:37">
             <style class="default" />
             <activation-bar lifeline-ref="di114711108277104987" />
           </item>
@@ -1374,7 +1296,7 @@
           </item>
           <item id="di601074064539509345" cid="SM072" type="sequence-action" name="Message72" style-class="" visibility="package" creator="P3cd2b21314f24b8bbd8e2d6ea95cc12e" creation-date="12/01/2015 16:45:29">
             <style class="default" />
-            <sequence-action type="call" message="calcolaPercorsoEmergenza()" is-asynchronous="false" to="di140413755598642368" return-value="" assign-to-variable="">
+            <sequence-action type="call" message="calcolaPercorsoEmergenza()" is-asynchronous="false" from="di656826877476762128" to="di140413755598642368" return-value="" assign-to-variable="">
               <parameters />
             </sequence-action>
           </item>
@@ -1388,7 +1310,7 @@
             <style class="default" />
             <lifeline classifier-name="Raccolta" classifier-ref="di698616452652095451" is-active="false" is-multi-object="false" />
           </item>
-          <item id="di612698853862995958" cid="AB030" type="activation-bar" name="ExecutionOccurrence26" style-class="" visibility="package" creator="P3cd2b21314f24b8bbd8e2d6ea95cc12e" creation-date="12/01/2015 16:14:10">
+          <item id="di612698853862995958" cid="AB030" type="activation-bar" name="ExecutionOccurrence26" style-class="" owner="di801021411678223879" visibility="package" creator="P3cd2b21314f24b8bbd8e2d6ea95cc12e" creation-date="12/01/2015 16:14:10">
             <style class="default" />
             <activation-bar lifeline-ref="di801021411678223879" />
           </item>
@@ -1398,11 +1320,11 @@
               <parameters />
             </sequence-action>
           </item>
-          <item id="di332668009545023318" cid="AB031" type="activation-bar" name="ExecutionOccurrence27" style-class="" visibility="package" creator="P3cd2b21314f24b8bbd8e2d6ea95cc12e" creation-date="12/01/2015 16:16:00">
+          <item id="di332668009545023318" cid="AB031" type="activation-bar" name="ExecutionOccurrence27" style-class="" owner="di801021411678223879" visibility="package" creator="P3cd2b21314f24b8bbd8e2d6ea95cc12e" creation-date="12/01/2015 16:16:00">
             <style class="default" />
             <activation-bar lifeline-ref="di801021411678223879" />
           </item>
-          <item id="di897345195570312467" cid="AB029" type="activation-bar" name="ExecutionOccurrence25" style-class="" visibility="package" creator="P3cd2b21314f24b8bbd8e2d6ea95cc12e" creation-date="12/01/2015 16:13:38">
+          <item id="di897345195570312467" cid="AB029" type="activation-bar" name="ExecutionOccurrence25" style-class="" owner="di801021411678223879" visibility="package" creator="P3cd2b21314f24b8bbd8e2d6ea95cc12e" creation-date="12/01/2015 16:13:38">
             <style class="default" />
             <activation-bar lifeline-ref="di801021411678223879" />
           </item>
@@ -1414,13 +1336,13 @@
           </item>
           <item id="di999198116850080245" cid="SM040" type="sequence-action" name="Message40" style-class="" visibility="package" creator="P3cd2b21314f24b8bbd8e2d6ea95cc12e" creation-date="12/01/2015 16:14:08">
             <style class="default" />
-            <sequence-action type="call" message="" is-asynchronous="false" to="di612698853862995958" operation-ref="of52023d039c84656ade789d1b6e4077e859" return-value="" assign-to-variable="">
+            <sequence-action type="call" message="" is-asynchronous="false" from="di684721214510358757" to="di612698853862995958" operation-ref="of52023d039c84656ade789d1b6e4077e859" return-value="" assign-to-variable="">
               <parameters />
             </sequence-action>
           </item>
           <item id="di392855810256501363" cid="SM039" type="sequence-action" name="Message39" style-class="" visibility="package" creator="P3cd2b21314f24b8bbd8e2d6ea95cc12e" creation-date="12/01/2015 16:13:43">
             <style class="default" />
-            <sequence-action type="reply" message="" is-asynchronous="false" from="di897345195570312467" return-value="" assign-to-variable="">
+            <sequence-action type="reply" message="" is-asynchronous="false" from="di897345195570312467" to="di684721214510358757" return-value="" assign-to-variable="">
               <parameters />
             </sequence-action>
           </item>
@@ -1429,7 +1351,7 @@
           </item>
           <item id="di521609938778416532" cid="SM038" type="sequence-action" name="Message38" style-class="" visibility="package" creator="P3cd2b21314f24b8bbd8e2d6ea95cc12e" creation-date="12/01/2015 16:13:36">
             <style class="default" />
-            <sequence-action type="call" message="" is-asynchronous="false" to="di897345195570312467" operation-ref="o8df4441d81224e36b2ec3ae7931a939b391" return-value="" assign-to-variable="">
+            <sequence-action type="call" message="" is-asynchronous="false" from="di684721214510358757" to="di897345195570312467" operation-ref="o8df4441d81224e36b2ec3ae7931a939b391" return-value="" assign-to-variable="">
               <parameters />
             </sequence-action>
           </item>
@@ -1437,10 +1359,6 @@
             <stereotypes>
               <stereotype name="entity" />
             </stereotypes>
-            <owned-items>
-              <owned-item ref="di140413755598642368" />
-              <owned-item ref="di371433620509775769" />
-            </owned-items>
             <style class="default" />
             <lifeline classifier-name="Percorso" is-active="false" is-multi-object="false" />
           </item>
@@ -1515,7 +1433,7 @@
           </item>
           <item id="di501513620578578059" cid="SM131" type="sequence-action" name="Message131" style-class="" visibility="package" creation-date="12/14/2015 17:06:46">
             <style class="default" />
-            <sequence-action type="reply" message="" is-asynchronous="false" from="di188250530123185383" return-value="" assign-to-variable="">
+            <sequence-action type="reply" message="" is-asynchronous="false" from="di188250530123185383" to="di765516594212430017" return-value="" assign-to-variable="">
               <parameters />
             </sequence-action>
           </item>
@@ -1713,7 +1631,7 @@
           </item>
           <item id="di735510348240391651" cid="SM076" type="sequence-action" name="Message76" style-class="" visibility="package" creator="P3cd2b21314f24b8bbd8e2d6ea95cc12e" creation-date="12/01/2015 16:48:41">
             <style class="default" />
-            <sequence-action type="reply" message="cammino" is-asynchronous="false" from="di488307738537685451" to="di204395684927730350" return-value="" assign-to-variable="">
+            <sequence-action type="reply" message="cammino" is-asynchronous="false" from="di488307738537685451" return-value="" assign-to-variable="">
               <parameters />
             </sequence-action>
           </item>
@@ -1723,11 +1641,11 @@
               <parameters />
             </sequence-action>
           </item>
-          <item id="di536490243477014964" cid="AB045" type="activation-bar" name="ExecutionOccurrence38" style-class="" visibility="package" creator="P3cd2b21314f24b8bbd8e2d6ea95cc12e" creation-date="12/01/2015 16:46:56">
+          <item id="di536490243477014964" cid="AB045" type="activation-bar" name="ExecutionOccurrence38" style-class="" owner="di280418328707087453" visibility="package" creator="P3cd2b21314f24b8bbd8e2d6ea95cc12e" creation-date="12/01/2015 16:46:56">
             <style class="default" />
             <activation-bar lifeline-ref="di280418328707087453" />
           </item>
-          <item id="di488307738537685451" cid="AB044" type="activation-bar" name="ExecutionOccurrence37" style-class="" visibility="package" creator="P3cd2b21314f24b8bbd8e2d6ea95cc12e" creation-date="12/01/2015 16:45:37">
+          <item id="di488307738537685451" cid="AB044" type="activation-bar" name="ExecutionOccurrence37" style-class="" owner="di280418328707087453" visibility="package" creator="P3cd2b21314f24b8bbd8e2d6ea95cc12e" creation-date="12/01/2015 16:45:37">
             <style class="default" />
             <activation-bar lifeline-ref="di280418328707087453" />
           </item>
@@ -1742,7 +1660,7 @@
           </item>
           <item id="di802988226260311320" cid="SM131" type="sequence-action" name="Message131" style-class="" visibility="package" creation-date="12/14/2015 17:06:46">
             <style class="default" />
-            <sequence-action type="reply" message="" is-asynchronous="false" from="di412914707316161075" to="di204395684927730350" return-value="" assign-to-variable="">
+            <sequence-action type="reply" message="" is-asynchronous="false" from="di412914707316161075" return-value="" assign-to-variable="">
               <parameters />
             </sequence-action>
           </item>
@@ -1753,10 +1671,6 @@
             <stereotypes>
               <stereotype name="entity" />
             </stereotypes>
-            <owned-items>
-              <owned-item ref="di488307738537685451" />
-              <owned-item ref="di536490243477014964" />
-            </owned-items>
             <style class="default" />
             <lifeline classifier-name="Percorso" is-active="false" is-multi-object="false" />
           </item>
@@ -1777,7 +1691,7 @@
             <style class="default" />
             <lifeline classifier-name="Raccolta" classifier-ref="di698616452652095451" is-active="false" is-multi-object="false" />
           </item>
-          <item id="di477877950848688008" cid="AB083" type="activation-bar" name="ExecutionOccurrence75" style-class="" visibility="package" creation-date="12/14/2015 16:21:53">
+          <item id="di477877950848688008" cid="AB083" type="activation-bar" name="ExecutionOccurrence75" style-class="" owner="di853876543194036506" visibility="package" creation-date="12/14/2015 16:21:53">
             <style class="default" />
           </item>
           <item id="di977069745557487467" cid="SM117" type="sequence-action" name="Message117" style-class="" visibility="package" creation-date="12/14/2015 16:27:03">
@@ -1832,18 +1746,18 @@
           </item>
           <item id="di148854846110034086" cid="SM040" type="sequence-action" name="Message40" style-class="" visibility="package" creator="P3cd2b21314f24b8bbd8e2d6ea95cc12e" creation-date="12/01/2015 16:14:08">
             <style class="default" />
-            <sequence-action type="call" message="" is-asynchronous="false" to="di170775958706201779" operation-ref="of52023d039c84656ade789d1b6e4077e859" return-value="" assign-to-variable="">
+            <sequence-action type="call" message="" is-asynchronous="false" from="di684721214510358757" to="di170775958706201779" operation-ref="of52023d039c84656ade789d1b6e4077e859" return-value="" assign-to-variable="">
               <parameters />
             </sequence-action>
           </item>
           <item id="di879679154257759418" cid="AB047" type="activation-bar" name="ExecutionOccurrence40" style-class="" visibility="package" creator="P3cd2b21314f24b8bbd8e2d6ea95cc12e" creation-date="12/01/2015 16:49:02">
             <style class="default" />
           </item>
-          <item id="di170775958706201779" cid="AB030" type="activation-bar" name="ExecutionOccurrence26" style-class="" visibility="package" creator="P3cd2b21314f24b8bbd8e2d6ea95cc12e" creation-date="12/01/2015 16:14:10">
+          <item id="di170775958706201779" cid="AB030" type="activation-bar" name="ExecutionOccurrence26" style-class="" owner="di813252216543578537" visibility="package" creator="P3cd2b21314f24b8bbd8e2d6ea95cc12e" creation-date="12/01/2015 16:14:10">
             <style class="default" />
             <activation-bar lifeline-ref="di813252216543578537" />
           </item>
-          <item id="di526699621756292606" cid="AB031" type="activation-bar" name="ExecutionOccurrence27" style-class="" visibility="package" creator="P3cd2b21314f24b8bbd8e2d6ea95cc12e" creation-date="12/01/2015 16:16:00">
+          <item id="di526699621756292606" cid="AB031" type="activation-bar" name="ExecutionOccurrence27" style-class="" owner="di813252216543578537" visibility="package" creator="P3cd2b21314f24b8bbd8e2d6ea95cc12e" creation-date="12/01/2015 16:16:00">
             <style class="default" />
             <activation-bar lifeline-ref="di813252216543578537" />
           </item>
@@ -1983,11 +1897,11 @@
           <version />
         </meta>
         <abstract-items>
-          <item id="di329482810834508757" cid="AB030" type="activation-bar" name="ExecutionOccurrence26" style-class="" visibility="package" creator="P3cd2b21314f24b8bbd8e2d6ea95cc12e" creation-date="12/01/2015 16:14:10">
+          <item id="di329482810834508757" cid="AB030" type="activation-bar" name="ExecutionOccurrence26" style-class="" owner="di107489647650389791" visibility="package" creator="P3cd2b21314f24b8bbd8e2d6ea95cc12e" creation-date="12/01/2015 16:14:10">
             <style class="default" />
             <activation-bar lifeline-ref="di107489647650389791" />
           </item>
-          <item id="di379794399187558648" cid="AB029" type="activation-bar" name="ExecutionOccurrence25" style-class="" visibility="package" creator="P3cd2b21314f24b8bbd8e2d6ea95cc12e" creation-date="12/01/2015 16:13:38">
+          <item id="di379794399187558648" cid="AB029" type="activation-bar" name="ExecutionOccurrence25" style-class="" owner="di107489647650389791" visibility="package" creator="P3cd2b21314f24b8bbd8e2d6ea95cc12e" creation-date="12/01/2015 16:13:38">
             <style class="default" />
             <activation-bar lifeline-ref="di107489647650389791" />
           </item>
@@ -2019,7 +1933,7 @@
           </item>
           <item id="di162214508485396106" cid="SM076" type="sequence-action" name="Message76" style-class="" visibility="package" creator="P3cd2b21314f24b8bbd8e2d6ea95cc12e" creation-date="12/01/2015 16:48:41">
             <style class="default" />
-            <sequence-action type="reply" message="cammino" is-asynchronous="false" from="di620119225262754013" return-value="" assign-to-variable="">
+            <sequence-action type="reply" message="cammino" is-asynchronous="false" from="di620119225262754013" to="di656826877476762128" return-value="" assign-to-variable="">
               <parameters />
             </sequence-action>
           </item>
@@ -2029,17 +1943,17 @@
               <parameters />
             </sequence-action>
           </item>
-          <item id="di370216722998753601" cid="AB045" type="activation-bar" name="ExecutionOccurrence38" style-class="" visibility="package" creator="P3cd2b21314f24b8bbd8e2d6ea95cc12e" creation-date="12/01/2015 16:46:56">
+          <item id="di370216722998753601" cid="AB045" type="activation-bar" name="ExecutionOccurrence38" style-class="" owner="di488602198924408184" visibility="package" creator="P3cd2b21314f24b8bbd8e2d6ea95cc12e" creation-date="12/01/2015 16:46:56">
             <style class="default" />
             <activation-bar lifeline-ref="di488602198924408184" />
           </item>
-          <item id="di620119225262754013" cid="AB044" type="activation-bar" name="ExecutionOccurrence37" style-class="" visibility="package" creator="P3cd2b21314f24b8bbd8e2d6ea95cc12e" creation-date="12/01/2015 16:45:37">
+          <item id="di620119225262754013" cid="AB044" type="activation-bar" name="ExecutionOccurrence37" style-class="" owner="di488602198924408184" visibility="package" creator="P3cd2b21314f24b8bbd8e2d6ea95cc12e" creation-date="12/01/2015 16:45:37">
             <style class="default" />
             <activation-bar lifeline-ref="di488602198924408184" />
           </item>
           <item id="di251451604901312627" cid="SM072" type="sequence-action" name="Message72" style-class="" visibility="package" creator="P3cd2b21314f24b8bbd8e2d6ea95cc12e" creation-date="12/01/2015 16:45:29">
             <style class="default" />
-            <sequence-action type="call" message="calcolaPercorsoEmergenza()" is-asynchronous="false" to="di620119225262754013" return-value="" assign-to-variable="">
+            <sequence-action type="call" message="calcolaPercorsoEmergenza()" is-asynchronous="false" from="di656826877476762128" to="di620119225262754013" return-value="" assign-to-variable="">
               <parameters />
             </sequence-action>
           </item>
@@ -2048,7 +1962,7 @@
           </item>
           <item id="di750838848267002015" cid="SM131" type="sequence-action" name="Message131" style-class="" visibility="package" creation-date="12/14/2015 17:06:46">
             <style class="default" />
-            <sequence-action type="reply" message="" is-asynchronous="false" from="di727957023535649300" return-value="" assign-to-variable="">
+            <sequence-action type="reply" message="" is-asynchronous="false" from="di727957023535649300" to="di765516594212430017" return-value="" assign-to-variable="">
               <parameters />
             </sequence-action>
           </item>
@@ -2059,10 +1973,6 @@
             <stereotypes>
               <stereotype name="entity" />
             </stereotypes>
-            <owned-items>
-              <owned-item ref="di620119225262754013" />
-              <owned-item ref="di370216722998753601" />
-            </owned-items>
             <style class="default" />
             <lifeline classifier-name="Percorso" is-active="false" is-multi-object="false" />
           </item>
@@ -2083,7 +1993,7 @@
             <style class="default" />
             <lifeline classifier-name="Raccolta" classifier-ref="di698616452652095451" is-active="false" is-multi-object="false" />
           </item>
-          <item id="di337384353291662078" cid="AB083" type="activation-bar" name="ExecutionOccurrence75" style-class="" visibility="package" creation-date="12/14/2015 16:21:53">
+          <item id="di337384353291662078" cid="AB083" type="activation-bar" name="ExecutionOccurrence75" style-class="" owner="di500346732366423540" visibility="package" creation-date="12/14/2015 16:21:53">
             <style class="default" />
           </item>
           <item id="di661874893926809365" cid="SM116" type="sequence-action" name="Message116" style-class="" visibility="package" creation-date="12/14/2015 16:26:48">
@@ -2144,7 +2054,7 @@
           </item>
           <item id="di623683632772859699" cid="SM040" type="sequence-action" name="Message40" style-class="" visibility="package" creator="P3cd2b21314f24b8bbd8e2d6ea95cc12e" creation-date="12/01/2015 16:14:08">
             <style class="default" />
-            <sequence-action type="call" message="" is-asynchronous="false" to="di329482810834508757" operation-ref="of52023d039c84656ade789d1b6e4077e859" return-value="" assign-to-variable="">
+            <sequence-action type="call" message="" is-asynchronous="false" from="di684721214510358757" to="di329482810834508757" operation-ref="of52023d039c84656ade789d1b6e4077e859" return-value="" assign-to-variable="">
               <parameters />
             </sequence-action>
           </item>
@@ -2153,11 +2063,11 @@
           </item>
           <item id="di916813331617178752" cid="SM038" type="sequence-action" name="Message38" style-class="" visibility="package" creator="P3cd2b21314f24b8bbd8e2d6ea95cc12e" creation-date="12/01/2015 16:13:36">
             <style class="default" />
-            <sequence-action type="call" message="" is-asynchronous="false" to="di379794399187558648" operation-ref="o2ea7b6d058d34676830df7109818992c974" return-value="" assign-to-variable="">
+            <sequence-action type="call" message="" is-asynchronous="false" from="di684721214510358757" to="di379794399187558648" operation-ref="o2ea7b6d058d34676830df7109818992c974" return-value="" assign-to-variable="">
               <parameters />
             </sequence-action>
           </item>
-          <item id="di974824878694766261" cid="AB031" type="activation-bar" name="ExecutionOccurrence27" style-class="" visibility="package" creator="P3cd2b21314f24b8bbd8e2d6ea95cc12e" creation-date="12/01/2015 16:16:00">
+          <item id="di974824878694766261" cid="AB031" type="activation-bar" name="ExecutionOccurrence27" style-class="" owner="di107489647650389791" visibility="package" creator="P3cd2b21314f24b8bbd8e2d6ea95cc12e" creation-date="12/01/2015 16:16:00">
             <style class="default" />
             <activation-bar lifeline-ref="di107489647650389791" />
           </item>
@@ -2308,7 +2218,7 @@
           <version />
         </meta>
         <abstract-items>
-          <item id="di153629885695607432" cid="AB030" type="activation-bar" name="ExecutionOccurrence26" style-class="" visibility="package" creator="P3cd2b21314f24b8bbd8e2d6ea95cc12e" creation-date="12/01/2015 16:14:10">
+          <item id="di153629885695607432" cid="AB030" type="activation-bar" name="ExecutionOccurrence26" style-class="" owner="di176635859968352573" visibility="package" creator="P3cd2b21314f24b8bbd8e2d6ea95cc12e" creation-date="12/01/2015 16:14:10">
             <style class="default" />
             <activation-bar lifeline-ref="di176635859968352573" />
           </item>
@@ -2354,17 +2264,17 @@
               <parameters />
             </sequence-action>
           </item>
-          <item id="di558840047595395396" cid="AB045" type="activation-bar" name="ExecutionOccurrence38" style-class="" visibility="package" creator="P3cd2b21314f24b8bbd8e2d6ea95cc12e" creation-date="12/01/2015 16:46:56">
+          <item id="di558840047595395396" cid="AB045" type="activation-bar" name="ExecutionOccurrence38" style-class="" owner="di971050833805749669" visibility="package" creator="P3cd2b21314f24b8bbd8e2d6ea95cc12e" creation-date="12/01/2015 16:46:56">
             <style class="default" />
             <activation-bar lifeline-ref="di971050833805749669" />
           </item>
-          <item id="di862546191429002161" cid="AB044" type="activation-bar" name="ExecutionOccurrence37" style-class="" visibility="package" creator="P3cd2b21314f24b8bbd8e2d6ea95cc12e" creation-date="12/01/2015 16:45:37">
+          <item id="di862546191429002161" cid="AB044" type="activation-bar" name="ExecutionOccurrence37" style-class="" owner="di971050833805749669" visibility="package" creator="P3cd2b21314f24b8bbd8e2d6ea95cc12e" creation-date="12/01/2015 16:45:37">
             <style class="default" />
             <activation-bar lifeline-ref="di971050833805749669" />
           </item>
           <item id="di199613377723898057" cid="SM072" type="sequence-action" name="Message72" style-class="" visibility="package" creator="P3cd2b21314f24b8bbd8e2d6ea95cc12e" creation-date="12/01/2015 16:45:29">
             <style class="default" />
-            <sequence-action type="call" message="calcolaPercorsoEmergenza()" is-asynchronous="false" to="di862546191429002161" return-value="" assign-to-variable="">
+            <sequence-action type="call" message="calcolaPercorsoEmergenza()" is-asynchronous="false" from="di656826877476762128" to="di862546191429002161" return-value="" assign-to-variable="">
               <parameters />
             </sequence-action>
           </item>
@@ -2384,10 +2294,6 @@
             <stereotypes>
               <stereotype name="entity" />
             </stereotypes>
-            <owned-items>
-              <owned-item ref="di862546191429002161" />
-              <owned-item ref="di558840047595395396" />
-            </owned-items>
             <style class="default" />
             <lifeline classifier-name="Percorso" is-active="false" is-multi-object="false" />
           </item>
@@ -2408,7 +2314,7 @@
             <style class="default" />
             <lifeline classifier-name="Raccolta" classifier-ref="di698616452652095451" is-active="false" is-multi-object="false" />
           </item>
-          <item id="di910624536532621979" cid="AB083" type="activation-bar" name="ExecutionOccurrence75" style-class="" visibility="package" creation-date="12/14/2015 16:21:53">
+          <item id="di910624536532621979" cid="AB083" type="activation-bar" name="ExecutionOccurrence75" style-class="" owner="di857719672791863433" visibility="package" creation-date="12/14/2015 16:21:53">
             <style class="default" />
           </item>
           <item id="di177631076770029873" cid="SM117" type="sequence-action" name="Message117" style-class="" visibility="package" creation-date="12/14/2015 16:27:03">
@@ -2479,7 +2385,7 @@
           <item id="di721023887409247630" cid="AB102" type="activation-bar" name="ExecutionOccurrence88" style-class="" visibility="package" creation-date="12/14/2015 17:19:02">
             <style class="default" />
           </item>
-          <item id="di994550443791636675" cid="AB031" type="activation-bar" name="ExecutionOccurrence27" style-class="" visibility="package" creator="P3cd2b21314f24b8bbd8e2d6ea95cc12e" creation-date="12/01/2015 16:16:00">
+          <item id="di994550443791636675" cid="AB031" type="activation-bar" name="ExecutionOccurrence27" style-class="" owner="di176635859968352573" visibility="package" creator="P3cd2b21314f24b8bbd8e2d6ea95cc12e" creation-date="12/01/2015 16:16:00">
             <style class="default" />
             <activation-bar lifeline-ref="di176635859968352573" />
           </item>
@@ -2649,54 +2555,29 @@
         </meta>
         <abstract-items>
           <item id="di638644430817721730" cid="LL005" type="lifeline" name="Mockup 1" style-class="" visibility="package" creation-date="12/01/2015 17:27:20">
-            <owned-items>
-              <owned-item ref="di172494450219512454" />
-            </owned-items>
             <style class="default" />
             <lifeline classifier-name="" is-active="false" is-multi-object="false" />
           </item>
           <item id="di407289435210905093" cid="AC002" type="actor" name=":Utente" style-class="" visibility="package" creation-date="12/01/2015 17:27:39">
-            <owned-items>
-              <owned-item ref="di360714748885203173" />
-              <owned-item ref="di774342560317105141" />
-              <owned-item ref="di441172183203960133" />
-              <owned-item ref="di772344508812185932" />
-            </owned-items>
             <style class="default" />
           </item>
           <item id="di543879108671352716" cid="LL006" type="lifeline" name="Mockup 5" style-class="" visibility="package" creation-date="12/01/2015 17:27:49">
-            <owned-items>
-              <owned-item ref="di577592323458554215" />
-            </owned-items>
             <style class="default" />
             <lifeline classifier-name="" is-active="false" is-multi-object="false" />
           </item>
           <item id="di941429524109186097" cid="LL006" type="lifeline" name="Mockup 7" style-class="" visibility="package" creation-date="12/01/2015 17:27:49">
-            <owned-items>
-              <owned-item ref="di394696872346566597" />
-            </owned-items>
             <style class="default" />
             <lifeline classifier-name="" is-active="false" is-multi-object="false" />
           </item>
           <item id="di219180549261110793" cid="LL007" type="lifeline" name="Mockup 6" style-class="" visibility="package" creation-date="12/01/2015 17:28:09">
-            <owned-items>
-              <owned-item ref="di990327617340866448" />
-              <owned-item ref="di338890739786640645" />
-            </owned-items>
             <style class="default" />
             <lifeline classifier-name="" is-active="false" is-multi-object="false" />
           </item>
           <item id="di109668358184433564" cid="LL008" type="lifeline" name="Mockup 8" style-class="" visibility="package" creation-date="12/01/2015 17:28:16">
-            <owned-items>
-              <owned-item ref="di806082050860188541" />
-            </owned-items>
             <style class="default" />
             <lifeline classifier-name="" is-active="false" is-multi-object="false" />
           </item>
           <item id="di337496060351991875" cid="LL009" type="lifeline" name="Mockup 12" style-class="" visibility="package" creation-date="12/01/2015 17:28:26">
-            <owned-items>
-              <owned-item ref="di986674502610500934" />
-            </owned-items>
             <style class="default" />
             <lifeline classifier-name="" is-active="false" is-multi-object="false" />
           </item>
@@ -2706,10 +2587,10 @@
               <parameters />
             </sequence-action>
           </item>
-          <item id="di360714748885203173" cid="AB051" type="activation-bar" name="ExecutionOccurrence44" style-class="" visibility="package" creation-date="12/01/2015 17:28:52">
+          <item id="di360714748885203173" cid="AB051" type="activation-bar" name="ExecutionOccurrence44" style-class="" owner="di407289435210905093" visibility="package" creation-date="12/01/2015 17:28:52">
             <style class="default" />
           </item>
-          <item id="di172494450219512454" cid="AB052" type="activation-bar" name="ExecutionOccurrence45" style-class="" visibility="package" creation-date="12/01/2015 17:28:52">
+          <item id="di172494450219512454" cid="AB052" type="activation-bar" name="ExecutionOccurrence45" style-class="" owner="di638644430817721730" visibility="package" creation-date="12/01/2015 17:28:52">
             <style class="default" />
             <activation-bar lifeline-ref="di638644430817721730" />
           </item>
@@ -2719,10 +2600,10 @@
               <parameters />
             </sequence-action>
           </item>
-          <item id="di774342560317105141" cid="AB053" type="activation-bar" name="ExecutionOccurrence46" style-class="" visibility="package" creation-date="12/01/2015 17:29:09">
+          <item id="di774342560317105141" cid="AB053" type="activation-bar" name="ExecutionOccurrence46" style-class="" owner="di407289435210905093" visibility="package" creation-date="12/01/2015 17:29:09">
             <style class="default" />
           </item>
-          <item id="di577592323458554215" cid="AB054" type="activation-bar" name="ExecutionOccurrence47" style-class="" visibility="package" creation-date="12/01/2015 17:29:09">
+          <item id="di577592323458554215" cid="AB054" type="activation-bar" name="ExecutionOccurrence47" style-class="" owner="di543879108671352716" visibility="package" creation-date="12/01/2015 17:29:09">
             <style class="default" />
             <activation-bar lifeline-ref="di543879108671352716" />
           </item>
@@ -2732,10 +2613,10 @@
               <parameters />
             </sequence-action>
           </item>
-          <item id="di441172183203960133" cid="AB055" type="activation-bar" name="ExecutionOccurrence48" style-class="" visibility="package" creation-date="12/01/2015 17:29:26">
+          <item id="di441172183203960133" cid="AB055" type="activation-bar" name="ExecutionOccurrence48" style-class="" owner="di407289435210905093" visibility="package" creation-date="12/01/2015 17:29:26">
             <style class="default" />
           </item>
-          <item id="di394696872346566597" cid="AB056" type="activation-bar" name="ExecutionOccurrence49" style-class="" visibility="package" creation-date="12/01/2015 17:29:26">
+          <item id="di394696872346566597" cid="AB056" type="activation-bar" name="ExecutionOccurrence49" style-class="" owner="di941429524109186097" visibility="package" creation-date="12/01/2015 17:29:26">
             <style class="default" />
             <activation-bar lifeline-ref="di941429524109186097" />
           </item>
@@ -2745,7 +2626,7 @@
               <parameters />
             </sequence-action>
           </item>
-          <item id="di772344508812185932" cid="AB059" type="activation-bar" name="ExecutionOccurrence52" style-class="" visibility="package" creation-date="12/01/2015 17:30:17">
+          <item id="di772344508812185932" cid="AB059" type="activation-bar" name="ExecutionOccurrence52" style-class="" owner="di407289435210905093" visibility="package" creation-date="12/01/2015 17:30:17">
             <style class="default" />
           </item>
           <item id="di239446617325354998" cid="FR006" type="fragment" name="Fragment6" style-class="" visibility="package" creation-date="12/01/2015 17:38:11">
@@ -2766,7 +2647,7 @@
               <parameters />
             </sequence-action>
           </item>
-          <item id="di990327617340866448" cid="AB064" type="activation-bar" name="ExecutionOccurrence57" style-class="" visibility="package" creation-date="12/01/2015 17:37:14">
+          <item id="di990327617340866448" cid="AB064" type="activation-bar" name="ExecutionOccurrence57" style-class="" owner="di219180549261110793" visibility="package" creation-date="12/01/2015 17:37:14">
             <style class="default" />
             <activation-bar lifeline-ref="di219180549261110793" />
           </item>
@@ -2872,32 +2753,32 @@
           <version />
         </meta>
         <abstract-items>
-          <item id="di635103102154186532" cid="AB051" type="activation-bar" name="ExecutionOccurrence44" style-class="" visibility="package" creation-date="12/01/2015 17:28:52">
+          <item id="di635103102154186532" cid="AB051" type="activation-bar" name="ExecutionOccurrence44" style-class="" owner="di230477815702200281" visibility="package" creation-date="12/01/2015 17:28:52">
             <style class="default" />
           </item>
-          <item id="di740833718976434807" cid="AB052" type="activation-bar" name="ExecutionOccurrence45" style-class="" visibility="package" creation-date="12/01/2015 17:28:52">
+          <item id="di740833718976434807" cid="AB052" type="activation-bar" name="ExecutionOccurrence45" style-class="" owner="di980607453516271749" visibility="package" creation-date="12/01/2015 17:28:52">
             <style class="default" />
             <activation-bar lifeline-ref="di980607453516271749" />
           </item>
-          <item id="di882322077422711029" cid="AB053" type="activation-bar" name="ExecutionOccurrence46" style-class="" visibility="package" creation-date="12/01/2015 17:29:09">
+          <item id="di882322077422711029" cid="AB053" type="activation-bar" name="ExecutionOccurrence46" style-class="" owner="di230477815702200281" visibility="package" creation-date="12/01/2015 17:29:09">
             <style class="default" />
           </item>
-          <item id="di709800925538211345" cid="AB054" type="activation-bar" name="ExecutionOccurrence47" style-class="" visibility="package" creation-date="12/01/2015 17:29:09">
+          <item id="di709800925538211345" cid="AB054" type="activation-bar" name="ExecutionOccurrence47" style-class="" owner="di573831616125070794" visibility="package" creation-date="12/01/2015 17:29:09">
             <style class="default" />
             <activation-bar lifeline-ref="di573831616125070794" />
           </item>
-          <item id="di834966534254871015" cid="AB055" type="activation-bar" name="ExecutionOccurrence48" style-class="" visibility="package" creation-date="12/01/2015 17:29:26">
+          <item id="di834966534254871015" cid="AB055" type="activation-bar" name="ExecutionOccurrence48" style-class="" owner="di230477815702200281" visibility="package" creation-date="12/01/2015 17:29:26">
             <style class="default" />
           </item>
-          <item id="di778919532644245095" cid="AB056" type="activation-bar" name="ExecutionOccurrence49" style-class="" visibility="package" creation-date="12/01/2015 17:29:26">
-            <style class="default" />
-            <activation-bar lifeline-ref="di468505931771698526" />
-          </item>
-          <item id="di171728948194872450" cid="AB068" type="activation-bar" name="ExecutionOccurrence61" style-class="" visibility="package" creation-date="12/01/2015 17:42:06">
+          <item id="di778919532644245095" cid="AB056" type="activation-bar" name="ExecutionOccurrence49" style-class="" owner="di468505931771698526" visibility="package" creation-date="12/01/2015 17:29:26">
             <style class="default" />
             <activation-bar lifeline-ref="di468505931771698526" />
           </item>
-          <item id="di267919046672596627" cid="AB069" type="activation-bar" name="ExecutionOccurrence62" style-class="" visibility="package" creation-date="12/01/2015 17:42:06">
+          <item id="di171728948194872450" cid="AB068" type="activation-bar" name="ExecutionOccurrence61" style-class="" owner="di468505931771698526" visibility="package" creation-date="12/01/2015 17:42:06">
+            <style class="default" />
+            <activation-bar lifeline-ref="di468505931771698526" />
+          </item>
+          <item id="di267919046672596627" cid="AB069" type="activation-bar" name="ExecutionOccurrence62" style-class="" owner="di515269675335150101" visibility="package" creation-date="12/01/2015 17:42:06">
             <style class="default" />
             <activation-bar lifeline-ref="di515269675335150101" />
           </item>
@@ -2987,39 +2868,21 @@
         </meta>
         <abstract-items>
           <item id="di633659403757394200" cid="LL005" type="lifeline" name="Mockup 1" style-class="" visibility="package" creation-date="12/01/2015 17:27:20">
-            <owned-items>
-              <owned-item ref="di182919031650025673" />
-            </owned-items>
             <style class="default" />
             <lifeline classifier-name="" is-active="false" is-multi-object="false" />
           </item>
           <item id="di475692965982574707" cid="AC002" type="actor" name=":Utente" style-class="" visibility="package" creation-date="12/01/2015 17:27:39">
-            <owned-items>
-              <owned-item ref="di420902391926425532" />
-              <owned-item ref="di532320156148647498" />
-            </owned-items>
             <style class="default" />
           </item>
           <item id="di305145961583076171" cid="LL006" type="lifeline" name="Mockup 3" style-class="" visibility="package" creation-date="12/01/2015 17:27:49">
-            <owned-items>
-              <owned-item ref="di394474370872605807" />
-              <owned-item ref="di329733446135633612" />
-              <owned-item ref="di218335211863989863" />
-            </owned-items>
             <style class="default" />
             <lifeline classifier-name="" is-active="false" is-multi-object="false" />
           </item>
           <item id="di127214297770894352" cid="LL008" type="lifeline" name="Mockup 8" style-class="" visibility="package" creation-date="12/01/2015 17:28:16">
-            <owned-items>
-              <owned-item ref="di926441161916989985" />
-            </owned-items>
             <style class="default" />
             <lifeline classifier-name="" is-active="false" is-multi-object="false" />
           </item>
           <item id="di649984306394467127" cid="LL009" type="lifeline" name="Mockup 12" style-class="" visibility="package" creation-date="12/01/2015 17:28:26">
-            <owned-items>
-              <owned-item ref="di157788662740533956" />
-            </owned-items>
             <style class="default" />
             <lifeline classifier-name="" is-active="false" is-multi-object="false" />
           </item>
@@ -3029,10 +2892,10 @@
               <parameters />
             </sequence-action>
           </item>
-          <item id="di420902391926425532" cid="AB051" type="activation-bar" name="ExecutionOccurrence44" style-class="" visibility="package" creation-date="12/01/2015 17:28:52">
+          <item id="di420902391926425532" cid="AB051" type="activation-bar" name="ExecutionOccurrence44" style-class="" owner="di475692965982574707" visibility="package" creation-date="12/01/2015 17:28:52">
             <style class="default" />
           </item>
-          <item id="di182919031650025673" cid="AB052" type="activation-bar" name="ExecutionOccurrence45" style-class="" visibility="package" creation-date="12/01/2015 17:28:52">
+          <item id="di182919031650025673" cid="AB052" type="activation-bar" name="ExecutionOccurrence45" style-class="" owner="di633659403757394200" visibility="package" creation-date="12/01/2015 17:28:52">
             <style class="default" />
             <activation-bar lifeline-ref="di633659403757394200" />
           </item>
@@ -3042,21 +2905,21 @@
               <parameters />
             </sequence-action>
           </item>
-          <item id="di532320156148647498" cid="AB053" type="activation-bar" name="ExecutionOccurrence46" style-class="" visibility="package" creation-date="12/01/2015 17:29:09">
+          <item id="di532320156148647498" cid="AB053" type="activation-bar" name="ExecutionOccurrence46" style-class="" owner="di475692965982574707" visibility="package" creation-date="12/01/2015 17:29:09">
             <style class="default" />
           </item>
-          <item id="di394474370872605807" cid="AB054" type="activation-bar" name="ExecutionOccurrence47" style-class="" visibility="package" creation-date="12/01/2015 17:29:09">
+          <item id="di394474370872605807" cid="AB054" type="activation-bar" name="ExecutionOccurrence47" style-class="" owner="di305145961583076171" visibility="package" creation-date="12/01/2015 17:29:09">
             <style class="default" />
             <activation-bar lifeline-ref="di305145961583076171" />
           </item>
-          <item id="di926441161916989985" cid="AB072" type="activation-bar" name="ExecutionOccurrence65" style-class="" visibility="package" creation-date="12/01/2015 17:46:14">
+          <item id="di926441161916989985" cid="AB072" type="activation-bar" name="ExecutionOccurrence65" style-class="" owner="di127214297770894352" visibility="package" creation-date="12/01/2015 17:46:14">
             <style class="default" />
             <activation-bar lifeline-ref="di127214297770894352" />
           </item>
           <item id="di222071360860969582" cid="AB056" type="activation-bar" name="ExecutionOccurrence49" style-class="" visibility="package" creation-date="12/01/2015 17:29:26">
             <style class="default" />
           </item>
-          <item id="di329733446135633612" cid="AB071" type="activation-bar" name="ExecutionOccurrence64" style-class="" visibility="package" creation-date="12/01/2015 17:46:14">
+          <item id="di329733446135633612" cid="AB071" type="activation-bar" name="ExecutionOccurrence64" style-class="" owner="di305145961583076171" visibility="package" creation-date="12/01/2015 17:46:14">
             <style class="default" />
             <activation-bar lifeline-ref="di305145961583076171" />
           </item>
@@ -3066,7 +2929,7 @@
               <parameters />
             </sequence-action>
           </item>
-          <item id="di218335211863989863" cid="AB074" type="activation-bar" name="ExecutionOccurrence1" style-class="" visibility="package" creation-date="12/01/2015 17:47:05">
+          <item id="di218335211863989863" cid="AB074" type="activation-bar" name="ExecutionOccurrence1" style-class="" owner="di305145961583076171" visibility="package" creation-date="12/01/2015 17:47:05">
             <style class="default" />
             <activation-bar lifeline-ref="di305145961583076171" />
           </item>
@@ -3079,7 +2942,7 @@
               <parameters />
             </sequence-action>
           </item>
-          <item id="di157788662740533956" cid="AB075" type="activation-bar" name="ExecutionOccurrence67" style-class="" visibility="package" creation-date="12/01/2015 17:48:09">
+          <item id="di157788662740533956" cid="AB075" type="activation-bar" name="ExecutionOccurrence67" style-class="" owner="di649984306394467127" visibility="package" creation-date="12/01/2015 17:48:09">
             <style class="default" />
             <activation-bar lifeline-ref="di649984306394467127" />
           </item>
@@ -3174,20 +3037,20 @@
               <parameters />
             </sequence-action>
           </item>
-          <item id="di329279888754325592" cid="AB051" type="activation-bar" name="ExecutionOccurrence44" style-class="" visibility="package" creation-date="12/01/2015 17:28:52">
+          <item id="di329279888754325592" cid="AB051" type="activation-bar" name="ExecutionOccurrence44" style-class="" owner="di974344428321037157" visibility="package" creation-date="12/01/2015 17:28:52">
             <style class="default" />
           </item>
-          <item id="di880642346825924443" cid="AB053" type="activation-bar" name="ExecutionOccurrence46" style-class="" visibility="package" creation-date="12/01/2015 17:29:09">
+          <item id="di880642346825924443" cid="AB053" type="activation-bar" name="ExecutionOccurrence46" style-class="" owner="di974344428321037157" visibility="package" creation-date="12/01/2015 17:29:09">
             <style class="default" />
           </item>
-          <item id="di732897969512853962" cid="AB055" type="activation-bar" name="ExecutionOccurrence48" style-class="" visibility="package" creation-date="12/01/2015 17:29:26">
+          <item id="di732897969512853962" cid="AB055" type="activation-bar" name="ExecutionOccurrence48" style-class="" owner="di974344428321037157" visibility="package" creation-date="12/01/2015 17:29:26">
             <style class="default" />
           </item>
-          <item id="di494317786597298434" cid="AB054" type="activation-bar" name="ExecutionOccurrence47" style-class="" visibility="package" creation-date="12/01/2015 17:29:09">
+          <item id="di494317786597298434" cid="AB054" type="activation-bar" name="ExecutionOccurrence47" style-class="" owner="di388109752329229438" visibility="package" creation-date="12/01/2015 17:29:09">
             <style class="default" />
             <activation-bar lifeline-ref="di388109752329229438" />
           </item>
-          <item id="di627309976856803561" cid="AB056" type="activation-bar" name="ExecutionOccurrence49" style-class="" visibility="package" creation-date="12/01/2015 17:29:26">
+          <item id="di627309976856803561" cid="AB056" type="activation-bar" name="ExecutionOccurrence49" style-class="" owner="di810620082569223082" visibility="package" creation-date="12/01/2015 17:29:26">
             <style class="default" />
             <activation-bar lifeline-ref="di810620082569223082" />
           </item>
@@ -3197,22 +3060,19 @@
               <parameters />
             </sequence-action>
           </item>
-          <item id="di879514887658147298" cid="AB068" type="activation-bar" name="ExecutionOccurrence61" style-class="" visibility="package" creation-date="12/01/2015 17:42:06">
+          <item id="di879514887658147298" cid="AB068" type="activation-bar" name="ExecutionOccurrence61" style-class="" owner="di810620082569223082" visibility="package" creation-date="12/01/2015 17:42:06">
             <style class="default" />
             <activation-bar lifeline-ref="di810620082569223082" />
           </item>
-          <item id="di334109575310787216" cid="AB069" type="activation-bar" name="ExecutionOccurrence62" style-class="" visibility="package" creation-date="12/01/2015 17:42:06">
+          <item id="di334109575310787216" cid="AB069" type="activation-bar" name="ExecutionOccurrence62" style-class="" owner="di180974468502296468" visibility="package" creation-date="12/01/2015 17:42:06">
             <style class="default" />
             <activation-bar lifeline-ref="di180974468502296468" />
           </item>
           <item id="di438607940239035935" cid="LL010" type="lifeline" name="Mockup 11" style-class="" visibility="package" creation-date="12/01/2015 17:43:49">
-            <owned-items>
-              <owned-item ref="di513121824541688533" />
-            </owned-items>
             <style class="default" />
             <lifeline classifier-name="" is-active="false" is-multi-object="false" />
           </item>
-          <item id="di513121824541688533" cid="AB070" type="activation-bar" name="ExecutionOccurrence63" style-class="" visibility="package" creation-date="12/01/2015 17:44:23">
+          <item id="di513121824541688533" cid="AB070" type="activation-bar" name="ExecutionOccurrence63" style-class="" owner="di438607940239035935" visibility="package" creation-date="12/01/2015 17:44:23">
             <style class="default" />
             <activation-bar lifeline-ref="di438607940239035935" />
           </item>
@@ -3296,39 +3156,21 @@
         </meta>
         <abstract-items>
           <item id="di287767258943718383" cid="LL005" type="lifeline" name="Mockup 1" style-class="" visibility="package" creation-date="12/01/2015 17:27:20">
-            <owned-items>
-              <owned-item ref="di338045438598476246" />
-              <owned-item ref="di293191617823249450" />
-            </owned-items>
             <style class="default" />
             <lifeline classifier-name="" is-active="false" is-multi-object="false" />
           </item>
           <item id="di785999983738791372" cid="AC002" type="actor" name=":Utente" style-class="" visibility="package" creation-date="12/01/2015 17:27:39">
-            <owned-items>
-              <owned-item ref="di547762455786354618" />
-              <owned-item ref="di557476501998576886" />
-            </owned-items>
             <style class="default" />
           </item>
           <item id="di756865354488324194" cid="LL006" type="lifeline" name="Mockup 4" style-class="" visibility="package" creation-date="12/01/2015 17:27:49">
-            <owned-items>
-              <owned-item ref="di464768305685177780" />
-              <owned-item ref="di909211499105067147" />
-            </owned-items>
             <style class="default" />
             <lifeline classifier-name="" is-active="false" is-multi-object="false" />
           </item>
           <item id="di133453349841537305" cid="LL008" type="lifeline" name="Mockup 8" style-class="" visibility="package" creation-date="12/01/2015 17:28:16">
-            <owned-items>
-              <owned-item ref="di861257292326798584" />
-            </owned-items>
             <style class="default" />
             <lifeline classifier-name="" is-active="false" is-multi-object="false" />
           </item>
           <item id="di157075404901901011" cid="LL009" type="lifeline" name="Mockup 13" style-class="" visibility="package" creation-date="12/01/2015 17:28:26">
-            <owned-items>
-              <owned-item ref="di376864010120136737" />
-            </owned-items>
             <style class="default" />
             <lifeline classifier-name="" is-active="false" is-multi-object="false" />
           </item>
@@ -3338,10 +3180,10 @@
               <parameters />
             </sequence-action>
           </item>
-          <item id="di547762455786354618" cid="AB051" type="activation-bar" name="ExecutionOccurrence44" style-class="" visibility="package" creation-date="12/01/2015 17:28:52">
+          <item id="di547762455786354618" cid="AB051" type="activation-bar" name="ExecutionOccurrence44" style-class="" owner="di785999983738791372" visibility="package" creation-date="12/01/2015 17:28:52">
             <style class="default" />
           </item>
-          <item id="di338045438598476246" cid="AB052" type="activation-bar" name="ExecutionOccurrence45" style-class="" visibility="package" creation-date="12/01/2015 17:28:52">
+          <item id="di338045438598476246" cid="AB052" type="activation-bar" name="ExecutionOccurrence45" style-class="" owner="di287767258943718383" visibility="package" creation-date="12/01/2015 17:28:52">
             <style class="default" />
             <activation-bar lifeline-ref="di287767258943718383" />
           </item>
@@ -3351,10 +3193,10 @@
               <parameters />
             </sequence-action>
           </item>
-          <item id="di557476501998576886" cid="AB053" type="activation-bar" name="ExecutionOccurrence46" style-class="" visibility="package" creation-date="12/01/2015 17:29:09">
+          <item id="di557476501998576886" cid="AB053" type="activation-bar" name="ExecutionOccurrence46" style-class="" owner="di785999983738791372" visibility="package" creation-date="12/01/2015 17:29:09">
             <style class="default" />
           </item>
-          <item id="di464768305685177780" cid="AB054" type="activation-bar" name="ExecutionOccurrence47" style-class="" visibility="package" creation-date="12/01/2015 17:29:09">
+          <item id="di464768305685177780" cid="AB054" type="activation-bar" name="ExecutionOccurrence47" style-class="" owner="di756865354488324194" visibility="package" creation-date="12/01/2015 17:29:09">
             <style class="default" />
             <activation-bar lifeline-ref="di756865354488324194" />
           </item>
@@ -3364,15 +3206,15 @@
               <parameters />
             </sequence-action>
           </item>
-          <item id="di293191617823249450" cid="AB071" type="activation-bar" name="ExecutionOccurrence64" style-class="" visibility="package" creation-date="12/01/2015 17:46:14">
+          <item id="di293191617823249450" cid="AB071" type="activation-bar" name="ExecutionOccurrence64" style-class="" owner="di287767258943718383" visibility="package" creation-date="12/01/2015 17:46:14">
             <style class="default" />
             <activation-bar lifeline-ref="di287767258943718383" />
           </item>
-          <item id="di861257292326798584" cid="AB072" type="activation-bar" name="ExecutionOccurrence65" style-class="" visibility="package" creation-date="12/01/2015 17:46:14">
+          <item id="di861257292326798584" cid="AB072" type="activation-bar" name="ExecutionOccurrence65" style-class="" owner="di133453349841537305" visibility="package" creation-date="12/01/2015 17:46:14">
             <style class="default" />
             <activation-bar lifeline-ref="di133453349841537305" />
           </item>
-          <item id="di909211499105067147" cid="AB074" type="activation-bar" name="ExecutionOccurrence1" style-class="" visibility="package" creation-date="12/01/2015 17:47:05">
+          <item id="di909211499105067147" cid="AB074" type="activation-bar" name="ExecutionOccurrence1" style-class="" owner="di756865354488324194" visibility="package" creation-date="12/01/2015 17:47:05">
             <style class="default" />
             <activation-bar lifeline-ref="di756865354488324194" />
           </item>
@@ -3382,7 +3224,7 @@
               <parameters />
             </sequence-action>
           </item>
-          <item id="di376864010120136737" cid="AB075" type="activation-bar" name="ExecutionOccurrence67" style-class="" visibility="package" creation-date="12/01/2015 17:48:09">
+          <item id="di376864010120136737" cid="AB075" type="activation-bar" name="ExecutionOccurrence67" style-class="" owner="di157075404901901011" visibility="package" creation-date="12/01/2015 17:48:09">
             <style class="default" />
             <activation-bar lifeline-ref="di157075404901901011" />
           </item>
@@ -3472,53 +3314,29 @@
         </meta>
         <abstract-items>
           <item id="di193088642457975426" cid="LL005" type="lifeline" name="Mockup 1" style-class="" visibility="package" creation-date="12/01/2015 17:27:20">
-            <owned-items>
-              <owned-item ref="di847811980362290573" />
-              <owned-item ref="di205871273338194457" />
-            </owned-items>
             <style class="default" />
             <lifeline classifier-name="" is-active="false" is-multi-object="false" />
           </item>
           <item id="di310257640856521226" cid="AC002" type="actor" name=":Utente" style-class="" visibility="package" creation-date="12/01/2015 17:27:39">
-            <owned-items>
-              <owned-item ref="di704347208807682032" />
-              <owned-item ref="di681317044753156048" />
-            </owned-items>
             <style class="default" />
           </item>
           <item id="di175542996431987994" cid="LL006" type="lifeline" name="Mockup 3" style-class="" visibility="package" creation-date="12/01/2015 17:27:49">
-            <owned-items>
-              <owned-item ref="di773626857905138341" />
-              <owned-item ref="di861129474891204945" />
-            </owned-items>
             <style class="default" />
             <lifeline classifier-name="" is-active="false" is-multi-object="false" />
           </item>
           <item id="di127217564815829279" cid="LL006" type="lifeline" name="Mockup 6" style-class="" visibility="package" creation-date="12/01/2015 17:27:49">
-            <owned-items>
-              <owned-item ref="di311383034890322373" />
-              <owned-item ref="di197916633593110197" />
-              <owned-item ref="di698148673749009528" />
-            </owned-items>
             <style class="default" />
             <lifeline classifier-name="" is-active="false" is-multi-object="false" />
           </item>
-          <item id="di640653180594589226" cid="AB080" type="activation-bar" name="ExecutionOccurrence72" style-class="" visibility="package" creation-date="12/01/2015 17:53:24">
+          <item id="di640653180594589226" cid="AB080" type="activation-bar" name="ExecutionOccurrence72" style-class="" owner="di757405468957400740" visibility="package" creation-date="12/01/2015 17:53:24">
             <style class="default" />
             <activation-bar lifeline-ref="di757405468957400740" />
           </item>
           <item id="di757405468957400740" cid="LL008" type="lifeline" name="Mockup 8" style-class="" visibility="package" creation-date="12/01/2015 17:28:16">
-            <owned-items>
-              <owned-item ref="di640653180594589226" />
-            </owned-items>
             <style class="default" />
             <lifeline classifier-name="" is-active="false" is-multi-object="false" />
           </item>
           <item id="di748345226497170500" cid="LL009" type="lifeline" name="Mockup 12" style-class="" visibility="package" creation-date="12/01/2015 17:28:26">
-            <owned-items>
-              <owned-item ref="di797328305777143785" />
-              <owned-item ref="di187065885545716138" />
-            </owned-items>
             <style class="default" />
             <lifeline classifier-name="" is-active="false" is-multi-object="false" />
           </item>
@@ -3528,18 +3346,18 @@
               <parameters />
             </sequence-action>
           </item>
-          <item id="di704347208807682032" cid="AB051" type="activation-bar" name="ExecutionOccurrence44" style-class="" visibility="package" creation-date="12/01/2015 17:28:52">
+          <item id="di704347208807682032" cid="AB051" type="activation-bar" name="ExecutionOccurrence44" style-class="" owner="di310257640856521226" visibility="package" creation-date="12/01/2015 17:28:52">
             <style class="default" />
           </item>
-          <item id="di847811980362290573" cid="AB052" type="activation-bar" name="ExecutionOccurrence45" style-class="" visibility="package" creation-date="12/01/2015 17:28:52">
+          <item id="di847811980362290573" cid="AB052" type="activation-bar" name="ExecutionOccurrence45" style-class="" owner="di193088642457975426" visibility="package" creation-date="12/01/2015 17:28:52">
             <style class="default" />
             <activation-bar lifeline-ref="di193088642457975426" />
           </item>
-          <item id="di197916633593110197" cid="AB079" type="activation-bar" name="ExecutionOccurrence71" style-class="" visibility="package" creation-date="12/01/2015 17:53:24">
+          <item id="di197916633593110197" cid="AB079" type="activation-bar" name="ExecutionOccurrence71" style-class="" owner="di127217564815829279" visibility="package" creation-date="12/01/2015 17:53:24">
             <style class="default" />
             <activation-bar lifeline-ref="di127217564815829279" />
           </item>
-          <item id="di797328305777143785" cid="AB076" type="activation-bar" name="ExecutionOccurrence68" style-class="" visibility="package" creation-date="12/01/2015 17:52:31">
+          <item id="di797328305777143785" cid="AB076" type="activation-bar" name="ExecutionOccurrence68" style-class="" owner="di748345226497170500" visibility="package" creation-date="12/01/2015 17:52:31">
             <style class="default" />
             <activation-bar lifeline-ref="di748345226497170500" />
           </item>
@@ -3555,11 +3373,11 @@
               <parameters />
             </sequence-action>
           </item>
-          <item id="di205871273338194457" cid="AB055" type="activation-bar" name="ExecutionOccurrence48" style-class="" visibility="package" creation-date="12/01/2015 17:29:26">
+          <item id="di205871273338194457" cid="AB055" type="activation-bar" name="ExecutionOccurrence48" style-class="" owner="di193088642457975426" visibility="package" creation-date="12/01/2015 17:29:26">
             <style class="default" />
             <activation-bar lifeline-ref="di193088642457975426" />
           </item>
-          <item id="di773626857905138341" cid="AB056" type="activation-bar" name="ExecutionOccurrence49" style-class="" visibility="package" creation-date="12/01/2015 17:29:26">
+          <item id="di773626857905138341" cid="AB056" type="activation-bar" name="ExecutionOccurrence49" style-class="" owner="di175542996431987994" visibility="package" creation-date="12/01/2015 17:29:26">
             <style class="default" />
             <activation-bar lifeline-ref="di175542996431987994" />
           </item>
@@ -3569,11 +3387,11 @@
               <parameters />
             </sequence-action>
           </item>
-          <item id="di861129474891204945" cid="AB059" type="activation-bar" name="ExecutionOccurrence52" style-class="" visibility="package" creation-date="12/01/2015 17:30:17">
+          <item id="di861129474891204945" cid="AB059" type="activation-bar" name="ExecutionOccurrence52" style-class="" owner="di175542996431987994" visibility="package" creation-date="12/01/2015 17:30:17">
             <style class="default" />
             <activation-bar lifeline-ref="di175542996431987994" />
           </item>
-          <item id="di681317044753156048" cid="AB077" type="activation-bar" name="ExecutionOccurrence69" style-class="" visibility="package" creation-date="12/01/2015 17:53:07">
+          <item id="di681317044753156048" cid="AB077" type="activation-bar" name="ExecutionOccurrence69" style-class="" owner="di310257640856521226" visibility="package" creation-date="12/01/2015 17:53:07">
             <style class="default" />
           </item>
           <item id="di147508455266175814" cid="SM104" type="sequence-action" name="Message104" style-class="" visibility="package" creation-date="12/01/2015 17:53:06">
@@ -3585,7 +3403,7 @@
           <item id="di575368711335279954" cid="AB064" type="activation-bar" name="ExecutionOccurrence57" style-class="" visibility="package" creation-date="12/01/2015 17:37:14">
             <style class="default" />
           </item>
-          <item id="di311383034890322373" cid="AB078" type="activation-bar" name="ExecutionOccurrence70" style-class="" visibility="package" creation-date="12/01/2015 17:53:07">
+          <item id="di311383034890322373" cid="AB078" type="activation-bar" name="ExecutionOccurrence70" style-class="" owner="di127217564815829279" visibility="package" creation-date="12/01/2015 17:53:07">
             <style class="default" />
             <activation-bar lifeline-ref="di127217564815829279" />
           </item>
@@ -3595,11 +3413,11 @@
               <parameters />
             </sequence-action>
           </item>
-          <item id="di698148673749009528" cid="AB081" type="activation-bar" name="ExecutionOccurrence73" style-class="" visibility="package" creation-date="12/01/2015 17:53:39">
+          <item id="di698148673749009528" cid="AB081" type="activation-bar" name="ExecutionOccurrence73" style-class="" owner="di127217564815829279" visibility="package" creation-date="12/01/2015 17:53:39">
             <style class="default" />
             <activation-bar lifeline-ref="di127217564815829279" />
           </item>
-          <item id="di187065885545716138" cid="AB082" type="activation-bar" name="ExecutionOccurrence74" style-class="" visibility="package" creation-date="12/01/2015 17:53:39">
+          <item id="di187065885545716138" cid="AB082" type="activation-bar" name="ExecutionOccurrence74" style-class="" owner="di748345226497170500" visibility="package" creation-date="12/01/2015 17:53:39">
             <style class="default" />
             <activation-bar lifeline-ref="di748345226497170500" />
           </item>
@@ -3721,48 +3539,25 @@
         </meta>
         <abstract-items>
           <item id="di150342920614948673" cid="LL005" type="lifeline" name="Mockup 1" style-class="" visibility="package" creation-date="12/01/2015 17:27:20">
-            <owned-items>
-              <owned-item ref="di911660463420375367" />
-              <owned-item ref="di565891448366473985" />
-              <owned-item ref="di660718102349196924" />
-            </owned-items>
             <style class="default" />
             <lifeline classifier-name="" is-active="false" is-multi-object="false" />
           </item>
           <item id="di970016696108342499" cid="AC002" type="actor" name=":Utente" style-class="" visibility="package" creation-date="12/01/2015 17:27:39">
-            <owned-items>
-              <owned-item ref="di410743611758581970" />
-              <owned-item ref="di682642457391558982" />
-            </owned-items>
             <style class="default" />
           </item>
           <item id="di383307644549088920" cid="LL006" type="lifeline" name="Mockup 4" style-class="" visibility="package" creation-date="12/01/2015 17:27:49">
-            <owned-items>
-              <owned-item ref="di774103312435003335" />
-            </owned-items>
             <style class="default" />
             <lifeline classifier-name="" is-active="false" is-multi-object="false" />
           </item>
           <item id="di350138986696877478" cid="LL006" type="lifeline" name="Mockup 6" style-class="" visibility="package" creation-date="12/01/2015 17:27:49">
-            <owned-items>
-              <owned-item ref="di444833192911126224" />
-              <owned-item ref="di706281158204952426" />
-              <owned-item ref="di582647814812652234" />
-            </owned-items>
             <style class="default" />
             <lifeline classifier-name="" is-active="false" is-multi-object="false" />
           </item>
           <item id="di992219719829717023" cid="LL008" type="lifeline" name="Mockup 8" style-class="" visibility="package" creation-date="12/01/2015 17:28:16">
-            <owned-items>
-              <owned-item ref="di189823724978366876" />
-            </owned-items>
             <style class="default" />
             <lifeline classifier-name="" is-active="false" is-multi-object="false" />
           </item>
           <item id="di206917087872229233" cid="LL009" type="lifeline" name="Mockup 13" style-class="" visibility="package" creation-date="12/01/2015 17:28:26">
-            <owned-items>
-              <owned-item ref="di176206035569599882" />
-            </owned-items>
             <style class="default" />
             <lifeline classifier-name="" is-active="false" is-multi-object="false" />
           </item>
@@ -3772,10 +3567,10 @@
               <parameters />
             </sequence-action>
           </item>
-          <item id="di410743611758581970" cid="AB051" type="activation-bar" name="ExecutionOccurrence44" style-class="" visibility="package" creation-date="12/01/2015 17:28:52">
+          <item id="di410743611758581970" cid="AB051" type="activation-bar" name="ExecutionOccurrence44" style-class="" owner="di970016696108342499" visibility="package" creation-date="12/01/2015 17:28:52">
             <style class="default" />
           </item>
-          <item id="di911660463420375367" cid="AB052" type="activation-bar" name="ExecutionOccurrence45" style-class="" visibility="package" creation-date="12/01/2015 17:28:52">
+          <item id="di911660463420375367" cid="AB052" type="activation-bar" name="ExecutionOccurrence45" style-class="" owner="di150342920614948673" visibility="package" creation-date="12/01/2015 17:28:52">
             <style class="default" />
             <activation-bar lifeline-ref="di150342920614948673" />
           </item>
@@ -3785,15 +3580,15 @@
               <parameters />
             </sequence-action>
           </item>
-          <item id="di774103312435003335" cid="AB056" type="activation-bar" name="ExecutionOccurrence49" style-class="" visibility="package" creation-date="12/01/2015 17:29:26">
+          <item id="di774103312435003335" cid="AB056" type="activation-bar" name="ExecutionOccurrence49" style-class="" owner="di383307644549088920" visibility="package" creation-date="12/01/2015 17:29:26">
             <style class="default" />
             <activation-bar lifeline-ref="di383307644549088920" />
           </item>
-          <item id="di660718102349196924" cid="AB059" type="activation-bar" name="ExecutionOccurrence52" style-class="" visibility="package" creation-date="12/01/2015 17:30:17">
+          <item id="di660718102349196924" cid="AB059" type="activation-bar" name="ExecutionOccurrence52" style-class="" owner="di150342920614948673" visibility="package" creation-date="12/01/2015 17:30:17">
             <style class="default" />
             <activation-bar lifeline-ref="di150342920614948673" />
           </item>
-          <item id="di565891448366473985" cid="AB055" type="activation-bar" name="ExecutionOccurrence48" style-class="" visibility="package" creation-date="12/01/2015 17:29:26">
+          <item id="di565891448366473985" cid="AB055" type="activation-bar" name="ExecutionOccurrence48" style-class="" owner="di150342920614948673" visibility="package" creation-date="12/01/2015 17:29:26">
             <style class="default" />
             <activation-bar lifeline-ref="di150342920614948673" />
           </item>
@@ -3803,7 +3598,7 @@
               <parameters />
             </sequence-action>
           </item>
-          <item id="di176206035569599882" cid="AB076" type="activation-bar" name="ExecutionOccurrence68" style-class="" visibility="package" creation-date="12/01/2015 17:52:31">
+          <item id="di176206035569599882" cid="AB076" type="activation-bar" name="ExecutionOccurrence68" style-class="" owner="di206917087872229233" visibility="package" creation-date="12/01/2015 17:52:31">
             <style class="default" />
             <activation-bar lifeline-ref="di206917087872229233" />
           </item>
@@ -3813,10 +3608,10 @@
               <parameters />
             </sequence-action>
           </item>
-          <item id="di682642457391558982" cid="AB077" type="activation-bar" name="ExecutionOccurrence69" style-class="" visibility="package" creation-date="12/01/2015 17:53:07">
+          <item id="di682642457391558982" cid="AB077" type="activation-bar" name="ExecutionOccurrence69" style-class="" owner="di970016696108342499" visibility="package" creation-date="12/01/2015 17:53:07">
             <style class="default" />
           </item>
-          <item id="di444833192911126224" cid="AB078" type="activation-bar" name="ExecutionOccurrence70" style-class="" visibility="package" creation-date="12/01/2015 17:53:07">
+          <item id="di444833192911126224" cid="AB078" type="activation-bar" name="ExecutionOccurrence70" style-class="" owner="di350138986696877478" visibility="package" creation-date="12/01/2015 17:53:07">
             <style class="default" />
             <activation-bar lifeline-ref="di350138986696877478" />
           </item>
@@ -3826,11 +3621,11 @@
               <parameters />
             </sequence-action>
           </item>
-          <item id="di706281158204952426" cid="AB079" type="activation-bar" name="ExecutionOccurrence71" style-class="" visibility="package" creation-date="12/01/2015 17:53:24">
+          <item id="di706281158204952426" cid="AB079" type="activation-bar" name="ExecutionOccurrence71" style-class="" owner="di350138986696877478" visibility="package" creation-date="12/01/2015 17:53:24">
             <style class="default" />
             <activation-bar lifeline-ref="di350138986696877478" />
           </item>
-          <item id="di189823724978366876" cid="AB080" type="activation-bar" name="ExecutionOccurrence72" style-class="" visibility="package" creation-date="12/01/2015 17:53:24">
+          <item id="di189823724978366876" cid="AB080" type="activation-bar" name="ExecutionOccurrence72" style-class="" owner="di992219719829717023" visibility="package" creation-date="12/01/2015 17:53:24">
             <style class="default" />
             <activation-bar lifeline-ref="di992219719829717023" />
           </item>
@@ -3840,11 +3635,11 @@
               <parameters />
             </sequence-action>
           </item>
-          <item id="di582647814812652234" cid="AB081" type="activation-bar" name="ExecutionOccurrence73" style-class="" visibility="package" creation-date="12/01/2015 17:53:39">
+          <item id="di582647814812652234" cid="AB081" type="activation-bar" name="ExecutionOccurrence73" style-class="" owner="di350138986696877478" visibility="package" creation-date="12/01/2015 17:53:39">
             <style class="default" />
             <activation-bar lifeline-ref="di350138986696877478" />
           </item>
-          <item id="di714609515197878306" cid="AB082" type="activation-bar" name="ExecutionOccurrence74" style-class="" visibility="package" creation-date="12/01/2015 17:53:39">
+          <item id="di714609515197878306" cid="AB082" type="activation-bar" name="ExecutionOccurrence74" style-class="" owner="di284180309668692196" visibility="package" creation-date="12/01/2015 17:53:39">
             <style class="default" />
             <activation-bar lifeline-ref="di284180309668692196" />
           </item>
@@ -3861,9 +3656,6 @@
             </fragment>
           </item>
           <item id="di284180309668692196" cid="LL009" type="lifeline" name="Mockup 12" style-class="" visibility="package" creation-date="12/01/2015 17:28:26">
-            <owned-items>
-              <owned-item ref="di714609515197878306" />
-            </owned-items>
             <style class="default" />
             <lifeline classifier-name="" is-active="false" is-multi-object="false" />
           </item>
@@ -4000,7 +3792,7 @@
               </operation>
             </operations>
           </item>
-          <item id="di479283155520898335" cid="REL001" type="relationship" name="" style-class="" visibility="package" creator="P3cd2b21314f24b8bbd8e2d6ea95cc12e" creation-date="12/01/2015 15:06:38">
+          <item id="di479283155520898335" cid="REL001" type="relationship" name="" style-class="" visibility="package" creator="P3cd2b21314f24b8bbd8e2d6ea95cc12e" creation-date="12/01/2015 15:06:38" from="di523722417955244514" to="di266130822397896987">
             <style class="default" />
             <relation from="di523722417955244514" to="di266130822397896987">
               <start-role id="" name="" multiplicity="0..1" navigability="" association-type="association" visibility="private" />
@@ -4029,7 +3821,7 @@
               </operation>
             </operations>
           </item>
-          <item id="di435658363168294179" cid="REL002" type="relationship" name="dati" style-class="" visibility="package" creator="P3cd2b21314f24b8bbd8e2d6ea95cc12e" creation-date="12/01/2015 15:09:03">
+          <item id="di435658363168294179" cid="REL002" type="relationship" name="dati" style-class="" visibility="package" creator="P3cd2b21314f24b8bbd8e2d6ea95cc12e" creation-date="12/01/2015 15:09:03" from="di523722417955244514" to="di476959204608963044">
             <style class="default" />
             <relation from="di523722417955244514" to="di476959204608963044">
               <start-role id="" name="" multiplicity="0..*" navigability="" association-type="association" visibility="private" />
@@ -4099,7 +3891,7 @@
               </operation>
             </operations>
           </item>
-          <item id="di368035333879019476" cid="REL004" type="relationship" name="collegamento" style-class="" visibility="package" creation-date="12/02/2015 15:43:33">
+          <item id="di368035333879019476" cid="REL004" type="relationship" name="collegamento" style-class="" visibility="package" creation-date="12/02/2015 15:43:33" from="di856578858621626846" to="di537489784502089770">
             <style class="default" />
             <relation from="di856578858621626846" to="di537489784502089770">
               <start-role id="" name="" multiplicity="1" navigability="" association-type="association" visibility="private" />
@@ -4123,13 +3915,13 @@
               </operation>
             </operations>
           </item>
-          <item id="di780947785126221833" cid="DEP003" type="dependency" name="" style-class="" visibility="package" change-tracking-state="added" creation-date="12/23/2015 18:44:27">
+          <item id="di780947785126221833" cid="DEP003" type="dependency" name="" style-class="" visibility="package" change-tracking-state="added" creation-date="12/23/2015 18:44:27" from="di476959204608963044" to="di856578858621626846">
             <stereotypes>
               <stereotype name="use" />
             </stereotypes>
             <style class="default" />
           </item>
-          <item id="di847102815313055969" cid="REL006" type="relationship" name="visualizzazione" style-class="" visibility="package" creation-date="12/09/2015 12:26:16">
+          <item id="di847102815313055969" cid="REL006" type="relationship" name="visualizzazione" style-class="" visibility="package" creation-date="12/09/2015 12:26:16" from="di266130822397896987" to="di947252046110962335">
             <style class="default" />
             <relation from="di266130822397896987" to="di947252046110962335">
               <start-role id="" name="" multiplicity="1" navigability="" association-type="association" visibility="private" />
@@ -4167,26 +3959,26 @@
               </operation>
             </operations>
           </item>
-          <item id="di285074926634877182" cid="DEP005" type="dependency" name="" style-class="" visibility="package" change-tracking-state="added" creation-date="12/23/2015 18:48:25">
+          <item id="di285074926634877182" cid="DEP005" type="dependency" name="" style-class="" visibility="package" change-tracking-state="added" creation-date="12/23/2015 18:48:25" from="di238243233299284071" to="di856578858621626846">
             <stereotypes>
               <stereotype name="use" />
             </stereotypes>
             <style class="default" />
           </item>
-          <item id="di775749414774787768" cid="DEP004" type="dependency" name="" style-class="" visibility="package" change-tracking-state="added" creation-date="12/23/2015 18:47:52">
+          <item id="di775749414774787768" cid="DEP004" type="dependency" name="" style-class="" visibility="package" change-tracking-state="added" creation-date="12/23/2015 18:47:52" from="di523722417955244514" to="di856578858621626846">
             <stereotypes>
               <stereotype name="use" />
             </stereotypes>
             <style class="default" />
           </item>
-          <item id="di564680242994252130" cid="REL010" type="relationship" name="percorso ottimo" style-class="" visibility="package" creation-date="12/09/2015 12:27:47">
+          <item id="di564680242994252130" cid="REL010" type="relationship" name="percorso ottimo" style-class="" visibility="package" creation-date="12/09/2015 12:27:47" from="di476959204608963044" to="di947252046110962335">
             <style class="default" />
             <relation from="di476959204608963044" to="di947252046110962335">
               <start-role id="" name="" multiplicity="0..2" navigability="" association-type="association" visibility="private" />
               <end-role id="" name="" multiplicity="1" navigability="" association-type="association" visibility="private" />
             </relation>
           </item>
-          <item id="di935335641606681825" cid="REL009" type="relationship" name="grafo orientato" style-class="" visibility="package" creation-date="12/09/2015 12:27:20">
+          <item id="di935335641606681825" cid="REL009" type="relationship" name="grafo orientato" style-class="" visibility="package" creation-date="12/09/2015 12:27:20" from="di856578858621626846" to="di947252046110962335">
             <style class="default" />
             <relation from="di856578858621626846" to="di947252046110962335">
               <start-role id="" name="" multiplicity="1..*" navigability="" association-type="association" visibility="private" />
@@ -4219,17 +4011,17 @@
           <item id="di182083000782222154" cid="C012" type="class" name="Semplice" style-class="" visibility="package" creation-date="12/14/2015 15:54:20">
             <style class="default" />
           </item>
-          <item id="di534331346297877694" cid="REL011" type="relationship" name="seleziona nodo" style-class="" visibility="package" creation-date="12/14/2015 16:11:12">
+          <item id="di534331346297877694" cid="REL011" type="relationship" name="seleziona nodo" style-class="" visibility="package" creation-date="12/14/2015 16:11:12" from="di266130822397896987" to="di947252046110962335">
             <style class="default" />
             <relation from="di266130822397896987" to="di947252046110962335">
               <start-role id="" name="" multiplicity="1" navigability="" association-type="association" visibility="private" />
               <end-role id="" name="" multiplicity="1..*" navigability="" association-type="association" visibility="private" />
             </relation>
           </item>
-          <item id="di709918209985214097" cid="GNR018" type="generalization" name="" style-class="" visibility="package" creation-date="12/14/2015 15:57:33">
+          <item id="di709918209985214097" cid="GNR018" type="generalization" name="" style-class="" visibility="package" creation-date="12/14/2015 15:57:33" from="di100734022502400982" to="di856578858621626846">
             <style class="default" />
           </item>
-          <item id="di100734022502400982" cid="ELEM001" type="universal-connector" name="" style-class="" visibility="package" creation-date="12/14/2015 15:55:26">
+          <item id="di100734022502400982" cid="ELEM001" type="universal-connector" name="" style-class="" visibility="package" creation-date="12/14/2015 15:55:26" from="di492196248177862604" to="di581575611601126681">
             <style class="default" />
           </item>
           <item id="di576474356818291388" cid="ELEM002" type="shape" name="Element1" style-class="" visibility="package" creation-date="12/14/2015 16:24:59">
@@ -4277,7 +4069,7 @@
               </operation>
             </operations>
           </item>
-          <item id="di632881911443909282" cid="REL014" type="relationship" name="aggiornamento costi" style-class="" visibility="package" change-tracking-state="added" creation-date="12/28/2015 11:40:05">
+          <item id="di632881911443909282" cid="REL014" type="relationship" name="aggiornamento costi" style-class="" visibility="package" change-tracking-state="added" creation-date="12/28/2015 11:40:05" from="di947252046110962335" to="di200449721360561258">
             <style class="default" />
             <relation from="di947252046110962335" to="di200449721360561258">
               <start-role id="" name="" multiplicity="1" navigability="" association-type="association" visibility="private" />
@@ -4287,6 +4079,12 @@
           <item id="di710897785536493575" cid="CMT015" type="comment" name="" style-class="" visibility="package" change-tracking-state="added" creation-date="12/28/2015 11:41:51">
             <style class="default" />
             <comment>Array costi, stesso discorso fatto in ClassDiagramServer, guardare lì (anche in Mappa)</comment>
+          </item>
+          <item id="di492196248177862604" cid="ELEM010" type="shape" name="Element1" style-class="" visibility="package" creation-date="05/12/2016 23:19:02">
+            <style class="default" />
+          </item>
+          <item id="di581575611601126681" cid="ELEM011" type="shape" name="Element2" style-class="" visibility="package" creation-date="05/12/2016 23:19:02">
+            <style class="default" />
           </item>
         </abstract-items>
         <layer name="Default" visible="true" enabled="true" locked="false">
@@ -4390,14 +4188,14 @@
                 <point x="-102" y="501" />
               </points>
             </layout>
-            <relation from="di774834459590302198" from-iid="bd2154f307f042aca20c486770cc5e35" to="di583001906961227807" to-iid="ee068bc7569a4be4aaab36eb83370cba" />
+            <relation from="di492196248177862604" from-iid="bd2154f307f042aca20c486770cc5e35" to="di581575611601126681" to-iid="ee068bc7569a4be4aaab36eb83370cba" />
           </item>
-          <item id="di774834459590302198" iid="bd2154f307f042aca20c486770cc5e35" name="Element1" creation-date="12/14/2015 15:55:43" order-index="32" type="drawing-line">
+          <item id="di492196248177862604" iid="bd2154f307f042aca20c486770cc5e35" name="Element1" creation-date="12/14/2015 15:55:43" order-index="32" type="drawing-line">
             <layout ax="-522" ay="501" awidth="1" aheight="101" x="-424" y="500" width="37" height="24" angle="0" />
             <drawing-line start-point="-522,601" end-point="-522,501" />
             <style class="default" />
           </item>
-          <item id="di583001906961227807" iid="ee068bc7569a4be4aaab36eb83370cba" name="Element2" creation-date="12/14/2015 15:55:49" order-index="33" type="drawing-line">
+          <item id="di581575611601126681" iid="ee068bc7569a4be4aaab36eb83370cba" name="Element2" creation-date="12/14/2015 15:55:49" order-index="33" type="drawing-line">
             <layout ax="-102" ay="501" awidth="1" aheight="101" x="-240" y="501" width="44" height="18" angle="0" />
             <drawing-line start-point="-102,601" end-point="-102,501" />
             <style class="default" />
@@ -4672,7 +4470,7 @@
           <item id="di906725294654254127" cid="IS001" type="initial-state" name="" style-class="" visibility="package" creation-date="12/16/2015 12:53:44">
             <style class="default" />
           </item>
-          <item id="di410649160632946326" cid="ELEM009" type="general-transition" name="" style-class="" visibility="package" creation-date="12/16/2015 12:54:28">
+          <item id="di410649160632946326" cid="ELEM009" type="general-transition" name="" style-class="" visibility="package" creation-date="12/16/2015 12:54:28" from="di906725294654254127" to="di279137757798701166">
             <style class="default" />
             <transition guard="" behaviourExpression="Nodo(id, archiUscenti)">
               <trigger />
@@ -4688,7 +4486,7 @@
             <state-invariant />
             <actions />
           </item>
-          <item id="di466881653949917622" cid="ELEM008" type="general-transition" name="" style-class="" visibility="package" creation-date="12/16/2015 12:54:11">
+          <item id="di466881653949917622" cid="ELEM008" type="general-transition" name="" style-class="" visibility="package" creation-date="12/16/2015 12:54:11" from="di906725294654254127" to="di197420252764597854">
             <style class="default" />
             <transition guard="" behaviourExpression="Nodo(id)">
               <trigger />
@@ -4699,13 +4497,13 @@
             <state-invariant />
             <actions />
           </item>
-          <item id="di475451831198259136" cid="ELEM010" type="general-transition" name="" style-class="" visibility="package" creation-date="12/16/2015 12:55:40">
+          <item id="di475451831198259136" cid="ELEM010" type="general-transition" name="" style-class="" visibility="package" creation-date="12/16/2015 12:55:40" from="di197420252764597854" to="di435116228328676346">
             <style class="default" />
             <transition guard="" behaviourExpression="setSensoriNelNodo()">
               <trigger />
             </transition>
           </item>
-          <item id="di457095622177310627" cid="ELEM011" type="general-transition" name="" style-class="" visibility="package" creation-date="12/16/2015 12:56:11">
+          <item id="di457095622177310627" cid="ELEM011" type="general-transition" name="" style-class="" visibility="package" creation-date="12/16/2015 12:56:11" from="di279137757798701166" to="di435116228328676346">
             <style class="default" />
             <transition guard="" behaviourExpression="setSensoriNelNodo()">
               <trigger />
@@ -4716,13 +4514,13 @@
             <state-invariant />
             <actions />
           </item>
-          <item id="di948597176507060246" cid="ELEM012" type="general-transition" name="" style-class="" visibility="package" creation-date="12/16/2015 12:56:24">
+          <item id="di948597176507060246" cid="ELEM012" type="general-transition" name="" style-class="" visibility="package" creation-date="12/16/2015 12:56:24" from="di435116228328676346" to="di243289459125150991">
             <style class="default" />
             <transition guard="" behaviourExpression="">
               <trigger>deleteSensori()</trigger>
             </transition>
           </item>
-          <item id="di499421285586393398" cid="ELEM013" type="general-transition" name="" style-class="" visibility="package" creation-date="12/16/2015 12:57:36">
+          <item id="di499421285586393398" cid="ELEM013" type="general-transition" name="" style-class="" visibility="package" creation-date="12/16/2015 12:57:36" from="di243289459125150991" to="di435116228328676346">
             <style class="default" />
             <transition guard="" behaviourExpression="">
               <trigger>setSensore(Sensore)</trigger>
@@ -4931,7 +4729,7 @@
               </operation>
             </operations>
           </item>
-          <item id="di735046112259835783" cid="REL004" type="relationship" name="collegamento" style-class="" visibility="package" creation-date="12/02/2015 15:43:33">
+          <item id="di735046112259835783" cid="REL004" type="relationship" name="collegamento" style-class="" visibility="package" creation-date="12/02/2015 15:43:33" from="di698348547881830830" to="di259822932607436780">
             <style class="default" />
             <relation from="di698348547881830830" to="di259822932607436780">
               <start-role id="" name="" multiplicity="1" navigability="" association-type="association" visibility="private" />
@@ -4988,14 +4786,14 @@
               </operation>
             </operations>
           </item>
-          <item id="di797497385613601951" cid="REL007" type="relationship" name="sensori nel nodo" style-class="" visibility="package" creation-date="12/03/2015 03:19:06">
+          <item id="di797497385613601951" cid="REL007" type="relationship" name="sensori nel nodo" style-class="" visibility="package" creation-date="12/03/2015 03:19:06" from="di936829809491257717" to="di698348547881830830">
             <style class="default" />
             <relation from="di936829809491257717" to="di698348547881830830">
               <start-role id="" name="" multiplicity="0..*" navigability="" association-type="association" visibility="private" attribute-ref="aee81640110d04fb5895a080a8ee04c52698" />
               <end-role id="" name="" multiplicity="1" navigability="" association-type="association" visibility="private" attribute-ref="ae1ed24d0452742cd8839bc1cf46c1c06189" />
             </relation>
           </item>
-          <item id="di540395432523936177" cid="REL009" type="relationship" name="grafo orientato" style-class="" visibility="package" creation-date="12/09/2015 12:27:20">
+          <item id="di540395432523936177" cid="REL009" type="relationship" name="grafo orientato" style-class="" visibility="package" creation-date="12/09/2015 12:27:20" from="di698348547881830830" to="di318430363316442890">
             <style class="default" />
             <relation from="di698348547881830830" to="di318430363316442890">
               <start-role id="" name="" multiplicity="1..*" navigability="" association-type="association" visibility="private" />
@@ -5018,13 +4816,13 @@
           <item id="di675195989164177582" cid="C012" type="class" name="Semplice" style-class="" visibility="package" creation-date="12/14/2015 15:54:20">
             <style class="default" />
           </item>
-          <item id="di923986461197605172" cid="ELEM001" type="universal-connector" name="" style-class="" visibility="package" creation-date="12/14/2015 15:55:26">
+          <item id="di923986461197605172" cid="ELEM001" type="universal-connector" name="" style-class="" visibility="package" creation-date="12/14/2015 15:55:26" from="di657623311551440804" to="di904500135326354775">
             <style class="default" />
           </item>
-          <item id="di781986861674075877" cid="GNR018" type="generalization" name="" style-class="" visibility="package" creation-date="12/14/2015 15:57:33">
+          <item id="di781986861674075877" cid="GNR018" type="generalization" name="" style-class="" visibility="package" creation-date="12/14/2015 15:57:33" from="di923986461197605172" to="di698348547881830830">
             <style class="default" />
           </item>
-          <item id="di985039104326687445" cid="REL011" type="relationship" name="invio dati ai client" style-class="" visibility="package" creation-date="12/14/2015 16:11:12">
+          <item id="di985039104326687445" cid="REL011" type="relationship" name="invio dati ai client" style-class="" visibility="package" creation-date="12/14/2015 16:11:12" from="di930840008972573553" to="di318430363316442890">
             <style class="default" />
             <relation from="di930840008972573553" to="di318430363316442890">
               <start-role id="" name="" multiplicity="1..*" navigability="" association-type="association" visibility="private" />
@@ -5049,6 +4847,12 @@ Li lascio per il discorso degli sviluppi futuri....</comment>
           <item id="di922613737623542070" cid="CMT016" type="comment" name="" style-class="" visibility="package" change-tracking-state="added" creation-date="12/28/2015 11:46:35">
             <style class="default" />
             <comment>N.B.: So che a un primo impatto può sembrare ridondante ricreare lato server il grafo quasi identicamente all'app. Ma serve sia lato client, per il calcolo del percorso ottimo che lato server, per il calcolo del costo dell'arco.</comment>
+          </item>
+          <item id="di657623311551440804" cid="ELEM016" type="shape" name="Element1" style-class="" visibility="package" creation-date="05/12/2016 23:19:02">
+            <style class="default" />
+          </item>
+          <item id="di904500135326354775" cid="ELEM017" type="shape" name="Element2" style-class="" visibility="package" creation-date="05/12/2016 23:19:02">
+            <style class="default" />
           </item>
         </abstract-items>
         <layer name="Default" visible="true" enabled="true" locked="false">
@@ -5114,14 +4918,14 @@ Li lascio per il discorso degli sviluppi futuri....</comment>
                 <point x="-102" y="501" />
               </points>
             </layout>
-            <relation from="di642026457618938162" from-iid="8f9848b7d76e40ed93d46468bd98bc6c" to="di181592696772835332" to-iid="3c34eb43fc4449418564d2fce4e0e25f" />
+            <relation from="di657623311551440804" from-iid="8f9848b7d76e40ed93d46468bd98bc6c" to="di904500135326354775" to-iid="3c34eb43fc4449418564d2fce4e0e25f" />
           </item>
-          <item id="di642026457618938162" iid="8f9848b7d76e40ed93d46468bd98bc6c" name="Element1" creation-date="12/14/2015 15:55:43" order-index="32" type="drawing-line">
+          <item id="di657623311551440804" iid="8f9848b7d76e40ed93d46468bd98bc6c" name="Element1" creation-date="12/14/2015 15:55:43" order-index="32" type="drawing-line">
             <layout ax="-522" ay="501" awidth="1" aheight="101" x="-424" y="500" width="37" height="24" angle="0" />
             <drawing-line start-point="-522,601" end-point="-522,501" />
             <style class="default" />
           </item>
-          <item id="di181592696772835332" iid="3c34eb43fc4449418564d2fce4e0e25f" name="Element2" creation-date="12/14/2015 15:55:49" order-index="33" type="drawing-line">
+          <item id="di904500135326354775" iid="3c34eb43fc4449418564d2fce4e0e25f" name="Element2" creation-date="12/14/2015 15:55:49" order-index="33" type="drawing-line">
             <layout ax="-102" ay="501" awidth="1" aheight="101" x="-240" y="501" width="44" height="18" angle="0" />
             <drawing-line start-point="-102,601" end-point="-102,501" />
             <style class="default" />
@@ -5156,6 +4960,222 @@ Li lascio per il discorso degli sviluppi futuri....</comment>
           </item>
           <item id="di922613737623542070" iid="71fea73a46724f50b8e7a1bc93408680" creation-date="12/28/2015 11:46:35" order-index="39" type="entity">
             <layout ax="-506" ay="-6" awidth="303" aheight="219" x="-506" y="-6" width="303" height="219" angle="0" />
+          </item>
+        </layer>
+      </diagram>
+      <diagram type="uml-component" id="p13f16e29654147e7afc3818c3a750afa_114364604" name="ComponentDiagram1" order-index="19" overview-order-index="20" show-id="false" show-name="true" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" show-template-parameters="true" show-fields="true" show-empty-compartments="true" show-attributes="true" show-attribute-visibility="true" show-operations="true" show-operation-parameters="true" show-operation-visibility="true" show-nullability="true" show-sequence-number="false" show-extension-points="false" show-relationship-texts="true" show-description="false" show-field-description="false" auto-routed-paths="false">
+        <style>
+          <background-color index="1" color="#FFFFFFFF" />
+          <background-color index="2" color="#FFFFFFFF" />
+          <background-type type="solid" />
+        </style>
+        <meta>
+          <authors>
+            <author> </author>
+          </authors>
+          <description />
+          <creation-date>05/12/2016 23:21:02</creation-date>
+          <change-date>05/12/2016 23:21:17</change-date>
+          <revision-count>0</revision-count>
+          <version />
+        </meta>
+        <abstract-items>
+          <item id="di666091585208515650" cid="CPT001" type="component" name="Emergency " style-class="" visibility="package" change-tracking-state="added" creation-date="05/12/2016 23:00:05">
+            <stereotypes>
+              <stereotype name="component" />
+            </stereotypes>
+            <style class="default" />
+            <component />
+          </item>
+          <item id="di421286819729718519" cid="CPT002" type="component" name="No Emergency" style-class="" visibility="package" change-tracking-state="added" creation-date="05/12/2016 23:00:50">
+            <stereotypes>
+              <stereotype name="component" />
+            </stereotypes>
+            <style class="default" />
+            <component />
+          </item>
+          <item id="di607915216681809810" cid="ELEM028" type="universal-connector" name="1" style-class="" visibility="package" change-tracking-state="added" creation-date="05/12/2016 23:03:32" from="di666091585208515650" to="di309022343246337191">
+            <style class="default" />
+          </item>
+          <item id="di805560876616823521" cid="CPT006" type="component" name="Business Logic" style-class="" visibility="package" change-tracking-state="added" creation-date="05/12/2016 23:04:03">
+            <stereotypes>
+              <stereotype name="component" />
+            </stereotypes>
+            <style class="default" />
+            <component />
+          </item>
+          <item id="di322885795271687210" cid="CPT007" type="component" name="Model" style-class="" visibility="package" change-tracking-state="added" creation-date="05/12/2016 23:04:19">
+            <stereotypes>
+              <stereotype name="component" />
+            </stereotypes>
+            <style class="default" />
+            <component />
+          </item>
+          <item id="di193507869598796318" cid="CPT008" type="component" name="Server" style-class="" visibility="package" change-tracking-state="added" creation-date="05/12/2016 23:04:31">
+            <stereotypes>
+              <stereotype name="component" />
+            </stereotypes>
+            <style class="default" />
+            <component />
+          </item>
+          <item id="di683514832397548069" cid="ELEM029" type="universal-connector" name="2" style-class="" visibility="package" change-tracking-state="added" creation-date="05/12/2016 23:04:50" from="di666091585208515650" to="di805560876616823521">
+            <style class="default" />
+          </item>
+          <item id="di586523841588805748" cid="ELEM030" type="universal-connector" name="1" style-class="" visibility="package" change-tracking-state="added" creation-date="05/12/2016 23:05:06" from="di421286819729718519" to="di309022343246337191">
+            <style class="default" />
+          </item>
+          <item id="di307176926931900761" cid="ELEM033" type="universal-connector" name="3" style-class="" visibility="package" change-tracking-state="added" creation-date="05/12/2016 23:05:36" from="di666091585208515650" to="di117249779879013819">
+            <style class="default" />
+          </item>
+          <item id="di170864549846551922" cid="ELEM042" type="universal-connector" name="2" style-class="" visibility="package" change-tracking-state="added" creation-date="05/12/2016 23:07:01" to="di421286819729718519">
+            <style class="default" />
+          </item>
+          <item id="di500043348768415811" cid="ELEM048" type="universal-connector" name="4" style-class="" visibility="package" change-tracking-state="added" creation-date="05/12/2016 23:07:31" from="di421286819729718519">
+            <style class="default" />
+          </item>
+          <item id="di983170063990911599" cid="ELEM057" type="universal-connector" name="3" style-class="" visibility="package" change-tracking-state="added" creation-date="05/12/2016 23:07:48" from="di421286819729718519" to="di805560876616823521">
+            <style class="default" />
+          </item>
+          <item id="di136164313578395410" cid="CN006" type="comment-connector" name="" style-class="" visibility="package" change-tracking-state="added" creation-date="05/12/2016 23:09:03" from="di805560876616823521" to="di193507869598796318">
+            <style class="default" />
+          </item>
+          <item id="di367900487814157503" cid="CN008" type="comment-connector" name="" style-class="" visibility="package" change-tracking-state="added" creation-date="05/12/2016 23:09:16" from="di805560876616823521" to="di322885795271687210">
+            <style class="default" />
+          </item>
+          <item id="di309022343246337191" cid="CPT004" type="component" name="Departure" style-class="" visibility="package" change-tracking-state="added" creation-date="05/12/2016 23:01:39">
+            <stereotypes>
+              <stereotype name="component" />
+            </stereotypes>
+            <style class="default" />
+            <component />
+          </item>
+          <item id="di756790348196632226" cid="CPT005" type="component" name="Destination" style-class="" visibility="package" change-tracking-state="added" creation-date="05/12/2016 23:01:52">
+            <stereotypes>
+              <stereotype name="component" />
+            </stereotypes>
+            <style class="default" />
+            <component />
+          </item>
+          <item id="di117249779879013819" cid="CPT003" type="component" name="Print Path" style-class="" visibility="package" change-tracking-state="added" creation-date="05/12/2016 23:01:06">
+            <stereotypes>
+              <stereotype name="component" />
+            </stereotypes>
+            <style class="default" />
+            <component />
+          </item>
+        </abstract-items>
+        <layer name="Default" visible="true" enabled="true" locked="false">
+          <item id="di666091585208515650" iid="50cf6138939f4fafb7081e45d8ee78f8" show-fields="false" creation-date="05/12/2016 23:00:05" order-index="0" type="entity">
+            <layout ax="87" ay="86" awidth="201" aheight="87" x="87" y="86" width="201" height="87" angle="0" />
+          </item>
+          <item id="di421286819729718519" iid="d693eb56515645688d695e27a1961d40" show-fields="false" creation-date="05/12/2016 23:00:50" order-index="1" type="entity">
+            <layout ax="632" ay="91" awidth="257" aheight="82" x="632" y="91" width="257" height="82" angle="0" />
+          </item>
+          <item id="di607915216681809810" iid="b2269fa6da904151a4d79766aa5965c8" creation-date="05/12/2016 23:03:32" order-index="5" type="relation">
+            <layout line-style="oblique" lock-start-point="false" lock-end-point="true" lock-to-fields="false" auto-path="" x1="217" y1="86" x2="381" y2="-167" start-border-pos="0.16118481384581" end-border-pos="0.714285714285714" name-position="-1,-20" name-width="118">
+              <points>
+                <point x="217" y="86" />
+                <point x="381" y="-167" />
+              </points>
+            </layout>
+            <relation from="di666091585208515650" from-iid="50cf6138939f4fafb7081e45d8ee78f8" to="di309022343246337191" to-iid="5ede408ecca243e791c609c79723af98" />
+          </item>
+          <item id="di805560876616823521" iid="6686a04eb0c04c8ba785145d79cbd9a7" show-fields="false" creation-date="05/12/2016 23:04:03" order-index="6" type="entity">
+            <layout ax="383" ay="301" awidth="177" aheight="140" x="383" y="301" width="177" height="140" angle="0" />
+          </item>
+          <item id="di322885795271687210" iid="a353f7399fde4e55ae43db8e27731692" show-fields="false" creation-date="05/12/2016 23:04:19" order-index="7" type="entity">
+            <layout ax="686" ay="414" awidth="192" aheight="116" x="686" y="414" width="192" height="116" angle="0" />
+          </item>
+          <item id="di193507869598796318" iid="1d937f3d3aaa4edc94abfee4a77c29c1" show-fields="false" creation-date="05/12/2016 23:04:31" order-index="8" type="entity">
+            <layout ax="96" ay="414" awidth="205" aheight="116" x="96" y="414" width="205" height="116" angle="0" />
+          </item>
+          <item id="di683514832397548069" iid="e41cd758a79347e08a97161a205304c4" creation-date="05/12/2016 23:04:50" order-index="9" type="relation">
+            <layout line-style="oblique" lock-start-point="false" lock-end-point="false" lock-to-fields="false" auto-path="" x1="239" y1="173" x2="390" y2="301" start-border-pos="0.561352990753022" end-border-pos="0.0091954462945798" name-position="-32,-4" name-width="134">
+              <points>
+                <point x="239" y="173" />
+                <point x="390" y="301" />
+              </points>
+            </layout>
+            <relation from="di666091585208515650" from-iid="50cf6138939f4fafb7081e45d8ee78f8" to="di805560876616823521" to-iid="6686a04eb0c04c8ba785145d79cbd9a7" />
+          </item>
+          <item id="di586523841588805748" iid="bcbe443371644ea985c2a0a1349e3278" creation-date="05/12/2016 23:05:06" order-index="10" type="relation">
+            <layout line-style="oblique" lock-start-point="true" lock-end-point="true" lock-to-fields="false" auto-path="" x1="632" y1="137" x2="501" y2="-200" start-border-pos="0.859756097560976" end-border-pos="0.4484375" name-position="2,-22" name-width="102">
+              <points>
+                <point x="632" y="137" />
+                <point x="501" y="-200" />
+              </points>
+            </layout>
+            <relation from="di421286819729718519" from-iid="d693eb56515645688d695e27a1961d40" to="di309022343246337191" to-iid="5ede408ecca243e791c609c79723af98" />
+          </item>
+          <item id="di307176926931900761" iid="c9e5e375a89d46aebb20cacd13e11848" creation-date="05/12/2016 23:05:36" order-index="11" type="relation">
+            <layout line-style="oblique" lock-start-point="true" lock-end-point="true" lock-to-fields="false" auto-path="" x1="288" y1="132" x2="388" y2="-24" start-border-pos="0.382183908045977" end-border-pos="0.723251124790737" name-position="17,7" name-width="114">
+              <points>
+                <point x="288" y="132" />
+                <point x="388" y="-24" />
+              </points>
+            </layout>
+            <relation from="di666091585208515650" from-iid="50cf6138939f4fafb7081e45d8ee78f8" to="di117249779879013819" to-iid="c73e812c2c2a4c55a311a7ea7feac5f9" />
+          </item>
+          <item id="di170864549846551922" iid="d3f1fe35bf384a0eb3d420ff1e486156" creation-date="05/12/2016 23:07:01" order-index="12" type="relation">
+            <layout line-style="oblique" lock-start-point="false" lock-end-point="true" lock-to-fields="false" auto-path="" x1="731" y1="-7" x2="735" y2="91" start-border-pos="0.618489183698382" end-border-pos="0.100194552529183" name-position="-28,-1" name-width="140">
+              <points>
+                <point x="731" y="-7" />
+                <point x="735" y="91" />
+              </points>
+            </layout>
+            <relation to="di421286819729718519" to-iid="d693eb56515645688d695e27a1961d40" />
+          </item>
+          <item id="di500043348768415811" iid="bd3e380729ed466b8c8a29aa75b0d6bf" creation-date="05/12/2016 23:07:31" order-index="13" type="relation">
+            <layout line-style="oblique" lock-start-point="true" lock-end-point="false" lock-to-fields="false" auto-path="" x1="632" y1="149" x2="453" y2="-25" start-border-pos="0.823170731707317" end-border-pos="0.54974250793457" name-position="-24,7">
+              <points>
+                <point x="632" y="149" />
+                <point x="453" y="-25" />
+              </points>
+            </layout>
+            <relation from="di421286819729718519" from-iid="d693eb56515645688d695e27a1961d40" />
+          </item>
+          <item id="di983170063990911599" iid="9dd5271825234787a99ec4b8585e2f07" creation-date="05/12/2016 23:07:48" order-index="14" type="relation">
+            <layout line-style="oblique" lock-start-point="false" lock-end-point="true" lock-to-fields="false" auto-path="" x1="702" y1="173" x2="521" y2="301" start-border-pos="0.681889337324447" end-border-pos="0.194915254237288" name-position="-20,-5">
+              <points>
+                <point x="702" y="173" />
+                <point x="521" y="301" />
+              </points>
+            </layout>
+            <relation from="di421286819729718519" from-iid="d693eb56515645688d695e27a1961d40" to="di805560876616823521" to-iid="6686a04eb0c04c8ba785145d79cbd9a7" />
+          </item>
+          <item id="di136164313578395410" iid="ad3bbf62e6c64316852f72eec94678b6" creation-date="05/12/2016 23:09:03" order-index="15" type="comment-connector">
+            <layout line-style="oblique" lock-start-point="true" lock-end-point="true" lock-to-fields="false" auto-path="" x1="383" y1="381" x2="301" y2="450" start-border-pos="0.857142857142857" end-border-pos="0.327586206896552" name-position="0,0">
+              <points>
+                <point x="383" y="381" />
+                <point x="301" y="450" />
+              </points>
+            </layout>
+            <relation from="di805560876616823521" from-iid="6686a04eb0c04c8ba785145d79cbd9a7" to="di193507869598796318" to-iid="1d937f3d3aaa4edc94abfee4a77c29c1" />
+          </item>
+          <item id="di367900487814157503" iid="a6085c68b9a1443e9249863afcbb0ac6" creation-date="05/12/2016 23:09:16" order-index="16" type="comment-connector">
+            <layout line-style="oblique" lock-start-point="true" lock-end-point="true" lock-to-fields="false" auto-path="" x1="560" y1="376" x2="686" y2="455" start-border-pos="0.383928571428571" end-border-pos="0.911637931034483" name-position="0,0">
+              <points>
+                <point x="560" y="376" />
+                <point x="686" y="455" />
+              </points>
+            </layout>
+            <relation from="di805560876616823521" from-iid="6686a04eb0c04c8ba785145d79cbd9a7" to="di322885795271687210" to-iid="a353f7399fde4e55ae43db8e27731692" />
+          </item>
+          <item id="di526034170658091968" iid="91eb19cc042b4dbbab5afd4e448d13d4" name="Element4" creation-date="05/12/2016 23:10:40" order-index="17" type="drawing-shape">
+            <layout ax="265" ay="-356" awidth="624" aheight="372" x="265" y="-356" width="624" height="372" angle="0" />
+            <drawing-shape type="Rectangle">
+              <text>Android View</text>
+            </drawing-shape>
+            <style class="default" />
+          </item>
+          <item id="di309022343246337191" iid="5ede408ecca243e791c609c79723af98" show-fields="false" creation-date="05/12/2016 23:01:39" order-index="3" type="entity">
+            <layout ax="361" ay="-327" awidth="140" aheight="160" x="361" y="-327" width="140" height="160" angle="0" />
+          </item>
+          <item id="di756790348196632226" iid="cb8698ed992c45fa9ed2446a0fb21713" show-fields="false" creation-date="05/12/2016 23:01:52" order-index="4" type="entity">
+            <layout ax="657.5" ay="-167" awidth="140" aheight="160" x="657.5" y="-167" width="140" height="160" angle="0" />
+          </item>
+          <item id="di117249779879013819" iid="c73e812c2c2a4c55a311a7ea7feac5f9" show-fields="false" creation-date="05/12/2016 23:01:06" order-index="2" type="entity">
+            <layout ax="373" ay="-105" awidth="140" aheight="81" x="373" y="-105" width="140" height="81" angle="0" />
           </item>
         </layer>
       </diagram>
