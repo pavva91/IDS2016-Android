@@ -16,4 +16,3 @@ I merge/push sul master li facciamo una volta che le modifiche fatte sul branch 
 ##IMPLEMENTAZIONE MVP
 - Applicazione di esempio per uso MVP pattern: [Applicazione esempio MVP] (https://github.com/ajitsing/ExpenseManager/tree/master/app/src/main/java/ajitsingh/com/expensemanager).
 
-ciao ciao betta
