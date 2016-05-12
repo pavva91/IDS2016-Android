@@ -37,8 +37,9 @@
      <string name="action_tap">Tap</string>
 
      <string name="mappa">mappa</string>
+    <string name="insert_departure">Inserisci Partenza</string>
+    <string name="ciao_qr">Ciao QR</string>
+    <string name="ciao_tap">Ciao tap</string>
 
 
-
-
- </resources>
+</resources>

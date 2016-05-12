@@ -35,7 +35,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
-            android:name=".EmTextActivity"
+            android:name=".EmergencyActivity"
             android:label=" "
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
@@ -43,7 +43,7 @@
                 android:value=".main.MainActivity" />
         </activity>
         <activity
-            android:name=".NoEmTextActivity"
+            android:name=".NoEmergencyActivity"
             android:label=" "
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
