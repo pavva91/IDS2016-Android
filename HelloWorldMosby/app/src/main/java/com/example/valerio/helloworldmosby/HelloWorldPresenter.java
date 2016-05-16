@@ -9,13 +9,18 @@ import com.hannesdorfmann.mosby.mvp.MvpBasePresenter;
 /**
  * com.example.valerio.helloworldmosby
  * HelloWorldPresenter
+ * Colui che invoca l'AsyncTask (RxJava)
  */
 
 // The presenter that coordinates HelloWorldView and business logic (GreetingGeneratorTask)
 class HelloWorldPresenter extends MvpBasePresenter<HelloWorldView> {
 
+    protected static final String HELLO_COLOR = "RED";
+    protected static final String GOODBYE_COLOR = "BLUE";
+
     // Greeting Task is "business logic"
     private GreetingGeneratorTask greetingTask;
+    protected String color;
 
     private void cancelGreetingTaskIfRunning(){
         if (greetingTask != null){
@@ -26,10 +31,12 @@ class HelloWorldPresenter extends MvpBasePresenter<HelloWorldView> {
     public void greetHello(){
         cancelGreetingTaskIfRunning();
 
+        color = HELLO_COLOR;
+
         greetingTask = new GreetingGeneratorTask("Hello", new GreetingGeneratorTask.GreetingTaskListener(){
             public void onGreetingGenerated(String greetingText){
                 if (isViewAttached())
-                    getView().showHello(greetingText);
+                    getView().showGreeting(greetingText,color);
             }
         });
         greetingTask.execute();
@@ -38,10 +45,12 @@ class HelloWorldPresenter extends MvpBasePresenter<HelloWorldView> {
     public void greetGoodbye(){
         cancelGreetingTaskIfRunning();
 
+        color = GOODBYE_COLOR;
+
         greetingTask = new GreetingGeneratorTask("Goodbye", new GreetingGeneratorTask.GreetingTaskListener(){
             public void onGreetingGenerated(String greetingText){
                 if (isViewAttached())
-                    getView().showGoodbye(greetingText);
+                    getView().showGreeting(greetingText, color);
             }
         });
         greetingTask.execute();
