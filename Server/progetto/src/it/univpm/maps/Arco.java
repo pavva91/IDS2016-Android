@@ -15,6 +15,7 @@ public class Arco {
 	String partenza; //id nodo partenza (foreign key)
 	String destinazione; //id nodo destinazione (foreign key)
 	private double superficie; //superficie arco in mq
+	int numpersone;//numero di persone presenti
 	
 	
 	//costruttore senza parametri
@@ -69,8 +70,10 @@ public class Arco {
 	public void setSuperficie(double superficie) {
 		this.superficie=superficie;
 	}
-
-	
-	
-	
+	public int getNumPersone(){
+		return this.numpersone;
+	}
+	public void setNumPersone(int numPersone){
+		this.numpersone=numPersone;
+	}
 }

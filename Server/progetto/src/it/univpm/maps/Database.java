@@ -4,6 +4,11 @@ import java.sql.DriverManager;
 
 public class Database {
 
+	//costruttore senza parametri
+	public Database(){
+		
+	}
+	
 	//parametri di connessione al DB MySQL
 	private static final String usernameDB = "univpm";
 	private static final String passwordDB = "univpm";

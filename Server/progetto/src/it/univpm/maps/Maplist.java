@@ -3,12 +3,12 @@ package it.univpm.maps;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -17,12 +17,15 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import com.sun.jersey.spi.resource.Singleton;
 
 
 @Path("maps/")
-@Singleton
 public class Maplist{
+	
+	//costruttore senza parametri
+	public Maplist(){
+		
+	}
 	
 	@POST
 	@Consumes("application/json")
@@ -114,7 +117,7 @@ public class Maplist{
 		try{
 			Database db = new Database();
 			Connection con = db.getConnection();
-			if(access.verificaToken(con, token)){
+			if(access.getUtente(con, token).getUsername().equals(Config.ADMINISTRATOR_USER)){
 				if(access.CercaMappa(con, nome)){
 					m=access.OttieniMappa(con, nome, token);
 				}else{
@@ -123,15 +126,42 @@ public class Maplist{
 				}
 			}else{
 				//errore mappa non trovata //restituire 403
-				return Response.status(Response.Status.FORBIDDEN).entity("ERRORE: Utente non loggato!").build();
+				return Response.status(Response.Status.FORBIDDEN).entity("ERRORE: Utente non autorizzato!").build();
 			}
 				
 		}catch (Exception e){
 			e.printStackTrace();
 		}
-		
 		return Response.ok(m, MediaType.APPLICATION_JSON).build();
-		//return m;
+	}
+	
+	@PUT
+	@Path("{name}/edges")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public Response UpdateEdge(Arco e, @PathParam("name") String nome, @QueryParam("token")String token){
+		try{
+			AccessDB access = new AccessDB();
+			Database db = new Database();
+			Connection con = db.getConnection();
+			if(access.verificaToken(con, token)){
+				int edgeFrom = access.getIdNodo(con, e.getPartenza(), nome);
+				int edgeTo = access.getIdNodo(con, e.getDestinazione(), nome);
+				if(access.CercaArco(con, edgeFrom, edgeTo)){
+					e=access.UpdateEdge(con, e, edgeFrom, edgeTo);
+				}else{
+					//errore arco non trovato //restituire 404
+					return Response.status(Response.Status.NOT_FOUND).entity("ERRORE: Arco non trovato!").build();
+				}
+			}else{
+				//errore arco non trovato //restituire 403
+				return Response.status(Response.Status.FORBIDDEN).entity("ERRORE: Utente non loggato!").build();
+			}
+				
+		}catch (Exception ex){
+			ex.printStackTrace();
+		}
+		return Response.ok(e, MediaType.APPLICATION_JSON).build();
 	}
 	
 

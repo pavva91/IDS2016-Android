@@ -14,6 +14,7 @@ import java.util.Date;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -22,8 +23,20 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import com.sun.jersey.core.header.FormDataContentDisposition;
-import com.sun.jersey.multipart.FormDataParam;
+
+import org.glassfish.jersey.media.multipart.FormDataContentDisposition.FormDataContentDispositionBuilder;
+import org.glassfish.jersey.media.multipart.FormDataParam;
+
+//import org.glassfish.jersey.media.multipart.FormDataContentDisposition.FormDataContentDispositionBuilder;
+
+
+
+//import org.glassfish.jersey.media.multipart.FormDataContentDisposition.FormDataContentDispositionBuilder;
+//import org.glassfish.jersey.media.multipart.FormDataParam;
+//import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
+
+
+
 
 @Path("/maps/upload")
 public class FileUpload {
@@ -31,11 +44,13 @@ public class FileUpload {
 	//@Context ServletContext context;
 	private String SERVER_URL = "http://localhost:8080/";
 
+	//costruttore senza parametri
 	public FileUpload(){
 		
 	}
 	
 	@POST
+
 	@Path("{mapName}/{quota}")
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	@Produces("application/json")
@@ -45,13 +60,13 @@ public class FileUpload {
 			@QueryParam("token")String token,
 			@Context HttpServletRequest request,
 			@FormDataParam("file") InputStream fileInputStream,
-			@FormDataParam("file") FormDataContentDisposition contentDispositionHeader) {
+			@FormDataParam("file") FormDataContentDispositionBuilder fileDetail) {
 		
 		ServletContext context=request.getSession().getServletContext();
 		String timeStamp =  new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
 		String SERVER_UPLOAD_LOCATION_FOLDER = context.getRealPath("/../../docroot/");
-		String filePath = SERVER_UPLOAD_LOCATION_FOLDER	 + "\\" + mapName + "\\" + mapName + "_" + quota + "_" + timeStamp +  "_" + contentDispositionHeader.getFileName();
-		String fileUrl = SERVER_URL	 + mapName + "/" + mapName + "_" + quota + "_" + timeStamp +  "_" + contentDispositionHeader.getFileName();
+		String filePath = SERVER_UPLOAD_LOCATION_FOLDER	 + "\\" + mapName + "\\" + mapName + "_" + quota + "_" + timeStamp +  "_" + fileDetail.build().getFileName();
+		String fileUrl = SERVER_URL	 + mapName + "/" + mapName + "_" + quota + "_" + timeStamp +  "_" + fileDetail.build().getFileName();
 		try{
 			Database db = new Database();
 			Connection con = db.getConnection();
@@ -120,4 +135,7 @@ public class FileUpload {
 		}
 		folder.delete();
 	}
+	
+	
+	
 }

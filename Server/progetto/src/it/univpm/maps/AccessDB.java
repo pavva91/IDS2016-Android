@@ -228,7 +228,7 @@ public class AccessDB {
 		String password = u.getPassword();
 		String token = u.getToken();
 		String salt = u.getSalt();
-		PreparedStatement stmt = con.prepareStatement("INSERT INTO utenti (username, password, token, salt) VALUES(?,?,?,?)");
+		PreparedStatement stmt = con.prepareStatement("INSERT INTO utenti (username, password, token, salt, posizione) VALUES(?,?,?,?, null)");
 		stmt.setString(1, username);
 		stmt.setString(2, password);
 		stmt.setString(3, token);
@@ -347,5 +347,79 @@ public class AccessDB {
 
 		
 	}
+
+	//metodo che aggiorna i valori di un arco, usato principalmente per variare i parametri 
+	//prende in input l'arco e gli id dei nodi di partenza e di arrivo e restituisce l'arco
+	public Arco UpdateEdge(Connection con, Arco e, int edgeFrom, int edgeTo) throws SQLException {
+		PreparedStatement stmt;
+		Double v=e.getV();
+		Double i=e.getI();
+		Double c=e.getC();
+		int numPersone=e.getNumPersone();
+		stmt = con.prepareStatement("UPDATE archi SET v=?, i=?, c=?, num_persone=? ,los="+Config.DEF_LOS+" WHERE partenza=? AND destinazione=?");
+		stmt.setDouble(1, v);
+		stmt.setDouble(2, i);
+		stmt.setDouble(3, c);
+		stmt.setInt(4, numPersone);
+		stmt.setInt(5, edgeFrom);
+		stmt.setInt(6, edgeTo);
+		stmt.executeUpdate();	
+		e=getEdge(con, edgeFrom, edgeTo);
+		return e;
+	}
+
+	//funzione che ritorna l'id di un nodo dato il nome del nodo e il nome della mappa
+	//ritorna -1 in caso di nodo non trovato
+	public int getIdNodo(Connection con, String nodeName, String mapName) throws SQLException {
+		PreparedStatement stmt;
+		stmt = con.prepareStatement("SELECT id FROM nodi WHERE mappa=? AND codice=?");
+		stmt.setString(1, mapName);
+		stmt.setString(2, nodeName);
+		ResultSet rs = stmt.executeQuery();
+		if(rs.next())
+			return rs.getInt("id");
+		else
+			return -1;
+	}
 	
+	//funzione che verifica l'esistenza di un arco dato il nodo di partenza e il nodo di arrivo
+	//ritorna falso in caso di arco non trovato, ritorna vero se l'arco esiste
+	public Boolean CercaArco(Connection con, int edgeFrom, int edgeTo) throws SQLException {
+		PreparedStatement stmt;
+		stmt = con.prepareStatement("SELECT * FROM archi WHERE partenza=? AND destinazione=?");
+		stmt.setInt(1, edgeFrom);
+		stmt.setInt(2, edgeTo);
+		ResultSet rs = stmt.executeQuery();
+		if(rs.next())
+			return true;
+		else
+			return false;
+	}
+	
+	
+	public Arco getEdge (Connection con, int edgeFrom, int edgeTo) throws SQLException {
+		Arco a = new Arco();
+		PreparedStatement stmt;
+		//stmt = con.prepareStatement("SELECT * FROM archi, nodi WHERE partenza=? AND destinazione=? AND (archi.partenza=nodi.id OR archi.destinazione=nodi.id)");
+		stmt = con.prepareStatement("SELECT n1.codice AS partenza, n2.codice AS destinazione, a.v, a.i, a.c,"
+									+" a.los, a.lunghezza, a.superficie, a.num_persone  FROM archi AS a, nodi AS n1, nodi AS n2"
+									+" WHERE a.partenza=n1.id AND a.destinazione=n2.id AND a.partenza=? AND a.destinazione=?");
+		stmt.setInt(1, edgeFrom);
+		stmt.setInt(2, edgeTo);
+		ResultSet rs = stmt.executeQuery();
+		if(rs.next()){
+			a.setPartenza(rs.getString("partenza"));
+			a.setDestinazione(rs.getString("destinazione"));
+			a.setLunghezza(rs.getDouble("lunghezza"));
+			a.setV(rs.getDouble("v"));
+			a.setI(rs.getDouble("i"));
+			a.setC(rs.getDouble("c"));
+			a.setLos(rs.getDouble("los"));
+			a.setSuperficie(rs.getDouble("superficie"));
+			a.setNumPersone(rs.getInt("num_persone"));
+		}else{
+			new SQLException("ERRORE: arco non trovato!");
+		}
+		return a;
+	}
 }
