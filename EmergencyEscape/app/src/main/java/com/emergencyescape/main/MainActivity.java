@@ -24,16 +24,19 @@ import butterknife.OnClick;
 
 public class MainActivity extends CommonBehaviourActivity {
     @BindView(R.id.logoutbutton) Button logout;
+    @BindView(R.id.toolbar) Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
         ButterKnife.bind(this);
+
+        setSupportActionBar(toolbar);
+
     }
+
 
     @OnClick(R.id.logoutbutton) // On click listener
     public void logout()

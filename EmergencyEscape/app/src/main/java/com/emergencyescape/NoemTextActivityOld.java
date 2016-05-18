@@ -3,8 +3,6 @@ package com.emergencyescape;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.widget.EditText;
 
@@ -14,7 +12,7 @@ public class NoemTextActivityOld extends CommonBehaviourActivity {
 
 
     public void sendInfo(View view) {
-        Intent intent = new Intent(this, DestinationActivity.class);
+        Intent intent = new Intent(this, TextDestinationActivity.class);
         EditText editText = (EditText) findViewById(R.id.editPartenza);
         String message = editText.getText().toString();
         intent.putExtra("aula", message);

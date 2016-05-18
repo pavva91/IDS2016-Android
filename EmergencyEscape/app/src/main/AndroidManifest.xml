@@ -82,7 +82,7 @@
                 android:value=".main.MainActivity" />
         </activity>
         <activity
-            android:name=".DestinationActivity"
+            android:name=".TextDestinationActivity"
             android:label=" "
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data

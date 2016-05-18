@@ -41,7 +41,7 @@ public class TextDepartureActivity extends CommonBehaviourActivity {
         if (this.getEmergencyState()) {
             startActivity(new Intent(TextDepartureActivity.this, ItineraryActivity.class));
         }else{
-            startActivity(new Intent(TextDepartureActivity.this,DestinationActivity.class).putExtra("aula",this.getAula()));
+            startActivity(new Intent(TextDepartureActivity.this,TextDestinationActivity.class).putExtra("aula",this.getAula()));
         }
     }
 

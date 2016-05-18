@@ -3,10 +3,6 @@ package com.emergencyescape;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.emergencyescape.commonbehaviour.CommonBehaviourActivity;
@@ -15,7 +11,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class DestinationActivity extends CommonBehaviourActivity {
+public class TextDestinationActivity extends CommonBehaviourActivity {
 
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.txtPartenza) TextView partenzaTextView;
@@ -23,7 +19,7 @@ public class DestinationActivity extends CommonBehaviourActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_destination);
+        setContentView(R.layout.activity_destination_text);
 
         ButterKnife.bind(this);
 
@@ -37,7 +33,7 @@ public class DestinationActivity extends CommonBehaviourActivity {
 
     @OnClick(R.id.btnDestinazione)
     public void submitDestination(){
-        startActivity(new Intent(DestinationActivity.this, ItineraryActivity.class));
+        startActivity(new Intent(TextDestinationActivity.this, ItineraryActivity.class));
     }
 
     private String getPartenza(){

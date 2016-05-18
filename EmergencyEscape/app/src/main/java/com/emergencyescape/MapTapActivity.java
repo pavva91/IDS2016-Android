@@ -4,8 +4,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -99,68 +97,68 @@ public class MapTapActivity extends CommonBehaviourActivity {
                             case MotionEvent.ACTION_DOWN:
 
                                 if (pixel == aulamagna) {
-                                    Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
+                                    Intent a = new Intent(MapTapActivity.this, TextDestinationActivity.class);
                                     a.putExtra("aula", "Aula magna");
                                     a.putExtra("quotap", "145");
                                     startActivity(a);
                                 }
                                 if (pixel == dacs) {
-                                    Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
+                                    Intent a = new Intent(MapTapActivity.this, TextDestinationActivity.class);
                                     a.putExtra("aula", "DACS");
                                     a.putExtra("quotap", "145");
                                     startActivity(a);
                                 }
                                 if (pixel == dardus) {
-                                    Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
+                                    Intent a = new Intent(MapTapActivity.this, TextDestinationActivity.class);
                                     a.putExtra("aula", "DARDUS");
                                     a.putExtra("quotap", "145");
                                     startActivity(a);
                                 }
                                 if (pixel == dacs) {
-                                    Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
+                                    Intent a = new Intent(MapTapActivity.this, TextDestinationActivity.class);
                                     a.putExtra("aula", "DACS");
                                     a.putExtra("quotap", "145");
                                     startActivity(a);
                                 }
                                 if (pixel == g1) {
-                                    Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
+                                    Intent a = new Intent(MapTapActivity.this, TextDestinationActivity.class);
                                     a.putExtra("aula", "G1");
                                     a.putExtra("quotap", "145");
                                     startActivity(a);
                                 }
                                   /*  if (pixel == g2) {
-                                        Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
+                                        Intent a = new Intent(MapTapActivity.this, TextDestinationActivity.class);
                                         a.putExtra("aula", "G2");
                                         startActivity(a);
                                     }
                                     if (pixel == q1454) {
-                                        Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
+                                        Intent a = new Intent(MapTapActivity.this, TextDestinationActivity.class);
                                         a.putExtra("aula", "145/4");
                                         startActivity(a);
                                     }
                                     if (pixel == q1455) {
-                                        Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
+                                        Intent a = new Intent(MapTapActivity.this, TextDestinationActivity.class);
                                         a.putExtra("aula", "145/5");
                                         startActivity(a);
                                     }
                                     if (pixel == q1451) {
-                                        Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
+                                        Intent a = new Intent(MapTapActivity.this, TextDestinationActivity.class);
                                         a.putExtra("aula", "145/1");
                                         startActivity(a);
                                     }
                                     if (pixel == q1453) {
-                                        Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
+                                        Intent a = new Intent(MapTapActivity.this, TextDestinationActivity.class);
                                         a.putExtra("aula", "145/3");
                                         startActivity(a);
                                     }*/
                                 if (pixel == dipmeccanica) {
-                                    Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
+                                    Intent a = new Intent(MapTapActivity.this, TextDestinationActivity.class);
                                     a.putExtra("aula", "Dipartimento di meccanica");
                                     a.putExtra("quotap", "145");
                                     startActivity(a);
                                 }
                                 if (pixel == isac) {
-                                    Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
+                                    Intent a = new Intent(MapTapActivity.this, TextDestinationActivity.class);
                                     a.putExtra("aula", "ISAC");
                                     a.putExtra("quotap", "145");
                                     startActivity(a);
@@ -197,78 +195,78 @@ public class MapTapActivity extends CommonBehaviourActivity {
                             case MotionEvent.ACTION_DOWN:
 
                                 if (pixel == aulamagna) {
-                                    Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
+                                    Intent a = new Intent(MapTapActivity.this, TextDestinationActivity.class);
                                     a.putExtra("aula", "Aula magna");
                                     a.putExtra("quotap", "150");
                                     startActivity(a);
                                 }
                                 if (pixel == dacs) {
-                                    Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
+                                    Intent a = new Intent(MapTapActivity.this, TextDestinationActivity.class);
                                     a.putExtra("aula", "DACS");
                                     a.putExtra("quotap", "150");
                                     startActivity(a);
                                 }
                                 if (pixel == g1) {
-                                    Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
+                                    Intent a = new Intent(MapTapActivity.this, TextDestinationActivity.class);
                                     a.putExtra("aula", "G1");
                                     a.putExtra("quotap", "150");
                                     startActivity(a);
                                 }
                                   /*  if (pixel == g2) {
-                                        Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
+                                        Intent a = new Intent(MapTapActivity.this, TextDestinationActivity.class);
                                         a.putExtra("aula", "G2");
                                         startActivity(a);
                                     }
                                     if (pixel == q1502) {
-                                        Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
+                                        Intent a = new Intent(MapTapActivity.this, TextDestinationActivity.class);
                                         a.putExtra("aula", "150/2");
                                         startActivity(a);
                                     }*/
                                 if (pixel == salalettura) {
-                                    Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
+                                    Intent a = new Intent(MapTapActivity.this, TextDestinationActivity.class);
                                     a.putExtra("aula", "Sala lettura");
                                     a.putExtra("quotap", "150");
                                     startActivity(a);
                                 }
                                /* if (pixel == q1501) {
-                                    Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
+                                    Intent a = new Intent(MapTapActivity.this, TextDestinationActivity.class);
                                     a.putExtra("aula", "150/1");
                                     a.putExtra("quotap", "150");
                                     startActivity(a);
                                 }*/
                                 if (pixel == atelierinformatica) {
-                                    Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
+                                    Intent a = new Intent(MapTapActivity.this, TextDestinationActivity.class);
                                     a.putExtra("aula", "Atelier informatica");
                                     a.putExtra("quotap", "150");
                                     startActivity(a);
                                 }
 
                                 if (pixel == csal) {
-                                    Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
+                                    Intent a = new Intent(MapTapActivity.this, TextDestinationActivity.class);
                                     a.putExtra("aula", "CSAL");
                                     a.putExtra("quotap", "150");
                                     startActivity(a);
                                 }
                                 if (pixel == biblioteca) {
-                                    Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
+                                    Intent a = new Intent(MapTapActivity.this, TextDestinationActivity.class);
                                     a.putExtra("aula", "Biblioteca");
                                     a.putExtra("quotap", "150");
                                     startActivity(a);
                                 }
                                 if (pixel == dipbiochimica) {
-                                    Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
+                                    Intent a = new Intent(MapTapActivity.this, TextDestinationActivity.class);
                                     a.putExtra("aula", "Dipartimento biochimica");
                                     a.putExtra("quotap", "150");
                                     startActivity(a);
                                 }
                                 if (pixel == dippatologia) {
-                                    Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
+                                    Intent a = new Intent(MapTapActivity.this, TextDestinationActivity.class);
                                     a.putExtra("aula", "Dipartimento patologia");
                                     a.putExtra("quota", "150");
                                     startActivity(a);
                                 }
                                 /*if (pixel == assstud) {
-                                    Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
+                                    Intent a = new Intent(MapTapActivity.this, TextDestinationActivity.class);
                                     a.putExtra("aula", "Associazioni studentesche");
                                     a.putExtra("quotap", "150");
                                     startActivity(a);
@@ -306,90 +304,90 @@ public class MapTapActivity extends CommonBehaviourActivity {
                             case MotionEvent.ACTION_DOWN:
 
                                 if (pixel == dacs) {
-                                    Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
+                                    Intent a = new Intent(MapTapActivity.this, TextDestinationActivity.class);
                                     a.putExtra("aula", "DACS");
                                     a.putExtra("quotap", "155");
                                     startActivity(a);
                                 }
                                 if (pixel == dardus) {
-                                    Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
+                                    Intent a = new Intent(MapTapActivity.this, TextDestinationActivity.class);
                                     a.putExtra("aula", "DARDUS");
                                     a.putExtra("quotap", "155");
                                     startActivity(a);
                                 }
                                 if (pixel == isac) {
-                                    Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
+                                    Intent a = new Intent(MapTapActivity.this, TextDestinationActivity.class);
                                     a.putExtra("aula", "ISAC");
                                     a.putExtra("quotap", "155");
                                     startActivity(a);
                                 }
                                 if (pixel == bar) {
-                                    Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
+                                    Intent a = new Intent(MapTapActivity.this, TextDestinationActivity.class);
                                     a.putExtra("aula", "Bar");
                                     a.putExtra("quotap", "155");
                                     startActivity(a);
                                 }
                                 if (pixel == banca) {
-                                    Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
+                                    Intent a = new Intent(MapTapActivity.this, TextDestinationActivity.class);
                                     a.putExtra("aula", "Banca");
                                     a.putExtra("quotap", "155");
                                     startActivity(a);
                                 }
                                 if (pixel == serfotocopie) {
-                                    Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
+                                    Intent a = new Intent(MapTapActivity.this, TextDestinationActivity.class);
                                     a.putExtra("aula", "Servizio fotocopie");
                                     a.putExtra("quotap", "155");
                                     startActivity(a);
                                 }
                                  /*   if (pixel == ecdl) {
-                                        Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
+                                        Intent a = new Intent(MapTapActivity.this, TextDestinationActivity.class);
                                         a.putExtra("aula", "Aula ECDL");
                                         startActivity(a);
                                     }*/
                                 if (pixel == cesmi) {
-                                    Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
+                                    Intent a = new Intent(MapTapActivity.this, TextDestinationActivity.class);
                                     a.putExtra("aula", "CeSMI");
                                     a.putExtra("quotap", "155");
                                     startActivity(a);
                                 }
                                 if (pixel == fimet) {
-                                    Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
+                                    Intent a = new Intent(MapTapActivity.this, TextDestinationActivity.class);
                                     a.putExtra("aula", "FIMeT");
                                     a.putExtra("quotap", "155");
                                     startActivity(a);
                                 }
                                 if (pixel == salalettura) {
-                                    Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
+                                    Intent a = new Intent(MapTapActivity.this, TextDestinationActivity.class);
                                     a.putExtra("aula", "Sala lettura");
                                     a.putExtra("quotap", "155");
                                     startActivity(a);
                                 }
                                 if (pixel == at1) {
-                                    Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
+                                    Intent a = new Intent(MapTapActivity.this, TextDestinationActivity.class);
                                     a.putExtra("aula", "AT1");
                                     a.putExtra("quotap", "155");
                                     startActivity(a);
                                 }
                                 if (pixel == dipscmat) {
-                                    Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
+                                    Intent a = new Intent(MapTapActivity.this, TextDestinationActivity.class);
                                     a.putExtra("aula", "Dipartimento scienze matematiche");
                                     a.putExtra("quotap", "155");
                                     startActivity(a);
                                 }
                                 if (pixel == dipmeccanica) {
-                                    Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
+                                    Intent a = new Intent(MapTapActivity.this, TextDestinationActivity.class);
                                     a.putExtra("aula", "Dipartimento meccanica");
                                     a.putExtra("quotap", "155");
                                     startActivity(a);
                                 }
                                 if (pixel == dipbiomed) {
-                                    Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
+                                    Intent a = new Intent(MapTapActivity.this, TextDestinationActivity.class);
                                     a.putExtra("aula", "Dipartimento scienze biomediche");
                                     a.putExtra("quotap", "155");
                                     startActivity(a);
                                 }
                                 if (pixel == q155d1) {
-                                    Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
+                                    Intent a = new Intent(MapTapActivity.this, TextDestinationActivity.class);
                                     a.putExtra("aula", "155/d1");
                                     a.putExtra("quotap", "155");
                                     startActivity(a);
