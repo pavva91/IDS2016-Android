@@ -76,7 +76,7 @@ public class FileUpload {
 				//errore utente non autorizzato a caricare mappe
 				return Response.status(Response.Status.FORBIDDEN).entity("ERRORE: Utente non autorizzato!").build();
 			//se non esiste nel DB mappa con nome e quota da parametri allora restituisco errore
-			if (!access.verificaQuota(con, mapName, quota))
+			if (!access.verifyQuote(con, mapName, quota))
 				return Response.status(Response.Status.NOT_ACCEPTABLE).entity("ERRORE: Quota non trovata o mappa non presente!").build();
 			
 			//creo cartella con nome mappa se non esiste
@@ -92,7 +92,7 @@ public class FileUpload {
 	
 			//salvo file sul server
 			saveFile(fileInputStream, filePath);
-			access.aggiornaImmagineMappa(con, mapName, quota, fileUrl);
+			access.updateMapImage(con, mapName, quota, fileUrl);
 			
 	    }catch(SecurityException se){
 	    	return Response.status(Response.Status.CONFLICT).entity("ERRORE: Impossibile creare cartella per salvataggio immagini!").build();

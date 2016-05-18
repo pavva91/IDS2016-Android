@@ -2,7 +2,7 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="lib"/>
-	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk1.7.0_79">
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
 		<attributes>
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
@@ -14,16 +14,16 @@
 	</classpathentry>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
 	<classpathentry exported="true" kind="lib" path="lib/mysql-connector-java-5.0.8-bin.jar"/>
-	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
-	<classpathentry kind="lib" path="C:/glassfish4/glassfish/modules/javax.ws.rs-api.jar"/>
-	<classpathentry kind="lib" path="C:/glassfish4/glassfish/modules/javax.servlet.jsp.jar"/>
-	<classpathentry kind="lib" path="C:/glassfish4/glassfish/modules/javax.servlet-api.jar"/>
-	<classpathentry kind="lib" path="C:/glassfish4/glassfish/modules/endorsed/webservices-api-osgi.jar"/>
-	<classpathentry kind="lib" path="C:/glassfish4/glassfish/modules/jersey-client.jar"/>
-	<classpathentry kind="lib" path="C:/glassfish4/glassfish/modules/jersey-common.jar"/>
-	<classpathentry kind="lib" path="C:/glassfish4/glassfish/modules/jersey-server.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Roby/workspace/progetto/lib/jersey-media-multipart-2.17.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Roby/workspace/progetto/lib/mimepull-1.9.3.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Roby/workspace/progetto/lib/mysql-connector-java-5.0.8-bin.jar"/>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
+	<classpathentry exported="true" kind="lib" path="C:/glassfish4/glassfish/modules/javax.ws.rs-api.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/glassfish4/glassfish/modules/javax.servlet.jsp.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/glassfish4/glassfish/modules/javax.servlet-api.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/glassfish4/glassfish/modules/endorsed/webservices-api-osgi.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/glassfish4/glassfish/modules/jersey-client.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/glassfish4/glassfish/modules/jersey-common.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/glassfish4/glassfish/modules/jersey-server.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Roberto/workspace/progetto/lib/jersey-media-multipart-2.17.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Roberto/workspace/progetto/lib/mimepull-1.9.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Roberto/workspace/progetto/lib/mysql-connector-java-5.0.8-bin.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
