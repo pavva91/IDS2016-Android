@@ -11,6 +11,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.emergencyescape.main.MainActivity;
+import com.facebook.stetho.Stetho;
+
 import java.util.ArrayList;
 
 /**
@@ -23,7 +26,9 @@ public class LoginActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
+
         super.onCreate(savedInstanceState);
+        Stetho.initializeWithDefaults(this);
         setContentView(R.layout.activity_login);
 
         passaARegistra();
@@ -66,7 +71,7 @@ public class LoginActivity extends AppCompatActivity
             sc.setUser(ris.get(0));
             sc.setSessionvalue(ris.get(1));
 
-            Toast.makeText(getApplicationContext(), "Bentornato " + sc.getUser(), Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(),  getResources().getString(R.string.welcome_message)+ " " + sc.getUser(), Toast.LENGTH_LONG).show();
         }
 
     }
@@ -88,7 +93,7 @@ public class LoginActivity extends AppCompatActivity
                     Intent openPage1 = new Intent(LoginActivity.this, MainActivity.class);
                     // passo all'attivazione dell'activity Pagina.java
                     startActivity(openPage1);
-                    Toast.makeText(getApplicationContext(), "Bentornato " + user.getText().toString(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.welcome_message)+ " " + user.getText().toString(), Toast.LENGTH_LONG).show();
                     SessionClass sc = SessionClass.getInstance();
                     // crea e setta la chiave di sessione se ricordami è selezionato
                     if (ricorda.isChecked() == true) {
@@ -101,7 +106,7 @@ public class LoginActivity extends AppCompatActivity
                     sc.setUser(user.getText().toString());
 
                 } else {
-                    Toast.makeText(getApplicationContext(), "ERRORE: username o password errati! ", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),  getResources().getString(R.string.error_message)+ ": " + getResources().getString(R.string.wrong_user_pass) , Toast.LENGTH_LONG).show();
                 }
             }
         });

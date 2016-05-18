@@ -2,19 +2,18 @@ package com.emergencyescape;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
+
+import com.emergencyescape.commonbehaviour.CommonBehaviourActivity;
 
 
-public class MapTapActivity extends CommonMenuActivity {
+public class MapTapActivity extends CommonBehaviourActivity {
 
     private Bitmap bitmap;
 
@@ -408,20 +407,4 @@ public class MapTapActivity extends CommonMenuActivity {
 
         }
         }
-
-
-
-
-
-
-
-
-    //action bar
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.activity_main_actions, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-
 }

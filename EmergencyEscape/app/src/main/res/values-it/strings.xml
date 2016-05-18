@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Emergency Escape</string>
+    <string name="action_emergency">Emergenza</string>
+    <string name="action_logout">Logout</string>
+    <string name="action_no_emergency">Non Emergenza</string>
+    <string name="action_qr_code">QRCode</string>
+    <string name="action_settings">Opzioni</string>
+    <string name="action_sign_in">Registrati</string>
+    <string name="action_sign_in_short">Registrati</string>
+    <string name="action_tap">Tap</string>
+    <string name="action_text">Testuale</string>
+    <string name="error_field_required">Questo campo è richiesto</string>
+    <string name="error_incorrect_password">Password non corretta</string>
+    <string name="error_invalid_email">Email non valida</string>
+    <string name="error_invalid_password">Password troppo corta</string>
+    <string name="mappa">Mappa</string>
+    <string name="google_maps_key">XX</string>
+    <string name="permission_rationale">"E\' richiesto il permesso di accedere ai contatti"</string>
+    <string name="prompt_email">Nome utente</string>
+    <string name="prompt_password">Password</string>
+    <string name="title_activity_maps">Mappa</string>
+    <string name="action_log_in">Accedi</string>
+    <string name="action_remember_me">Ricordami</string>
+    <string name="welcome_message">Bentornato</string>
+    <string name="error_message">Errore</string>
+    <string name="wrong_user_pass">Username o Password errati!</string>
+    <string name="departure_room">Aula di partenza</string>
+    <string name="quote">Quota</string>
+    <string name="insert_destination">Inserire Destinazione:</string>
+    <string name="action_ok">Ok</string>
+    <string name="insert_departure">Inserire Partenza</string>
+</resources>

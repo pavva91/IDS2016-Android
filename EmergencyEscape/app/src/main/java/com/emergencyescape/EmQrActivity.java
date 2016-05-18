@@ -1,17 +1,13 @@
 package com.emergencyescape;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
 
-public class EmQrActivity extends CommonMenuActivity {
+import com.emergencyescape.commonbehaviour.CommonBehaviourActivity;
+
+public class EmQrActivity extends CommonBehaviourActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,17 +26,4 @@ public class EmQrActivity extends CommonMenuActivity {
             }
         });*/
     }
-    //action bar
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.activity_main_actions, menu);
-
-        return super.onCreateOptionsMenu(menu);
-    }
-
-
-
-
-
-
 }

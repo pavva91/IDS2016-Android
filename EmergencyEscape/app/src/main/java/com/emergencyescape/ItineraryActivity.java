@@ -6,8 +6,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 
+import com.emergencyescape.commonbehaviour.CommonBehaviourActivity;
 
-public class ItineraryActivity extends CommonMenuActivity {
+
+public class ItineraryActivity extends CommonBehaviourActivity {
+
+    // TODO: Creare Background Thread (RxJava) che va a fare il calcolo prendendo i valori(Departure (e) Destination) (per ora) da CommonBehaviourViewState
 
 
     @Override
@@ -19,19 +23,5 @@ public class ItineraryActivity extends CommonMenuActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
-           }
-
-    //action bar
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.activity_main_actions, menu);
-        return super.onCreateOptionsMenu(menu);
-
-
-
     }
-
-
-
-
 }

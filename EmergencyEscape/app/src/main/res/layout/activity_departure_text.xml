@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.emergencyescape.EmTextActivity">
+    tools:context=".TextDepartureActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -33,7 +33,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Inserisci Partenza"
+        android:text="@string/insert_departure"
         android:id="@+id/txtPartenza"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
@@ -54,7 +54,7 @@
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Ok"
+        android:text="@string/action_ok"
         android:id="@+id/btnPartenza"
         android:layout_below="@+id/editPartenza"
         android:layout_centerHorizontal="true"

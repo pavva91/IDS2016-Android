@@ -7,8 +7,10 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 
+import com.emergencyescape.commonbehaviour.CommonBehaviourActivity;
 
-public class NoemTapActivity extends CommonMenuActivity {
+
+public class NoemTapActivity extends CommonBehaviourActivity {
 
 
       public void onClick(View v)
@@ -53,14 +55,4 @@ public class NoemTapActivity extends CommonMenuActivity {
 
 
 }
-
-
-    //action bar
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.activity_main_actions, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-
 }
