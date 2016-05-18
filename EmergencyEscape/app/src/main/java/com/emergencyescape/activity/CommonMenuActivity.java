@@ -19,13 +19,13 @@ public class CommonMenuActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if(id == R.id.action_emtext){
-            Intent intent = new Intent(this,EmTextActivity.class);
+            Intent intent = new Intent(this,EmTextActivity.class).putExtra("emergencyMode",true);
             startActivity(intent);
             return true;
         }
 
         if(id == R.id.action_emtap){
-            Intent intent = new Intent(this,EmTapActivity.class);
+            Intent intent = new Intent(this,EmTapActivity.class).putExtra("emergencyMode",true);
             startActivity(intent);
             return true;
         }
