@@ -1,13 +1,14 @@
 package com.emergencyescape;
 
+
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 
-import com.emergencyescape.option.OptionActivity;
 
-public class ItineraryActivity extends OptionActivity {
+public class ItineraryActivity extends CommonMenuActivity {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

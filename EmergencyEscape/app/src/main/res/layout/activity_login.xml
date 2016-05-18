@@ -1,4 +1,4 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,106 +8,78 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".login.LoginActivity">
+    tools:context="com.emergencyescape.LoginActivity">
 
 
-    <TextView android:text="Benvenuto!"
+    <EditText
+        android:id="@+id/user"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/prompt_email"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:layout_below="@+id/imageView"
+        android:layout_alignLeft="@+id/psw"
+        android:layout_alignStart="@+id/psw"
+        android:layout_marginTop="33dp" />
+
+    <EditText
+        android:id="@+id/psw"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/prompt_password"
+        android:imeActionId="@+id/login"
+        android:imeActionLabel="@string/action_sign_in_short"
+        android:imeOptions="actionUnspecified"
+        android:inputType="textPassword"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:layout_below="@+id/user"
+        android:layout_alignLeft="@+id/remember"
+        android:layout_alignStart="@+id/remember"
+        android:layout_marginTop="22dp" />
+
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/textview"
-        android:layout_marginTop="30dp"
-        android:textSize="40dp"
+        android:id="@+id/imageView"
+        android:src="@drawable/logo1piccolo"
+        android:layout_marginTop="34dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
-
-    <!-- Login progress -->
-    <ProgressBar
-        android:id="@+id/login_progress"
-        style="?android:attr/progressBarStyleLarge"
+    <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="30dp"
-        android:layout_marginTop="30dp"
-        android:visibility="gone" />
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Ricordami"
+        android:id="@+id/remember"
+        android:checked="false"
+        android:layout_marginTop="31dp"
+        android:layout_below="@+id/psw"
+        android:layout_alignLeft="@+id/registra"
+        android:layout_alignStart="@+id/registra" />
 
-    <!-- modificato da scrollView a LinearLayout -->
-    <LinearLayout
-        android:id="@+id/login_form"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textStyle="bold"
+        android:text="Registrati"
+        android:id="@+id/registra"
+        android:clickable="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
-        <LinearLayout
-            android:id="@+id/email_login_form"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-
-
-            <AutoCompleteTextView
-                android:id="@+id/email"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/prompt_email"
-                android:inputType="textEmailAddress"
-                android:maxLines="1"
-                android:singleLine="true" />
-
-        </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="LOGIN"
+        android:id="@+id/loginbutton"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="28dp" />
 
 
-
-                <EditText
-                    android:id="@+id/password"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/prompt_password"
-                    android:imeActionId="@+id/login"
-                    android:imeActionLabel="@string/action_sign_in_short"
-                    android:imeOptions="actionUnspecified"
-                    android:inputType="textPassword"
-                    android:maxLines="1"
-                    android:singleLine="true" />
-
-            </android.support.design.widget.TextInputLayout>
-
-            <Button
-                android:id="@+id/email_sign_in_button"
-                style="?android:textAppearanceSmall"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="@string/action_sign_in"
-                android:textStyle="bold" />
-
-
-            <TextView android:id="@+id/link_reg"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
-                android:layout_marginBottom="40dp"
-                android:text="registrati"
-                android:gravity="center"
-                android:textSize="20dip"/>
-
-
-        </LinearLayout>
-
-
-
-    </LinearLayout>
-
-
-
-
-
-</LinearLayout>
+</RelativeLayout>
