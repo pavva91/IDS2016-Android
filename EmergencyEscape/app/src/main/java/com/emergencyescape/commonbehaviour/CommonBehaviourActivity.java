@@ -66,7 +66,7 @@ public class CommonBehaviourActivity extends MvpViewStateActivity<MvpView, Commo
         int id = item.getItemId();
 
         if(id == R.id.action_emtext){
-            Intent intent = new Intent(this,TextDepartureActivity.class).putExtra("emergencyState",true); // TODO: Sostitutire EmText con TextDeparture
+            Intent intent = new Intent(this,TextDepartureActivity.class).putExtra("emergencyState",true);
             startActivity(intent);
             return true;
         }
@@ -86,7 +86,7 @@ public class CommonBehaviourActivity extends MvpViewStateActivity<MvpView, Commo
 
 
         if(id == R.id.action_noemtext){
-            Intent intent = new Intent(this,TextDepartureActivity.class).putExtra("emergencyState",false); // TODO: Sostiture NoEmText con TextDeparture e TextDestination
+            Intent intent = new Intent(this,TextDepartureActivity.class).putExtra("emergencyState",false);
             startActivity(intent);
             return true;
         }

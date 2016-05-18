@@ -13,10 +13,10 @@ import butterknife.OnClick;
 
 public class TextDepartureActivity extends CommonBehaviourActivity {
 
-    //TODO: Finire Refactoring:
+    // Refactoring attuato:
     // - Old Class: EmTextActivity
-    // - Fare merge con NoemTextActivityOld
-    // - verifica emergenza tramite boolean (emergencyState)
+    // - Merge con NoemTextActivityOld
+    // - Verifica emergenza tramite boolean (emergencyState)
 
 
     @BindView(R.id.toolbar) Toolbar toolbar;
