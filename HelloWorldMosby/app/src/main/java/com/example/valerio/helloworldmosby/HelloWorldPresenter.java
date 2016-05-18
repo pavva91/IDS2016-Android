@@ -3,6 +3,8 @@ package com.example.valerio.helloworldmosby;
  * Created by Valerio Mattioli on 11/05/2016.
  */
 
+import android.accounts.Account;
+
 import com.example.valerio.helloworldmosby.business_logic.GreetingGeneratorTask;
 import com.hannesdorfmann.mosby.mvp.MvpBasePresenter;
 
@@ -63,4 +65,43 @@ class HelloWorldPresenter extends MvpBasePresenter<HelloWorldView> {
             cancelGreetingTaskIfRunning();
         }
     }
+
+
+    /*
+    ESEMPIO DI JavaRx
+     */
+    public void doLogin(AuthCredentials credentials) {
+
+        if (isViewAttached()) {
+            getView().showLoading();
+        }
+
+        // Kind of "callback"
+        cancelSubscription();
+        subscriber = new Subscriber<Account>() {
+            @Override public void onCompleted() {
+                if (isViewAttached()) {
+                    getView().loginSuccessful();
+                }
+            }
+
+            @Override public void onError(Throwable e) {
+                if (isViewAttached()) {
+                    getView().showError();
+                }
+            }
+
+            @Override public void onNext(Account account) {
+                eventBus.post(new LoginSuccessfulEvent(account));
+            }
+        };
+
+        // do the login
+        accountManager.doLogin(credentials)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(subscriber);
+    }
+
+
 }
