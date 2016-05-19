@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 import com.mysql.jdbc.Statement;
 
-import it.univpm.maps.Node.tiponodo;
+import it.univpm.maps.Node.NodeType;
 
 public class AccessDB {
 
@@ -55,13 +55,13 @@ public class AccessDB {
 	public Node insertNode(Connection con, Map m, Node n) throws SQLException{
 		int numRecord;
 		String mapName = m.getNome();
-		String edgeCode = n.getCodice();
-		String nodeDescr = n.getDescrizione();
+		String edgeCode = n.getCode();
+		String nodeDescr = n.getDescr();
 		int quote = n.getQuota();
 		int x = n.getX();
 		int y = n.getY();
-		double width = n.getLarghezza();
-		String type = n.getTipo().toString();
+		double width = n.getWidth();
+		String type = String.valueOf(n.getWidth());
 		PreparedStatement stmt = con.prepareStatement("INSERT INTO nodi (mappa, codice, descrizione, quota, x, y, larghezza, tipo) VALUES(?,?,?,?,?,?,?,?)",Statement.RETURN_GENERATED_KEYS);
 		stmt.setString(1, mapName);
 		stmt.setString(2, edgeCode);
@@ -92,7 +92,7 @@ public class AccessDB {
 		int numRecord;
 		int nodeFrom = getIdNode(con, m, e.getPartenza());
 		int nodeTo = getIdNode(con, m, e.getDestinazione());
-		double lenght = e.getLunghezza();
+		double lenght = e.getLength();
 		double v = e.getV();
 		double i = e.getI();
 		double c = e.getC();
@@ -177,14 +177,14 @@ public class AccessDB {
 		while(rs.next()){
 			Node n = new Node();
 			n.setId(rs.getInt("id"));
-			n.setMappa(m.getNome());
-			n.setCodice(rs.getString("codice"));
-			n.setDescrizione(rs.getString("descrizione"));
+			n.setMap(m.getNome());
+			n.setCode(rs.getString("codice"));
+			n.setDescr(rs.getString("descrizione"));
 			n.setQuota(rs.getInt("quota"));
 			n.setX(rs.getInt("x"));
 			n.setY(rs.getInt("y"));
-			n.setLarghezza(rs.getDouble("larghezza"));
-			n.setTipo(tiponodo.valueOf(rs.getString("tipo")));
+			n.setWidth(rs.getDouble("larghezza"));
+			n.setType(NodeType.valueOf(rs.getString("tipo")));
 			m.AggiungiNodo(n);
 		}
 		//seleziono gli archi
@@ -295,13 +295,13 @@ public class AccessDB {
 			u.setUsername(rs.getString("username"));
 			u.setPassword(rs.getString("password"));
 			if (rs.getInt("posizione")>=0){
-				u.setPosizione(rs.getInt("posizione"));
+				u.setPosition(rs.getInt("posizione"));
 			}else{
 				//se l'utente non si trova in nessun arco della mappa gli assegno la posizione -1
-				u.setPosizione(-1);
+				u.setPosition(-1);
 			}
 			u.setToken(rs.getString("token"));
-			u.setAggiornamentoMappa(rs.getTimestamp("aggiornamento_mappa"));
+			u.setLastMapUpdate(rs.getTimestamp("aggiornamento_mappa"));
 			return u;
 		}
 		throw new SQLException("ERRORE!");
@@ -312,7 +312,7 @@ public class AccessDB {
 	public User updatePositionUser(Connection con, User u, int newPosition) throws SQLException{
 		PreparedStatement stmt;
 		String mapName;
-		int oldPosition = u.getPosizione();
+		int oldPosition = u.getPosition();
 		//se l'utente non aveva una posizione nota allora...
 		if(oldPosition==-1){
 			//rimuovo una persona da tutti gli archi adiacenti la vecchia posizione dell'utente e aggiorno il LOS

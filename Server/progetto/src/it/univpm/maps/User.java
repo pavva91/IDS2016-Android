@@ -13,62 +13,50 @@ public class User {
 	String username; //nome utente
 	String password; //password utente
 	String salt; //salt usato per crittografia password con funzione hashUtente
-	int posizione; //posizione dell'utente (id codice nodo)
+	int position; //posizione dell'utente (id codice nodo)
 	String token; //token da usare per la comunicazione con il server
-	Date aggiornamentoMappa; //data e ora dell'ultimo invio mappa all'utente
+	Date lastMapUpdate; //data e ora della mappa
 	
 	//costruttore senza parametri
 	public User(){
 		
 	}
 	
+	//getters e setters
 	public String getUsername() {
 		return username;
 	}
-
 	public void setUsername(String username) {
 		this.username = username;
 	}
-
 	public String getPassword() {
 		return password;
 	}
-
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
 	public String getSalt(){
 		return this.salt;
 	}
-	
 	public void setSalt(String salt){
 		this.salt=salt;
 	}
-
-	public int getPosizione() {
-		return posizione;
+	public int getPosition() {
+		return position;
 	}
-
-	public void setPosizione(int posizione) {
-		this.posizione = posizione;
+	public void setPosition(int position) {
+		this.position = position;
 	}
-
 	public String getToken() {
 		return token;
 	}
-
 	public void setToken(String token) {
 		this.token = token;
 	}
-
-	public Date getAggiornamentoMappa() {
-		return aggiornamentoMappa;
+	public Date getLasMapUpdate() {
+		return lastMapUpdate;
 	}
-
-	public void setAggiornamentoMappa(Date aggiornamentoMappa) {
-		this.aggiornamentoMappa = aggiornamentoMappa;
+	public void setLastMapUpdate(Date lastMapUpdate) {
+		this.lastMapUpdate = lastMapUpdate;
 	}
-	
-	
 }

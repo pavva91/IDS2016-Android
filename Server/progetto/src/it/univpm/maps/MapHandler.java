@@ -27,17 +27,22 @@ public class MapHandler{
 		
 	}
 	
+	//metodo che carica una mappa sul DB
+	//ritorna FORBIDDEN se l'utente non ha i privilegi necessari
+	//ritorna CONFLICT se si tenta di caricare una mappa che già esiste sul DB
+	//ritorna CONFLICT se si verificano problemi SQL
+	//ritorna OK se la mappa viene caricata correttamente
 	@POST
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Response CreaMappa(Map m, @QueryParam("token")String token){
+	public Response createMap(Map m, @QueryParam("token")String token){
 		try{
 			Database db = new Database();
 			Connection con = db.getConnection();
 			AccessDB access = new AccessDB();
-			if(access.getUtente(con, token).getUsername().equals(Config.ADMINISTRATOR_USER))
+			if(access.getUser(con, token).getUsername().equals(Config.ADMINISTRATOR_USER))
 				if(!access.searchMap(con, m.getNome())){
-					access.inserisciMappa(con, m);
+					access.insertMap(con, m);
 				}else{
 					//access.cancellaMappa(con, m);
 					//errore mappa già esistente
@@ -45,31 +50,36 @@ public class MapHandler{
 				}	
 			else
 				//errore utente non autorizzato a caricare mappe
-				return Response.status(Response.Status.FORBIDDEN).entity("ERRORE: Utente non autorizzato a caricare mappe!").build();
+				return Response.status(Response.Status.FORBIDDEN).entity("ERRORE: Utente non autorizzato!").build();
 		}catch(SQLException esql){
 			//errore inserimento mappa //restituire 409
 			return Response.status(Response.Status.CONFLICT).entity(esql.getMessage()).build();
-		}catch (Exception e){
-			System.out.println(e);
+		}catch (Exception ex){
+			System.out.println(ex);
 		}
 		return Response.ok(m, MediaType.APPLICATION_JSON).build();
 	}
 	
+	//metodo che cancella una mappa dal DB
+	//ritorna FORBIDDEN se l'utente non ha i privilegi necessari
+	//ritorna NOT FOUND se si tenta di cancellare una mappa che non esiste sul DB
+	//ritorna CONFLICT se si verificano problemi SQL
+	//ritorna OK se la mappa cancellata correttamente
 	@DELETE
 	@Path("{nome}")
 	@Produces("application/json")
-	public Response CancellaMappa(@PathParam("nome") String nome, @QueryParam("token")String token, @Context HttpServletRequest request){
+	public Response deleteMap(@PathParam("nome") String name, @QueryParam("token")String token, @Context HttpServletRequest request){
 		try{
 			Database db = new Database();
 			Connection con = db.getConnection();
 			AccessDB access = new AccessDB();
-			FileUpload fileHandler = new FileUpload();
+			FileHandler fileHandler = new FileHandler();
 			Map m = new Map();
-			m.setNome(nome);
-			if(access.getUtente(con, token).getUsername().equals(Config.ADMINISTRATOR_USER))
-				if(access.searchMap(con, nome)){
-					access.deleteMap(con, m);
-					fileHandler.deleteFolder(request, nome);
+			m.setNome(name);
+			if(access.getUser(con, token).getUsername().equals(Config.ADMINISTRATOR_USER))
+				if(access.searchMap(con, name)){
+					access.deleteMap(con, m);//cancello mappa
+					fileHandler.deleteFolder(request, name);//cancello file immagine e cartella
 				}else{
 					//errore mappa non trovata
 					return Response.status(Response.Status.NOT_FOUND).entity("ERRORE: Mappa non trovata!").build();
@@ -86,9 +96,12 @@ public class MapHandler{
 		return Response.ok("Mappa cancellata!").build();
 	}
 
+	//metodo che ritorna un elenco di mappe presenti nel DB
+	//ritorna FORBIDDEN se l'utente è sconosciuto
+	//ritorna OK se non ci sono problemi
 	@GET
 	@Produces("application/json")
-	public Response ElencaMappe(@QueryParam("token")String token){
+	public Response listMaps(@QueryParam("token")String token){
 		ArrayList<Map> listaMappe = new ArrayList<Map>();
 		try{
 			Database db = new Database();
@@ -100,26 +113,29 @@ public class MapHandler{
 				//errore mappa non trovata //restituire 403
 				return Response.status(Response.Status.FORBIDDEN).entity("ERRORE: Utente non loggato!").build();
 			}	
-		}catch (Exception e){
-			e.printStackTrace();
+		}catch (Exception ex){
+			ex.printStackTrace();
 		}
 		GenericEntity entity = new GenericEntity<ArrayList<Map>>(listaMappe) {};
-
 		return Response.ok(entity, MediaType.APPLICATION_JSON).build();
 	}
 	
+	//metodo che ritorna una mappa a partire dal suo nome e dal token utente
+	//ritorna FORBIDDEN se l'utente è sconosciuto
+	//ritorna NOT FOUND se la mappa non esiste sul DB
+	//ritorna OK se non ci sono problemi
 	@GET
 	@Path("{name}")
 	@Produces("application/json")
-	public Response getMappa(@PathParam("name") String nome, @QueryParam("token")String token){
+	public Response getMap(@PathParam("name") String name, @QueryParam("token")String token){
 		AccessDB access = new AccessDB();
-		Map m=new Map(nome);
+		Map m=new Map(name);
 		try{
 			Database db = new Database();
 			Connection con = db.getConnection();
-			if(access.getUtente(con, token).getUsername().equals(Config.ADMINISTRATOR_USER)){
-				if(access.searchMap(con, nome)){
-					m=access.obtainMap(con, nome, token);
+			if(access.getUser(con, token).getUsername().equals(Config.ADMINISTRATOR_USER)){
+				if(access.searchMap(con, name)){
+					m=access.obtainMap(con, name, token);
 				}else{
 					//errore mappa non trovata //restituire 404
 					return Response.status(Response.Status.NOT_FOUND).entity("ERRORE: Mappa non trovata!").build();
@@ -127,26 +143,30 @@ public class MapHandler{
 			}else{
 				//errore mappa non trovata //restituire 403
 				return Response.status(Response.Status.FORBIDDEN).entity("ERRORE: Utente non autorizzato!").build();
-			}
-				
-		}catch (Exception e){
-			e.printStackTrace();
+			}				
+		}catch (Exception ex){
+			ex.printStackTrace();
 		}
 		return Response.ok(m, MediaType.APPLICATION_JSON).build();
 	}
 	
+	//metodo che permette di aggiornare i valori di peso di un arco
+	//prende in input l'arco con i nuovi valori aggiornati e restituisce l'arco aggiornato con tutti i dati presenti sul DB
+	//ritorna FORBIDDEN se l'utente non ha i privilegi necessari
+	//ritorna NOT FOUND se l'arco non esiste
+	//ritorna OK se l'arco viene aggiornato correttamente
 	@PUT
 	@Path("{name}/edges")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Response UpdateEdge(Edge e, @PathParam("name") String nome, @QueryParam("token")String token){
+	public Response UpdateEdge(Edge e, @PathParam("name") String name, @QueryParam("token")String token){
 		try{
 			AccessDB access = new AccessDB();
 			Database db = new Database();
 			Connection con = db.getConnection();
-			if(access.verifyToken(con, token)){
-				int edgeFrom = access.getNodeId(con, e.getPartenza(), nome);
-				int edgeTo = access.getNodeId(con, e.getDestinazione(), nome);
+			if(access.getUser(con, token).getUsername().equals(Config.ADMINISTRATOR_USER)){
+				int edgeFrom = access.getNodeId(con, e.getPartenza(), name);
+				int edgeTo = access.getNodeId(con, e.getDestinazione(), name);
 				if(access.edgeExist(con, edgeFrom, edgeTo)){
 					e=access.updateEdge(con, e, edgeFrom, edgeTo);
 				}else{
@@ -155,15 +175,11 @@ public class MapHandler{
 				}
 			}else{
 				//errore arco non trovato //restituire 403
-				return Response.status(Response.Status.FORBIDDEN).entity("ERRORE: Utente non loggato!").build();
-			}
-				
+				return Response.status(Response.Status.FORBIDDEN).entity("ERRORE: Utente non autorizzato!").build();
+			}	
 		}catch (Exception ex){
 			ex.printStackTrace();
 		}
 		return Response.ok(e, MediaType.APPLICATION_JSON).build();
 	}
-	
-
-	
 }

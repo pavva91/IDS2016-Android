@@ -3,6 +3,7 @@ package it.univpm.maps;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 
+
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Edge {
 
@@ -11,17 +12,18 @@ public class Edge {
 	private double i; //rischi per la vita
 	private double los; //presenza di persone
 	private double c; //dati variabili
-	private double lunghezza; //lunghezza arco in metri
-	String partenza; //id nodo partenza (foreign key)
-	String destinazione; //id nodo destinazione (foreign key)
-	private double superficie; //superficie arco in mq
-	int numpersone;//numero di persone presenti
+	private double length; //lunghezza arco in metri
+	private String nodeFrom; //id nodo partenza (foreign key)
+	private String nodeTo; //id nodo destinazione (foreign key)
+	private double area; //superficie arco in mq
+	private int numPers;//numero di persone presenti
 	
 	
 	//costruttore senza parametri
 	public Edge(){
 		
 	}
+	//getters e setters
 	public double getV() {
 		return this.v;
 	}
@@ -46,34 +48,34 @@ public class Edge {
 	public void setC(double c) {
 		this.c = c;
 	}
-	public double getLunghezza() {
-		return this.lunghezza;
+	public double getLength() {
+		return this.length;
 	}
 	public void setLunghezza(double lunghezza) {
-		this.lunghezza = lunghezza;
+		this.length = lunghezza;
 	}
 	public String getPartenza() {
-		return this.partenza;
+		return this.nodeFrom;
 	}
 	public void setPartenza(String partenza) {
-		this.partenza = partenza;
+		this.nodeFrom = partenza;
 	}
 	public String getDestinazione() {
-		return this.destinazione;
+		return this.nodeTo;
 	}
 	public void setDestinazione(String destinazione) {
-		this.destinazione = destinazione;
+		this.nodeTo = destinazione;
 	}
 	public double getSuperficie() {
-		return this.superficie;
+		return this.area;
 	}
 	public void setSuperficie(double superficie) {
-		this.superficie=superficie;
+		this.area=superficie;
 	}
 	public int getNumPersone(){
-		return this.numpersone;
+		return this.numPers;
 	}
 	public void setNumPersone(int numPersone){
-		this.numpersone=numPersone;
+		this.numPers=numPersone;
 	}
 }

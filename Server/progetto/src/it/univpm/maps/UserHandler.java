@@ -25,19 +25,22 @@ public class UserHandler {
 		
 	}
 	
-	
+	//metodo che crea un utente
+	//prende in input un utente e restituisce l'utente appena inserito nel DB
+	//ritorna CONFLICT in caso di errore
+	//ritorna OK se tutto ok
 	@POST
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Response CreaUtente(Utente u){
+	public Response createUser(User u){
 		String newPassword;
 		SecureRandom random = new SecureRandom();
 		String newToken = new String(new BigInteger(128, random).toString(32));
-		String salt = new String(new BigInteger(64, random).toString(32));
+		String salt = new String(new BigInteger(64, random).toString(32));//genero salt
 		u.setToken(newToken);
 		u.setSalt(salt);
-		newPassword=cryptPassword(u.getPassword(), salt);
-		u.setPassword(newPassword);
+		newPassword=cryptPassword(u.getPassword(), salt);//cifro la password
+		u.setPassword(newPassword);//setto password cifrata
 		try{
 			Database db = new Database();
 			Connection con = db.getConnection();
@@ -49,10 +52,14 @@ public class UserHandler {
 		return Response.ok(u.getToken(), MediaType.APPLICATION_JSON).build();	
 	}
 
+	//metodo che effettua il login utente verificando username e password restituendo il token utente
+	//ritorna CONFLICT in caso di errori SQL
+	//ritorna INTERNAL SERVER ERROR se non riesce ad accedere al DB
+	//ritorna OK se il login avviene correttamente
 	@GET
 	@Path("{username}/login")
 	@Produces("text/plain")
-	public Response LoginUtente(@PathParam("username")String username, @QueryParam("password")String password){
+	public Response userLogin(@PathParam("username")String username, @QueryParam("password")String password){
 		String token;
 		String salt;
 		Database db;
@@ -66,49 +73,52 @@ public class UserHandler {
 			password=cryptPassword(password, salt);
 			token = access.loginUser(con, username, password);
 		}catch (SQLException sqlex){
-			return Response.status(Response.Status.FORBIDDEN).entity(sqlex.toString()).build();
+			return Response.status(Response.Status.CONFLICT).entity(sqlex.toString()).build();
 		}catch (Exception e){
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("ERRORE: Accesso al db non riuscito!").build();
 		}
 		return Response.ok(token, MediaType.APPLICATION_JSON).build();
 	}
 	
+	//metodo che modifica la posizione di un utente e ritorna l'utente aggiornato
+	//ritorna CONFLICT se non è stato possibile aggiornare la posizione dell'utente
+	//ritorna EXPECTATION FAILED se riesce a cifrare la password
+	//ritorna OK se l'aggiornamento avviene correttamente
 	@POST
 	@Consumes("application/json")
 	@Path("{username}/posizione")
 	@Produces("application/json")
-	public Response posizioneUtente(Utente u, @QueryParam("token")String token){
-		//Utente u= new Utente();
-		int nuovaPosizione=u.getPosizione();
+	public Response updateUserPosition(User u, @QueryParam("token")String token){;
+		int neePosition=u.getPosition();
 		try{
 			Database db = new Database();
 			Connection con = db.getConnection();
 			AccessDB access = new AccessDB();
 			access.verifyToken(con, token);
-			//u = access.getUtente(con, token); //recupero utente dal DB
-			u = access.updatePositionUser(con, u, nuovaPosizione); //aggiorno posizione utente
-			//u = access.getUtente(con, token); //recupero utente aggiornato dal DB
-		}catch (Exception e){
+			u = access.updatePositionUser(con, u, neePosition); //aggiorno posizione utente
+		}catch (NoSuchAlgorithmException algex){	
+			return Response.status(Response.Status.EXPECTATION_FAILED).entity("ERRORE: Errore, algoritmo crittografico non supportato!").build();
+		}catch (Exception ex){
 			return Response.status(Response.Status.CONFLICT).entity("ERRORE: Aggiornamento posizione utente impossibile!").build();
 		}
 		return Response.ok(u, MediaType.APPLICATION_JSON).build();	
 	}
 	
-	   public String cryptPassword(String password, String salt) {
-		   	password=password.concat(salt);
-		   	MessageDigest messageDigest;
-			try {
-				messageDigest = MessageDigest.getInstance("SHA-256");
-				byte arrayDigest[] = messageDigest.digest(password.getBytes());     
-				StringBuffer hexString = new StringBuffer();
-				for (int i=0;i<arrayDigest.length;i++) {
-				    hexString.append(Integer.toHexString(0xFF & arrayDigest[i]));
-				}
-			    password=hexString.toString();
-			} catch (NoSuchAlgorithmException e) {
-				e.printStackTrace();
-			}
-		    return password;
+	//metodo che cripta la password e ritorna la password cifrata
+	//prende come parametri la password e il salt
+	public String cryptPassword(String password, String salt) {
+	   	password=password.concat(salt);
+	   	MessageDigest messageDigest;
+		try {
+			messageDigest = MessageDigest.getInstance("SHA-256");
+			byte arrayDigest[] = messageDigest.digest(password.getBytes());     
+			StringBuffer hexString = new StringBuffer();
+			for (int i=0; i<arrayDigest.length; i++)
+			    hexString.append(Integer.toHexString(0xFF & arrayDigest[i]));
+		    password=hexString.toString();
+		} catch (NoSuchAlgorithmException ex) {
+			ex.printStackTrace();
 		}
-	
+	    return password;
+	}
 }

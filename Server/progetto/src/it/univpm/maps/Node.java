@@ -7,56 +7,46 @@ import javax.xml.bind.annotation.XmlAccessType;
 public class Node {
 
 	//attributi
-	private String mappa; //mappa a cui appartiene il nodo
+	private String mapName; //mappa a cui appartiene il nodo
 	private int id; //codice indentificativo nodo
-	private String codice; //codice nodo
-	private String descrizione; //nome esteso nodo ***** serve ? **************
+	private String code; //codice nodo
+	private String descr; //nome esteso nodo
 	private int quota; //quota in metri s.l.m.
 	private int x; //coordinata x
 	private int y; //coordinata y
-	private double larghezza; //larghezza in metri
-	static enum tiponodo {uscita, uscita_emergenza, altro};
-	private tiponodo tipo;
+	private double width; //larghezza in metri
+	static enum NodeType {EXIT, EMERGENCY_EXIT, OTHER};
+	private NodeType type;
 	
-	//costruttore
-	public Node(String codice, String desc, int quota, int x, int y, double larg, tiponodo t){
-		this.codice=codice;
-		this.descrizione=desc;
-		this.quota=quota;
-		this.x=x;
-		this.y=y;
-		this.larghezza=larg;
-		this.tipo=t;
-	}
 	//costruttore senza parametri
 	public Node(){
 		
 	}
 	
-
+	//getters e setters
 	public int getId(){
 		return this.id;
 	}
 	public void setId(int id){
 		this.id=id;
 	}
-	public String getCodice(){
-		return this.codice;
+	public String getCode(){
+		return this.code;
 	}
-	public void setCodice(String codice){
-		this.codice=codice;
+	public void setCode(String code){
+		this.code=code;
 	}
-	public String getDescrizione(){
-		return this.descrizione;
+	public String getDescr(){
+		return this.descr;
 	}
-	public void setDescrizione(String desc){
-		this.descrizione=desc;
+	public void setDescr(String desc){
+		this.descr=desc;
 	}
 	public int getQuota(){
 		return this.quota;
 	}
-	public void setQuota(int q){
-		this.quota=q;
+	public void setQuota(int quota){
+		this.quota=quota;
 	}
 	public int getX(){
 		return this.x;
@@ -70,27 +60,25 @@ public class Node {
 	public void setY(int y){
 		this.y=y;
 	}
-	public double getLarghezza(){
-		return this.larghezza;
+	public double getWidth(){
+		return this.width;
 	}
-	public void setLarghezza(double larghezza){
-		this.larghezza=larghezza;
+	public void setWidth(double width){
+		this.width=width;
 	}
 	public void setY(double l){
-		this.larghezza=l;
+		this.width=l;
 	}
-	public tiponodo getTipo(){
-		return this.tipo;
+	public NodeType getType(){
+		return this.type;
 	}
-	public void setTipo(tiponodo t){
-		this.tipo=t;
+	public void setType(NodeType type){
+		this.type=type;
 	}
-	public void setMappa(String mappa){
-		this.mappa=mappa;
+	public void setMap(String mapName){
+		this.mapName=mapName;
 	}
-	public String getMappa(){
-		return this.mappa;
-	}
-	
-	
+	public String getMap(){
+		return this.mapName;
+	}	
 }

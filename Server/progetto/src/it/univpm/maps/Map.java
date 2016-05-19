@@ -12,54 +12,56 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Map {
 	//attributi
 	@XmlElement
-	private String nome;
+	private String name;
 	@XmlElement
-	private ArrayList<Node> nodi = new ArrayList<Node>();
+	private ArrayList<Node> nodes = new ArrayList<Node>();
 	@XmlElement
-	private ArrayList<Edge> archi = new ArrayList<Edge>();
+	private ArrayList<Edge> edges = new ArrayList<Edge>();
 	@XmlElement
-	private ArrayList<String> immagini = new ArrayList<String>();
+	private ArrayList<String> images = new ArrayList<String>();
 
 	//costruttore 
-	public Map(String nome){
-		this.nome=nome;
+	public Map(String name){
+		this.name=name;
 	}
 	//costruttore senza parametri
 	public Map(){
 		
 	}
+	
+	//getters e setters
 	public String getNome(){
-		return this.nome;
+		return this.name;
 	}
-	public void setNome(String nome){
-		this.nome=nome;
+	public void setNome(String name){
+		this.name=name;
 	}
 	public ArrayList<Node> getNodi(){
-		return this.nodi;		
+		return this.nodes;		
 	}
-	public void setNodi(ArrayList<Node> nodi){
-		this.nodi=nodi;
+	public void setNodi(ArrayList<Node> nodes){
+		this.nodes=nodes;
 	}
 	public ArrayList<Edge> getArchi(){
-		return this.archi;		
+		return this.edges;		
 	}
-	public void setArchi(ArrayList<Edge> archi){
-		this.archi=archi;
+	public void setArchi(ArrayList<Edge> edges){
+		this.edges=edges;
 	}
 	public void AggiungiNodo(Node n){
-		this.nodi.add(n);
+		this.nodes.add(n);
 	}
-	public void AggiungiArco(Edge a){
-		this.archi.add(a);
+	public void AggiungiArco(Edge e){
+		this.edges.add(e);
 	}
 	public void AggiungiImmagine(String s){
-		this.immagini.add(s);
+		this.images.add(s);
 	}
-	public void setImmagini(ArrayList<String> immagini){
-		this.immagini=immagini;
+	public void setImmagini(ArrayList<String> images){
+		this.images=images;
 	}
 	public ArrayList<String> getImmagini(){
-		return this.immagini;
+		return this.images;
 	}
 	
 }
