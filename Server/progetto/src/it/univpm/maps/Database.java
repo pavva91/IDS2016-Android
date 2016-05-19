@@ -16,17 +16,12 @@ public class Database {
 	private static final String portDB = "3306";
 	private static final String urlDB = "/progetto";
 	
+	//metodo che consente di collegarsi al DB, restituisce la connessione
 	public Connection getConnection() throws Exception{
-		try{
-			String connectionURL = "jdbc:mysql://"+ipDB+":"+portDB+urlDB;
-			Connection connection = null;
-			Class.forName("com.mysql.jdbc.Driver").newInstance();
-			connection = DriverManager.getConnection(connectionURL, usernameDB, passwordDB);
-			return connection;
-		} catch (Exception e){
-			System.out.println(e.toString());
-			throw e;
-			
-		}
+		String connectionURL = "jdbc:mysql://"+ipDB+":"+portDB+urlDB;
+		Connection connection = null;
+		Class.forName("com.mysql.jdbc.Driver").newInstance();
+		connection = DriverManager.getConnection(connectionURL, usernameDB, passwordDB);
+		return connection;
 	}
 }
