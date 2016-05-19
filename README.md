@@ -21,3 +21,6 @@ I merge/push sul master li facciamo una volta che le modifiche fatte sul branch 
 
 ##BUTTERKNIFE
 - Spiegazione [ButterKnife] (http://jakewharton.github.io/butterknife/).
+
+##DB-FLOW
+- A robust, powerful, and very simple ORM android database library with annotation processing. Let [DBFlow] (https://github.com/Raizlabs/DBFlow) make SQL code flow like a steady stream so you can focus on writing amazing apps.
