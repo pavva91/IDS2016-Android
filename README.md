@@ -21,3 +21,12 @@ I merge/push sul master li facciamo una volta che le modifiche fatte sul branch 
 
 ##BUTTERKNIFE
 - Spiegazione [ButterKnife] (http://jakewharton.github.io/butterknife/).
+
+##DB-FLOW
+- A robust, powerful, and very simple ORM android database library with annotation processing. Let [DBFlow] (https://github.com/Raizlabs/DBFlow) make SQL code flow like a steady stream so you can focus on writing amazing apps.
+
+##RETROLAMBDA
+- Plugin per implementare le funzioni anonime (lambda) in Android ([LINK]) (https://github.com/evant/gradle-retrolambda)
+
+##RxJava
+- Observer pattern, per la gestione di task asincroni (UI Thread, Background Thread) ([LINK]) (http://blog.danlew.net/2014/09/15/grokking-rxjava-part-1/)

@@ -21,6 +21,7 @@ public class CommonBehaviourPresenter extends MvpBasePresenter<MvpView>{
 
     public boolean logout(Context AppContext){
         try {
+            // TODO:Spostare in un task asincrono?
             SessionClass sc = SessionClass.getInstance();
             //canella dal db la session key
             UtenteTable ut = new UtenteTable(AppContext);

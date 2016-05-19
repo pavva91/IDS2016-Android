@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
+apply plugin: 'me.tatarka.retrolambda'
 
 android {
     compileSdkVersion 23
@@ -36,4 +37,8 @@ dependencies {
 
     compile 'com.hannesdorfmann.mosby:mvp:2.0.1'// Mosby library
     compile 'com.hannesdorfmann.mosby:viewstate:2.0.1' // optional viewstate feature
+
+
+
+
 }
