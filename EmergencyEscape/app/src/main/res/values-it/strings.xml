@@ -30,4 +30,6 @@
     <string name="insert_destination">Inserire Destinazione:</string>
     <string name="action_ok">Ok</string>
     <string name="insert_departure">Inserire Partenza</string>
+    <string name="itinerary">Percorso</string>
+    <string name="title_activity_noem_tap">NoemTapActivity</string>
 </resources>

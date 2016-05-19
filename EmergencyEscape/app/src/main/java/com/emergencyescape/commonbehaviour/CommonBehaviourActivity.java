@@ -1,24 +1,19 @@
 package com.emergencyescape.commonbehaviour;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
-import com.emergencyescape.EmTapActivity;
-import com.emergencyescape.TextDepartureActivity;
-import com.emergencyescape.NoemTapActivity;
+
+import com.emergencyescape.text.TextDepartureActivity;
+import com.emergencyescape.tap.TapActivity;
 import com.emergencyescape.R;
 import com.hannesdorfmann.mosby.mvp.MvpView;
 import com.hannesdorfmann.mosby.mvp.viewstate.MvpViewStateActivity;
 import com.hannesdorfmann.mosby.mvp.viewstate.RestorableViewState;
 import com.hannesdorfmann.mosby.mvp.viewstate.ViewState;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * Created by valerio on 27/04/2016.
@@ -72,7 +67,7 @@ public class CommonBehaviourActivity extends MvpViewStateActivity<MvpView, Commo
         }
 
         if(id == R.id.action_emtap){
-            Intent intent = new Intent(this,EmTapActivity.class).putExtra("emergencyState",true);
+            Intent intent = new Intent(this,TapActivity.class).putExtra("emergencyState",true);
             startActivity(intent);
             return true;
         }
@@ -92,7 +87,7 @@ public class CommonBehaviourActivity extends MvpViewStateActivity<MvpView, Commo
         }
 
         if(id == R.id.action_noemtap){
-            Intent intent = new Intent(this,NoemTapActivity.class).putExtra("emergencyState",false);
+            Intent intent = new Intent(this,TapActivity.class).putExtra("emergencyState",false);
             startActivity(intent);
             return true;
         }

@@ -37,6 +37,8 @@
     <string name="insert_destination">Insert Destination:</string>
     <string name="action_ok">Ok</string>
     <string name="insert_departure">Insert Departure:</string>
+    <string name="title_activity_noem_tap">NoemTapActivity</string>
+    <string name="itinerary">Itinerary</string>
 
 
 </resources>

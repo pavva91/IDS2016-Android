@@ -1,4 +1,4 @@
-package com.emergencyescape;
+package com.emergencyescape.tap;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -8,14 +8,21 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.emergencyescape.ItineraryActivity;
+import com.emergencyescape.R;
 import com.emergencyescape.commonbehaviour.CommonBehaviourActivity;
+import com.emergencyescape.text.TextDestinationActivity;
+
+import butterknife.OnClick;
 
 
 public class MapTapActivity extends CommonBehaviourActivity {
 
+    // TODO: Rendere tutto questo schifo dinamico e collegato col model
+
     private Bitmap bitmap;
 
-
+    // TODO: Spostare il mapping aula-colore nel model
     int aulamagna=-8355841;
     int dacs= -8388896;
     int dardus=-4129024;
@@ -63,7 +70,17 @@ public class MapTapActivity extends CommonBehaviourActivity {
 
     }
 
-    private void quote(){
+    // TODO: intregrare con boolean e ButterKnife
+    @OnClick(R.id.btnPartenza)
+    public void submitDeparture(){
+      /*  if (this.getEmergencyState()) {
+            startActivity(new Intent(MapTapActivity.this, ItineraryActivity.class));
+        }else{
+            startActivity(new Intent(MapTapActivity.this,TextDestinationActivity.class).putExtra("aula",this.getAula()));
+        }*/
+    }
+
+    private void quote(){ // TODO: Spostare questa funzione secondo il pattern utilizzando il model
 
         String quota = getIntent().getExtras().getString("quota");
         System.out.println("quota " + String.valueOf(quota));
@@ -165,7 +182,7 @@ public class MapTapActivity extends CommonBehaviourActivity {
                                 }
                         }
                     }
-                    return true;
+                return true;
                 }
             });
 
@@ -404,5 +421,10 @@ public class MapTapActivity extends CommonBehaviourActivity {
             });
 
         }
-        }
+    }
+
+    private Boolean getEmergencyState(){
+        Boolean emergencyState = getIntent().getBooleanExtra("emergencyState",true);
+        return emergencyState;
+    }
 }
