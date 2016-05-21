@@ -86,16 +86,16 @@ public class UserHandler {
 	//ritorna OK se l'aggiornamento avviene correttamente
 	@POST
 	@Consumes("application/json")
-	@Path("{username}/posizione")
+	@Path("{username}/position")
 	@Produces("application/json")
 	public Response updateUserPosition(User u, @QueryParam("token")String token){;
-		int neePosition=u.getPosition();
+		int newPosition=u.getPosition();
 		try{
 			Database db = new Database();
 			Connection con = db.getConnection();
 			AccessDB access = new AccessDB();
 			access.verifyToken(con, token);
-			u = access.updatePositionUser(con, u, neePosition); //aggiorno posizione utente
+			u = access.updatePositionUser(con, u, newPosition); //aggiorno posizione utente
 		}catch (NoSuchAlgorithmException algex){	
 			return Response.status(Response.Status.EXPECTATION_FAILED).entity("ERRORE: Errore, algoritmo crittografico non supportato!").build();
 		}catch (Exception ex){

@@ -3,7 +3,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import com.mysql.jdbc.Statement;
 
@@ -15,6 +18,7 @@ public class AccessDB {
 	public AccessDB(){
 		
 	}
+	
 	//medodo che restituisce l'elenco di mappe (nomi univoci) presenti sul DB
 	public ArrayList<Map> getMapList(Connection con) throws SQLException{
 		ArrayList<Map> mapList = new ArrayList<Map>();
@@ -24,6 +28,7 @@ public class AccessDB {
 			while(rs.next()){
 				Map m = new Map();
 				m.setNome(rs.getString("nome"));
+				m.setLastUpdateMap(rs.getTimestamp("data_aggiornamento"));
 				mapList.add(m);
 			}
 		} catch (SQLException e){
@@ -164,9 +169,10 @@ public class AccessDB {
 	
 	//metodo che ritorna una mappa a partire dal suo nome
 	//richiede anche il token utente e aggiorna la data di ultimo invio mappa all'utente
-	public Map obtainMap(Connection con, String mapName, String token) throws SQLException{
+	public Map getMap(Connection con, String mapName, String token) throws SQLException{
 		PreparedStatement stmt;
 		ResultSet rs;
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 		Map m=new Map(mapName);
 		int numRecord;
 		//seleziono i nodi mappa
@@ -218,6 +224,13 @@ public class AccessDB {
 		//creo la lista di URL di immagini
 		while(rs.next()){
 			m.AggiungiImmagine(rs.getString("url"));
+		}
+		//recupero data aggiornamento mappa
+		stmt = con.prepareStatement("SELECT * FROM mappe WHERE nome=?");
+		stmt.setString(1, mapName);
+		rs = stmt.executeQuery();
+		if(rs.next()){
+			m.setLastUpdateMap(rs.getTimestamp("data_aggiornamento"));
 		}
 		return m;
 	}
@@ -350,9 +363,7 @@ public class AccessDB {
 		}
 		mapName=rs.getString("mappa");
 		//aggiorno data mappa
-		stmt = con.prepareStatement("UPDATE mappe SET data_aggiornamento=NOW() WHERE nome=?");
-		stmt.setString(1, mapName);
-		stmt.executeUpdate();
+		updateMapDate(con, mapName);
 		return u;
 	}
 	
@@ -468,5 +479,22 @@ public class AccessDB {
 		stmt.setString(1, mapName);
 		stmt.executeUpdate();	
 		stmt.close();
+	}
+	
+	//metodo che recupera le informazioni su una mappa (nome e data ultimo aggiornamento)
+	public Map getMapInfo(Connection con, String mapName) throws SQLException{
+		Map m = new Map();
+		PreparedStatement stmt;
+		//recupero data aggiornamento mappa
+		stmt = con.prepareStatement("SELECT * FROM mappe WHERE nome=?");
+		stmt.setString(1, mapName);
+		ResultSet rs = stmt.executeQuery();
+		if(rs.next()){
+			m.setNome(mapName);
+			m.setLastUpdateMap(rs.getTimestamp("data_aggiornamento"));
+		}else{
+			new SQLException("ERRORE: mappa non trovata!");
+		}
+		return m;
 	}
 }

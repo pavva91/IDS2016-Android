@@ -1,6 +1,7 @@
 package it.univpm.maps;
 
 import java.util.ArrayList;
+import java.util.Date;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -19,6 +20,8 @@ public class Map {
 	private ArrayList<Edge> edges = new ArrayList<Edge>();
 	@XmlElement
 	private ArrayList<String> images = new ArrayList<String>();
+	@XmlElement
+	private Date lastUpdateMap;
 
 	//costruttore 
 	public Map(String name){
@@ -62,6 +65,12 @@ public class Map {
 	}
 	public ArrayList<String> getImmagini(){
 		return this.images;
+	}
+	public void setLastUpdateMap(Date lastUpdateMap){
+		this.lastUpdateMap=lastUpdateMap;
+	}
+	public Date getLastUpdateMap(){
+		return this.lastUpdateMap;
 	}
 	
 }

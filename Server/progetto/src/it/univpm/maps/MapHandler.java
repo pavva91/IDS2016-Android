@@ -136,7 +136,7 @@ public class MapHandler{
 			Connection con = db.getConnection();
 			if(access.getUser(con, token).getUsername().equals(Config.ADMINISTRATOR_USER)){
 				if(access.searchMap(con, mapName)){
-					m=access.obtainMap(con, mapName, token);
+					m=access.getMap(con, mapName, token);
 				}else{
 					//errore mappa non trovata //restituire 404
 					return Response.status(Response.Status.NOT_FOUND).entity("ERRORE: Mappa non trovata!").build();
@@ -184,4 +184,29 @@ public class MapHandler{
 		}
 		return Response.ok(e, MediaType.APPLICATION_JSON).build();
 	}
+	
+		//metodo che ritorna le informazioni su una mappa presente nel DB
+		//ritorna FORBIDDEN se l'utente è sconosciuto
+		//ritorna OK se non ci sono problemi
+		@GET
+		@Path("{mapName}/info")
+		@Produces("application/json")
+		public Response getMapInfo(@PathParam("mapName") String mapName, @QueryParam("token")String token){
+			Map m=new Map();
+			try{
+				Database db = new Database();
+				Connection con = db.getConnection();
+				AccessDB access = new AccessDB();
+				if(access.verifyToken(con, token)){
+					m = access.getMapInfo(con, mapName);
+				}else{
+					//errore mappa non trovata //restituire 403
+					return Response.status(Response.Status.FORBIDDEN).entity("ERRORE: Utente non loggato!").build();
+				}	
+			}catch (Exception ex){
+				ex.printStackTrace();
+			}
+			return Response.ok(m, MediaType.APPLICATION_JSON).build();
+		}
+	
 }

@@ -22,7 +22,10 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import org.glassfish.jersey.media.multipart.FormDataContentDisposition.FormDataContentDispositionBuilder;
+
+import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
+//import org.glassfish.jersey.media.multipart.FormDataContentDisposition.FormDataContentDispositionBuilder;
+//import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 
 
@@ -52,13 +55,13 @@ public class FileHandler {
 								@QueryParam("token")String token,
 								@Context HttpServletRequest request,
 								@FormDataParam("file") InputStream fileInputStream,
-								@FormDataParam("file") FormDataContentDispositionBuilder fileDetail) {
+								@FormDataParam("file") FormDataContentDisposition fileDetail) {
 		
 		ServletContext context=request.getSession().getServletContext();
 		String timeStamp =  new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
 		String SERVER_UPLOAD_LOCATION_FOLDER = context.getRealPath("/../../docroot/");
-		String filePath = SERVER_UPLOAD_LOCATION_FOLDER	 + "\\" + mapName + "\\" + mapName + "_" + quota + "_" + timeStamp +  "_" + fileDetail.build().getFileName();
-		String fileUrl = Config.SERVER_URL	 + mapName + "/" + mapName + "_" + quota + "_" + timeStamp +  "_" + fileDetail.build().getFileName();
+		String filePath = SERVER_UPLOAD_LOCATION_FOLDER	 + "\\" + mapName + "\\" + mapName + "_" + quota + "_" + timeStamp +  "_" + fileDetail.getFileName();
+		String fileUrl = Config.SERVER_URL	 + mapName + "/" + mapName + "_" + quota + "_" + timeStamp +  "_" + fileDetail.getFileName();
 		try{
 			Database db = new Database();
 			Connection con = db.getConnection();
@@ -85,6 +88,8 @@ public class FileHandler {
 			//salvo file sul server
 			saveFile(fileInputStream, filePath);
 			access.updateMapImage(con, mapName, quota, fileUrl);
+			//aggiorno data mappa
+			access.updateMapDate(con, mapName);
 	
 	    }catch(SecurityException se){
 	    	return Response.status(Response.Status.CONFLICT).entity("ERRORE: Impossibile creare cartella per salvataggio immagini!").build();
@@ -108,7 +113,6 @@ public class FileHandler {
 				outputStream.write(bytes, 0, read);
 			outputStream.flush();
 			outputStream.close();
-
 	}
 	
 	//metodo che cancella una cartella (comprese sottocartelle e file) dal filesystem
