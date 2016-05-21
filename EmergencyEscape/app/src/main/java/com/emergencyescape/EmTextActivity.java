@@ -10,6 +10,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import com.emergencyescape.utility.CommonMenuActivity;
+import com.emergencyescape.utility.ItineraryActivity;
+
 public class EmTextActivity extends CommonMenuActivity {
 
 

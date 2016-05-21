@@ -11,6 +11,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.emergencyescape.utility.CommonMenuActivity;
+
 public class EmQrActivity extends CommonMenuActivity {
 
     @Override

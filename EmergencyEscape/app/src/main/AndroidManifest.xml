@@ -60,7 +60,7 @@ package="com.emergencyescape">
             android:value="com.emergencyescape.MainActivity" />
     </activity>
     <activity
-        android:name=".NoemTapActivity"
+        android:name=".noemtap.NoemTapActivity"
         android:label=" "
         android:theme="@style/AppTheme.NoActionBar">
         <meta-data
@@ -84,7 +84,7 @@ package="com.emergencyescape">
             android:value="com.emergencyescape.MainActivity" />
     </activity>
     <activity
-        android:name=".DestinationActivity"
+        android:name=".utility.DestinationActivity"
         android:label=" "
         android:theme="@style/AppTheme.NoActionBar">
         <meta-data
@@ -92,7 +92,7 @@ package="com.emergencyescape">
             android:value="com.emergencyescape.MainActivity" />
     </activity>
     <activity
-        android:name=".ItineraryActivity"
+        android:name=".utility.ItineraryActivity"
         android:label=" "
         android:theme="@style/AppTheme.NoActionBar">
         <meta-data
@@ -101,7 +101,7 @@ package="com.emergencyescape">
     </activity>
 
     <activity
-        android:name=".MapTapActivity"
+        android:name=".noemtap.MapTapActivity"
         android:label=" "
         android:theme="@style/AppTheme.NoActionBar">
         <meta-data

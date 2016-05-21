@@ -73,6 +73,7 @@
             android:layout_height="wrap_content"
             android:text="Ok"
             android:id="@+id/btnDestinazione"
+            android:onClick="sendDest"
             android:layout_below="@+id/editDestinazione"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"/>

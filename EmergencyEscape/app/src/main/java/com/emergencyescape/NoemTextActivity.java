@@ -11,6 +11,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.emergencyescape.utility.CommonMenuActivity;
+import com.emergencyescape.utility.DestinationActivity;
+
 public class NoemTextActivity extends CommonMenuActivity {
 
 

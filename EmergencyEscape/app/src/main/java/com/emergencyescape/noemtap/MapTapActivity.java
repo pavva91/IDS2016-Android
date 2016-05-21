@@ -1,17 +1,18 @@
-package com.emergencyescape;
+package com.emergencyescape.noemtap;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
+
+import com.emergencyescape.utility.CommonMenuActivity;
+import com.emergencyescape.utility.DestinationActivity;
+import com.emergencyescape.R;
 
 
 public class MapTapActivity extends CommonMenuActivity {
@@ -19,39 +20,45 @@ public class MapTapActivity extends CommonMenuActivity {
     private Bitmap bitmap;
 
 
-    int aulamagna=-8355841;
-    int dacs= -8388896;
-    int dardus=-4129024;
-    int g1= -8462337;
-    int g2= -8462337;
-    /*int 1454= ; #7edfff
-    int 1455= ; #7edfff
-    int 150st2= ;#81deff*/
-    int dipmeccanica= -2293595;
-    int isac= -9446035;
-  //  int q1501= -8462337; #7edfff
-   // int 1502= ; #7cdfff
-    int salalettura= -32832;
-    int atelierinformatica= -2302976;
-    int csal= -11889571;
-    int biblioteca= -4629321;
-    int dippatologia= -2200064;
-    int dipbiochimica= -32866;
-   // int assstud= ; //#a501db
-    int fimet= -16741704;
-    int serfotocopie= -8388704;
-    int dipscmat= -33024;
-    int at1= -8462337;
-    int at2= -8462337;
-   // int aulafisica= ; #7de1ff
-  //  int s8= ;#7fddf9
-    int bar= -8388704;
-    int cesmi= -2237184;
-    int banca= -9648936;
-  //  int 15510= ;
-  //  int ecdl= ;#80deff
-    int q155d1= -8527106;  //d2 d3 d4 2-3 4 5-6 7
-    int dipbiomed =-8388609;
+int q145dicea =-8388896;
+int q145rg1= -12204496;
+int q145rg2= -14913778;
+int q145ram= -8355841;
+int q145wc1= -8320;
+int q145r1= -15864725;
+int q145r3= -15486891;
+/*int q145s1= ;
+int q145s2= ;
+int q145s3= ;*/
+
+int q150dicea= -5111816;
+int q150dicea1= -4128776;
+int q150strade= -9446035;
+int q150g1= -8462337;
+int q150g2= -13396555;
+//int q150g1g2= ;
+int q150r2= -16584198;
+//int q150wc1= ;
+int q150ram= -5263617;
+int q150bib= -1082939;
+int q150rl= -32832;
+int q150r1= -59530;
+int q150s1= -9842;
+
+int q155dicea = -4129024;
+int q155r567 = -2946;
+int q155r4 = -592842;
+int q155r4d3 = -4217;
+int q155r23d2 = -2646;
+int q155rd1 = -10173;
+int q155ecdl = -22907;
+int q155wc1 = -20307;
+int q155wc2 = -20413;
+int q155bar = -8388704;
+int q155cesmi = -2237184;
+int q155up = -8791909;
+int q155acq = -2243281;
+
 
 
 
@@ -99,73 +106,67 @@ public class MapTapActivity extends CommonMenuActivity {
 
                             case MotionEvent.ACTION_DOWN:
 
-                                if (pixel == aulamagna) {
+                                if (pixel == q145ram) {
                                     Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
                                     a.putExtra("aula", "Aula magna");
                                     a.putExtra("quotap", "145");
                                     startActivity(a);
                                 }
-                                if (pixel == dacs) {
+                                if (pixel == q145dicea) {
                                     Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
                                     a.putExtra("aula", "DACS");
                                     a.putExtra("quotap", "145");
                                     startActivity(a);
                                 }
-                                if (pixel == dardus) {
+                                if (pixel == q145wc1) {
                                     Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
-                                    a.putExtra("aula", "DARDUS");
+                                    a.putExtra("aula", "WC1");
                                     a.putExtra("quotap", "145");
                                     startActivity(a);
                                 }
-                                if (pixel == dacs) {
+                                if (pixel == q145r1) {
                                     Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
-                                    a.putExtra("aula", "DACS");
+                                    a.putExtra("aula", "145/1");
                                     a.putExtra("quotap", "145");
                                     startActivity(a);
                                 }
-                                if (pixel == g1) {
+                                if (pixel == q145rg1) {
                                     Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
                                     a.putExtra("aula", "G1");
                                     a.putExtra("quotap", "145");
                                     startActivity(a);
                                 }
-                                  /*  if (pixel == g2) {
+                                    if (pixel == q145rg2) {
                                         Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
                                         a.putExtra("aula", "G2");
+                                        a.putExtra("quotap", "145");
                                         startActivity(a);
                                     }
-                                    if (pixel == q1454) {
-                                        Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
-                                        a.putExtra("aula", "145/4");
-                                        startActivity(a);
-                                    }
-                                    if (pixel == q1455) {
-                                        Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
-                                        a.putExtra("aula", "145/5");
-                                        startActivity(a);
-                                    }
-                                    if (pixel == q1451) {
-                                        Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
-                                        a.putExtra("aula", "145/1");
-                                        startActivity(a);
-                                    }
-                                    if (pixel == q1453) {
+                                    if (pixel == q145r3) {
                                         Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
                                         a.putExtra("aula", "145/3");
+                                        a.putExtra("quotap", "145");
+                                        startActivity(a);
+                                    }
+                                  /*  if (pixel == q145s1) {
+                                        Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
+                                        a.putExtra("aula", "");
+                                        a.putExtra("quotap", "145");
+                                        startActivity(a);
+                                    }
+                                    if (pixel == q145s2) {
+                                        Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
+                                        a.putExtra("aula", "");
+                                        a.putExtra("quotap", "145");
+                                        startActivity(a);
+                                    }
+                                    if (pixel == q145s3) {
+                                        Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
+                                        a.putExtra("aula", "");
+                                        a.putExtra("quotap", "145");
                                         startActivity(a);
                                     }*/
-                                if (pixel == dipmeccanica) {
-                                    Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
-                                    a.putExtra("aula", "Dipartimento di meccanica");
-                                    a.putExtra("quotap", "145");
-                                    startActivity(a);
-                                }
-                                if (pixel == isac) {
-                                    Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
-                                    a.putExtra("aula", "ISAC");
-                                    a.putExtra("quotap", "145");
-                                    startActivity(a);
-                                }
+
                         }
                     }
                     return true;
@@ -197,83 +198,86 @@ public class MapTapActivity extends CommonMenuActivity {
 
                             case MotionEvent.ACTION_DOWN:
 
-                                if (pixel == aulamagna) {
+                                if (pixel == q150ram) {
                                     Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
                                     a.putExtra("aula", "Aula magna");
                                     a.putExtra("quotap", "150");
                                     startActivity(a);
                                 }
-                                if (pixel == dacs) {
+                                if (pixel == q150dicea) {
                                     Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
-                                    a.putExtra("aula", "DACS");
+                                    a.putExtra("aula", "dicea");
                                     a.putExtra("quotap", "150");
                                     startActivity(a);
                                 }
-                                if (pixel == g1) {
+                                if (pixel == q150dicea1) {
+                                    Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
+                                    a.putExtra("aula", "dicea1");
+                                    a.putExtra("quotap", "150");
+                                    startActivity(a);
+                                }
+                                if (pixel == q150g1) {
                                     Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
                                     a.putExtra("aula", "G1");
                                     a.putExtra("quotap", "150");
                                     startActivity(a);
                                 }
-                                  /*  if (pixel == g2) {
+                                    if (pixel == q150g2) {
                                         Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
                                         a.putExtra("aula", "G2");
+                                        a.putExtra("quotap", "150");
                                         startActivity(a);
                                     }
-                                    if (pixel == q1502) {
+                                   /* if (pixel == q150g1g2) {
                                         Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
-                                        a.putExtra("aula", "150/2");
+                                        a.putExtra("aula", "g1g2");
+                                         a.putExtra("quotap", "150");
                                         startActivity(a);
                                     }*/
-                                if (pixel == salalettura) {
+                                if (pixel == q150rl) {
                                     Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
                                     a.putExtra("aula", "Sala lettura");
                                     a.putExtra("quotap", "150");
                                     startActivity(a);
                                 }
-                               /* if (pixel == q1501) {
+                                if (pixel == q150r2) {
                                     Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
-                                    a.putExtra("aula", "150/1");
+                                    a.putExtra("aula", "150/2");
                                     a.putExtra("quotap", "150");
                                     startActivity(a);
-                                }*/
-                                if (pixel == atelierinformatica) {
+                                }
+                                if (pixel == q150s1) {
                                     Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
                                     a.putExtra("aula", "Atelier informatica");
                                     a.putExtra("quotap", "150");
                                     startActivity(a);
                                 }
 
-                                if (pixel == csal) {
+                                if (pixel == q150r1) {
                                     Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
-                                    a.putExtra("aula", "CSAL");
+                                    a.putExtra("aula", "150/1");
                                     a.putExtra("quotap", "150");
                                     startActivity(a);
                                 }
-                                if (pixel == biblioteca) {
+                                if (pixel == q150bib) {
                                     Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
                                     a.putExtra("aula", "Biblioteca");
                                     a.putExtra("quotap", "150");
                                     startActivity(a);
                                 }
-                                if (pixel == dipbiochimica) {
+                                if (pixel == q150strade) {
                                     Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
-                                    a.putExtra("aula", "Dipartimento biochimica");
+                                    a.putExtra("aula", "isac");
                                     a.putExtra("quotap", "150");
                                     startActivity(a);
                                 }
-                                if (pixel == dippatologia) {
+                               /* if (pixel == q150wc1) {
                                     Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
-                                    a.putExtra("aula", "Dipartimento patologia");
+                                    a.putExtra("aula", "wc1");
                                     a.putExtra("quota", "150");
                                     startActivity(a);
-                                }
-                                /*if (pixel == assstud) {
-                                    Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
-                                    a.putExtra("aula", "Associazioni studentesche");
-                                    a.putExtra("quotap", "150");
-                                    startActivity(a);
                                 }*/
+
                         }
 
                     }
@@ -306,95 +310,87 @@ public class MapTapActivity extends CommonMenuActivity {
 
                             case MotionEvent.ACTION_DOWN:
 
-                                if (pixel == dacs) {
+                                if (pixel == q155dicea) {
                                     Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
-                                    a.putExtra("aula", "DACS");
+                                    a.putExtra("aula", "dardus");
                                     a.putExtra("quotap", "155");
                                     startActivity(a);
                                 }
-                                if (pixel == dardus) {
+                                if (pixel == q155r567) {
                                     Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
-                                    a.putExtra("aula", "DARDUS");
+                                    a.putExtra("aula", "155/5-6 155/7");
                                     a.putExtra("quotap", "155");
                                     startActivity(a);
                                 }
-                                if (pixel == isac) {
+                                if (pixel == q155r4) {
                                     Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
-                                    a.putExtra("aula", "ISAC");
+                                    a.putExtra("aula", "155/d4");
                                     a.putExtra("quotap", "155");
                                     startActivity(a);
                                 }
-                                if (pixel == bar) {
+                                if (pixel == q155r4d3) {
                                     Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
-                                    a.putExtra("aula", "Bar");
+                                    a.putExtra("aula", "155/d3 155/4");
                                     a.putExtra("quotap", "155");
                                     startActivity(a);
                                 }
-                                if (pixel == banca) {
+                                if (pixel == q155up) {
                                     Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
                                     a.putExtra("aula", "Banca");
                                     a.putExtra("quotap", "155");
                                     startActivity(a);
                                 }
-                                if (pixel == serfotocopie) {
+                                if (pixel == q155acq) {
                                     Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
-                                    a.putExtra("aula", "Servizio fotocopie");
+                                    a.putExtra("aula", "cesmi basso");
                                     a.putExtra("quotap", "155");
                                     startActivity(a);
                                 }
-                                 /*   if (pixel == ecdl) {
+                                    if (pixel == q155ecdl) {
                                         Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
-                                        a.putExtra("aula", "Aula ECDL");
+                                        a.putExtra("aula", "Aula ECDL, 155/10");
+                                        a.putExtra("quotap", "155");
                                         startActivity(a);
-                                    }*/
-                                if (pixel == cesmi) {
+                                    }
+                                if (pixel == q155cesmi) {
                                     Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
-                                    a.putExtra("aula", "CeSMI");
+                                    a.putExtra("aula", "CeSMI alto");
                                     a.putExtra("quotap", "155");
                                     startActivity(a);
                                 }
-                                if (pixel == fimet) {
+                                if (pixel == q155r23d2) {
                                     Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
-                                    a.putExtra("aula", "FIMeT");
+                                    a.putExtra("aula", "155/d2 155/2-3");
                                     a.putExtra("quotap", "155");
                                     startActivity(a);
                                 }
-                                if (pixel == salalettura) {
-                                    Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
-                                    a.putExtra("aula", "Sala lettura");
-                                    a.putExtra("quotap", "155");
-                                    startActivity(a);
-                                }
-                                if (pixel == at1) {
-                                    Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
-                                    a.putExtra("aula", "AT1");
-                                    a.putExtra("quotap", "155");
-                                    startActivity(a);
-                                }
-                                if (pixel == dipscmat) {
-                                    Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
-                                    a.putExtra("aula", "Dipartimento scienze matematiche");
-                                    a.putExtra("quotap", "155");
-                                    startActivity(a);
-                                }
-                                if (pixel == dipmeccanica) {
-                                    Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
-                                    a.putExtra("aula", "Dipartimento meccanica");
-                                    a.putExtra("quotap", "155");
-                                    startActivity(a);
-                                }
-                                if (pixel == dipbiomed) {
-                                    Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
-                                    a.putExtra("aula", "Dipartimento scienze biomediche");
-                                    a.putExtra("quotap", "155");
-                                    startActivity(a);
-                                }
-                                if (pixel == q155d1) {
+                                if (pixel == q155rd1) {
                                     Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
                                     a.putExtra("aula", "155/d1");
                                     a.putExtra("quotap", "155");
                                     startActivity(a);
                                 }
+                                if (pixel == q155wc1) {
+                                    Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
+                                    a.putExtra("aula", "wc1");
+                                    a.putExtra("quotap", "155");
+
+                                    startActivity(a);
+                                }
+                                if (pixel == q155wc2) {
+                                    Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
+                                    a.putExtra("aula", "wc2");
+
+                                    a.putExtra("quotap", "155");
+                                    startActivity(a);
+                                }
+                                if (pixel == q155bar) {
+                                    Intent a = new Intent(MapTapActivity.this, DestinationActivity.class);
+                                    a.putExtra("aula", "bar");
+                                    a.putExtra("quotap", "155");
+                                    startActivity(a);
+                                }
+
 
 
                         }

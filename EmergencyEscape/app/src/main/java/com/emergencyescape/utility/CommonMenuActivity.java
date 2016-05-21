@@ -1,8 +1,17 @@
-package com.emergencyescape;
+package com.emergencyescape.utility;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+
+//import com.emergencyescape.emtap.EmTapActivity;
+//import com.emergencyescape.emtext.EmTextActivity;
+//import com.emergencyescape.noemtxt.NoemTextActivity;
+import com.emergencyescape.EmTapActivity;
+import com.emergencyescape.EmTextActivity;
+import com.emergencyescape.NoemTextActivity;
+import com.emergencyescape.R;
+import com.emergencyescape.noemtap.NoemTapActivity;
 
 /**
  * Created by valerio on 27/04/2016.

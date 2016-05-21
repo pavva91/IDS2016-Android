@@ -29,16 +29,12 @@
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="70dp">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Percorso"
-        android:id="@+id/Percorso"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="100dp" />
-
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/image"
+            android:src="@drawable/q145"
+            />
 
 </RelativeLayout>
 </android.support.design.widget.CoordinatorLayout>

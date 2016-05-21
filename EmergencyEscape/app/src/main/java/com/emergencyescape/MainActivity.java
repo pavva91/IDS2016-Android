@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.emergencyescape.utility.CommonMenuActivity;
+
 
 public class MainActivity extends CommonMenuActivity {
 

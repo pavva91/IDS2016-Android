@@ -8,6 +8,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import com.emergencyescape.utility.CommonMenuActivity;
+
 public class EmTapActivity extends CommonMenuActivity {
 
     @Override
