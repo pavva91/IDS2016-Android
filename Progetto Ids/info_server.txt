@@ -1,0 +1,76 @@
+GLASSFISH LOGIN:
+https://213.26.178.148:4848
+username: admin
+password: univpm
+
+PHPMYADMIN LOGIN:
+http://213.26.178.148:81/phpmyadmin
+username: univpm
+password:univpm
+
+
+GET
+ottieni elenco mappe disponibili
+http://213.26.178.148/progetto/maps?token={token dell'utente}
+
+GET
+ottieni mappa denominata "nomemappa" (provare "univpm" che è la vera mappa)
+http://213.26.178.148/progetto/maps/{nomemappa}?token={token dell'utente}
+
+POST json (mettere header content-type application/json)
+inserisci un utente, se ok ottieni il token, se tenti di inserire un utente esistente ottieni errore 409
+http://robyhp:8080/progetto/users/
+json di esempio:
+{
+  "username":"roberto4",
+  "password":"pwdroberto4"
+}
+
+GET
+login utente (login utente "stocazzo" con password "staminchia"). se ok ottieni il token, se errato ottieni errore 403
+http://213.26.178.148/progetto/users/{username}/login?password={password utente}
+
+l'unico account "amministratore" autorizzato a caricare nuove mappe è
+username: admin
+password: univpm
+token: 12m2t7oc43godndv767tkj9hue
+
+POST json (mettere header content-type application/json)
+inserisci una nuova mappa, se ok ottieni il nome mappa, se non sei autorizzato, ovvero non sei admin ottieni errore 403
+http://213.26.178.148/progetto/maps/?token=12m2t7oc43godndv767tkj9hue
+json di esempio: vedi file mappa_json_univmp.json presente nel drive dentro la cartella "mappe"
+
+DELETE
+cancella una mappa esistente, se ok ottieni messaggio, se non sei autorizzato, ovvero non sei admin ottieni errore 403
+http://213.26.178.148/progetto/maps/{nome mappa}?token=12m2t7oc43godndv767tkj9hue
+json di esempio: vedi file mappa_json_univmp.json presente nel drive dentro la cartella "mappe"
+
+POST json (mettere header content-type application/json)
+aggiorna la posizione di un utente a seguito di un tap, aggiorna il numero di persone negli archi e ricalcola il LOS
+nell'esempio aggiorna la posizione dell'utene "pippo", richiede il passaggio come parametro del token
+http://213.26.178.148/progetto/users/pippo/posizione?token=12m2t7oc43godndv767tkj9hue
+inviare ad esempio: 145S1
+ritorna la nuova posizione: 145S1
+
+POST file immagine mappa (Mettere header: Content-Type: multipart-form-data e oggetto file di nome "file" e immagine png da inviare
+carica nel server l'immagine della mappa. La mappa deve già essere stata caricata
+http://213.26.178.148/progetto/maps/upload/{nome mappa}/{quota}?token=12m2t7oc43godndv767tkj9hue
+restituisce errore 406 se mappa non presente o quota non presente
+restituisce errore 409 se non riesce a salvare nel filesystem
+restituisce 201 se ok
+
+
+
+
+
+************************************************************************ bestemmie **************************************************************
+
+keytool -genkeypair -keyalg <key_alg> -keystore keystore.jks -validity 90 -alias s1as 
+
+keytool -import -v -trustcacerts -alias SSLcom -file ca.cert -keystore cacerts.jks -storepass univpm
+keytool -certreq -alias s1as -file s1as.csr -keystore keystore.jks -storepass univpm
+
+
+host148-178-static.26-213-b.business.telecomitalia.it
+
+keytool -keysize 2048 -genkey -alias host148-178-static.26-213-b.business.telecomitalia.it -keyalg RSA –dname "CN=host148-178-static.26-213-b.business.telecomitalia.it,O=company,L=city,S=Italy,C=IT" -keystore keystore.jks
