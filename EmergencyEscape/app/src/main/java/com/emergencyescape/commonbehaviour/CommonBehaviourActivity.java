@@ -102,8 +102,7 @@ public class CommonBehaviourActivity extends MvpViewStateActivity<MvpView, Commo
         return super.onOptionsItemSelected(item);
     }
 
-    // Action bar
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(Menu menu) { // Action bar
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.activity_main_actions, menu);
         return super.onCreateOptionsMenu(menu);
