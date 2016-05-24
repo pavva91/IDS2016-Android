@@ -11,11 +11,14 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class Mappa {
 	//attributi
+	@XmlElement
 	private String nome;
 	@XmlElement
 	private ArrayList<Nodo> nodi = new ArrayList<Nodo>();
 	@XmlElement
 	private ArrayList<Arco> archi = new ArrayList<Arco>();
+	@XmlElement
+	private ArrayList<String> immagini = new ArrayList<String>();
 
 	//costruttore 
 	public Mappa(String nome){
@@ -25,7 +28,6 @@ public class Mappa {
 	public Mappa(){
 		
 	}
-
 	public String getNome(){
 		return this.nome;
 	}
@@ -49,6 +51,15 @@ public class Mappa {
 	}
 	public void AggiungiArco(Arco a){
 		this.archi.add(a);
+	}
+	public void AggiungiImmagine(String s){
+		this.immagini.add(s);
+	}
+	public void setImmagini(ArrayList<String> immagini){
+		this.immagini=immagini;
+	}
+	public ArrayList<String> getImmagini(){
+		return this.immagini;
 	}
 	
 }
