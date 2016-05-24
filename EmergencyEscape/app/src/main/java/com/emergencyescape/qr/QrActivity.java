@@ -2,18 +2,31 @@ package com.emergencyescape.qr;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 
 import com.emergencyescape.R;
 import com.emergencyescape.commonbehaviour.CommonBehaviourActivity;
+import com.hannesdorfmann.mosby.mvp.MvpPresenter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class QrActivity extends CommonBehaviourActivity {
     @BindView(R.id.toolbar) Toolbar toolbar;
+
+    /**
+     * Instantiate a presenter instance
+     *
+     * @return The {@link MvpPresenter} for this view
+     */
+    @NonNull
+    @Override
+    public QrPresenter createPresenter() {
+        return new QrPresenter();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

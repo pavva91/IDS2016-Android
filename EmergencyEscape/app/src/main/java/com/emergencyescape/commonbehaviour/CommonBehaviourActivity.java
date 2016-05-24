@@ -10,6 +10,8 @@ import android.view.MenuItem;
 import com.emergencyescape.text.TextDepartureActivity;
 import com.emergencyescape.tap.TapActivity;
 import com.emergencyescape.R;
+import com.hannesdorfmann.mosby.mvp.MvpActivity;
+import com.hannesdorfmann.mosby.mvp.MvpPresenter;
 import com.hannesdorfmann.mosby.mvp.MvpView;
 import com.hannesdorfmann.mosby.mvp.viewstate.MvpViewStateActivity;
 import com.hannesdorfmann.mosby.mvp.viewstate.RestorableViewState;
@@ -23,37 +25,9 @@ import com.hannesdorfmann.mosby.mvp.viewstate.ViewState;
  *      - gestione comune logout
  */
 
-public class CommonBehaviourActivity extends MvpViewStateActivity<MvpView, CommonBehaviourPresenter>
-        implements MvpView {
-    /**
-     * Creates the ViewState instance
-     */
-    @Override
-    public RestorableViewState createViewState() {
-        return new CommonBehaviourViewState();
-    }
+public abstract class CommonBehaviourActivity<V extends CommonBehaviourView, P extends MvpPresenter<V>> extends MvpActivity<V,P>
+        implements CommonBehaviourView {
 
-    /**
-     * Called if a new {@link ViewState} has been created because no viewstate from a previous
-     * Activity or Fragment instance could be restored.
-     * <p><b>Typically this is called on the first time the <i>Activity</i> or <i>Fragment</i> starts
-     * and therefore no view state instance previously exists</b></p>
-     */
-    @Override
-    public void onNewViewStateInstance() {
-
-    }
-
-    /**
-     * Instantiate a presenter instance
-     *
-     * @return The {@link CommonBehaviourPresenter} for this view
-     */
-    @NonNull
-    @Override
-    public CommonBehaviourPresenter createPresenter() {
-        return new CommonBehaviourPresenter();
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

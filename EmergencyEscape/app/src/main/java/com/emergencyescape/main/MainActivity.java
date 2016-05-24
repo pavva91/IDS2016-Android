@@ -22,9 +22,20 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 
-public class MainActivity extends CommonBehaviourActivity {
+public class MainActivity extends CommonBehaviourActivity<MainView,MainPresenter> {
     @BindView(R.id.logoutbutton) Button logout;
     @BindView(R.id.toolbar) Toolbar toolbar;
+
+    /**
+     * Instantiate a presenter instance
+     *
+     * @return The {@link MainPresenter} for this view
+     */
+    @NonNull
+    @Override
+    public MainPresenter createPresenter() {
+        return new MainPresenter();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

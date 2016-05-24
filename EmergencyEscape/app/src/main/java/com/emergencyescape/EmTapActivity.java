@@ -7,7 +7,7 @@ import android.view.MenuInflater;
 
 import com.emergencyescape.commonbehaviour.CommonBehaviourActivity;
 
-public class EmTapActivity extends CommonBehaviourActivity {
+public abstract class EmTapActivity extends CommonBehaviourActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

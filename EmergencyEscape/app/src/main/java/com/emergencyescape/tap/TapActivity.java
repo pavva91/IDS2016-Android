@@ -1,21 +1,28 @@
 package com.emergencyescape.tap;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
-import com.emergencyescape.ItineraryActivity;
 import com.emergencyescape.R;
 import com.emergencyescape.commonbehaviour.CommonBehaviourActivity;
-import com.emergencyescape.text.TextDepartureActivity;
-import com.emergencyescape.text.TextDestinationActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 
-public class TapActivity extends CommonBehaviourActivity {
+public class TapActivity extends CommonBehaviourActivity<TapView,TapPresenter> {
+    /**
+     * Instantiate a presenter instance
+     *
+     * @return The {@link MvpPresenter} for this view
+     */
+    @NonNull
+    @Override
+    public TapPresenter createPresenter() {
+        return new TapPresenter();
+    }
 
     @BindView(R.id.toolbar) Toolbar toolbar;
 

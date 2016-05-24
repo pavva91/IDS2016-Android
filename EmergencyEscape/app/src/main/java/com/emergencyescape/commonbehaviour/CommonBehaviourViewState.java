@@ -19,12 +19,13 @@ package com.emergencyescape.commonbehaviour;
 import android.os.Bundle;
 import android.os.Parcelable;
 
+import com.hannesdorfmann.mosby.mvp.MvpView;
 import com.hannesdorfmann.mosby.mvp.viewstate.RestorableViewState;
 
 /**
  * @author Hannes Dorfmann
  */
-public class CommonBehaviourViewState implements RestorableViewState<CommonBehaviourActivity> {
+public abstract class CommonBehaviourViewState<V extends MvpView> implements RestorableViewState<V> {
 
   // TODO: dove salvare la partenza e la destinazione per ora, alla fine dovranno essere passati al model in modo che la funzione di calcolo potrà andarli a prendere
 
@@ -50,8 +51,10 @@ public class CommonBehaviourViewState implements RestorableViewState<CommonBehav
     return this;
   }
 
-  @Override public void apply(CommonBehaviourActivity view, boolean retained) {
+  @Override public void apply(V view, boolean retained) {
 
   }
+
+
 
 }

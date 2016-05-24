@@ -12,9 +12,15 @@ package="com.emergencyescape">
      location permissions for the 'MyLocation' functionality.
     -->
 <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+<uses-permission android:name="android.permission.INTERNET"/>
 
-<application android:allowBackup="true" android:icon="@drawable/logobar" android:label="@string/app_name"
-    android:supportsRtl="true" android:theme="@style/AppTheme">
+<application
+    android:allowBackup="true"
+    android:icon="@drawable/logobar"
+    android:label="@string/app_name"
+    android:supportsRtl="true"
+    android:name=".rxretrofit.RxApplication"
+    android:theme="@style/AppTheme">
     <activity android:name=".LoginActivity" android:label="@string/app_name">
         <intent-filter>
             <action android:name="android.intent.action.MAIN" />
@@ -44,7 +50,7 @@ package="com.emergencyescape">
     <activity android:name=".text.TextDestinationActivity" android:label=" " android:theme="@style/AppTheme.NoActionBar">
         <meta-data android:name="android.support.PARENT_ACTIVITY" android:value=".main.MainActivity" />
     </activity>
-    <activity android:name=".ItineraryActivity" android:label=" " android:theme="@style/AppTheme.NoActionBar">
+    <activity android:name=".itinerary.ItineraryActivity" android:label=" " android:theme="@style/AppTheme.NoActionBar">
         <meta-data android:name="android.support.PARENT_ACTIVITY" android:value=".main.MainActivity" />
     </activity>
     <activity android:name=".tap.MapTapActivity" android:label=" " android:theme="@style/AppTheme.NoActionBar">

@@ -2,10 +2,11 @@ package com.emergencyescape.text;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
 
-import com.emergencyescape.ItineraryActivity;
+import com.emergencyescape.itinerary.ItineraryActivity;
 import com.emergencyescape.R;
 import com.emergencyescape.commonbehaviour.CommonBehaviourActivity;
 
@@ -13,7 +14,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class TextDepartureActivity extends CommonBehaviourActivity {
+public class TextDepartureActivity extends CommonBehaviourActivity<TexterView,TextPresenter> {
 
     // Refactoring attuato:
     // - Old Class: EmTextActivity
@@ -22,8 +23,19 @@ public class TextDepartureActivity extends CommonBehaviourActivity {
 
 
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.editPartenza) TextView aulaPartenzaTextView;
+    @BindView(R.id.editPartenza)
+    TextView aulaPartenzaTextView;
 
+    /**
+     * Instantiate a presenter instance
+     *
+     * @return The {@link TextPresenter} for this view
+     */
+    @NonNull
+    @Override
+    public TextPresenter createPresenter() {
+        return new TextPresenter();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

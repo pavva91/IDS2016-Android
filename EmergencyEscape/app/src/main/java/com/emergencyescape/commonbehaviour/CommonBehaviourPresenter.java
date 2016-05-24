@@ -17,7 +17,7 @@ import com.hannesdorfmann.mosby.mvp.MvpView;
  * com.emergencyescape
  * CommonBehaviourPresenter
  */
-public class CommonBehaviourPresenter extends MvpBasePresenter<MvpView>{
+public abstract class CommonBehaviourPresenter<V extends MvpView> extends MvpBasePresenter<V>{
 
     public boolean logout(Context AppContext){
         try {

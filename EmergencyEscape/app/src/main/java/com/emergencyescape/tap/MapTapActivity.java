@@ -3,12 +3,12 @@ package com.emergencyescape.tap;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.emergencyescape.ItineraryActivity;
 import com.emergencyescape.R;
 import com.emergencyescape.commonbehaviour.CommonBehaviourActivity;
 import com.emergencyescape.text.TextDestinationActivity;
@@ -16,7 +16,18 @@ import com.emergencyescape.text.TextDestinationActivity;
 import butterknife.OnClick;
 
 
-public class MapTapActivity extends CommonBehaviourActivity {
+public class MapTapActivity extends CommonBehaviourActivity<TapView,TapPresenter> {
+
+    /**
+     * Instantiate a presenter instance
+     *
+     * @return The {@link TapPresenter} for this view
+     */
+    @NonNull
+    @Override
+    public TapPresenter createPresenter() {
+        return new TapPresenter();
+    }
 
     // TODO: Rendere tutto questo schifo dinamico e collegato col model
 
