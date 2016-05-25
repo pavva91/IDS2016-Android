@@ -27,7 +27,7 @@ import com.hannesdorfmann.mosby.mvp.viewstate.RestorableViewState;
  */
 public abstract class CommonBehaviourViewState<V extends MvpView> implements RestorableViewState<V> {
 
-  // TODO: dove salvare la partenza e la destinazione per ora, alla fine dovranno essere passati al model in modo che la funzione di calcolo potrà andarli a prendere
+  // TODO: Da eliminare questa classe
 
   private final String KEY_DEPARTURE = "Departure-data";
   private final String KEY_DESTINATION = "Destination-data";

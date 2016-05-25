@@ -12,7 +12,10 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+
+
     }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -46,6 +49,10 @@ dependencies {
 // Because RxAndroid releases are few and far between, it is recommended you also
 // explicitly depend on RxJava's latest version for bug fixes and new features.
     compile 'io.reactivex:rxjava:1.1.5' // RxJava
+
+    // http://mvnrepository.com/artifact/javax.annotation/javax.annotation-api
+    compile group: 'javax.annotation', name: 'javax.annotation-api', version: '1.2-b01'
+
 
 
 

@@ -13,13 +13,14 @@ package="com.emergencyescape">
     -->
 <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 <uses-permission android:name="android.permission.INTERNET"/>
+<uses-permission android:name="android.permission.CAMERA"/>
 
-<application
+    <application
     android:allowBackup="true"
     android:icon="@drawable/logobar"
     android:label="@string/app_name"
     android:supportsRtl="true"
-    android:name=".rxretrofit.RxApplication"
+    android:name=".server.RxApplication"
     android:theme="@style/AppTheme">
     <activity android:name=".LoginActivity" android:label="@string/app_name">
         <intent-filter>
@@ -32,21 +33,13 @@ package="com.emergencyescape">
     <activity android:name=".text.TextDepartureActivity" android:label=" " android:theme="@style/AppTheme.NoActionBar">
         <meta-data android:name="android.support.PARENT_ACTIVITY" android:value=".main.MainActivity" />
     </activity>
-    <activity android:name=".NoemTextActivityOld" android:label=" " android:theme="@style/AppTheme.NoActionBar">
-        <meta-data android:name="android.support.PARENT_ACTIVITY" android:value=".main.MainActivity" />
-    </activity>
-    <activity android:name=".EmTapActivity" android:label=" " android:theme="@style/AppTheme.NoActionBar">
-        <meta-data android:name="android.support.PARENT_ACTIVITY" android:value=".main.MainActivity" />
-    </activity>
     <activity android:name=".tap.TapActivity" android:label=" " android:theme="@style/AppTheme.NoActionBar">
         <meta-data android:name="android.support.PARENT_ACTIVITY" android:value=".main.MainActivity" />
     </activity>
     <activity android:name=".qr.QrActivity" android:label=" " android:theme="@style/AppTheme.NoActionBar">
         <meta-data android:name="android.support.PARENT_ACTIVITY" android:value=".main.MainActivity" />
     </activity>
-    <activity android:name=".NoemQrActivity" android:label=" " android:theme="@style/AppTheme.NoActionBar">
-        <meta-data android:name="android.support.PARENT_ACTIVITY" android:value=".main.MainActivity" />
-    </activity>
+
     <activity android:name=".text.TextDestinationActivity" android:label=" " android:theme="@style/AppTheme.NoActionBar">
         <meta-data android:name="android.support.PARENT_ACTIVITY" android:value=".main.MainActivity" />
     </activity>
