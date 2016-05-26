@@ -11,15 +11,17 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-<<<<<<< HEAD:EmergencyEscape/app/src/main/java/com/emergencyescape/activity/LoginActivity.java
+
 import com.emergencyescape.R;
 
 import java.util.ArrayList;
-import java.util.List;
-=======
+
+import com.emergencyescape.RegistraActivity;
+import com.emergencyescape.SessionClass;
+import com.emergencyescape.UtenteTable;
 import com.emergencyescape.main.MainActivity;
 import com.facebook.stetho.Stetho;
->>>>>>> valerio:EmergencyEscape/app/src/main/java/com/emergencyescape/LoginActivity.java
+
 
 import java.util.ArrayList;
 
