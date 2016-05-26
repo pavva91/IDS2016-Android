@@ -5,21 +5,24 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.emergencyescape.R;
 import com.emergencyescape.commonbehaviour.CommonBehaviourActivity;
-import com.emergencyescape.server.ServerService;
-import com.emergencyescape.server.RxApplication;
-import com.emergencyescape.server.model.Maps;
+import com.emergencyescape.rxretrofit.FriendResponse;
+import com.emergencyescape.rxretrofit.NetworkService;
+import com.emergencyescape.rxretrofit.RxApplication;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 
-public class ItineraryActivity extends CommonBehaviourActivity<ItineraryView,ItineraryPresenter> implements ItineraryView {
+public class ItineraryActivity extends CommonBehaviourActivity<ItineraryView,ItineraryPresenter> {
 
     // TODO: Creare Background Thread (RxJava) che va a fare il calcolo prendendo i valori(Departure (e) Destination) (per ora) da CommonBehaviourViewState
 
@@ -27,7 +30,7 @@ public class ItineraryActivity extends CommonBehaviourActivity<ItineraryView,Iti
     @BindView(R.id.Percorso) TextView rxResponse;
 
     private static final String EXTRA_RX = "EXTRA_RX";
-    private ServerService service;
+    private NetworkService service;
     private boolean rxCallInWorks = false;
 
     /**
@@ -39,7 +42,7 @@ public class ItineraryActivity extends CommonBehaviourActivity<ItineraryView,Iti
     @Override
     public ItineraryPresenter createPresenter() {
         RxApplication rxApplication = (RxApplication)getApplication();
-        service = rxApplication.getServerService();
+        service = rxApplication.getNetworkService();
         presenter = new ItineraryPresenter(this,service);
         return presenter;
     }
@@ -79,17 +82,18 @@ public class ItineraryActivity extends CommonBehaviourActivity<ItineraryView,Iti
     protected void onResume() {
         super.onResume();
         if(rxCallInWorks)
-            presenter.loadMaps();
+            presenter.loadRxData();
     }
 
     @OnClick(R.id.buttonRx)
     public void startRx(){
         rxCallInWorks=true;
-        presenter.loadMaps();
+        presenter.loadRxData();
     }
 
-    protected void showMapsResults(Maps response){
-        rxResponse.setText(response.getName()); // TODO: Implementare RecycleView Adapter per stampare le risposte
+
+    protected void showRxResults(FriendResponse response){
+        rxResponse.setText(response.friendLocations.data.friend.get(1).friendName);
         rxResponse.setVisibility(View.VISIBLE);
     }
 

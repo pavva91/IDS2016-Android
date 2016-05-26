@@ -1,4 +1,4 @@
-package com.emergencyescape.server;
+package com.emergencyescape.rxretrofit;
 
 import android.app.Application;
 
@@ -10,16 +10,16 @@ import android.app.Application;
  */
 public class RxApplication extends Application {
 
-    private ServerService serverService;
+    private NetworkService networkService;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        serverService = new ServerService();
+        networkService = new NetworkService();
     }
 
-    public ServerService getServerService(){
-        return serverService;
+    public NetworkService getNetworkService(){
+        return networkService;
     }
 
 

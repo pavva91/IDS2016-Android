@@ -3,13 +3,14 @@ package com.emergencyescape.itinerary;
  * Created by Valerio Mattioli on 24/05/2016.
  */
 
-import android.util.Log;
-
 import com.emergencyescape.commonbehaviour.CommonBehaviourPresenter;
-import com.emergencyescape.server.ServerService;
-import com.emergencyescape.server.model.Maps;
-import com.emergencyescape.server.model.MapsResponse;
+import com.emergencyescape.qr.QrActivity;
+import com.emergencyescape.rxretrofit.FriendResponse;
+import com.emergencyescape.rxretrofit.NetworkService;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import rx.Observable;
 import rx.Observer;
 import rx.Subscription;
@@ -21,30 +22,24 @@ import rx.Subscription;
 public class ItineraryPresenter extends CommonBehaviourPresenter<ItineraryView> implements PresenterInterface {
 
     private ItineraryActivity view;
-    private ServerService service; // Retrofit
+    private NetworkService service; // Retrofit
     private Subscription subscription; // RxJava
 
-    public ItineraryPresenter(ItineraryActivity view, ServerService service){
+    public ItineraryPresenter(ItineraryActivity view, NetworkService service){
         this.view = view;
         this.service = service;
     }
 
     @Override
-    public void loadMaps(){//TODO: Quando ne avrai capito il workflow attivare caching
-
-       /* Observable<FriendResponse> friendResponseObservable = (Observable<FriendResponse>) // type bind
-                service.getPreparedObservable(preparedObservable, FriendResponse.class, false, false); // Vado a creare i due thread e ritorno l'Observable (prima verifico cache)
-*/
-
-
-        Observable<MapsResponse> mapsResponseObservable = service.getAPI().getMaps();
-        Observable<Maps> mapsObservable= service.getMap(mapsResponseObservable);
-
-
-        subscription = mapsObservable.subscribe(new Observer<Maps>() { //Qua faccio il filtro dell'Observables
+    public void loadRxData(){
+        // TODO: Capire questo passaggio:
+        Observable<?> preparedObservable = service.getAPI().getFriendsObservable();
+        Observable<FriendResponse> friendResponseObservable = (Observable<FriendResponse>) // type bind
+                service.getPreparedObservable(preparedObservable, FriendResponse.class, false, false);
+        subscription = friendResponseObservable.subscribe(new Observer<FriendResponse>() {
             @Override
             public void onCompleted() {
-                Log.v("onCompleted","END");
+
             }
 
             @Override
@@ -53,10 +48,8 @@ public class ItineraryPresenter extends CommonBehaviourPresenter<ItineraryView> 
             }
 
             @Override
-            public void onNext(Maps response) {
-                view.showMapsResults(response);
-
-                Log.v("onNextIteration",response.getName());
+            public void onNext(FriendResponse response) {
+                view.showRxResults(response);
             }
         });
     }

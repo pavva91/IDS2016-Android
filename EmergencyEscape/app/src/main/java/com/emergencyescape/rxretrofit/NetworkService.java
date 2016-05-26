@@ -1,10 +1,7 @@
-package com.emergencyescape.server;
+package com.emergencyescape.rxretrofit;
 
 
 import android.support.v4.util.LruCache;
-
-import com.emergencyescape.server.model.Maps;
-import com.emergencyescape.server.model.MapsResponse;
 
 import java.io.IOException;
 
@@ -17,29 +14,28 @@ import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 /**
  * Created by cteegarden on 1/25/16.
- * Questa è la classe che implementa la logica di interazione col server (polling ecc...)
  */
 
-public class ServerService { // TODO: Per ora è grezzo e non sfrutta il caching, ogni volta esegue la get al server
+public class NetworkService{
 
-    private static String baseUrl ="http://www.valeriomattioli.com/"; // Server URL
-    private ServerAPI serverAPI; // Retrofit Callers Interface
+    private static String baseUrl ="https://dl.dropboxusercontent.com/u/57707756/"; // Server URL
+    private NetworkAPI networkAPI; // Retrofit Callers Interface
     private OkHttpClient okHttpClient;
     private LruCache<Class<?>, Observable<?>> apiObservables;
 
-    public ServerService(){
+    public NetworkService(){
         this(baseUrl);
     } // Il costruttore senza parametri richiama quello col parametro
 
-    public ServerService(String baseUrl){
+    public NetworkService(String baseUrl){
         okHttpClient = buildClient();
         apiObservables = new LruCache<>(10);
 
+        // TODO: Capire queste righe:
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(baseUrl)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -47,15 +43,15 @@ public class ServerService { // TODO: Per ora è grezzo e non sfrutta il caching
                 .client(okHttpClient)
                 .build();
 
-        serverAPI = retrofit.create(ServerAPI.class);
+        networkAPI = retrofit.create(NetworkAPI.class);
     }
 
     /**
      * Method to return the API interface.
      * @return
      */
-    public ServerAPI getAPI(){
-        return serverAPI;
+    public NetworkAPI getAPI(){
+        return  networkAPI;
     }
 
 
@@ -111,8 +107,6 @@ public class ServerService { // TODO: Per ora è grezzo e non sfrutta il caching
 
         Observable<?> preparedObservable = null;
 
-
-
         if(useCache)//this way we don't reset anything in the cache if this is the only instance of us not wanting to use it.
             preparedObservable = apiObservables.get(clazz);
 
@@ -123,10 +117,9 @@ public class ServerService { // TODO: Per ora è grezzo e non sfrutta il caching
 
         //we are here because we have never created this observable before or we didn't want to use the cache...
 
-        preparedObservable = unPreparedObservable // TODO: Trasformare la risposta JSON (Observervble<MapsResponse>) in tanti oggetti da trattare singolarmente(Observable<List<Maps>>)
-
-                .subscribeOn(Schedulers.newThread()) // Background Thread
-                .observeOn(AndroidSchedulers.mainThread()); // UI Thread
+        preparedObservable = unPreparedObservable
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread());
 
         if(cacheObservable){
             preparedObservable = preparedObservable.cache();
@@ -135,28 +128,6 @@ public class ServerService { // TODO: Per ora è grezzo e non sfrutta il caching
 
 
         return preparedObservable;
-    }
-
-
-    /**
-     * Funzione che serve per deserializzare la risposta JSON fornita dal server
-     * e poter accedere ad un elemento alla volta del vettore JSON di risposta
-     * sfruttando RxJava
-     *
-     * @param mapsResponseObservable Risposta JSON "grezza" fornita da Retrofit
-     * @return Observable<Maps> su cui si andrà a lavorare
-     */
-    public Observable<Maps> getMap(Observable<MapsResponse> mapsResponseObservable) {
-
-        return mapsResponseObservable
-                .flatMap(new Func1<MapsResponse, Observable<Maps>>() { // TODO: Trasformare la risposta JSON (Observervble<MapsResponse>) in tanti oggetti da trattare singolarmente(Observable<List<Maps>>)
-                    @Override
-                    public Observable<Maps> call(MapsResponse iterable) {
-                        return Observable.from(iterable.getMaps());
-                    }
-                })
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
     }
 
 
