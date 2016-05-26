@@ -9,13 +9,10 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.widget.Button;
 
-import com.emergencyescape.LoginActivity;
+
 import com.emergencyescape.R;
 import com.emergencyescape.commonbehaviour.CommonBehaviourActivity;
-import com.emergencyescape.commonbehaviour.CommonBehaviourPresenter;
-import com.emergencyescape.commonbehaviour.CommonBehaviourViewState;
-import com.hannesdorfmann.mosby.mvp.viewstate.RestorableViewState;
-import com.hannesdorfmann.mosby.mvp.viewstate.ViewState;
+
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
