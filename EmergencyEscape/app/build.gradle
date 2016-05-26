@@ -50,7 +50,6 @@ dependencies {
     // http://mvnrepository.com/artifact/javax.annotation/javax.annotation-api
     compile group: 'javax.annotation', name: 'javax.annotation-api', version: '1.2-b01'
 
-    compile 'com.mcxiaoke.volley:library-aar:1.0.0' // Volley
 
 
 
