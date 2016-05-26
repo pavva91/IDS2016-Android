@@ -1,4 +1,4 @@
-package com.emergencyescape;
+package com.emergencyescape.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,8 +11,17 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
+import com.emergencyescape.R;
+
+import java.util.ArrayList;
+
+import com.emergencyescape.RegistraActivity;
+import com.emergencyescape.SessionClass;
+import com.emergencyescape.UtenteTable;
 import com.emergencyescape.main.MainActivity;
 import com.facebook.stetho.Stetho;
+
 
 import java.util.ArrayList;
 

@@ -11,7 +11,6 @@ import android.view.MenuInflater;
 import android.widget.Button;
 
 
-import com.emergencyescape.LoginActivity;
 import com.emergencyescape.R;
 import com.emergencyescape.commonbehaviour.CommonBehaviourActivity;
 
