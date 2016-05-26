@@ -6,19 +6,19 @@
        <item
         android:id="@+id/action_em"
         android:orderInCategory="100"
-        android:title="Emergenza"
+        android:title="@string/action_emergency"
         app:showAsAction="always">
 
          <menu>
               <item
                   android:id="@+id/action_emtext"
-                  android:title="Testuale"/>
+                  android:title="@string/action_text"/>
              <item
                  android:id="@+id/action_emtap"
-                 android:title="Tap"/>
+                 android:title="@string/action_tap"/>
              <item
                  android:id="@+id/action_emqr"
-                 android:title="QR"/>
+                 android:title="@string/action_qr_code"/>
          </menu>
         </item>
 
@@ -26,19 +26,19 @@
     <item
         android:id="@+id/action_noem"
         android:orderInCategory="100"
-        android:title="Non Emergenza"
+        android:title="@string/action_no_emergency"
         app:showAsAction="always">
 
     <menu>
         <item
             android:id="@+id/action_noemtext"
-            android:title="Testuale"/>
+            android:title="@string/action_text"/>
         <item
             android:id="@+id/action_noemtap"
-            android:title="Tap"/>
+            android:title="@string/action_tap"/>
         <item
             android:id="@+id/action_noemqr"
-            android:title="QR"/>
+            android:title="@string/action_qr_code"/>
     </menu>
     </item>
 

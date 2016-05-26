@@ -34,6 +34,10 @@ public class GreetingGeneratorTask extends AsyncTask<Void, Void, Integer> {
 
     @Override
     protected void onPostExecute(Integer randomInt){
+<<<<<<< HEAD
         listener.onGreetingGenerated(baseText + " "+randomInt);
+=======
+        listener.onGreetingGenerated(baseText + " "  + randomInt);
+>>>>>>> valerio
     }
 }

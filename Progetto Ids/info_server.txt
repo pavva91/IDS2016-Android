@@ -15,7 +15,11 @@ http://213.26.178.148/progetto/maps?token={token dell'utente}
 
 GET
 ottieni mappa denominata "nomemappa" (provare "univpm" che è la vera mappa)
+<<<<<<< HEAD
 http://213.26.178.148/progetto/maps/{nomemappa}?token={token dell'utente}
+=======
+	{token dell'utente}
+>>>>>>> valerio
 
 POST json (mettere header content-type application/json)
 inserisci un utente, se ok ottieni il token, se tenti di inserire un utente esistente ottieni errore 409
