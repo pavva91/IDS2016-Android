@@ -14,6 +14,7 @@ I merge/push sul master li facciamo una volta che le modifiche fatte sul branch 
 - [Google Java Style standard] (https://google.github.io/styleguide/javaguide.html).
 
 ##IMPLEMENTAZIONE MVP
+<<<<<<< HEAD
 - Applicazione di esempio per uso MVP pattern: [Applicazione esempio MVP] (https://github.com/sockeqwe/mosby).
 
 ##LIBRARY MVP UTILIZZATA
@@ -30,3 +31,7 @@ I merge/push sul master li facciamo una volta che le modifiche fatte sul branch 
 
 ##RxJava
 - Observer pattern, per la gestione di task asincroni (UI Thread, Background Thread) ([LINK]) (http://blog.danlew.net/2014/09/15/grokking-rxjava-part-1/)
+=======
+- Applicazione di esempio per uso MVP pattern: [Applicazione esempio MVP] (https://github.com/ajitsing/ExpenseManager/tree/master/app/src/main/java/ajitsingh/com/expensemanager).
+
+>>>>>>> origin/betta

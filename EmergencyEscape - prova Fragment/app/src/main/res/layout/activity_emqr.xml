@@ -5,7 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
+<<<<<<< HEAD:EmergencyEscape - prova Fragment/app/src/main/res/layout/activity_emqr.xml
     tools:context=".EmQrActivity">
+=======
+    tools:context=".emtext.EmTextActivity">
+>>>>>>> origin/betta:EmergencyEscape/app/src/main/res/layout/activity_emtext.xml
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -21,7 +25,48 @@
 
     </android.support.design.widget.AppBarLayout>
 
+<<<<<<< HEAD:EmergencyEscape - prova Fragment/app/src/main/res/layout/activity_emqr.xml
     <include layout="@layout/content_emqr" />
 
+=======
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Inserisci Partenza"
+        android:id="@+id/txtPartenza"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp" />
+>>>>>>> origin/betta:EmergencyEscape/app/src/main/res/layout/activity_emtext.xml
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/editPartenza"
+        android:layout_below="@+id/txtPartenza"
+        android:layout_alignLeft="@+id/txtPartenza"
+        android:layout_alignStart="@+id/txtPartenza"
+        android:layout_alignRight="@+id/txtPartenza"
+        android:layout_alignEnd="@+id/txtPartenza"
+        android:layout_marginTop="10dp"/>
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ok"
+        android:id="@+id/btnPartenza"
+        android:layout_below="@+id/editPartenza"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"/>
+</RelativeLayout>
 </android.support.design.widget.CoordinatorLayout>

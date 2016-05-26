@@ -17,6 +17,7 @@
         completions."
     </string>
     <string name="title_activity_maps">Map</string>
+<<<<<<< HEAD
     <string name="action_settings">Settings</string>
 
     <string name="action_emergency">Emergency</string>
@@ -42,3 +43,22 @@
 
 
 </resources>
+=======
+<string name="action_settings">Settings</string>
+
+     <string name="action_emergency">Emergency</string>
+     <string name="action_no_emergency">No Emergency</string>
+     <string name="action_logout">Logout</string>
+     <string name="action_text">Text</string>
+     <string name="action_qr_code">QRCode</string>
+     <string name="action_tap">Tap</string>
+
+     <string name="mappa">mappa</string>
+
+
+
+
+
+
+ </resources>
+>>>>>>> origin/betta

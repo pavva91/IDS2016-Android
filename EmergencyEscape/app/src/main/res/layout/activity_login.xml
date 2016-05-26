@@ -8,7 +8,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.emergencyescape.LoginActivity">
+    tools:context=".login.LoginActivity">
 
 
     <EditText
@@ -21,7 +21,11 @@
         android:layout_below="@+id/imageView"
         android:layout_alignLeft="@+id/psw"
         android:layout_alignStart="@+id/psw"
+<<<<<<< HEAD
         android:layout_marginTop="33dp" />
+=======
+        android:layout_marginTop="43dp" />
+>>>>>>> origin/betta
 
     <EditText
         android:id="@+id/psw"
@@ -37,7 +41,11 @@
         android:layout_below="@+id/user"
         android:layout_alignLeft="@+id/remember"
         android:layout_alignStart="@+id/remember"
+<<<<<<< HEAD
         android:layout_marginTop="22dp" />
+=======
+        android:layout_marginTop="32dp" />
+>>>>>>> origin/betta
 
     <ImageView
         android:layout_width="wrap_content"
@@ -52,7 +60,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
+<<<<<<< HEAD
         android:text="@string/action_remember_me"
+=======
+        android:text="Ricordami"
+>>>>>>> origin/betta
         android:id="@+id/remember"
         android:checked="false"
         android:layout_marginTop="31dp"
@@ -65,7 +77,11 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textStyle="bold"
+<<<<<<< HEAD
         android:text="@string/action_sign_in"
+=======
+        android:text="Registrati"
+>>>>>>> origin/betta
         android:id="@+id/registra"
         android:clickable="true"
         android:layout_alignParentTop="true"
@@ -75,7 +91,11 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+<<<<<<< HEAD
         android:text="@string/action_log_in"
+=======
+        android:text="LOGIN"
+>>>>>>> origin/betta
         android:id="@+id/loginbutton"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
