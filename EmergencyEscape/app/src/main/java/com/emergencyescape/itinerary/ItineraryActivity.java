@@ -24,7 +24,7 @@ public class ItineraryActivity extends CommonBehaviourActivity<ItineraryView,Iti
     // TODO: Creare Background Thread (RxJava) che va a fare il calcolo prendendo i valori(Departure (e) Destination) (per ora) da CommonBehaviourViewState
 
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.Percorso) TextView rxResponse;
+    @BindView(R.id.percorso) TextView rxResponse;
 
     private static final String EXTRA_RX = "EXTRA_RX";
     private ServerService service;

@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class RegistraActivity extends AppCompatActivity
+public class RegistraActivityOld extends AppCompatActivity
 {
 
     @Override
@@ -42,7 +42,7 @@ public class RegistraActivity extends AppCompatActivity
                 if (ok != -1) {
                     Toast.makeText(getApplicationContext(), "Registrazione avvenuta con successo!", Toast.LENGTH_LONG).show();
                     // definisco l'intenzione
-                    Intent openPage1 = new Intent(RegistraActivity.this, LoginActivity.class);
+                    Intent openPage1 = new Intent(RegistraActivityOld.this, LoginActivity.class);
                     // passo all'attivazione dell'activity Pagina.java
                     startActivity(openPage1);
                 } else {

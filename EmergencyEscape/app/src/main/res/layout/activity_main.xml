@@ -23,7 +23,6 @@
 
     <Button
         style="?android:attr/buttonStyleSmall"
-<<<<<<< HEAD
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/action_logout"
@@ -32,7 +31,7 @@
         android:layout_marginTop="500dp"
 
         />
-=======
+<!--=======
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="LOGOUT"
@@ -40,6 +39,6 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="185dp" />
->>>>>>> origin/betta
+>>>>>>> origin/betta-->
 
 </android.support.design.widget.CoordinatorLayout>

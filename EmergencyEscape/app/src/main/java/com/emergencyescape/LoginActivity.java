@@ -46,7 +46,7 @@ public class LoginActivity extends AppCompatActivity
             @Override
             public void onClick(View arg0) {
                 // definisco l'intenzione
-                Intent openPage1 = new Intent(LoginActivity.this, RegistraActivity.class);
+                Intent openPage1 = new Intent(LoginActivity.this, RegistraActivityOld.class);
                 // passo all'attivazione dell'activity Pagina.java
                 startActivity(openPage1);
             }

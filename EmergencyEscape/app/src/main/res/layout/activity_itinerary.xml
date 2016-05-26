@@ -5,11 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-<<<<<<< HEAD
+
     tools:context=".itinerary.ItineraryActivity">
-=======
-    tools:context=".utility.ItineraryActivity">
->>>>>>> origin/betta
+
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -37,31 +35,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-<<<<<<< HEAD
         android:text="@string/itinerary"
-=======
-        android:text="Percorso"
->>>>>>> origin/betta
-        android:id="@+id/Percorso"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="100dp" />
+        android:id="@+id/percorso"/>
 
-<<<<<<< HEAD
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Mostra Mappe"
             android:id="@+id/buttonRx"
             android:layout_marginBottom="126dp"
-            android:layout_alignParentBottom="true"
-            android:layout_alignRight="@+id/Percorso"
-            android:layout_alignEnd="@+id/Percorso" />
+            android:layout_alignParentBottom="true" />
 
 
     </RelativeLayout>
-=======
-
-</RelativeLayout>
->>>>>>> origin/betta
 </android.support.design.widget.CoordinatorLayout>
