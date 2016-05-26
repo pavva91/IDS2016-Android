@@ -24,4 +24,8 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.android.support:design:23.1.1'
+    compile 'com.mcxiaoke.volley:library:1.0.19'
+    compile files ('libs/gson-2.6.2.jar')
+    compile files ('libs/khandroid-httpclient-4.2.3.jar')
+    compile files ('libs/httpcore-4.4.4.jar')
 }
