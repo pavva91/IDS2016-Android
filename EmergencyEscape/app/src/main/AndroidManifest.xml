@@ -32,13 +32,28 @@ package="com.emergencyescape">
     <activity android:name=".text.TextDepartureActivity" android:label=" " android:theme="@style/AppTheme.NoActionBar">
         <meta-data android:name="android.support.PARENT_ACTIVITY" android:value=".main.MainActivity" />
     </activity>
+<<<<<<< HEAD
 
+=======
+    <activity android:name=".NoemTextActivityOld" android:label=" " android:theme="@style/AppTheme.NoActionBar">
+        <meta-data android:name="android.support.PARENT_ACTIVITY" android:value=".main.MainActivity" />
+    </activity>
+    <activity android:name=".EmTapActivity" android:label=" " android:theme="@style/AppTheme.NoActionBar">
+        <meta-data android:name="android.support.PARENT_ACTIVITY" android:value=".main.MainActivity" />
+    </activity>
+>>>>>>> parent of 6005c43... Completata (e capita) integrazione Mosby, RxJava, Retrofit per implementare MVP Pattern
     <activity android:name=".tap.TapActivity" android:label=" " android:theme="@style/AppTheme.NoActionBar">
         <meta-data android:name="android.support.PARENT_ACTIVITY" android:value=".main.MainActivity" />
     </activity>
     <activity android:name=".qr.QrActivity" android:label=" " android:theme="@style/AppTheme.NoActionBar">
         <meta-data android:name="android.support.PARENT_ACTIVITY" android:value=".main.MainActivity" />
     </activity>
+<<<<<<< HEAD
+=======
+    <activity android:name=".NoemQrActivity" android:label=" " android:theme="@style/AppTheme.NoActionBar">
+        <meta-data android:name="android.support.PARENT_ACTIVITY" android:value=".main.MainActivity" />
+    </activity>
+>>>>>>> parent of 6005c43... Completata (e capita) integrazione Mosby, RxJava, Retrofit per implementare MVP Pattern
     <activity android:name=".text.TextDestinationActivity" android:label=" " android:theme="@style/AppTheme.NoActionBar">
         <meta-data android:name="android.support.PARENT_ACTIVITY" android:value=".main.MainActivity" />
     </activity>
