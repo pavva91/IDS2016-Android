@@ -17,7 +17,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 
-@Path("users")
+@Path("users/")
 public class UserHandler {
 
 	//costruttore senza parametri
@@ -49,7 +49,7 @@ public class UserHandler {
 		}catch (Exception e){
 			return Response.status(Response.Status.CONFLICT).entity("ERRORE: Impossibile registrare utente!").build();
 		}
-		return Response.ok(u.getToken(), MediaType.APPLICATION_JSON).build();	
+		return Response.ok(u, MediaType.APPLICATION_JSON).build();	
 	}
 
 	//metodo che effettua il login utente verificando username e password restituendo il token utente

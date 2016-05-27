@@ -15,5 +15,6 @@ public final class Config {
 								+"IF (superficie/(num_persone+0.01)<2.2 AND superficie/(num_persone+0.01)>=1.4, 0.6,"
 								+"IF (superficie/(num_persone+0.01)<1.4 AND superficie/(num_persone+0.01)>=0.75, 1.0, 3.0))))";
 	//URL del server
-	protected static final String SERVER_URL = "http://localhost:8080/";
+	//protected static final String SERVER_URL = "http://localhost:8080/";//solo per debug locale
+	protected static final String SERVER_URL = "http://213.26.178.148/";//per server di produzione
 }

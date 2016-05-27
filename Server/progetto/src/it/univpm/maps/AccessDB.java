@@ -1,12 +1,10 @@
 package it.univpm.maps;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 import com.mysql.jdbc.Statement;
 
@@ -54,6 +52,15 @@ public class AccessDB {
         //inserisco gli archi
         for(Edge a: m.getArchi()) //ciclo su ogni arco in lista
         	a = insertEdge(con, m, a); //inserisce nuovo arco
+        //recupero data aggiornamento mappa
+        stmt = con.prepareStatement("SELECT data_aggiornamento FROM mappe WHERE nome=?");
+		stmt.setString(1, m.getNome());
+		ResultSet rs = stmt.executeQuery();
+        if (rs.next()) {
+        	m.setLastUpdateMap(Date.valueOf(rs.getString("data_aggiornamento")));
+        }else
+        	//se non esiste la mappa allora genero un'eccezione
+        	throw new SQLException("Errore inserimento mappa!");
 	}
 	
 	//meto do che inserisce un nodo nel DB
@@ -172,7 +179,6 @@ public class AccessDB {
 	public Map getMap(Connection con, String mapName, String token) throws SQLException{
 		PreparedStatement stmt;
 		ResultSet rs;
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 		Map m=new Map(mapName);
 		int numRecord;
 		//seleziono i nodi mappa

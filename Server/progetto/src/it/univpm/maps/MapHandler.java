@@ -19,7 +19,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 
-@Path("maps/")
+@Path("/maps")
 public class MapHandler{
 	
 	//costruttore senza parametri
@@ -66,7 +66,7 @@ public class MapHandler{
 	//ritorna CONFLICT se si verificano problemi SQL
 	//ritorna OK se la mappa cancellata correttamente
 	@DELETE
-	@Path("{mapName}")
+	@Path("/{mapName}")
 	@Produces("application/json")
 	public Response deleteMap(@PathParam("mapName") String mapName, @QueryParam("token")String token, @Context HttpServletRequest request){
 		try{
@@ -126,7 +126,7 @@ public class MapHandler{
 	//ritorna NOT FOUND se la mappa non esiste sul DB
 	//ritorna OK se non ci sono problemi
 	@GET
-	@Path("{mapName}")
+	@Path("/{mapName}")
 	@Produces("application/json")
 	public Response getMap(@PathParam("mapName") String mapName, @QueryParam("token")String token){
 		AccessDB access = new AccessDB();

@@ -29,7 +29,7 @@ import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 
 
-@Path("/maps/upload")
+@Path("maps/upload/")
 public class FileHandler {
 
 	//costruttore senza parametri
@@ -60,7 +60,8 @@ public class FileHandler {
 		ServletContext context=request.getSession().getServletContext();
 		String timeStamp =  new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
 		String SERVER_UPLOAD_LOCATION_FOLDER = context.getRealPath("/../../docroot/");
-		String filePath = SERVER_UPLOAD_LOCATION_FOLDER	 + "\\" + mapName + "\\" + mapName + "_" + quota + "_" + timeStamp +  "_" + fileDetail.getFileName();
+		//String filePath = SERVER_UPLOAD_LOCATION_FOLDER	 + "\\" + mapName + "\\" + mapName + "_" + quota + "_" + timeStamp +  "_" + fileDetail.getFileName();
+		String filePath = SERVER_UPLOAD_LOCATION_FOLDER	 + "/" + mapName + "/" + mapName + "_" + quota + "_" + timeStamp +  "_" + fileDetail.getFileName();
 		String fileUrl = Config.SERVER_URL	 + mapName + "/" + mapName + "_" + quota + "_" + timeStamp +  "_" + fileDetail.getFileName();
 		try{
 			Database db = new Database();
