@@ -29,7 +29,7 @@ public class TapActivity extends CommonBehaviourActivity<TapView,TapPresenter> {
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_noemtap);
+        setContentView(R.layout.activity_tap);
 
         ButterKnife.bind(this);
 

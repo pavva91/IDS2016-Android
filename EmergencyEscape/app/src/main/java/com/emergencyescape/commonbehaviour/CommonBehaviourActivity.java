@@ -1,21 +1,17 @@
 package com.emergencyescape.commonbehaviour;
 
 import android.content.Intent;
-import android.support.annotation.NonNull;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
 
+import com.emergencyescape.settings.SettingsActivity;
 import com.emergencyescape.text.TextDepartureActivity;
 import com.emergencyescape.tap.TapActivity;
 import com.emergencyescape.R;
 import com.hannesdorfmann.mosby.mvp.MvpActivity;
 import com.hannesdorfmann.mosby.mvp.MvpPresenter;
-import com.hannesdorfmann.mosby.mvp.MvpView;
-import com.hannesdorfmann.mosby.mvp.viewstate.MvpViewStateActivity;
-import com.hannesdorfmann.mosby.mvp.viewstate.RestorableViewState;
-import com.hannesdorfmann.mosby.mvp.viewstate.ViewState;
 
 /**
  * Created by valerio on 27/04/2016.
@@ -70,6 +66,10 @@ public abstract class CommonBehaviourActivity<V extends CommonBehaviourView, P e
             Intent intent = new Intent("com.google.zxing.client.android.SCAN"); //Intent zxing
             intent.putExtra("SCAN_MODE", "QR_CODE_MODE"); // "PRODUCT_MODE" for bar codes
             startActivityForResult(intent, 0); //start barcode scanner zxing
+            return true;
+        }
+        if (id == R.id.action_settings) {
+            startActivity(new Intent(this, SettingsActivity.class));
             return true;
         }
 
