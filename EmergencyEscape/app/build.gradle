@@ -60,7 +60,7 @@ dependencies {
     compile 'com.mcxiaoke.volley:library:1.0.19' // Volley
     //compile files ('libs/gson-2.6.2.jar') // Non scaricare i file .jar ma prenderli da Maven, come sotto
     //compile files ('libs/khandroid-httpclient-4.2.3.jar')
-    compile files ('libs/httpcore-4.4.4.jar')
+    //compile files ('libs/httpcore-4.4.4.jar')
 
     compile 'com.google.code.gson:gson:2.6.2'
 
