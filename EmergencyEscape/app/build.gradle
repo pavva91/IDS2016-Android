@@ -62,8 +62,8 @@ dependencies {
     //compile files ('libs/khandroid-httpclient-4.2.3.jar')
     //compile files ('libs/httpcore-4.4.4.jar')
 
-    compile 'com.google.code.gson:gson:2.6.2'
 
+    compile 'com.google.code.gson:gson:2.6.2'
     // http://mvnrepository.com/artifact/org.apache.httpcomponents/httpcore
     compile group: 'org.apache.httpcomponents', name: 'httpcore', version: '4.4'
 
