@@ -3,8 +3,9 @@ package com.emergencyescape.server;
 
 import android.support.v4.util.LruCache;
 
-import com.emergencyescape.server.model.Maps;
-import com.emergencyescape.server.model.MapsResponse;
+
+import com.emergencyescape.server.model.MapResponse;
+import com.emergencyescape.server.model.Node;
 
 import java.io.IOException;
 
@@ -27,7 +28,7 @@ import rx.schedulers.Schedulers;
 
 public class ServerService { // TODO: Per ora è grezzo e non sfrutta il caching, ogni volta esegue la get al server
 
-    private static String baseUrl ="http://www.valeriomattioli.com/"; // Server URL
+    private static String baseUrl ="http://213.26.178.148/progetto/"; // Server URL
     private ServerAPI serverAPI; // Retrofit Callers Interface
     private OkHttpClient okHttpClient;
     private LruCache<Class<?>, Observable<?>> apiObservables;
@@ -146,7 +147,7 @@ public class ServerService { // TODO: Per ora è grezzo e non sfrutta il caching
      * @param mapsResponseObservable Risposta JSON "grezza" fornita da Retrofit
      * @return Observable<Maps> su cui si andrà a lavorare
      */
-    public Observable<Maps> getMap(Observable<MapsResponse> mapsResponseObservable) {
+    /*public Observable<Maps> getMap(Observable<MapsResponse> mapsResponseObservable) {
 
         return mapsResponseObservable
                 .flatMap(new Func1<MapsResponse, Observable<Maps>>() { // TODO: Trasformare la risposta JSON (Observervble<MapsResponse>) in tanti oggetti da trattare singolarmente(Observable<List<Maps>>)
@@ -155,8 +156,18 @@ public class ServerService { // TODO: Per ora è grezzo e non sfrutta il caching
                         return Observable.from(iterable.getMaps());
                     }
                 })
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread());
+    }*/
+
+    public Observable<Node> getNodes (Observable<MapResponse> mapResponse){
+        return mapResponse
+                .flatMap(new Func1<MapResponse, Observable<Node>>() {
+                    @Override
+                    public Observable<Node> call(MapResponse mapResponse) {
+                        return Observable.from(mapResponse.getNodes());
+                    }
+                });
     }
 
 

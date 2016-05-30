@@ -8,17 +8,17 @@ import java.util.Map;
 import javax.annotation.Generated;
 
 @Generated("org.jsonschema2pojo")
-public class MapsResponse {
+public class MapResponse {
 
     private String name;
-    private List<Object> nodes = new ArrayList<Object>();
-    private List<Object> edges = new ArrayList<Object>();
-    private List<Object> images = new ArrayList<Object>();
+    private List<Node> nodes = new ArrayList<Node>();
+    private List<Edge> edges = new ArrayList<Edge>();
+    private List<String> images = new ArrayList<String>();
     private String lastUpdateMap;
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     /**
-     *
+     * 
      * @return
      *     The name
      */
@@ -27,7 +27,7 @@ public class MapsResponse {
     }
 
     /**
-     *
+     * 
      * @param name
      *     The name
      */
@@ -36,61 +36,61 @@ public class MapsResponse {
     }
 
     /**
-     *
+     * 
      * @return
      *     The nodes
      */
-    public List<Object> getNodes() {
+    public List<Node> getNodes() {
         return nodes;
     }
 
     /**
-     *
+     * 
      * @param nodes
      *     The nodes
      */
-    public void setNodes(List<Object> nodes) {
+    public void setNodes(List<Node> nodes) {
         this.nodes = nodes;
     }
 
     /**
-     *
+     * 
      * @return
      *     The edges
      */
-    public List<Object> getEdges() {
+    public List<Edge> getEdges() {
         return edges;
     }
 
     /**
-     *
+     * 
      * @param edges
      *     The edges
      */
-    public void setEdges(List<Object> edges) {
+    public void setEdges(List<Edge> edges) {
         this.edges = edges;
     }
 
     /**
-     *
+     * 
      * @return
      *     The images
      */
-    public List<Object> getImages() {
+    public List<String> getImages() {
         return images;
     }
 
     /**
-     *
+     * 
      * @param images
      *     The images
      */
-    public void setImages(List<Object> images) {
+    public void setImages(List<String> images) {
         this.images = images;
     }
 
     /**
-     *
+     * 
      * @return
      *     The lastUpdateMap
      */
@@ -99,7 +99,7 @@ public class MapsResponse {
     }
 
     /**
-     *
+     * 
      * @param lastUpdateMap
      *     The lastUpdateMap
      */

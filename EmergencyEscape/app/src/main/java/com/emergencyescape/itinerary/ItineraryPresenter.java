@@ -7,12 +7,15 @@ import android.util.Log;
 
 import com.emergencyescape.commonbehaviour.CommonBehaviourPresenter;
 import com.emergencyescape.server.ServerService;
-import com.emergencyescape.server.model.Maps;
+import com.emergencyescape.server.model.MapResponse;
 import com.emergencyescape.server.model.MapsResponse;
+import com.emergencyescape.server.model.Node;
 
 import rx.Observable;
 import rx.Observer;
 import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * com.emergencyescape.qr
@@ -35,13 +38,17 @@ public class ItineraryPresenter extends CommonBehaviourPresenter<ItineraryView> 
        /* Observable<FriendResponse> friendResponseObservable = (Observable<FriendResponse>) // type bind
                 service.getPreparedObservable(preparedObservable, FriendResponse.class, false, false); // Vado a creare i due thread e ritorno l'Observable (prima verifico cache)
 */
+        String mapName ="univpm";
+        String token = "12m2t7oc43godndv767tkj9hue";
+        Observable<MapResponse> mapResponseObservable = service.getAPI().getMap(mapName, token);
+        Observable<Node> nodeObservable= service.getNodes(mapResponseObservable); // Deserializzo la risposta
 
 
-        Observable<MapsResponse> mapsResponseObservable = service.getAPI().getMaps();
-        Observable<Maps> mapsObservable= service.getMap(mapsResponseObservable);
-
-
-        subscription = mapsObservable.subscribe(new Observer<Maps>() { //Qua faccio il filtro dell'Observables
+        subscription = nodeObservable
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .filter((map) -> map.getQuota()== 155) //Qua faccio il filtro dell'Observables
+                .subscribe(new Observer<Node>() {
             @Override
             public void onCompleted() {
                 Log.v("onCompleted","END");
@@ -53,10 +60,10 @@ public class ItineraryPresenter extends CommonBehaviourPresenter<ItineraryView> 
             }
 
             @Override
-            public void onNext(Maps response) {
+            public void onNext(Node response) {
                 view.showMapsResults(response);
 
-                Log.v("onNextIteration",response.getName());
+                Log.v("onNextIteration",response.getId().toString());
             }
         });
     }

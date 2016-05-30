@@ -12,7 +12,8 @@ import com.emergencyescape.R;
 import com.emergencyescape.commonbehaviour.CommonBehaviourActivity;
 import com.emergencyescape.server.RxApplication;
 import com.emergencyescape.server.ServerService;
-import com.emergencyescape.server.model.Maps;
+import com.emergencyescape.server.model.MapResponse;
+import com.emergencyescape.server.model.Node;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -88,8 +89,8 @@ public class ItineraryActivity extends CommonBehaviourActivity<ItineraryView,Iti
         presenter.loadMaps();
     }
 
-    protected void showMapsResults(Maps response){
-        rxResponse.setText(response.getName()); // TODO: Implementare RecycleView Adapter per stampare le risposte
+    protected void showMapsResults(Node response){
+        rxResponse.setText(response.getId().toString()); // TODO: Implementare RecycleView Adapter per stampare le risposte
         rxResponse.setVisibility(View.VISIBLE);
     }
 
