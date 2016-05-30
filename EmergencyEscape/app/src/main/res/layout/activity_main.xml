@@ -21,15 +21,4 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/action_logout"
-        android:id="@+id/logoutbutton"
-        android:gravity="center"
-        android:layout_marginTop="500dp"
-
-        />
-
 </android.support.design.widget.CoordinatorLayout>

@@ -6,6 +6,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 
+import com.emergencyescape.LoginActivity;
+import com.emergencyescape.main.MainPresenter;
 import com.emergencyescape.settings.SettingsActivity;
 import com.emergencyescape.text.TextDepartureActivity;
 import com.emergencyescape.tap.TapActivity;
@@ -70,6 +72,17 @@ public abstract class CommonBehaviourActivity<V extends CommonBehaviourView, P e
         }
         if (id == R.id.action_settings) {
             startActivity(new Intent(this, SettingsActivity.class));
+            return true;
+        }
+        if (id == R.id.action_logout) { // Creo un presenter perchè CommonBehaviourPresenter è Astratto
+                MainPresenter presenterCommonBehaviourDescendentan = new MainPresenter();
+
+                boolean logoutOk = presenterCommonBehaviourDescendentan.logout(getApplicationContext()); // Effettua il logout
+
+                if (logoutOk) {
+                    Intent loginIntent = new Intent(this, LoginActivity.class); // Reindirizzo al login
+                    startActivity(loginIntent);
+                }
             return true;
         }
 

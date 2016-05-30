@@ -18,7 +18,7 @@ import butterknife.OnClick;
 
 
 public class MainActivity extends CommonBehaviourActivity<MainView,MainPresenter> {
-    @BindView(R.id.logoutbutton) Button logout;
+
     @BindView(R.id.toolbar) Toolbar toolbar;
 
     /**
@@ -46,6 +46,7 @@ public class MainActivity extends CommonBehaviourActivity<MainView,MainPresenter
     }
 
 
+    /*
     @OnClick(R.id.logoutbutton) // On click listener
     public void logout()
     {
@@ -60,6 +61,6 @@ public class MainActivity extends CommonBehaviourActivity<MainView,MainPresenter
 
         // Le funzioni di prima per il logout le ho spostate nel CommonBehaviourPresenter
     }
-
+    */
 
 }
