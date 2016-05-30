@@ -30,3 +30,6 @@ I merge/push sul master li facciamo una volta che le modifiche fatte sul branch 
 
 ##RxJava
 - Observer pattern, per la gestione di task asincroni (UI Thread, Background Thread) ([LINK]) (http://blog.danlew.net/2014/09/15/grokking-rxjava-part-1/)
+
+##DIJKSTRA
+- Libreria da cui attinto per implementazione algoritmo di calcolo ([LINK]) (https://github.com/phishman3579/java-algorithms-implementation)
