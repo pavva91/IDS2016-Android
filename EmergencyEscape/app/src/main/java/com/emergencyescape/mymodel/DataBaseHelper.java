@@ -7,6 +7,10 @@ import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.emergencyescape.greendao.DaoMaster;
+import com.emergencyescape.greendao.DaoSession;
+import com.emergencyescape.greendao.NoteDao;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -16,15 +20,16 @@ import java.io.OutputStream;
 /**
  * Classe che crea il DB
  */
+
 public class DataBaseHelper extends SQLiteOpenHelper
 {
 
    private SQLiteDatabase myDataBase;
-   private final Context myContext;
-   private static final String DATABASE_NAME = "UNIVPMLabEscape.db";
-   public static final String DATABASE_PATH = "/data/data/com.emergencyescape/databases/";
-   public static final int DATABASE_VERSION = 1;
-   //public static final int DATABASE_VERSION_old = 1;
+    private final Context myContext;
+    private static final String DATABASE_NAME = "UNIVPMLabEscape.db";
+    public static final String DATABASE_PATH = "/data/data/com.emergencyescape/databases/";
+    public static final int DATABASE_VERSION = 1;
+    //public static final int DATABASE_VERSION_old = 1;
 
    //Constructor
    public DataBaseHelper(Context context)
@@ -43,6 +48,7 @@ public class DataBaseHelper extends SQLiteOpenHelper
         }
         else
         {
+
             //By calling this method and empty database will be created into the default system path
             //of your application so we are gonna be able to overwrite that database with our database.
             this.getReadableDatabase();
@@ -85,7 +91,7 @@ public class DataBaseHelper extends SQLiteOpenHelper
         return checkDB != null ? true : false;
     }
 
-    /*
+    /**
     *  Copies your database from your local assets-folder to the just created empty database in the
     *  system folder, from where it can be accessed and handled.
     *  This is done by transfering bytestream.

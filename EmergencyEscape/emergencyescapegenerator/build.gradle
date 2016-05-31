@@ -1,0 +1,6 @@
+apply plugin: 'java'
+
+dependencies {
+    // greenDAO generator
+    compile 'org.greenrobot:greendao-generator:2.2.0'
+}

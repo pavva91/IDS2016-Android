@@ -1,21 +1,38 @@
 package com.emergencyescape.main;
 
+import android.content.Context;
+import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
+import android.widget.EditText;
 
 import com.emergencyescape.R;
 import com.emergencyescape.commonbehaviour.CommonBehaviourActivity;
+import com.emergencyescape.greendao.DaoMaster;
+import com.emergencyescape.greendao.DaoSession;
+import com.emergencyescape.greendao.NoteDao;
+import com.emergencyescape.login.LoginActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 
 public class MainActivity extends CommonBehaviourActivity<MainView,MainPresenter> {
 
     @BindView(R.id.toolbar) Toolbar toolbar;
+
+    private SQLiteDatabase db;
+
+    private EditText editText;
+
+    private DaoMaster daoMaster;
+    private DaoSession daoSession;
+    private NoteDao noteDao;
 
     /**
      * Instantiate a presenter instance
@@ -39,6 +56,8 @@ public class MainActivity extends CommonBehaviourActivity<MainView,MainPresenter
 
         setSupportActionBar(toolbar);
 
+        /**/
+
     }
 
 
@@ -56,7 +75,7 @@ public class MainActivity extends CommonBehaviourActivity<MainView,MainPresenter
         }
 
         // Le funzioni di prima per il logout le ho spostate nel CommonBehaviourPresenter
-    }
-    */
+    }*/
+
 
 }

@@ -45,10 +45,10 @@ public abstract class CommonBehaviourActivity<V extends CommonBehaviourView, P e
         }
 
         if(id == R.id.action_emqr){  // TODO: Sistemare il qr-code in modo da fare un intent interno (QrActivity) che a sua volta interagisce con zxing
-            Intent intent = new Intent("com.google.zxing.client.android.SCAN"); //Intent zxing
+            /*Intent intent = new Intent("com.google.zxing.client.android.SCAN"); //Intent zxing
             intent.putExtra("SCAN_MODE", "QR_CODE_MODE"); // "PRODUCT_MODE" for bar codes
             startActivityForResult(intent, 0); //start barcode scanner zxing
-            return true;
+            return true;*/
         }
 
 
@@ -65,10 +65,10 @@ public abstract class CommonBehaviourActivity<V extends CommonBehaviourView, P e
         }
 
         if(id == R.id.action_noemqr){
-            Intent intent = new Intent("com.google.zxing.client.android.SCAN"); //Intent zxing
+            /*Intent intent = new Intent("com.google.zxing.client.android.SCAN"); //Intent zxing
             intent.putExtra("SCAN_MODE", "QR_CODE_MODE"); // "PRODUCT_MODE" for bar codes
             startActivityForResult(intent, 0); //start barcode scanner zxing
-            return true;
+            return true;*/
         }
         if (id == R.id.action_settings) {
             startActivity(new Intent(this, SettingsActivity.class));

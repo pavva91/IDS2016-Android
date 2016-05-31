@@ -17,7 +17,7 @@ import com.hannesdorfmann.mosby.mvp.MvpView;
  */
 public abstract class CommonBehaviourPresenter<V extends MvpView> extends MvpBasePresenter<V>{
 
-    public boolean logout(Context AppContext){
+    public boolean logout(Context AppContext){/*
         try {
             // TODO:Spostare in un task asincrono?
             SessionClass sc = SessionClass.getInstance();
@@ -32,8 +32,8 @@ public abstract class CommonBehaviourPresenter<V extends MvpView> extends MvpBas
         catch(Exception e){
             Log.e("LogoutError", e.toString());
             return false;
-        }
-    }
+        }*/
+    return true;}
 
 
 }
