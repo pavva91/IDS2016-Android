@@ -1,4 +1,4 @@
-package com.emergencyescape;
+package com.emergencyescape.mymodel;
 
 import android.content.Context;
 import android.database.SQLException;
@@ -13,7 +13,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-
+/**
+ * Classe che crea il DB
+ */
 public class DataBaseHelper extends SQLiteOpenHelper
 {
 
@@ -32,7 +34,7 @@ public class DataBaseHelper extends SQLiteOpenHelper
    }
 
     //Create a empty database on the system
-    private void createDatabase() throws IOException
+    private void createDatabase() throws IOException // Singleton Pattern
     {
         boolean dbExist = checkDataBase();
         if(dbExist)

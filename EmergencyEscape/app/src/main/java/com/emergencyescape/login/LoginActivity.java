@@ -1,4 +1,4 @@
-package com.emergencyescape;
+package com.emergencyescape.login;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +11,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.emergencyescape.R;
+import com.emergencyescape.RegistraActivity;
+import com.emergencyescape.SessionClass;
+import com.emergencyescape.mymodel.table.User;
 import com.emergencyescape.main.MainActivity;
 import com.facebook.stetho.Stetho;
 
@@ -21,7 +25,7 @@ import java.util.ArrayList;
  */
 public class LoginActivity extends AppCompatActivity
 {
-    UtenteTable ut;
+    User ut;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -56,7 +60,7 @@ public class LoginActivity extends AppCompatActivity
     //mi passa ad un'altra activity se l'utente ha fatto il login
     private void setView()
     {
-        ut = new UtenteTable(getApplicationContext());
+        ut = new User(getApplicationContext());
         //verifico se un utente è rimasto loggato
         ArrayList<String> ris = ut.checkSession();
 
@@ -83,7 +87,7 @@ public class LoginActivity extends AppCompatActivity
         final EditText user = (EditText) findViewById(R.id.user);
         final CheckBox ricorda = (CheckBox) findViewById(R.id.remember);
 
-        ut = new UtenteTable(getApplicationContext());
+        ut = new User(getApplicationContext());
 
         log.setOnClickListener(new OnClickListener() {
             @Override

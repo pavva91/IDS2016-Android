@@ -38,16 +38,14 @@ public class ItineraryPresenter extends CommonBehaviourPresenter<ItineraryView> 
        /* Observable<FriendResponse> friendResponseObservable = (Observable<FriendResponse>) // type bind
                 service.getPreparedObservable(preparedObservable, FriendResponse.class, false, false); // Vado a creare i due thread e ritorno l'Observable (prima verifico cache)
 */
-        String mapName ="univpm";
+        String mapName ="univpm"; //TODO: Collegare col model
         String token = "12m2t7oc43godndv767tkj9hue";
+
         Observable<MapResponse> mapResponseObservable = service.getAPI().getMap(mapName, token);
         Observable<Node> nodeObservable= service.getNodes(mapResponseObservable); // Deserializzo la risposta
 
 
         subscription = nodeObservable
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .filter((map) -> map.getQuota()== 155) //Qua faccio il filtro dell'Observables
                 .subscribe(new Observer<Node>() {
             @Override
             public void onCompleted() {

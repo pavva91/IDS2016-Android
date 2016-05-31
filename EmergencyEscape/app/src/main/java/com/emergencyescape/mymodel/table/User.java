@@ -1,10 +1,12 @@
-package com.emergencyescape;
+package com.emergencyescape.mymodel.table;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
+
+import com.emergencyescape.mymodel.DataBaseHelper;
 
 import java.util.ArrayList;
 
@@ -13,7 +15,7 @@ import java.util.ArrayList;
  *
  * Classe che serve per interagire con la tabella user del db
  */
-public class UtenteTable
+public class User
 {
     private static final String TABLENAME = "utente";
     private static final String DBCOLUMNUSER = "user";
@@ -23,7 +25,7 @@ public class UtenteTable
     private DataBaseHelper dbh;
 
 
-    public UtenteTable (Context context)
+    public User(Context context)
     {
         dbh = new DataBaseHelper(context);
     }

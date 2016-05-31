@@ -160,14 +160,16 @@ public class ServerService { // TODO: Per ora è grezzo e non sfrutta il caching
                     .observeOn(AndroidSchedulers.mainThread());
     }*/
 
-    public Observable<Node> getNodes (Observable<MapResponse> mapResponse){
+    public Observable<Node> getNodes (Observable<MapResponse> mapResponse){ // Deserializzo la risposta JSON in tanti Nodi
         return mapResponse
                 .flatMap(new Func1<MapResponse, Observable<Node>>() {
                     @Override
                     public Observable<Node> call(MapResponse mapResponse) {
                         return Observable.from(mapResponse.getNodes());
                     }
-                });
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());//Qua faccio il filtro dell'Observables
     }
 
 

@@ -6,7 +6,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 
-import com.emergencyescape.LoginActivity;
+import com.emergencyescape.login.LoginActivity;
 import com.emergencyescape.main.MainPresenter;
 import com.emergencyescape.settings.SettingsActivity;
 import com.emergencyescape.text.TextDepartureActivity;

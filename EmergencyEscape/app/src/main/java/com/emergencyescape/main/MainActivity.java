@@ -1,20 +1,16 @@
 package com.emergencyescape.main;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
-import android.widget.Button;
 
-import com.emergencyescape.LoginActivity;
 import com.emergencyescape.R;
 import com.emergencyescape.commonbehaviour.CommonBehaviourActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 
 public class MainActivity extends CommonBehaviourActivity<MainView,MainPresenter> {

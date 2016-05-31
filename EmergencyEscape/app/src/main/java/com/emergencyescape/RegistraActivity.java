@@ -9,6 +9,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.emergencyescape.login.LoginActivity;
+import com.emergencyescape.mymodel.table.User;
+
 public class RegistraActivity extends AppCompatActivity
 {
 
@@ -34,7 +37,7 @@ public class RegistraActivity extends AppCompatActivity
             public void onClick(View arg0) {
                 long ok;
 
-                UtenteTable ut = new UtenteTable(getApplicationContext());
+                User ut = new User(getApplicationContext());
                 ok = ut.inserisciUtente(user.getText().toString(), psw.getText().toString());
 
                 Log.i("Rowind nuovo", String.valueOf(ok));

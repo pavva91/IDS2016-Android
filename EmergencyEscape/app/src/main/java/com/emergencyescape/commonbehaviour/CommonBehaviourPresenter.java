@@ -5,12 +5,10 @@ package com.emergencyescape.commonbehaviour;
 
 import android.content.Context;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.emergencyescape.SessionClass;
-import com.emergencyescape.UtenteTable;
+import com.emergencyescape.mymodel.table.User;
 import com.hannesdorfmann.mosby.mvp.MvpBasePresenter;
-import com.hannesdorfmann.mosby.mvp.MvpPresenter;
 import com.hannesdorfmann.mosby.mvp.MvpView;
 
 /**
@@ -24,7 +22,7 @@ public abstract class CommonBehaviourPresenter<V extends MvpView> extends MvpBas
             // TODO:Spostare in un task asincrono?
             SessionClass sc = SessionClass.getInstance();
             //canella dal db la session key
-            UtenteTable ut = new UtenteTable(AppContext);
+            User ut = new User(AppContext);
             ut.destroySession(sc.getSessionvalue());
             //pulisce le variabili globali
             sc.clearSessionvalue();
