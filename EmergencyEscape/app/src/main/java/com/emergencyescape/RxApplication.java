@@ -1,14 +1,18 @@
-package com.emergencyescape.server;
+package com.emergencyescape;
 
 import android.app.Application;
 
+import com.emergencyescape.server.ServerService;
+
 
 /**
- * Created by cteegarden on 1/26/16.
+ * Created by Valerio Mattioli on 12/05/16.
  *
  * A SINGLETON to decouple from UI thread
+ * the Application runs first
  */
 public class RxApplication extends Application {
+    // TODO: All'accensione fare il polling al server per vedere il lastUpdate della mappa
 
     private ServerService serverService;
 

@@ -1,7 +1,5 @@
 package com.emergencyescape.main;
 
-import android.content.Context;
-import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
@@ -14,12 +12,10 @@ import com.emergencyescape.R;
 import com.emergencyescape.commonbehaviour.CommonBehaviourActivity;
 import com.emergencyescape.greendao.DaoMaster;
 import com.emergencyescape.greendao.DaoSession;
-import com.emergencyescape.greendao.NoteDao;
-import com.emergencyescape.login.LoginActivity;
+import com.facebook.stetho.Stetho;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 
 public class MainActivity extends CommonBehaviourActivity<MainView,MainPresenter> {
@@ -32,7 +28,6 @@ public class MainActivity extends CommonBehaviourActivity<MainView,MainPresenter
 
     private DaoMaster daoMaster;
     private DaoSession daoSession;
-    private NoteDao noteDao;
 
     /**
      * Instantiate a presenter instance
@@ -48,6 +43,7 @@ public class MainActivity extends CommonBehaviourActivity<MainView,MainPresenter
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Stetho.initializeWithDefaults(this);
         setContentView(R.layout.activity_main);
 
         PreferenceManager.setDefaultValues(this, R.xml.settings_file, false); // Carica i valori di default delle opzioni
@@ -56,7 +52,12 @@ public class MainActivity extends CommonBehaviourActivity<MainView,MainPresenter
 
         setSupportActionBar(toolbar);
 
-        /**/
+        // PROVA greenDAO
+        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, "UNIVPMLabEscape.db", null);
+        db = helper.getWritableDatabase();
+        daoMaster = new DaoMaster(db);
+        daoSession = daoMaster.newSession();
+        //noteDao = daoSession.getNoteDao();
 
     }
 

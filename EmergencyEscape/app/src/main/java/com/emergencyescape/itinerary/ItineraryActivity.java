@@ -10,9 +10,8 @@ import android.widget.TextView;
 
 import com.emergencyescape.R;
 import com.emergencyescape.commonbehaviour.CommonBehaviourActivity;
-import com.emergencyescape.server.RxApplication;
+import com.emergencyescape.RxApplication;
 import com.emergencyescape.server.ServerService;
-import com.emergencyescape.server.model.MapResponse;
 import com.emergencyescape.server.model.Node;
 
 import butterknife.BindView;

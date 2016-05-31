@@ -1,12 +1,17 @@
 package com.emergencyescape.greendao;
 
+import java.util.List;
+import java.util.ArrayList;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
 
 import de.greenrobot.dao.AbstractDao;
 import de.greenrobot.dao.Property;
+import de.greenrobot.dao.internal.SqlUtils;
 import de.greenrobot.dao.internal.DaoConfig;
+import de.greenrobot.dao.query.Query;
+import de.greenrobot.dao.query.QueryBuilder;
 
 import com.emergencyescape.greendao.User;
 
@@ -23,13 +28,17 @@ public class UserDao extends AbstractDao<User, Long> {
      * Can be used for QueryBuilder and for referencing column names.
     */
     public static class Properties {
-        public final static Property Id = new Property(0, Long.class, "id", true, "_id");
-        public final static Property User = new Property(1, String.class, "user", false, "USER");
-        public final static Property Psw = new Property(2, String.class, "psw", false, "PSW");
-        public final static Property Partenza = new Property(3, String.class, "partenza", false, "PARTENZA");
-        public final static Property Destinazione = new Property(4, String.class, "destinazione", false, "DESTINAZIONE");
+        public final static Property Id = new Property(0, long.class, "id", true, "_id");
+        public final static Property Name = new Property(1, String.class, "name", false, "NAME");
+        public final static Property Password = new Property(2, String.class, "password", false, "PASSWORD");
+        public final static Property DepartureId = new Property(3, long.class, "departureId", false, "DEPARTURE_ID");
+        public final static Property DestinationId = new Property(4, long.class, "destinationId", false, "DESTINATION_ID");
     };
 
+    private DaoSession daoSession;
+
+    private Query<User> node_DepartureToManyUserQuery;
+    private Query<User> node_DestinationToManyUserQuery;
 
     public UserDao(DaoConfig config) {
         super(config);
@@ -37,17 +46,18 @@ public class UserDao extends AbstractDao<User, Long> {
     
     public UserDao(DaoConfig config, DaoSession daoSession) {
         super(config, daoSession);
+        this.daoSession = daoSession;
     }
 
     /** Creates the underlying database table. */
     public static void createTable(SQLiteDatabase db, boolean ifNotExists) {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"USER\" (" + //
-                "\"_id\" INTEGER PRIMARY KEY ," + // 0: id
-                "\"USER\" TEXT NOT NULL ," + // 1: user
-                "\"PSW\" TEXT NOT NULL ," + // 2: psw
-                "\"PARTENZA\" TEXT," + // 3: partenza
-                "\"DESTINAZIONE\" TEXT);"); // 4: destinazione
+                "\"_id\" INTEGER PRIMARY KEY NOT NULL ," + // 0: id
+                "\"NAME\" TEXT NOT NULL ," + // 1: name
+                "\"PASSWORD\" TEXT NOT NULL ," + // 2: password
+                "\"DEPARTURE_ID\" INTEGER NOT NULL ," + // 3: departureId
+                "\"DESTINATION_ID\" INTEGER NOT NULL );"); // 4: destinationId
     }
 
     /** Drops the underlying database table. */
@@ -60,40 +70,34 @@ public class UserDao extends AbstractDao<User, Long> {
     @Override
     protected void bindValues(SQLiteStatement stmt, User entity) {
         stmt.clearBindings();
- 
-        Long id = entity.getId();
-        if (id != null) {
-            stmt.bindLong(1, id);
-        }
-        stmt.bindString(2, entity.getUser());
-        stmt.bindString(3, entity.getPsw());
- 
-        String partenza = entity.getPartenza();
-        if (partenza != null) {
-            stmt.bindString(4, partenza);
-        }
- 
-        String destinazione = entity.getDestinazione();
-        if (destinazione != null) {
-            stmt.bindString(5, destinazione);
-        }
+        stmt.bindLong(1, entity.getId());
+        stmt.bindString(2, entity.getName());
+        stmt.bindString(3, entity.getPassword());
+        stmt.bindLong(4, entity.getDepartureId());
+        stmt.bindLong(5, entity.getDestinationId());
+    }
+
+    @Override
+    protected void attachEntity(User entity) {
+        super.attachEntity(entity);
+        entity.__setDaoSession(daoSession);
     }
 
     /** @inheritdoc */
     @Override
     public Long readKey(Cursor cursor, int offset) {
-        return cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0);
+        return cursor.getLong(offset + 0);
     }    
 
     /** @inheritdoc */
     @Override
     public User readEntity(Cursor cursor, int offset) {
         User entity = new User( //
-            cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
-            cursor.getString(offset + 1), // user
-            cursor.getString(offset + 2), // psw
-            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // partenza
-            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4) // destinazione
+            cursor.getLong(offset + 0), // id
+            cursor.getString(offset + 1), // name
+            cursor.getString(offset + 2), // password
+            cursor.getLong(offset + 3), // departureId
+            cursor.getLong(offset + 4) // destinationId
         );
         return entity;
     }
@@ -101,11 +105,11 @@ public class UserDao extends AbstractDao<User, Long> {
     /** @inheritdoc */
     @Override
     public void readEntity(Cursor cursor, User entity, int offset) {
-        entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
-        entity.setUser(cursor.getString(offset + 1));
-        entity.setPsw(cursor.getString(offset + 2));
-        entity.setPartenza(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
-        entity.setDestinazione(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
+        entity.setId(cursor.getLong(offset + 0));
+        entity.setName(cursor.getString(offset + 1));
+        entity.setPassword(cursor.getString(offset + 2));
+        entity.setDepartureId(cursor.getLong(offset + 3));
+        entity.setDestinationId(cursor.getLong(offset + 4));
      }
     
     /** @inheritdoc */
@@ -131,4 +135,134 @@ public class UserDao extends AbstractDao<User, Long> {
         return true;
     }
     
+    /** Internal query to resolve the "departureToManyUser" to-many relationship of Node. */
+    public List<User> _queryNode_DepartureToManyUser(long departureId) {
+        synchronized (this) {
+            if (node_DepartureToManyUserQuery == null) {
+                QueryBuilder<User> queryBuilder = queryBuilder();
+                queryBuilder.where(Properties.DepartureId.eq(null));
+                node_DepartureToManyUserQuery = queryBuilder.build();
+            }
+        }
+        Query<User> query = node_DepartureToManyUserQuery.forCurrentThread();
+        query.setParameter(0, departureId);
+        return query.list();
+    }
+
+    /** Internal query to resolve the "destinationToManyUser" to-many relationship of Node. */
+    public List<User> _queryNode_DestinationToManyUser(long destinationId) {
+        synchronized (this) {
+            if (node_DestinationToManyUserQuery == null) {
+                QueryBuilder<User> queryBuilder = queryBuilder();
+                queryBuilder.where(Properties.DestinationId.eq(null));
+                node_DestinationToManyUserQuery = queryBuilder.build();
+            }
+        }
+        Query<User> query = node_DestinationToManyUserQuery.forCurrentThread();
+        query.setParameter(0, destinationId);
+        return query.list();
+    }
+
+    private String selectDeep;
+
+    protected String getSelectDeep() {
+        if (selectDeep == null) {
+            StringBuilder builder = new StringBuilder("SELECT ");
+            SqlUtils.appendColumns(builder, "T", getAllColumns());
+            builder.append(',');
+            SqlUtils.appendColumns(builder, "T0", daoSession.getNodeDao().getAllColumns());
+            builder.append(',');
+            SqlUtils.appendColumns(builder, "T1", daoSession.getNodeDao().getAllColumns());
+            builder.append(" FROM USER T");
+            builder.append(" LEFT JOIN NODE T0 ON T.\"DEPARTURE_ID\"=T0.\"_id\"");
+            builder.append(" LEFT JOIN NODE T1 ON T.\"DESTINATION_ID\"=T1.\"_id\"");
+            builder.append(' ');
+            selectDeep = builder.toString();
+        }
+        return selectDeep;
+    }
+    
+    protected User loadCurrentDeep(Cursor cursor, boolean lock) {
+        User entity = loadCurrent(cursor, 0, lock);
+        int offset = getAllColumns().length;
+
+        Node departureToOneUser = loadCurrentOther(daoSession.getNodeDao(), cursor, offset);
+         if(departureToOneUser != null) {
+            entity.setDepartureToOneUser(departureToOneUser);
+        }
+        offset += daoSession.getNodeDao().getAllColumns().length;
+
+        Node destinationToOneUser = loadCurrentOther(daoSession.getNodeDao(), cursor, offset);
+         if(destinationToOneUser != null) {
+            entity.setDestinationToOneUser(destinationToOneUser);
+        }
+
+        return entity;    
+    }
+
+    public User loadDeep(Long key) {
+        assertSinglePk();
+        if (key == null) {
+            return null;
+        }
+
+        StringBuilder builder = new StringBuilder(getSelectDeep());
+        builder.append("WHERE ");
+        SqlUtils.appendColumnsEqValue(builder, "T", getPkColumns());
+        String sql = builder.toString();
+        
+        String[] keyArray = new String[] { key.toString() };
+        Cursor cursor = db.rawQuery(sql, keyArray);
+        
+        try {
+            boolean available = cursor.moveToFirst();
+            if (!available) {
+                return null;
+            } else if (!cursor.isLast()) {
+                throw new IllegalStateException("Expected unique result, but count was " + cursor.getCount());
+            }
+            return loadCurrentDeep(cursor, true);
+        } finally {
+            cursor.close();
+        }
+    }
+    
+    /** Reads all available rows from the given cursor and returns a list of new ImageTO objects. */
+    public List<User> loadAllDeepFromCursor(Cursor cursor) {
+        int count = cursor.getCount();
+        List<User> list = new ArrayList<User>(count);
+        
+        if (cursor.moveToFirst()) {
+            if (identityScope != null) {
+                identityScope.lock();
+                identityScope.reserveRoom(count);
+            }
+            try {
+                do {
+                    list.add(loadCurrentDeep(cursor, false));
+                } while (cursor.moveToNext());
+            } finally {
+                if (identityScope != null) {
+                    identityScope.unlock();
+                }
+            }
+        }
+        return list;
+    }
+    
+    protected List<User> loadDeepAllAndCloseCursor(Cursor cursor) {
+        try {
+            return loadAllDeepFromCursor(cursor);
+        } finally {
+            cursor.close();
+        }
+    }
+    
+
+    /** A raw-style query where you can pass any WHERE clause and arguments. */
+    public List<User> queryDeep(String where, String... selectionArg) {
+        Cursor cursor = db.rawQuery(getSelectDeep() + where, selectionArg);
+        return loadDeepAllAndCloseCursor(cursor);
+    }
+ 
 }

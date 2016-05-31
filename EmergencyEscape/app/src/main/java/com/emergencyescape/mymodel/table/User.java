@@ -1,22 +1,12 @@
 package com.emergencyescape.mymodel.table;
 
-import android.content.ContentValues;
-import android.content.Context;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
-
-import com.emergencyescape.mymodel.DataBaseHelper;
-
-import java.util.ArrayList;
-
 /**
  * Created by Betta73 on 05/04/2016.
  *
  * Classe che serve per interagire con la tabella user del db
  */
 public class User
-{
+{/*
     private static final String TABLENAME = "utente";
     private static final String DBCOLUMNUSER = "user";
     private static final String DBCOLUMNPSW = "psw";
@@ -206,6 +196,6 @@ public class User
 
         return ris;
 
-    }
+    }*/
 }
 
