@@ -2,6 +2,7 @@ package com.emergencyescape;
 
 import android.app.Application;
 
+import com.emergencyescape.server.Server2Db;
 import com.emergencyescape.server.ServerService;
 
 
@@ -16,10 +17,13 @@ public class RxApplication extends Application {
 
     private ServerService serverService;
 
+    private Server2Db server2Db;
+
     @Override
     public void onCreate() {
         super.onCreate();
         serverService = new ServerService();
+        server2Db = new Server2Db(getServerService());
     }
 
     public ServerService getServerService(){

@@ -35,9 +35,6 @@ public class ItineraryPresenter extends CommonBehaviourPresenter<ItineraryView> 
     @Override
     public void loadMaps(){//TODO: Quando ne avrai capito il workflow attivare caching
 
-       /* Observable<FriendResponse> friendResponseObservable = (Observable<FriendResponse>) // type bind
-                service.getPreparedObservable(preparedObservable, FriendResponse.class, false, false); // Vado a creare i due thread e ritorno l'Observable (prima verifico cache)
-*/
         String mapName ="univpm"; //TODO: Collegare col model
         String token = "12m2t7oc43godndv767tkj9hue";
 
@@ -59,7 +56,7 @@ public class ItineraryPresenter extends CommonBehaviourPresenter<ItineraryView> 
 
             @Override
             public void onNext(Node response) {
-                view.showMapsResults(response);
+                view.showMapsResults(response); //TODO: Salvare nel DB
 
                 Log.v("onNextIteration",response.getId().toString());
             }

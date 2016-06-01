@@ -24,8 +24,6 @@ public class MainActivity extends CommonBehaviourActivity<MainView,MainPresenter
 
     private SQLiteDatabase db;
 
-    private EditText editText;
-
     private DaoMaster daoMaster;
     private DaoSession daoSession;
 
@@ -57,8 +55,6 @@ public class MainActivity extends CommonBehaviourActivity<MainView,MainPresenter
         db = helper.getWritableDatabase();
         daoMaster = new DaoMaster(db);
         daoSession = daoMaster.newSession();
-        //noteDao = daoSession.getNoteDao();
-
     }
 
 

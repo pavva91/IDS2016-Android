@@ -41,6 +41,7 @@ public class ServerService { // TODO: Per ora è grezzo e non sfrutta il caching
         okHttpClient = buildClient();
         apiObservables = new LruCache<>(10);
 
+        // Creo collegamento al server
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(baseUrl)
                 .addConverterFactory(GsonConverterFactory.create())
