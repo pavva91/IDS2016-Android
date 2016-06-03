@@ -45,6 +45,7 @@ public class EmergencyEscapeGenerator {
         user.addIdProperty().notNull().primaryKey();
         user.addStringProperty("name").notNull();
         user.addStringProperty("password").notNull();
+        user.addStringProperty("token").notNull();
     }
     private static void addEdge(Entity edge) {
         edge.addIdProperty().primaryKey();

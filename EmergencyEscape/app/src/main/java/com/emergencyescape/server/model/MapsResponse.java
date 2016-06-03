@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 import javax.annotation.Generated;
 
+// TODO: Non la uso, da cancellare
+
 @Generated("org.jsonschema2pojo")
 public class MapsResponse {
 

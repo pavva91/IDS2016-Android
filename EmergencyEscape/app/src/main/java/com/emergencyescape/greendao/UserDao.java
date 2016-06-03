@@ -31,8 +31,9 @@ public class UserDao extends AbstractDao<User, Long> {
         public final static Property Id = new Property(0, long.class, "id", true, "_id");
         public final static Property Name = new Property(1, String.class, "name", false, "NAME");
         public final static Property Password = new Property(2, String.class, "password", false, "PASSWORD");
-        public final static Property DepartureId = new Property(3, long.class, "departureId", false, "DEPARTURE_ID");
-        public final static Property DestinationId = new Property(4, long.class, "destinationId", false, "DESTINATION_ID");
+        public final static Property Token = new Property(3, String.class, "token", false, "TOKEN");
+        public final static Property DepartureId = new Property(4, long.class, "departureId", false, "DEPARTURE_ID");
+        public final static Property DestinationId = new Property(5, long.class, "destinationId", false, "DESTINATION_ID");
     };
 
     private DaoSession daoSession;
@@ -56,8 +57,9 @@ public class UserDao extends AbstractDao<User, Long> {
                 "\"_id\" INTEGER PRIMARY KEY NOT NULL ," + // 0: id
                 "\"NAME\" TEXT NOT NULL ," + // 1: name
                 "\"PASSWORD\" TEXT NOT NULL ," + // 2: password
-                "\"DEPARTURE_ID\" INTEGER NOT NULL ," + // 3: departureId
-                "\"DESTINATION_ID\" INTEGER NOT NULL );"); // 4: destinationId
+                "\"TOKEN\" TEXT NOT NULL ," + // 3: token
+                "\"DEPARTURE_ID\" INTEGER NOT NULL ," + // 4: departureId
+                "\"DESTINATION_ID\" INTEGER NOT NULL );"); // 5: destinationId
     }
 
     /** Drops the underlying database table. */
@@ -73,8 +75,9 @@ public class UserDao extends AbstractDao<User, Long> {
         stmt.bindLong(1, entity.getId());
         stmt.bindString(2, entity.getName());
         stmt.bindString(3, entity.getPassword());
-        stmt.bindLong(4, entity.getDepartureId());
-        stmt.bindLong(5, entity.getDestinationId());
+        stmt.bindString(4, entity.getToken());
+        stmt.bindLong(5, entity.getDepartureId());
+        stmt.bindLong(6, entity.getDestinationId());
     }
 
     @Override
@@ -96,8 +99,9 @@ public class UserDao extends AbstractDao<User, Long> {
             cursor.getLong(offset + 0), // id
             cursor.getString(offset + 1), // name
             cursor.getString(offset + 2), // password
-            cursor.getLong(offset + 3), // departureId
-            cursor.getLong(offset + 4) // destinationId
+            cursor.getString(offset + 3), // token
+            cursor.getLong(offset + 4), // departureId
+            cursor.getLong(offset + 5) // destinationId
         );
         return entity;
     }
@@ -108,8 +112,9 @@ public class UserDao extends AbstractDao<User, Long> {
         entity.setId(cursor.getLong(offset + 0));
         entity.setName(cursor.getString(offset + 1));
         entity.setPassword(cursor.getString(offset + 2));
-        entity.setDepartureId(cursor.getLong(offset + 3));
-        entity.setDestinationId(cursor.getLong(offset + 4));
+        entity.setToken(cursor.getString(offset + 3));
+        entity.setDepartureId(cursor.getLong(offset + 4));
+        entity.setDestinationId(cursor.getLong(offset + 5));
      }
     
     /** @inheritdoc */

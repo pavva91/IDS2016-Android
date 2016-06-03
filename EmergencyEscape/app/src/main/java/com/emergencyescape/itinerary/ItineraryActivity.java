@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.emergencyescape.R;
 import com.emergencyescape.commonbehaviour.CommonBehaviourActivity;
-import com.emergencyescape.RxApplication;
+import com.emergencyescape.MyApplication;
 import com.emergencyescape.server.ServerService;
 import com.emergencyescape.server.model.Node;
 
@@ -25,6 +25,9 @@ public class ItineraryActivity extends CommonBehaviourActivity<ItineraryView,Iti
 
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.Percorso) TextView rxResponse;
+    @BindView(R.id.txtDeparture) TextView txtDeparture;
+    @BindView(R.id.txtDestination) TextView txtDestination;
+
 
     private static final String EXTRA_RX = "EXTRA_RX";
     private ServerService service;
@@ -38,8 +41,8 @@ public class ItineraryActivity extends CommonBehaviourActivity<ItineraryView,Iti
     @NonNull
     @Override
     public ItineraryPresenter createPresenter() {
-        RxApplication rxApplication = (RxApplication) getApplication();
-        service = rxApplication.getServerService();
+        MyApplication myApplication = (MyApplication) getApplication();
+        service = myApplication.getServerService();
         presenter = new ItineraryPresenter(this,service);
         return presenter;
     }
@@ -53,6 +56,9 @@ public class ItineraryActivity extends CommonBehaviourActivity<ItineraryView,Iti
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        showDeparture();
+        showDestination();
 
         if(savedInstanceState!=null){
             rxCallInWorks = savedInstanceState.getBoolean(EXTRA_RX);
@@ -99,4 +105,13 @@ public class ItineraryActivity extends CommonBehaviourActivity<ItineraryView,Iti
         rxResponse.setVisibility(View.VISIBLE);
     }
 
+    @Override
+    public void showDeparture() {
+        txtDeparture.setText(presenter.getDeparture());
+    }
+
+    @Override
+    public void showDestination() {
+        txtDestination.setText(presenter.getDestination());
+    }
 }

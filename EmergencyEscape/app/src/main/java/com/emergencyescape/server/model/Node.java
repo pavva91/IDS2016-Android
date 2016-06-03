@@ -9,7 +9,7 @@ import javax.annotation.Generated;
 public class Node {
 
     private String mapName;
-    private Integer id;
+    private Long id;
     private String code;
     private String descr;
     private Integer quota;
@@ -42,7 +42,7 @@ public class Node {
      * @return
      *     The id
      */
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
@@ -51,7 +51,7 @@ public class Node {
      * @param id
      *     The id
      */
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

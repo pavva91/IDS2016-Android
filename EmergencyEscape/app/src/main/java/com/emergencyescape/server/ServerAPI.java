@@ -7,6 +7,8 @@ package com.emergencyescape.server;
 import com.emergencyescape.server.model.MapResponse;
 import com.emergencyescape.server.model.MapsResponse;
 
+import java.util.List;
+
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -19,7 +21,7 @@ import rx.Observable;
 public interface ServerAPI {
 
     @GET("maps")
-    Observable<MapsResponse> getMaps(@Query("token") String token);
+    Observable<List<MapResponse>> getMaps(@Query("token") String token);
 
     @GET("maps/{mapName}")
     Observable<MapResponse> getMap(@Path("mapName") String mapName, @Query("token") String token);

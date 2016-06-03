@@ -4,11 +4,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
-import android.widget.TextView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 
 import com.emergencyescape.itinerary.ItineraryActivity;
 import com.emergencyescape.R;
 import com.emergencyescape.commonbehaviour.CommonBehaviourActivity;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -16,15 +19,8 @@ import butterknife.OnClick;
 
 public class TextDepartureActivity extends CommonBehaviourActivity<TexterView,TextPresenter> {
 
-    // Refactoring attuato:
-    // - Old Class: EmTextActivity
-    // - Merge con NoemTextActivityOld
-    // - Verifica emergenza tramite boolean (emergencyState)
-
-
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.editPartenza)
-    TextView aulaPartenzaTextView;
+    @BindView(R.id.editPartenza) AutoCompleteTextView aulaPartenzaTextView;
 
     /**
      * Instantiate a presenter instance
@@ -44,19 +40,25 @@ public class TextDepartureActivity extends CommonBehaviourActivity<TexterView,Te
 
         ButterKnife.bind(this);
 
+        fillAutoCompleteTextView();
+
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
 
     }
 
     @OnClick(R.id.btnPartenza)
     public void submitDeparture(){
+        Intent intentToStart;
         if (this.getEmergencyState()) {
-            startActivity(new Intent(TextDepartureActivity.this, ItineraryActivity.class));
+            intentToStart = new Intent(TextDepartureActivity.this, ItineraryActivity.class);
         }else{
-            startActivity(new Intent(TextDepartureActivity.this,TextDestinationActivity.class).putExtra("aula",this.getAula()));
+            intentToStart = new Intent(TextDepartureActivity.this,TextDestinationActivity.class);
         }
+        presenter.setUserDeparture(this.getAula());
+        startActivity(intentToStart);
     }
 
     private Boolean getEmergencyState(){
@@ -68,4 +70,48 @@ public class TextDepartureActivity extends CommonBehaviourActivity<TexterView,Te
         String aulaPartenza = aulaPartenzaTextView.getText().toString();
         return aulaPartenza;
     }
+
+    private void fillAutoCompleteTextView(){
+
+        // Get the string array
+        ArrayList<String> nodes = presenter.getNodesList();
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.select_dialog_multichoice, nodes);
+
+
+        /*aulaPartenzaTextView.setValidator(new AutoCompleteTextView.Validator() {
+                                        @Override
+                                        public boolean isValid(CharSequence text) {
+                                            return false;
+                                        }
+                                          public boolean isValid(String inputText, String[] allNodes) {
+                                              boolean validString = false;
+
+                                              for (String singleNode : allNodes) {
+                                                  if (inputText.equalsIgnoreCase(singleNode)){
+                                                      if (inputText.equals(singleNode)){
+                                                          validString = true;
+                                                      }
+                                                      else {
+                                                          inputText=singleNode;
+                                                          validString = true;
+                                                      }
+                                                      return validString;
+                                                  }
+                                              }
+                                              return validString;
+                                          }
+
+                                          @Override
+                                          public CharSequence fixText(CharSequence invalidText) {
+                                              return null;
+                                          }
+                                          }
+
+        );*/
+        aulaPartenzaTextView.setThreshold(1);
+        aulaPartenzaTextView.setAdapter(adapter);
+    }
+
+
 }

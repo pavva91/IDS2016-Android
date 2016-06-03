@@ -14,6 +14,8 @@ public class User {
     private String name;
     /** Not-null value. */
     private String password;
+    /** Not-null value. */
+    private String token;
     private long departureId;
     private long destinationId;
 
@@ -37,10 +39,11 @@ public class User {
         this.id = id;
     }
 
-    public User(long id, String name, String password, long departureId, long destinationId) {
+    public User(long id, String name, String password, String token, long departureId, long destinationId) {
         this.id = id;
         this.name = name;
         this.password = password;
+        this.token = token;
         this.departureId = departureId;
         this.destinationId = destinationId;
     }
@@ -77,6 +80,16 @@ public class User {
     /** Not-null value; ensure this value is available before it is saved to the database. */
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    /** Not-null value. */
+    public String getToken() {
+        return token;
+    }
+
+    /** Not-null value; ensure this value is available before it is saved to the database. */
+    public void setToken(String token) {
+        this.token = token;
     }
 
     public long getDepartureId() {

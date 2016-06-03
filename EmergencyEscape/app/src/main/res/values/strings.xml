@@ -77,7 +77,13 @@
 
     <!-- Value in SharedPreferences for imperial temperature unit option [CHAR LIMIT=NONE] -->
     <string name="pref_units_imperial" translatable="false">imperial</string>
+
     <string name="title_activity_settings2">Settings2Activity</string>
+
+    <string name="select_map_label">Select Map</string>
+    <string name="select_map_key" translatable="false">id</string>
+    <string name="map_id_0" translatable="false">0</string>
+    <string name="map_value_0" translatable="false">univpm</string>
 
 
 </resources>

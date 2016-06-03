@@ -5,9 +5,11 @@ import android.support.v4.util.LruCache;
 
 
 import com.emergencyescape.server.model.MapResponse;
+import com.emergencyescape.server.model.MapsResponse;
 import com.emergencyescape.server.model.Node;
 
 import java.io.IOException;
+import java.util.List;
 
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -172,6 +174,9 @@ public class ServerService { // TODO: Per ora è grezzo e non sfrutta il caching
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());//Qua faccio il filtro dell'Observables
     }
-
-
+    public Observable<List<MapResponse>> getMaps (Observable<List<MapResponse>> mapResponse){
+        return mapResponse
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
 }

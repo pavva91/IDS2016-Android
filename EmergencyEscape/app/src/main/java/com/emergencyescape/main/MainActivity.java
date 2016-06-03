@@ -1,17 +1,13 @@
 package com.emergencyescape.main;
 
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
-import android.widget.EditText;
 
 import com.emergencyescape.R;
 import com.emergencyescape.commonbehaviour.CommonBehaviourActivity;
-import com.emergencyescape.greendao.DaoMaster;
-import com.emergencyescape.greendao.DaoSession;
 import com.facebook.stetho.Stetho;
 
 import butterknife.BindView;
@@ -21,11 +17,6 @@ import butterknife.ButterKnife;
 public class MainActivity extends CommonBehaviourActivity<MainView,MainPresenter> {
 
     @BindView(R.id.toolbar) Toolbar toolbar;
-
-    private SQLiteDatabase db;
-
-    private DaoMaster daoMaster;
-    private DaoSession daoSession;
 
     /**
      * Instantiate a presenter instance
@@ -49,12 +40,8 @@ public class MainActivity extends CommonBehaviourActivity<MainView,MainPresenter
         ButterKnife.bind(this);
 
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        // PROVA greenDAO
-        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, "UNIVPMLabEscape.db", null);
-        db = helper.getWritableDatabase();
-        daoMaster = new DaoMaster(db);
-        daoSession = daoMaster.newSession();
     }
 
 
