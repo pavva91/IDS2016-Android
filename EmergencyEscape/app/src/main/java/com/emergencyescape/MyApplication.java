@@ -46,7 +46,9 @@ public class MyApplication extends Application {
 
         server2Db.loadUser(); // TODO: Da eliminare una volta integrato login e registrazione corretti
 
-        server2Db.loadNode();
+        server2Db.loadNodes();
+
+        server2Db.loadEdges();
     }
 
     public ServerService getServerService(){

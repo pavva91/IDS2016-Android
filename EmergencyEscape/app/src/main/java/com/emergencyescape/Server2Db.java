@@ -9,11 +9,13 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.emergencyescape.greendao.DaoSession;
+import com.emergencyescape.greendao.EdgeDao;
 import com.emergencyescape.greendao.Maps;
 import com.emergencyescape.greendao.MapsDao;
 import com.emergencyescape.greendao.NodeDao;
 import com.emergencyescape.greendao.UserDao;
 import com.emergencyescape.server.ServerService;
+import com.emergencyescape.server.model.Edge;
 import com.emergencyescape.server.model.MapResponse;
 import com.emergencyescape.server.model.Node;
 
@@ -38,6 +40,7 @@ public class Server2Db {
     private ServerService service = MyApplication.getInstance().getServerService();
     private DaoSession daoSession = MyApplication.getSession();
     private NodeDao nodeDao = daoSession.getNodeDao();
+    private EdgeDao edgeDao = daoSession.getEdgeDao();
     private MapsDao mapsDao = daoSession.getMapsDao();
     private UserDao userDao = daoSession.getUserDao();
     private DBHelper dbHelper = MyApplication.getInstance().getDbHelper();
@@ -45,7 +48,7 @@ public class Server2Db {
     private Cursor cursor;
 
 
-    public void loadNode(){
+    public void loadNodes(){
 
         setDb();
         NodeDao.dropTable(db,true);
@@ -57,7 +60,7 @@ public class Server2Db {
 
 
 
-        Observable<MapResponse> mapResponseObservable = service.getAPI().getMap(mapName, token);
+        Observable<MapResponse> mapResponseObservable = service.getAPI().getMap(mapName,token);
         Observable<Node> nodeObservable= service.getNodes(mapResponseObservable); // Deserializzo la risposta
 
 
@@ -75,7 +78,7 @@ public class Server2Db {
 
                     @Override
                     public void onNext(Node response) {
-                        Log.v("onNextIteration",response.getId().toString());
+                        Log.v("onNextIterationNodeId",response.getId().toString());
 
                         // Salvo i nodi presi dal server nel DB
                         com.emergencyescape.greendao.Node node = new com.emergencyescape.greendao.Node(response.getId());
@@ -86,10 +89,62 @@ public class Server2Db {
                         node.setY(response.getY());
                         node.setWidth(response.getWidth());
                         node.setType(response.getType());
-
                         //node.setMapId(response.getMapName()) // TODO: Sistemare questa cosa
 
                         nodeDao.insert(node);
+
+
+                    }
+                });
+    }
+
+    public void loadEdges(){
+
+        setDb();
+        EdgeDao.dropTable(db,true);
+        EdgeDao.createTable(db,false);
+
+
+        String mapName ="univpm"; //TODO: Collegare col model
+        String token = "12m2t7oc43godndv767tkj9hue";
+
+
+
+        Observable<MapResponse> mapResponseObservable = service.getAPI().getMap(mapName,token);
+        Observable<Edge> edgeObservable= service.getEdges(mapResponseObservable); // Deserializzo la risposta
+
+
+        subscription = edgeObservable
+                .subscribe(new Observer<Edge>() {
+                    @Override
+                    public void onCompleted() {
+                        Log.v("onCompleted","END");
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e(LOG, e.toString());
+                    }
+
+                    @Override
+                    public void onNext(Edge response) {
+                        Log.v("onNextIterationEdgeFrom",response.getFrom());
+                        Log.v("onNextIterationEdgeTo",response.getTo());
+
+                        List<com.emergencyescape.greendao.Node> nodeDeparture = nodeDao.queryBuilder().where(NodeDao.Properties.Code.eq(response.getFrom())).list();
+                        List<com.emergencyescape.greendao.Node> nodeDestination = nodeDao.queryBuilder().where(NodeDao.Properties.Code.eq(response.getTo())).list();
+
+                        com.emergencyescape.greendao.Edge edge = new com.emergencyescape.greendao.Edge();
+                        edge.setDepartureToOne(nodeDeparture.get(0));
+                        edge.setDestinationToOne(nodeDestination.get(0));
+                        edge.setV(response.getV());
+                        edge.setI(response.getI());
+                        edge.setC(response.getC());
+                        edge.setLos(response.getLos());
+                        edge.setLength(response.getLength());
+                        edge.setSurface(response.getArea());
+
+                        edgeDao.insert(edge);
 
 
                     }

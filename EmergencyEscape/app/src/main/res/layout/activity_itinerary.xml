@@ -38,32 +38,12 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
-        <Button
+        <ListView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="New Button"
-            android:id="@+id/buttonRx"
-            android:layout_marginBottom="126dp"
-            android:layout_alignParentBottom="true"
-            android:layout_alignRight="@+id/Percorso"
-            android:layout_alignEnd="@+id/Percorso" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:id="@+id/txtDeparture"
-            android:layout_below="@+id/Percorso"
-            android:layout_centerHorizontal="true" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:id="@+id/txtDestination"
-            android:layout_below="@+id/txtDeparture"
+            android:id="@+id/pathListView"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="45dp" />
+            android:layout_below="@+id/Percorso" />
 
 
     </RelativeLayout>

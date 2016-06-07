@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.TextView;
 
+import com.emergencyescape.dijkstra.Graph;
 import com.emergencyescape.itinerary.ItineraryActivity;
 import com.emergencyescape.R;
 import com.emergencyescape.commonbehaviour.CommonBehaviourActivity;
@@ -18,7 +19,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class TextDestinationActivity extends CommonBehaviourActivity<TexterView,TextPresenter> {
+public class TextDestinationActivity extends CommonBehaviourActivity<TexterView,TextDestinationPresenter> {
 
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.txtPartenza) TextView partenzaTextView;
@@ -31,8 +32,8 @@ public class TextDestinationActivity extends CommonBehaviourActivity<TexterView,
      */
     @NonNull
     @Override
-    public TextPresenter createPresenter() {
-        return new TextPresenter();
+    public TextDestinationPresenter createPresenter() {
+        return new TextDestinationPresenter();
     }
 
     @Override
@@ -55,8 +56,10 @@ public class TextDestinationActivity extends CommonBehaviourActivity<TexterView,
     @OnClick(R.id.btnDestinazione)
     public void submitDestination(){
         presenter.setUserDestination(this.getAula());
-        startActivity(new Intent(TextDestinationActivity.this, ItineraryActivity.class));
+
+        startActivity(new Intent(TextDestinationActivity.this, ItineraryActivity.class).putExtra("emergencyState", false));
     }
+
 
     private String getPartenza(){
         return presenter.getUserDeparture();

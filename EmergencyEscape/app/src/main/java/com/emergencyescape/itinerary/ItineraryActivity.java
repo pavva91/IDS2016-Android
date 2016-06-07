@@ -4,19 +4,20 @@ package com.emergencyescape.itinerary;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.emergencyescape.R;
 import com.emergencyescape.commonbehaviour.CommonBehaviourActivity;
-import com.emergencyescape.MyApplication;
+import com.emergencyescape.dijkstra.Graph;
 import com.emergencyescape.server.ServerService;
-import com.emergencyescape.server.model.Node;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 
 public class ItineraryActivity extends CommonBehaviourActivity<ItineraryView,ItineraryPresenter> implements ItineraryView {
@@ -25,8 +26,8 @@ public class ItineraryActivity extends CommonBehaviourActivity<ItineraryView,Iti
 
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.Percorso) TextView rxResponse;
-    @BindView(R.id.txtDeparture) TextView txtDeparture;
-    @BindView(R.id.txtDestination) TextView txtDestination;
+
+    @BindView(R.id.pathListView) ListView pathListView;
 
 
     private static final String EXTRA_RX = "EXTRA_RX";
@@ -41,9 +42,7 @@ public class ItineraryActivity extends CommonBehaviourActivity<ItineraryView,Iti
     @NonNull
     @Override
     public ItineraryPresenter createPresenter() {
-        MyApplication myApplication = (MyApplication) getApplication();
-        service = myApplication.getServerService();
-        presenter = new ItineraryPresenter(this,service);
+        presenter = new ItineraryPresenter();
         return presenter;
     }
 
@@ -57,8 +56,14 @@ public class ItineraryActivity extends CommonBehaviourActivity<ItineraryView,Iti
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        showDeparture();
-        showDestination();
+        //showDeparture();
+        //showDestination();
+        if(getEmergencyState()){
+            showShortestPathEmergency();
+        }else{
+            showShortestPathNoEmergency();
+        }
+
 
         if(savedInstanceState!=null){
             rxCallInWorks = savedInstanceState.getBoolean(EXTRA_RX);
@@ -71,47 +76,46 @@ public class ItineraryActivity extends CommonBehaviourActivity<ItineraryView,Iti
     @Override
     protected void onPause() {
         super.onPause();
-        presenter.rxUnSubscribe();
 
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putBoolean(EXTRA_RX, rxCallInWorks);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if(rxCallInWorks)
-            presenter.loadMaps();
-    }
-
-    @OnClick(R.id.buttonRx)
-    public void startRx(){
-        rxCallInWorks=true;
-        presenter.loadMaps();
-    }
-
-    protected void showMapsResults(Node response){
-        rxResponse.setText(response.getId().toString()); // TODO: Implementare RecycleView Adapter per stampare le risposte
-        rxResponse.setVisibility(View.VISIBLE);
-    }
-
-    protected void showRxFailure(Throwable throwable){
-        Log.d("TAG", throwable.toString());
-        rxResponse.setText("ERROR");
-        rxResponse.setVisibility(View.VISIBLE);
     }
 
     @Override
-    public void showDeparture() {
-        txtDeparture.setText(presenter.getDeparture());
+    public void showShortestPathNoEmergency(){ // No emergency, sembra funzionare
+        Graph.CostPathPair shortestPath = presenter.getShortestPath(
+                presenter.getDeparture(),
+                presenter.getDestination());
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1, shortestPath.getPath());
+
+        pathListView.setAdapter(adapter);
     }
 
     @Override
-    public void showDestination() {
-        txtDestination.setText(presenter.getDestination());
+    public void showShortestPathEmergency() { // Emergency, calcola tutti i possibili path, ma non funziona
+        Graph.CostPathPair shortestPath = presenter.getEmergencyShortestPath(
+                presenter.getDeparture(),
+                presenter.getEmergencyDestinations());
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1, shortestPath.getPath());
+
+        pathListView.setAdapter(adapter);
+    }
+
+
+    private Boolean getEmergencyState(){
+        Boolean emergencyState = getIntent().getBooleanExtra("emergencyState",true);
+        return emergencyState;
     }
 }

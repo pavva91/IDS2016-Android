@@ -4,9 +4,13 @@ package com.emergencyescape.itinerary;
  */
 
 import android.util.Log;
+import android.widget.ArrayAdapter;
 
 import com.emergencyescape.MyApplication;
 import com.emergencyescape.commonbehaviour.CommonBehaviourPresenter;
+import com.emergencyescape.dijkstra.Db2Dijkstra;
+import com.emergencyescape.dijkstra.Dijkstra;
+import com.emergencyescape.dijkstra.Graph;
 import com.emergencyescape.greendao.DaoSession;
 import com.emergencyescape.greendao.NodeDao;
 import com.emergencyescape.greendao.User;
@@ -15,7 +19,9 @@ import com.emergencyescape.server.ServerService;
 import com.emergencyescape.server.model.MapResponse;
 import com.emergencyescape.server.model.Node;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import rx.Observable;
 import rx.Observer;
@@ -28,73 +34,8 @@ import rx.Subscription;
 public class ItineraryPresenter extends CommonBehaviourPresenter<ItineraryView> implements ItineraryPresenterInterface {
 
     DaoSession daoSession = MyApplication.getSession();
-    NodeDao nodeDao = daoSession.getNodeDao();
     UserDao userDao = daoSession.getUserDao();
-
-    private ItineraryActivity view;
-    private ServerService service; // Retrofit
-    private Subscription subscription; // RxJava
-
-    public ItineraryPresenter(ItineraryActivity view, ServerService service){
-        this.view = view;
-        this.service = service;
-    }
-
-    @Override
-    public void loadMaps(){//TODO: Quando ne avrai capito il workflow attivare caching
-
-        String mapName ="univpm"; //TODO: Collegare col model
-        String token = "12m2t7oc43godndv767tkj9hue";
-
-
-
-        Observable<MapResponse> mapResponseObservable = service.getAPI().getMap(mapName, token);
-        Observable<Node> nodeObservable= service.getNodes(mapResponseObservable); // Deserializzo la risposta
-
-
-        subscription = nodeObservable
-                .subscribe(new Observer<Node>() {
-            @Override
-            public void onCompleted() {
-                Log.v("onCompleted","END");
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                view.showRxFailure(e);
-                Log.e("Errore", e.toString());
-            }
-
-            @Override
-            public void onNext(Node response) {
-                Log.v("onNextIteration",response.getId().toString());
-                view.showMapsResults(response);
-
-                // Salvo i nodi presi dal server nel DB
-                com.emergencyescape.greendao.Node node = new com.emergencyescape.greendao.Node(response.getId());
-                node.setCode(response.getCode());
-                node.setDescription(response.getDescr());
-                node.setQuote(response.getQuota());
-                node.setX(response.getX());
-                node.setY(response.getY());
-                node.setWidth(response.getWidth());
-                node.setType(response.getType());
-                //node.setMapId(response.getMapName()) // TODO: Sistemare questa cosa (
-
-                nodeDao.insert(node);
-
-
-            }
-        });
-    }
-
-
-
-    @Override
-    public void rxUnSubscribe(){ // Avoid Memory leak
-        if(subscription!=null && !subscription.isUnsubscribed())
-            subscription.unsubscribe();
-    }
+    NodeDao nodeDao = daoSession.getNodeDao();
 
     @Override
     public String getDeparture() {
@@ -118,5 +59,50 @@ public class ItineraryPresenter extends CommonBehaviourPresenter<ItineraryView> 
             }
         }
         return userDestination;
+    }
+
+    @Override
+    public List<String> getEmergencyDestinations() {
+        String singleEmergencyExit;
+        List<String> allEmergencyExit = new ArrayList<>();
+        List<com.emergencyescape.greendao.Node> allNode = nodeDao.loadAll();
+        for (com.emergencyescape.greendao.Node singleNode : allNode) {
+            if(singleNode.getType().equalsIgnoreCase("emergency_exit")){
+                singleEmergencyExit = singleNode.getCode();
+                allEmergencyExit.add(singleEmergencyExit);
+            }
+        }
+        return allEmergencyExit;
+    }
+
+    @Override
+    public Graph.CostPathPair getEmergencyShortestPath(String departure, List<String> allEmergencyExit) {
+        List<Graph.CostPathPair> allEmergencyPath = new ArrayList<>();
+        Graph.CostPathPair shortestPath = new Graph.CostPathPair(0, new ArrayList<>());
+        boolean shortestPathNotAValue = true;
+        for (String singleEmergencyExit : allEmergencyExit) {
+            allEmergencyPath.add(this.getShortestPath(
+                    departure,
+                    singleEmergencyExit));
+            if(shortestPathNotAValue){
+                shortestPath = allEmergencyPath.get(allEmergencyPath.size()-1);
+                shortestPathNotAValue = false;
+            }
+            if(allEmergencyPath.get(allEmergencyPath.size()-1).getCost() <= shortestPath.getCost()){
+                shortestPath = allEmergencyPath.get(allEmergencyPath.size()-1);
+            }
+        }
+        return shortestPath;
+    }
+
+    @Override
+    public Graph.CostPathPair getShortestPath(String departure, String destination) {
+        Db2Dijkstra db2Dijkstra = new Db2Dijkstra();
+        Graph graph = new Graph(db2Dijkstra.getVertexList(),db2Dijkstra.getEdgeDijkstraList());
+        Graph.CostPathPair shortestPath = Dijkstra.getShortestPath(
+                graph,
+                db2Dijkstra.getVertex(departure),
+                db2Dijkstra.getVertex(destination));
+        return shortestPath;
     }
 }

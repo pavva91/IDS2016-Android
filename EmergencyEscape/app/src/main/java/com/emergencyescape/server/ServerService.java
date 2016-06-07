@@ -4,6 +4,7 @@ package com.emergencyescape.server;
 import android.support.v4.util.LruCache;
 
 
+import com.emergencyescape.server.model.Edge;
 import com.emergencyescape.server.model.MapResponse;
 import com.emergencyescape.server.model.MapsResponse;
 import com.emergencyescape.server.model.Node;
@@ -174,6 +175,19 @@ public class ServerService { // TODO: Per ora è grezzo e non sfrutta il caching
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());//Qua faccio il filtro dell'Observables
     }
+
+    public Observable<Edge> getEdges (Observable<MapResponse> mapResponse){ // Deserializzo la risposta JSON in tanti Nodi
+        return mapResponse
+                .flatMap(new Func1<MapResponse, Observable<Edge>>() {
+                    @Override
+                    public Observable<Edge> call(MapResponse mapResponse) {
+                        return Observable.from(mapResponse.getEdges());
+                    }
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());//Qua faccio il filtro dell'Observables
+    }
+
     public Observable<List<MapResponse>> getMaps (Observable<List<MapResponse>> mapResponse){
         return mapResponse
                 .subscribeOn(Schedulers.io())

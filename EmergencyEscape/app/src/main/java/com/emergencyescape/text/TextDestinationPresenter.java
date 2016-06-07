@@ -19,13 +19,12 @@ import com.emergencyescape.greendao.UserDao;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * com.emergencyescape.text
  * TextPresenter
  */
-public class TextPresenter extends CommonBehaviourPresenter<TexterView> implements TextPresenterInterface {
+public class TextDestinationPresenter extends CommonBehaviourPresenter<TexterView> implements TextPresenterInterface {
     private DaoSession daoSession = MyApplication.getSession();
     private NodeDao nodeDao = daoSession.getNodeDao();
     private UserDao userDao = daoSession.getUserDao();
@@ -45,7 +44,7 @@ public class TextPresenter extends CommonBehaviourPresenter<TexterView> implemen
     }
 
     @Override
-    public void setUserDeparture(String departure) { // TODO: Aggiornare anche il Server
+    public void setUserDeparture(String departure) {
         List<User> allUser = userDao.loadAll();
         for (User singleUser : allUser) {
             if(singleUser.getName().equalsIgnoreCase("vale")){
@@ -101,4 +100,25 @@ public class TextPresenter extends CommonBehaviourPresenter<TexterView> implemen
         return userDeparture;
     }
 
+    public String getUserDestination() {
+        String userDestination = "";
+        List<User> allUser = userDao.loadAll();
+        for (User singleUser : allUser) {
+            if(singleUser.getName().equalsIgnoreCase("vale")){
+                userDestination = singleUser.getDestinationToOneUser().getCode();
+            }
+        }
+        return userDestination;
+    }
+
+
+    public Graph.CostPathPair getShortestPath(String departure, String destination) {
+        Db2Dijkstra db2Dijkstra = new Db2Dijkstra();
+        Graph graph = new Graph(db2Dijkstra.getVertexList(),db2Dijkstra.getEdgeDijkstraList());
+        Graph.CostPathPair shortestPath = Dijkstra.getShortestPath(
+                graph,
+                db2Dijkstra.getVertex(departure),
+                db2Dijkstra.getVertex(destination));
+        return shortestPath;
+    }
 }
