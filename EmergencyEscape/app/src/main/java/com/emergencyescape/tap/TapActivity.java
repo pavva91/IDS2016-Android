@@ -3,13 +3,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import com.emergencyescape.R;
 import com.emergencyescape.commonbehaviour.CommonBehaviourActivity;
 
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnItemClick;
 
 
 public class TapActivity extends CommonBehaviourActivity<TapView,TapPresenter> {
@@ -25,60 +29,37 @@ public class TapActivity extends CommonBehaviourActivity<TapView,TapPresenter> {
     }
 
     @BindView(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.floorListView) ListView floorListView;
 
-    protected void onCreate(Bundle savedInstanceState)
-    {
+
+    protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tap);
 
         ButterKnife.bind(this);
 
+        populateFloorListView(getFloorList());
+
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-
-    }
-    
-
-
-
-    public void onClick(View v)
-    {
-
-        // TODO: rendere questa lista dinamica e fare riferimento al Model usando ButterKnife
-
-        int id = v.getId();
-
-        if (id == R.id.q145)
-        {
-            Intent in = new Intent(this, MapTapActivity.class);
-            in.putExtra("id", R.drawable.q145);
-            in.putExtra("quota", "q145");
-            startActivity(in);
-        }
-
-        if (id == R.id.q150)
-        {
-            Intent in = new Intent(this, MapTapActivity.class);
-            in.putExtra("id", R.drawable.q150);
-            in.putExtra("quota", "q150");
-            startActivity(in);
-        }
-
-        if (id == R.id.q155)
-        {
-            Intent in = new Intent(this, MapTapActivity.class);
-            in.putExtra("id", R.drawable.q155);
-            in.putExtra("quota", "q155");
-            startActivity(in);
-        }
-
     }
 
+    public List<String> getFloorList(){
+        return presenter.getFloorList();
+    }
 
+    public void populateFloorListView(List<String> floorList){
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_list_item_1, floorList);
 
+        floorListView.setAdapter(adapter);
+    }
 
-
-    
-    
+    @OnItemClick(R.id.floorListView)
+    public void floorListViewItemClick(int position){
+        Intent intentToStart = new Intent(this, MapActivity.class);
+        intentToStart.putExtra("floor",floorListView.getItemAtPosition(position).toString());
+        intentToStart.putExtra("id",R.drawable.q145);
+        startActivity(intentToStart);
+    }
 }

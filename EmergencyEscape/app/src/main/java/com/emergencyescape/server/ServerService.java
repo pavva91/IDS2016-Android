@@ -6,7 +6,6 @@ import android.support.v4.util.LruCache;
 
 import com.emergencyescape.server.model.Edge;
 import com.emergencyescape.server.model.MapResponse;
-import com.emergencyescape.server.model.MapsResponse;
 import com.emergencyescape.server.model.Node;
 
 import java.io.IOException;
@@ -128,7 +127,7 @@ public class ServerService { // TODO: Per ora è grezzo e non sfrutta il caching
 
         //we are here because we have never created this observable before or we didn't want to use the cache...
 
-        preparedObservable = unPreparedObservable // TODO: Trasformare la risposta JSON (Observervble<MapsResponse>) in tanti oggetti da trattare singolarmente(Observable<List<Maps>>)
+        preparedObservable = unPreparedObservable // TODO: Trasformare la risposta JSON (Observable<MapsResponse>) in tanti oggetti da trattare singolarmente(Observable<List<Maps>>)
 
                 .subscribeOn(Schedulers.newThread()) // Background Thread
                 .observeOn(AndroidSchedulers.mainThread()); // UI Thread
@@ -151,18 +150,7 @@ public class ServerService { // TODO: Per ora è grezzo e non sfrutta il caching
      * @param mapsResponseObservable Risposta JSON "grezza" fornita da Retrofit
      * @return Observable<Maps> su cui si andrà a lavorare
      */
-    /*public Observable<Maps> getMap(Observable<MapsResponse> mapsResponseObservable) {
 
-        return mapsResponseObservable
-                .flatMap(new Func1<MapsResponse, Observable<Maps>>() { // TODO: Trasformare la risposta JSON (Observervble<MapsResponse>) in tanti oggetti da trattare singolarmente(Observable<List<Maps>>)
-                    @Override
-                    public Observable<Maps> call(MapsResponse iterable) {
-                        return Observable.from(iterable.getMaps());
-                    }
-                })
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread());
-    }*/
 
     public Observable<Node> getNodes (Observable<MapResponse> mapResponse){ // Deserializzo la risposta JSON in tanti Nodi
         return mapResponse

@@ -5,7 +5,7 @@ package com.emergencyescape.server;
  */
 
 import com.emergencyescape.server.model.MapResponse;
-import com.emergencyescape.server.model.MapsResponse;
+
 
 import java.util.List;
 

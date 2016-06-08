@@ -76,7 +76,8 @@ public class EmergencyEscapeGenerator {
     }
     private static void addImage(Entity image) {
         image.addIdProperty().primaryKey();
-        image.addIntProperty("quote").notNull();
+        image.addIntProperty("quote").notNull().unique();
+        image.addStringProperty("url").notNull();
     }
 
     // Ora faccio le relazioni

@@ -75,12 +75,12 @@
                 android:value=".main.MainActivity" />
         </activity>
         <activity
-            android:name=".tap.MapTapActivity"
+            android:name=".tap.MapActivity"
             android:label=" "
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".main.MainActivity" />
+                android:value=".tap.TapActivity" />
         </activity>
         <activity
             android:name=".settings.SettingsActivity"

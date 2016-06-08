@@ -40,7 +40,7 @@ public class ItineraryPresenter extends CommonBehaviourPresenter<ItineraryView> 
     @Override
     public String getDeparture() {
         String userDeparture = "";
-        List<User> allUser = userDao.loadAll();
+        List<User> allUser = userDao.loadAll(); // select *
         for (User singleUser : allUser) {
             if(singleUser.getName().equalsIgnoreCase("vale")){
                 userDeparture = singleUser.getDepartureToOneUser().getCode();

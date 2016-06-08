@@ -22,9 +22,9 @@ import java.util.List;
 
 /**
  * com.emergencyescape.text
- * TextPresenter
+ * TextDeparturePresenter
  */
-public class TextDestinationPresenter extends CommonBehaviourPresenter<TexterView> implements TextPresenterInterface {
+public class TextDestinationPresenter extends CommonBehaviourPresenter<TexterView> implements TextDestinationPresenterInterface {
     private DaoSession daoSession = MyApplication.getSession();
     private NodeDao nodeDao = daoSession.getNodeDao();
     private UserDao userDao = daoSession.getUserDao();
@@ -43,7 +43,7 @@ public class TextDestinationPresenter extends CommonBehaviourPresenter<TexterVie
         return allNames;
     }
 
-    @Override
+
     public void setUserDeparture(String departure) {
         List<User> allUser = userDao.loadAll();
         for (User singleUser : allUser) {
@@ -99,6 +99,7 @@ public class TextDestinationPresenter extends CommonBehaviourPresenter<TexterVie
         }
         return userDeparture;
     }
+
 
     public String getUserDestination() {
         String userDestination = "";

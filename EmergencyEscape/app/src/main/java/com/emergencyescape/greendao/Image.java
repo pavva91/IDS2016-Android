@@ -11,6 +11,8 @@ public class Image {
 
     private Long id;
     private int quote;
+    /** Not-null value. */
+    private String url;
     private long mapId;
 
     /** Used to resolve relations */
@@ -30,9 +32,10 @@ public class Image {
         this.id = id;
     }
 
-    public Image(Long id, int quote, long mapId) {
+    public Image(Long id, int quote, String url, long mapId) {
         this.id = id;
         this.quote = quote;
+        this.url = url;
         this.mapId = mapId;
     }
 
@@ -56,6 +59,16 @@ public class Image {
 
     public void setQuote(int quote) {
         this.quote = quote;
+    }
+
+    /** Not-null value. */
+    public String getUrl() {
+        return url;
+    }
+
+    /** Not-null value; ensure this value is available before it is saved to the database. */
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public long getMapId() {

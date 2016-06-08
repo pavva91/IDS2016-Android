@@ -33,4 +33,11 @@
     <string name="itinerary">Percorso</string>
     <string name="title_activity_noem_tap">NoemTapActivity</string>
     <string name="select_map">Seleziona Mappa</string>
+    <string name="select_map_label">Seleziona Mappa</string>
+    <string name="title_activity_settings2">Settings</string>
+    <string name="select_floor">Seleziona Piano</string>
+    <string name="pref_location_label">Posizione</string>
+    <string name="pref_enable_notifications_true">Abilitata</string>
+    <string name="pref_enable_notifications_label">Notifica Emergenza</string>
+    <string name="pref_enable_notifications_false">Non Abilitata</string>
 </resources>

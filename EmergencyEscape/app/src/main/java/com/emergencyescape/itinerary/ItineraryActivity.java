@@ -56,8 +56,6 @@ public class ItineraryActivity extends CommonBehaviourActivity<ItineraryView,Iti
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        //showDeparture();
-        //showDestination();
         if(getEmergencyState()){
             showShortestPathEmergency();
         }else{
@@ -108,7 +106,7 @@ public class ItineraryActivity extends CommonBehaviourActivity<ItineraryView,Iti
                 presenter.getEmergencyDestinations());
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, shortestPath.getPath());
+                android.R.layout.simple_list_item_1, shortestPath.getPath());//TODO: Far ritornare List<Edge> (Edge del greenDAO)
 
         pathListView.setAdapter(adapter);
     }

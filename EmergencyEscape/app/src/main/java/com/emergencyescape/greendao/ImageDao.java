@@ -30,7 +30,8 @@ public class ImageDao extends AbstractDao<Image, Long> {
     public static class Properties {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
         public final static Property Quote = new Property(1, int.class, "quote", false, "QUOTE");
-        public final static Property MapId = new Property(2, long.class, "mapId", false, "MAP_ID");
+        public final static Property Url = new Property(2, String.class, "url", false, "URL");
+        public final static Property MapId = new Property(3, long.class, "mapId", false, "MAP_ID");
     };
 
     private DaoSession daoSession;
@@ -51,8 +52,9 @@ public class ImageDao extends AbstractDao<Image, Long> {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"IMAGE\" (" + //
                 "\"_id\" INTEGER PRIMARY KEY ," + // 0: id
-                "\"QUOTE\" INTEGER NOT NULL ," + // 1: quote
-                "\"MAP_ID\" INTEGER NOT NULL );"); // 2: mapId
+                "\"QUOTE\" INTEGER NOT NULL UNIQUE ," + // 1: quote
+                "\"URL\" TEXT NOT NULL ," + // 2: url
+                "\"MAP_ID\" INTEGER NOT NULL );"); // 3: mapId
     }
 
     /** Drops the underlying database table. */
@@ -71,7 +73,8 @@ public class ImageDao extends AbstractDao<Image, Long> {
             stmt.bindLong(1, id);
         }
         stmt.bindLong(2, entity.getQuote());
-        stmt.bindLong(3, entity.getMapId());
+        stmt.bindString(3, entity.getUrl());
+        stmt.bindLong(4, entity.getMapId());
     }
 
     @Override
@@ -92,7 +95,8 @@ public class ImageDao extends AbstractDao<Image, Long> {
         Image entity = new Image( //
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
             cursor.getInt(offset + 1), // quote
-            cursor.getLong(offset + 2) // mapId
+            cursor.getString(offset + 2), // url
+            cursor.getLong(offset + 3) // mapId
         );
         return entity;
     }
@@ -102,7 +106,8 @@ public class ImageDao extends AbstractDao<Image, Long> {
     public void readEntity(Cursor cursor, Image entity, int offset) {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
         entity.setQuote(cursor.getInt(offset + 1));
-        entity.setMapId(cursor.getLong(offset + 2));
+        entity.setUrl(cursor.getString(offset + 2));
+        entity.setMapId(cursor.getLong(offset + 3));
      }
     
     /** @inheritdoc */

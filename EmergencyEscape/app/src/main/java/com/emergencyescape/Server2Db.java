@@ -80,6 +80,7 @@ public class Server2Db {
                     public void onNext(Node response) {
                         Log.v("onNextIterationNodeId",response.getId().toString());
 
+
                         // Salvo i nodi presi dal server nel DB
                         com.emergencyescape.greendao.Node node = new com.emergencyescape.greendao.Node(response.getId());
                         node.setCode(response.getCode());

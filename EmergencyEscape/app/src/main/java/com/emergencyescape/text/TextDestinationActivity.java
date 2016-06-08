@@ -8,7 +8,6 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.TextView;
 
-import com.emergencyescape.dijkstra.Graph;
 import com.emergencyescape.itinerary.ItineraryActivity;
 import com.emergencyescape.R;
 import com.emergencyescape.commonbehaviour.CommonBehaviourActivity;
@@ -28,7 +27,7 @@ public class TextDestinationActivity extends CommonBehaviourActivity<TexterView,
     /**
      * Instantiate a presenter instance
      *
-     * @return The {@link TextPresenter} for this view
+     * @return The {@link TextDeparturePresenter} for this view
      */
     @NonNull
     @Override

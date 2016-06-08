@@ -17,7 +17,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class TextDepartureActivity extends CommonBehaviourActivity<TexterView,TextPresenter> {
+public class TextDepartureActivity extends CommonBehaviourActivity<TexterView,TextDeparturePresenter> {
 
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.editPartenza) AutoCompleteTextView aulaPartenzaTextView;
@@ -25,12 +25,12 @@ public class TextDepartureActivity extends CommonBehaviourActivity<TexterView,Te
     /**
      * Instantiate a presenter instance
      *
-     * @return The {@link TextPresenter} for this view
+     * @return The {@link TextDeparturePresenter} for this view
      */
     @NonNull
     @Override
-    public TextPresenter createPresenter() {
-        return new TextPresenter();
+    public TextDeparturePresenter createPresenter() {
+        return new TextDeparturePresenter();
     }
 
     @Override
@@ -67,48 +67,13 @@ public class TextDepartureActivity extends CommonBehaviourActivity<TexterView,Te
     }
 
     private String getAula(){
-        String aulaPartenza = aulaPartenzaTextView.getText().toString();
-        return aulaPartenza;
+        return aulaPartenzaTextView.getText().toString();
     }
 
     private void fillAutoCompleteTextView(){
-
-        // Get the string array
         ArrayList<String> nodes = presenter.getNodesList();
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.select_dialog_multichoice, nodes);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.select_dialog_multichoice, nodes);
-
-
-        /*aulaPartenzaTextView.setValidator(new AutoCompleteTextView.Validator() {
-                                        @Override
-                                        public boolean isValid(CharSequence text) {
-                                            return false;
-                                        }
-                                          public boolean isValid(String inputText, String[] allNodes) {
-                                              boolean validString = false;
-
-                                              for (String singleNode : allNodes) {
-                                                  if (inputText.equalsIgnoreCase(singleNode)){
-                                                      if (inputText.equals(singleNode)){
-                                                          validString = true;
-                                                      }
-                                                      else {
-                                                          inputText=singleNode;
-                                                          validString = true;
-                                                      }
-                                                      return validString;
-                                                  }
-                                              }
-                                              return validString;
-                                          }
-
-                                          @Override
-                                          public CharSequence fixText(CharSequence invalidText) {
-                                              return null;
-                                          }
-                                          }
-
-        );*/
         aulaPartenzaTextView.setThreshold(1);
         aulaPartenzaTextView.setAdapter(adapter);
     }
