@@ -9,6 +9,7 @@ import android.widget.ListView;
 import com.emergencyescape.R;
 import com.emergencyescape.commonbehaviour.CommonBehaviourActivity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -48,10 +49,18 @@ public class TapActivity extends CommonBehaviourActivity<TapView,TapPresenter> {
         return presenter.getFloorList();
     }
 
+    public List<String> addStringValueListView(String stringToAdd , List<String> floorList){
+        List<String> newListView = new ArrayList<>();
+        for (String singleFloor:floorList){
+            newListView.add(stringToAdd + " " + singleFloor);
+        }
+        return newListView;
+    }
+
     public void populateFloorListView(List<String> floorList){
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_list_item_1, floorList);
-
+                android.R.layout.simple_list_item_1,
+                addStringValueListView(getResources().getString(R.string.quote), floorList));
         floorListView.setAdapter(adapter);
     }
 

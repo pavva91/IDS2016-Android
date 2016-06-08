@@ -10,6 +10,7 @@ import android.util.Log;
 
 import com.emergencyescape.greendao.DaoSession;
 import com.emergencyescape.greendao.EdgeDao;
+import com.emergencyescape.greendao.ImageDao;
 import com.emergencyescape.greendao.Maps;
 import com.emergencyescape.greendao.MapsDao;
 import com.emergencyescape.greendao.NodeDao;
@@ -208,6 +209,58 @@ public class Server2Db {
         user.setToken("12m2t7oc43godndv767tkj9hue");
 
         userDao.insert(user);
+    }
+
+    public void loadImages(){
+
+        setDb();
+        ImageDao.dropTable(db,true);
+        ImageDao.createTable(db,false);
+
+
+        String mapName ="univpm"; //TODO: Collegare col model
+        String token = "12m2t7oc43godndv767tkj9hue";
+
+
+
+        Observable<MapResponse> mapResponseObservable = service.getAPI().getMap(mapName,token);
+        Observable<String> imageObservable= service.getImages(mapResponseObservable); // Deserializzo la risposta
+        int quote = 145;
+
+
+
+        subscription = imageObservable
+                .subscribe(new Observer<Node>() {
+                    @Override
+                    public void onCompleted() {
+                        Log.v("onCompleted","END");
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e(LOG, e.toString());
+                    }
+
+                    @Override
+                    public void onNext(String response) {
+                        Log.v("onNextIterationNodeId",response.getMapName());
+
+
+                        // Salvo i nodi presi dal server nel DB
+                        com.emergencyescape.greendao.Image image = new com.emergencyescape.greendao.Image();
+                        image.setUrl(response);
+
+                        long mapId = mapsDao.loadAll().get(0).getId();
+                        image.setQuote(response.indexOf(""))); // TODO: Finire caricamento immagine (prendere valori mappa e quota)
+                        image.setMapId(mapId);// TODO: Aspettare cambiamento risposta JSON del server
+
+
+
+                        nodeDao.insert(node);
+
+
+                    }
+                });
     }
 
    /* private boolean mapChanged(MapResponse map){

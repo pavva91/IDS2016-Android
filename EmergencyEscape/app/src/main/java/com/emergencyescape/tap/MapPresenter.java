@@ -24,7 +24,7 @@ public class MapPresenter extends CommonBehaviourPresenter<TapView> {
 
     private DaoSession daoSession = MyApplication.getSession();
 
-    public Drawable getFloorImage(String floor){
+    public Drawable getFloorImage(String floor){ // TODO: Andare a prendere immagini precedentemente caricate
         Drawable drawable = MyApplication.context.getResources().getDrawable(R.drawable.q145);
         return drawable;
     }
