@@ -17,6 +17,7 @@ public class Edge {
     private String to;
     private Double area;
     private Integer numpers;
+    private Double emgcost;
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     /**
@@ -179,6 +180,24 @@ public class Edge {
      */
     public void setNumpers(Integer numpers) {
         this.numpers = numpers;
+    }
+
+    /**
+     * 
+     * @return
+     *     The emgcost
+     */
+    public Double getEmgcost() {
+        return emgcost;
+    }
+
+    /**
+     * 
+     * @param emgcost
+     *     The emgcost
+     */
+    public void setEmgcost(Double emgcost) {
+        this.emgcost = emgcost;
     }
 
     public Map<String, Object> getAdditionalProperties() {

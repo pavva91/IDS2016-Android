@@ -2,21 +2,33 @@ package com.emergencyescape.tap;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.Toast;
 
+import com.emergencyescape.MyDrawView;
 import com.emergencyescape.R;
 import com.emergencyescape.commonbehaviour.CommonBehaviourActivity;
 import com.emergencyescape.text.TextDestinationActivity;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnTouch;
 
 
 public class MapActivity extends CommonBehaviourActivity<TapView,MapPresenter> {
@@ -32,7 +44,9 @@ public class MapActivity extends CommonBehaviourActivity<TapView,MapPresenter> {
 
 
 
+    private String LOG = this.toString();
     private Bitmap bitmap;
+
 
     // TODO: Schifo assoluto
     int aulamagna=-8355841;
@@ -75,6 +89,11 @@ public class MapActivity extends CommonBehaviourActivity<TapView,MapPresenter> {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maptap);
 
+        RelativeLayout parent = (RelativeLayout) findViewById(R.id.floorImageRelativeLayout);
+        MyDrawView myDrawView = new MyDrawView(this);
+        parent.addView(myDrawView);
+
+
         ButterKnife.bind(this);
 
         populateImageView(getIntent().getExtras().getString("floor"));
@@ -87,6 +106,31 @@ public class MapActivity extends CommonBehaviourActivity<TapView,MapPresenter> {
         floorImage.setImageDrawable(presenter.getFloorImage(floor));
     }
 
+    /*@OnTouch(R.id.floorImage)
+    public boolean floorImageClick(MotionEvent event){
+
+        floorImage.buildDrawingCache();
+        bitmap = floorImage.getDrawingCache();
+
+        int pixel = bitmap.getPixel((int) event.getX(), (int) event.getY());
+        int rawPixel = bitmap.getPixel((int) event.getRawX(),(int) event.getRawY()); // bitmap measures
+        Toast.makeText(this,"pixel: " + pixel + "rawPixel: " + rawPixel,Toast.LENGTH_SHORT).show();
+        Log.v(LOG,"pixel: " + pixel);
+        Log.v(LOG,"rawPixel: "+ rawPixel);
+        Log.v(LOG,"x: " + event.getX());
+        Log.v(LOG,"x: " + event.getY());
+        Log.v(LOG,"raw x: " + event.getRawX());
+        Log.v(LOG,"raw y: " + event.getRawY());
+
+
+
+
+
+
+        return false;
+    }*/
+
+
     private void quote(){ // TODO: Spostare questa funzione secondo il pattern utilizzando il model
 
         String quota = getIntent().getExtras().getString("floor");
@@ -95,10 +139,10 @@ public class MapActivity extends CommonBehaviourActivity<TapView,MapPresenter> {
 
         if (quota.equals("145")) {
             final ImageView imgView = (ImageView) findViewById(R.id.image);
-            imgView.setImageResource(getIntent().getIntExtra("id", R.id.image));
+            imgView.setImageResource(getIntent().getIntExtra("id", R.id.image)); // ImageView
             imgView.setDrawingCacheEnabled(true);
             imgView.buildDrawingCache(true);
-            Drawable d = getResources().getDrawable(R.drawable.q145);
+            Drawable d = getResources().getDrawable(R.drawable.q145); // Drawable
             imgView.setOnTouchListener(new View.OnTouchListener() {
 
                 public boolean onTouch(View v, MotionEvent event) {

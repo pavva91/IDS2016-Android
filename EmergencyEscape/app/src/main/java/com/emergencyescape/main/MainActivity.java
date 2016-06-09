@@ -1,5 +1,6 @@
 package com.emergencyescape.main;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import android.preference.PreferenceManager;
@@ -39,27 +40,19 @@ public class MainActivity extends CommonBehaviourActivity<MainView,MainPresenter
 
         ButterKnife.bind(this);
 
+        SharedPreferences wmbPreference = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean isFirstRun = wmbPreference.getBoolean("FIRSTRUN", true);
+        if (isFirstRun)
+        {
+            presenter.loadServer2Db();  // Carico il DB al primo lancio dell'app
+
+            SharedPreferences.Editor editor = wmbPreference.edit();
+            editor.putBoolean("FIRSTRUN", false);
+            editor.commit();
+        }
+
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
     }
-
-
-    /*
-    @OnClick(R.id.logoutbutton) // On click listener
-    public void logout()
-    {
-        assert logout != null; // cosa serve?
-
-        boolean logoutOk = presenter.logout(getApplicationContext()); // chiama il CommonBehaviourPresenter
-
-        if (logoutOk){
-            Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
-            startActivity(loginIntent);
-        }
-
-        // Le funzioni di prima per il logout le ho spostate nel CommonBehaviourPresenter
-    }*/
-
-
 }

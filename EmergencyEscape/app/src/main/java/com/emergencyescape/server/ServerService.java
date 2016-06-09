@@ -5,6 +5,7 @@ import android.support.v4.util.LruCache;
 
 
 import com.emergencyescape.server.model.Edge;
+import com.emergencyescape.server.model.Image;
 import com.emergencyescape.server.model.MapResponse;
 import com.emergencyescape.server.model.Node;
 
@@ -173,19 +174,19 @@ public class ServerService { // TODO: Per ora è grezzo e non sfrutta il caching
                     }
                 })
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());//Qua faccio il filtro dell'Observables
+                .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public Observable<String> getImages (Observable<MapResponse> mapResponse){ // Deserializzo la risposta JSON in tanti Nodi
+    public Observable<Image> getImages (Observable<MapResponse> mapResponse){ // Deserializzo la risposta JSON in tante Image
         return mapResponse
-                .flatMap(new Func1<MapResponse, Observable<String>>() {
+                .flatMap(new Func1<MapResponse, Observable<Image>>() {
                     @Override
-                    public Observable<String> call(MapResponse mapResponse) {
+                    public Observable<Image> call(MapResponse mapResponse) {
                         return Observable.from(mapResponse.getImages());
                     }
                 })
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());//Qua faccio il filtro dell'Observables
+                .observeOn(AndroidSchedulers.mainThread());
     }
 
     public Observable<List<MapResponse>> getMaps (Observable<List<MapResponse>> mapResponse){

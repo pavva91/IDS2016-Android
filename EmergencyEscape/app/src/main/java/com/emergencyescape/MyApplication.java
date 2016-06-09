@@ -42,14 +42,8 @@ public class MyApplication extends Application {
 
         server2Db = new Server2Db();
 
-        server2Db.loadMaps();// TODO: Aggiungere controllo data
-
-        server2Db.loadUser(); // TODO: Da eliminare una volta integrato login e registrazione corretti
-
-        server2Db.loadNodes();
-
-        server2Db.loadEdges();
     }
+
 
     public ServerService getServerService(){
         return serverService;
@@ -57,6 +51,10 @@ public class MyApplication extends Application {
 
     public DBHelper getDbHelper(){
         return _dbHelper;
+    }
+
+    public Server2Db getServer2Db(){
+        return server2Db;
     }
 
 

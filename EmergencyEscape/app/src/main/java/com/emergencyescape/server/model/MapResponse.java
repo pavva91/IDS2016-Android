@@ -2,7 +2,6 @@
 package com.emergencyescape.server.model;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,8 +13,8 @@ public class MapResponse {
     private String name;
     private List<Node> nodes = new ArrayList<Node>();
     private List<Edge> edges = new ArrayList<Edge>();
-    private List<String> images = new ArrayList<String>();
-    private Date lastUpdateMap;
+    private List<Image> images = new ArrayList<Image>();
+    private String lastUpdateMap;
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     /**
@@ -77,7 +76,7 @@ public class MapResponse {
      * @return
      *     The images
      */
-    public List<String> getImages() {
+    public List<Image> getImages() {
         return images;
     }
 
@@ -86,7 +85,7 @@ public class MapResponse {
      * @param images
      *     The images
      */
-    public void setImages(List<String> images) {
+    public void setImages(List<Image> images) {
         this.images = images;
     }
 
@@ -95,7 +94,7 @@ public class MapResponse {
      * @return
      *     The lastUpdateMap
      */
-    public Date getLastUpdateMap() {
+    public String getLastUpdateMap() {
         return lastUpdateMap;
     }
 
@@ -104,7 +103,7 @@ public class MapResponse {
      * @param lastUpdateMap
      *     The lastUpdateMap
      */
-    public void setLastUpdateMap(Date lastUpdateMap) {
+    public void setLastUpdateMap(String lastUpdateMap) {
         this.lastUpdateMap = lastUpdateMap;
     }
 

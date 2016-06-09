@@ -17,6 +17,7 @@ import com.emergencyescape.greendao.NodeDao;
 import com.emergencyescape.greendao.UserDao;
 import com.emergencyescape.server.ServerService;
 import com.emergencyescape.server.model.Edge;
+import com.emergencyescape.server.model.Image;
 import com.emergencyescape.server.model.MapResponse;
 import com.emergencyescape.server.model.Node;
 
@@ -33,6 +34,7 @@ import static java.lang.String.format;
  * com.emergencyescape
  * Server2Db
  * Classe che cura la sincronizzazione del DB con i dati del server
+ * TODO: Rendere il tutto asincrono
  */
 public class Server2Db {
 
@@ -44,6 +46,7 @@ public class Server2Db {
     private EdgeDao edgeDao = daoSession.getEdgeDao();
     private MapsDao mapsDao = daoSession.getMapsDao();
     private UserDao userDao = daoSession.getUserDao();
+    private ImageDao imageDao = daoSession.getImageDao();
     private DBHelper dbHelper = MyApplication.getInstance().getDbHelper();
     private SQLiteDatabase db = null;
     private Cursor cursor;
@@ -81,7 +84,6 @@ public class Server2Db {
                     public void onNext(Node response) {
                         Log.v("onNextIterationNodeId",response.getId().toString());
 
-
                         // Salvo i nodi presi dal server nel DB
                         com.emergencyescape.greendao.Node node = new com.emergencyescape.greendao.Node(response.getId());
                         node.setCode(response.getCode());
@@ -94,8 +96,6 @@ public class Server2Db {
                         //node.setMapId(response.getMapName()) // TODO: Sistemare questa cosa
 
                         nodeDao.insert(node);
-
-
                     }
                 });
     }
@@ -213,6 +213,7 @@ public class Server2Db {
 
     public void loadImages(){
 
+
         setDb();
         ImageDao.dropTable(db,true);
         ImageDao.createTable(db,false);
@@ -224,13 +225,12 @@ public class Server2Db {
 
 
         Observable<MapResponse> mapResponseObservable = service.getAPI().getMap(mapName,token);
-        Observable<String> imageObservable= service.getImages(mapResponseObservable); // Deserializzo la risposta
-        int quote = 145;
+        Observable<Image> imageObservable= service.getImages(mapResponseObservable); // Deserializzo la risposta
 
 
 
         subscription = imageObservable
-                .subscribe(new Observer<Node>() {
+                .subscribe(new Observer<Image>() {
                     @Override
                     public void onCompleted() {
                         Log.v("onCompleted","END");
@@ -242,53 +242,27 @@ public class Server2Db {
                     }
 
                     @Override
-                    public void onNext(String response) {
-                        Log.v("onNextIterationNodeId",response.getMapName());
+                    public void onNext(Image response) {
+                        Log.v("onNextIterFloorImage",response.getQuota() + " image url: " + response.getUrl());
 
+                        List<com.emergencyescape.greendao.Maps> mapsList = mapsDao.queryBuilder()
+                                .where(MapsDao.Properties.Name.eq(response.getMap()))
+                                .list();
 
                         // Salvo i nodi presi dal server nel DB
                         com.emergencyescape.greendao.Image image = new com.emergencyescape.greendao.Image();
-                        image.setUrl(response);
 
-                        long mapId = mapsDao.loadAll().get(0).getId();
-                        image.setQuote(response.indexOf(""))); // TODO: Finire caricamento immagine (prendere valori mappa e quota)
-                        image.setMapId(mapId);// TODO: Aspettare cambiamento risposta JSON del server
+                        image.setUrl(response.getUrl());
+                        image.setQuote(response.getQuota());
+                        image.setMapId(mapsList
+                                .get(0)
+                                .getId());
 
-
-
-                        nodeDao.insert(node);
-
-
+                        imageDao.insert(image);
                     }
                 });
+
     }
-
-   /* private boolean mapChanged(MapResponse map){
-        boolean mapChanged = false;
-        setDb();
-        Maps maps = mapsDao.queryBuilder()
-                .where(MapsDao.Properties.FirstName.eq("Joe"))
-                .orderAsc(MapsDao.Properties.LastName)
-                .list();; // select *
-
-
-        return mapChanged;
-
-    }*/
-
-   /* private int getMapToArrayXml(int index) {
-        TypedArray mapId = MyApplication.context.getResources().getStringArray(R.array.map_id);
-
-        WriteFi
-
-        List<Maps> maps = mapsDao.loadAll(); // Prendo la lista di mappe e la voglio stampare in array.xml
-
-
-
-        int id = fileNames.getResourceId(index, -1); //-1 is default if nothing is found (we don't care)
-        fileNames.recycle();
-        return id;
-    }*/
 
     private void setDb(){
         this.db = dbHelper.getDb();
