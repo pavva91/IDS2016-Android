@@ -110,7 +110,7 @@ public class AccessDB {
 		double c = e.getC();
 		double area = e.getArea();
 		//inserisco arco nel DB
-		PreparedStatement stmt = con.prepareStatement("INSERT INTO archi (partenza, destinazione, lunghezza, v, i, c, superficie) VALUES(?,?,?,?,?,?,?)");
+		PreparedStatement stmt = con.prepareStatement("INSERT INTO archi (partenza, destinazione, lunghezza, v, i, c, superficie, los, costo_emg) VALUES(?,?,?,?,?,?,?,"+Config.DEF_LOS+","+Config.COST_EMG+")");
 		stmt.setInt(1, nodeFrom);
 		stmt.setInt(2, nodeTo);
 		stmt.setDouble(3, lenght);
@@ -201,21 +201,22 @@ public class AccessDB {
 		}
 		//seleziono gli archi
 		stmt = con.prepareStatement("SELECT n1.codice AS partenza, n2.codice AS destinazione, a.v, a.i, a.c,"
-									+" a.los, a.lunghezza, a.superficie  FROM archi AS a, nodi AS n1, nodi AS n2"
+									+" a.los, a.lunghezza, a.superficie, a.costo_emg FROM archi AS a, nodi AS n1, nodi AS n2"
 									+" WHERE a.partenza=n1.id AND a.destinazione=n2.id and n1.mappa=?");
 		stmt.setString(1, mapName);
 		rs = stmt.executeQuery();
 		//genero gli archi
 		while(rs.next()){
-			Edge a = new Edge();
-			a.setFrom(rs.getString("partenza"));
-			a.setTo(rs.getString("destinazione"));
-			a.setLength(rs.getDouble("lunghezza"));
-			a.setV(rs.getDouble("v"));
-			a.setI(rs.getDouble("i"));
-			a.setC(rs.getDouble("c"));
-			a.setSuperficie(rs.getDouble("superficie"));
-			m.AggiungiArco(a);
+			Edge e = new Edge();
+			e.setFrom(rs.getString("partenza"));
+			e.setTo(rs.getString("destinazione"));
+			e.setLength(rs.getDouble("lunghezza"));
+			e.setV(rs.getDouble("v"));
+			e.setI(rs.getDouble("i"));
+			e.setC(rs.getDouble("c"));
+			e.setArea(rs.getDouble("superficie"));
+			e.setEmgCost(rs.getDouble("costo_emg"));
+			m.AggiungiArco(e);
 		}
 		//aggiorno data di ultimo invio mappa all'utente
 		stmt = con.prepareStatement("UPDATE utenti SET aggiornamento_mappa=NOW() WHERE token=?");
@@ -229,7 +230,11 @@ public class AccessDB {
 		rs = stmt.executeQuery();
 		//creo la lista di URL di immagini
 		while(rs.next()){
-			m.AggiungiImmagine(rs.getString("url"));
+			Image img = new Image();
+			img.setMap(rs.getString("mappa"));
+			img.setQuota(rs.getInt("quota"));
+			img.setUrl(rs.getString("url"));
+			m.AggiungiImmagine(img);
 		}
 		//recupero data aggiornamento mappa
 		stmt = con.prepareStatement("SELECT * FROM mappe WHERE nome=?");
@@ -333,20 +338,18 @@ public class AccessDB {
 		String mapName;
 		int oldPosition = u.getPosition();
 		//se l'utente non aveva una posizione nota allora...
-		if(oldPosition==-1){
+		if(oldPosition!=-1){
 			//rimuovo una persona da tutti gli archi adiacenti la vecchia posizione dell'utente e aggiorno il LOS
-			stmt = con.prepareStatement("UPDATE archi SET num_persone=num_persone-1 ,los="+Config.DEF_LOS+" WHERE partenza=? OR destinazione=?");
+			stmt = con.prepareStatement("UPDATE archi SET num_persone=num_persone-1 ,los="+Config.DEF_LOS+", costo_emg="+Config.COST_EMG+" WHERE partenza=? OR destinazione=?");
 			stmt.setInt(1, oldPosition);
 			stmt.setInt(2, oldPosition);
 			stmt.executeUpdate();
-		}else{
-			//se l'utente va in una posizione nota allora...
-			//aggiungo una persona in tutti gli archi adiacenti la nuova posizione dell'utente e aggiorno il LOS
-			stmt = con.prepareStatement("UPDATE archi SET num_persone=num_persone+1, los="+Config.DEF_LOS+" WHERE partenza=? OR destinazione=?");
-			stmt.setInt(1, newPosition);
-			stmt.setInt(2, newPosition);
-			stmt.executeUpdate();
 		}
+		//aggiungo una persona in tutti gli archi adiacenti la nuova posizione dell'utente e aggiorno il LOS
+		stmt = con.prepareStatement("UPDATE archi SET num_persone=num_persone+1, los="+Config.DEF_LOS+", costo_emg="+Config.COST_EMG+" WHERE partenza=? OR destinazione=?");
+		stmt.setInt(1, newPosition);
+		stmt.setInt(2, newPosition);
+		stmt.executeUpdate();
 		//aggiorno posizione utente su tabella utenti
 		if(newPosition!=-1){
 			stmt = con.prepareStatement("UPDATE utenti SET posizione=? WHERE token=?");
@@ -410,7 +413,7 @@ public class AccessDB {
 		Double i=e.getI();
 		Double c=e.getC();
 		int numPersone=e.getNumPers();
-		stmt = con.prepareStatement("UPDATE archi SET v=?, i=?, c=?, num_persone=? ,los="+Config.DEF_LOS+" WHERE partenza=? AND destinazione=?");
+		stmt = con.prepareStatement("UPDATE archi SET v=?, i=?, c=?, num_persone=? ,los="+Config.DEF_LOS+", costo_emg"+Config.COST_EMG+ " WHERE partenza=? AND destinazione=?");
 		stmt.setDouble(1, v);
 		stmt.setDouble(2, i);
 		stmt.setDouble(3, c);
@@ -457,7 +460,7 @@ public class AccessDB {
 		PreparedStatement stmt;
 		//stmt = con.prepareStatement("SELECT * FROM archi, nodi WHERE partenza=? AND destinazione=? AND (archi.partenza=nodi.id OR archi.destinazione=nodi.id)");
 		stmt = con.prepareStatement("SELECT n1.codice AS partenza, n2.codice AS destinazione, a.v, a.i, a.c,"
-									+" a.los, a.lunghezza, a.superficie, a.num_persone  FROM archi AS a, nodi AS n1, nodi AS n2"
+									+" a.los, a.lunghezza, a.superficie, a.num_persone, a.costo_emg  FROM archi AS a, nodi AS n1, nodi AS n2"
 									+" WHERE a.partenza=n1.id AND a.destinazione=n2.id AND a.partenza=? AND a.destinazione=?");
 		stmt.setInt(1, from);
 		stmt.setInt(2, to);
@@ -470,8 +473,9 @@ public class AccessDB {
 			a.setI(rs.getDouble("i"));
 			a.setC(rs.getDouble("c"));
 			a.setLos(rs.getDouble("los"));
-			a.setSuperficie(rs.getDouble("superficie"));
+			a.setArea(rs.getDouble("superficie"));
 			a.setNumPers(rs.getInt("num_persone"));
+			a.setEmgCost(rs.getDouble("costo_img"));
 		}else{
 			new SQLException("ERRORE: arco non trovato!");
 		}
@@ -502,5 +506,25 @@ public class AccessDB {
 			new SQLException("ERRORE: mappa non trovata!");
 		}
 		return m;
+	}
+	
+	//medodo che restituisce l'elenco degli utenti presenti sul DB
+	public ArrayList<User> getUsersList(Connection con) throws SQLException{
+		ArrayList<User> userList = new ArrayList<User>();
+		PreparedStatement stmt = con.prepareStatement("SELECT * FROM utenti");
+		ResultSet rs = stmt.executeQuery();
+		try{
+			while(rs.next()){
+				User u = new User();
+				u.setUsername(rs.getString("username"));
+				u.setPassword(rs.getString("password"));
+				u.setSalt(rs.getString("salt"));
+				u.setToken(rs.getString("token"));
+				userList.add(u);
+			}
+		} catch (SQLException e){
+			e.printStackTrace();
+		}
+		return userList;
 	}
 }

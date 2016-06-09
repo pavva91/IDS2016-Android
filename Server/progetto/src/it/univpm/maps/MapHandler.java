@@ -146,7 +146,8 @@ public class MapHandler{
 				return Response.status(Response.Status.FORBIDDEN).entity("ERRORE: Utente non autorizzato!").build();
 			}				
 		}catch (Exception ex){
-			ex.printStackTrace();
+			//errore SQL //restituire 403
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("ERRORE: Errore SQL!").build();
 		}
 		return Response.ok(m, MediaType.APPLICATION_JSON).build();
 	}

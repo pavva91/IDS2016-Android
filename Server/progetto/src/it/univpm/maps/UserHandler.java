@@ -6,6 +6,8 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -13,6 +15,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -28,7 +31,7 @@ public class UserHandler {
 	//metodo che crea un utente
 	//prende in input un utente e restituisce l'utente appena inserito nel DB
 	//ritorna CONFLICT in caso di errore
-	//ritorna OK se tutto ok
+	//ritorna CREATED se tutto ok
 	@POST
 	@Consumes("application/json")
 	@Produces("application/json")
@@ -50,6 +53,7 @@ public class UserHandler {
 			return Response.status(Response.Status.CONFLICT).entity("ERRORE: Impossibile registrare utente!").build();
 		}
 		return Response.ok(u, MediaType.APPLICATION_JSON).build();	
+		//return Response.status(Response.Status.CREATED).entity("OK: Utente registrato correttamente!").build();
 	}
 
 	//metodo che effettua il login utente verificando username e password restituendo il token utente
@@ -65,6 +69,7 @@ public class UserHandler {
 		Database db;
 		Connection con;
 		AccessDB access;
+		User u = new User();
 		try{
 			db = new Database();
 			con = db.getConnection();
@@ -72,12 +77,16 @@ public class UserHandler {
 			salt = access.getSaltUser(con, username);
 			password=cryptPassword(password, salt);
 			token = access.loginUser(con, username, password);
+			u.setToken(token);
+			u.setUsername(username);
+			u.setPassword(password);
+			u.setSalt(salt);
 		}catch (SQLException sqlex){
 			return Response.status(Response.Status.CONFLICT).entity(sqlex.toString()).build();
 		}catch (Exception e){
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("ERRORE: Accesso al db non riuscito!").build();
 		}
-		return Response.ok(token, MediaType.APPLICATION_JSON).build();
+		return Response.ok(u, MediaType.APPLICATION_JSON).build();
 	}
 	
 	//metodo che modifica la posizione di un utente e ritorna l'utente aggiornato
@@ -121,4 +130,27 @@ public class UserHandler {
 		}
 	    return password;
 	}
+	
+	//metodo che restituisce elenco di username, password e salt
+	//ritorna CONFLICT in caso di errori SQL
+	//ritorna INTERNAL SERVER ERROR se non riesce ad accedere al DB
+	//ritorna OK 
+	@GET
+	@Path("list")
+	@Produces("text/plain")
+	public Response getUsersList(){
+		ArrayList<User> userList = new ArrayList<User>();
+		try{
+			Database db = new Database();
+			Connection con = db.getConnection();
+			AccessDB access = new AccessDB();
+			userList = access.getUsersList(con);
+		}catch (Exception ex){
+			ex.printStackTrace();
+		}
+		GenericEntity entity = new GenericEntity<ArrayList<User>>(userList) {};
+		return Response.ok(entity, MediaType.APPLICATION_JSON).build();
+	}
+	
+	
 }

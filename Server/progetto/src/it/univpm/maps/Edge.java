@@ -17,6 +17,7 @@ public class Edge {
 	private String to; //id nodo destinazione (foreign key)
 	private double area; //superficie arco in mq
 	private int numpers;//numero di persone presenti
+	private double emgcost;//costo arco in caso di emergenza
 	
 	
 	//costruttore senza parametri
@@ -69,13 +70,19 @@ public class Edge {
 	public double getArea() {
 		return this.area;
 	}
-	public void setSuperficie(double superficie) {
-		this.area=superficie;
+	public void setArea(double area) {
+		this.area=area;
 	}
 	public int getNumPers(){
 		return this.numpers;
 	}
 	public void setNumPers(int numPers){
 		this.numpers=numPers;
+	}
+	public double getEmgCost() {
+		return this.emgcost;
+	}
+	public void setEmgCost(double cost) {
+		this.emgcost=cost;
 	}
 }

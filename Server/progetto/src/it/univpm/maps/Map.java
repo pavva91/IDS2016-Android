@@ -19,7 +19,7 @@ public class Map {
 	@XmlElement
 	private ArrayList<Edge> edges = new ArrayList<Edge>();
 	@XmlElement
-	private ArrayList<String> images = new ArrayList<String>();
+	private ArrayList<Image> images = new ArrayList<Image>();
 	@XmlElement
 	private Date lastUpdateMap;
 
@@ -57,13 +57,13 @@ public class Map {
 	public void AggiungiArco(Edge e){
 		this.edges.add(e);
 	}
-	public void AggiungiImmagine(String s){
-		this.images.add(s);
+	public void AggiungiImmagine(Image img){
+		this.images.add(img);
 	}
-	public void setImmagini(ArrayList<String> images){
+	public void setImmagini(ArrayList<Image> images){
 		this.images=images;
 	}
-	public ArrayList<String> getImmagini(){
+	public ArrayList<Image> getImmagini(){
 		return this.images;
 	}
 	public void setLastUpdateMap(Date lastUpdateMap){
