@@ -1,6 +1,6 @@
 package com.emergencyescape;
 /**
- * Created by Valerio Mattioli on 09/06/2016.
+ * Created by Valerio Mattioli on 10/06/2016.
  */
 
 import android.content.Context;
@@ -12,24 +12,22 @@ import android.graphics.Path;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
-import android.view.View;
 import android.widget.ImageView;
 
 /**
  * com.emergencyescape
- * MyView
+ * FloorImageView
  */
-public class MyDrawView extends View {
-
+public class FloorImageView extends ImageView {
     private Bitmap mBitmap;
     private Canvas mCanvas;
     private Path mPath;
-    private Paint   mBitmapPaint;
+    private Paint mBitmapPaint;
     private Paint mPaint;
 
     private Drawable mDrawable;
 
-    public MyDrawView(Context c, AttributeSet attributeSet) {
+    public FloorImageView(Context c, AttributeSet attributeSet) {
         super(c,attributeSet);
 
         mPath = new Path();

@@ -43,17 +43,6 @@ public class TextDestinationPresenter extends CommonBehaviourPresenter<TexterVie
         return allNames;
     }
 
-
-    public void setUserDeparture(String departure) {
-        List<User> allUser = userDao.loadAll();
-        for (User singleUser : allUser) {
-            if(singleUser.getName().equalsIgnoreCase("vale")){
-                singleUser.setDepartureId(this.getDepartureIdFromName(departure));
-                userDao.update(singleUser);
-            }
-        }
-    }
-
     @Override
     public Long getDepartureIdFromName(String departureName){
         List<Node> allNodes = nodeDao.loadAll();
@@ -98,28 +87,5 @@ public class TextDestinationPresenter extends CommonBehaviourPresenter<TexterVie
             }
         }
         return userDeparture;
-    }
-
-
-    public String getUserDestination() {
-        String userDestination = "";
-        List<User> allUser = userDao.loadAll();
-        for (User singleUser : allUser) {
-            if(singleUser.getName().equalsIgnoreCase("vale")){
-                userDestination = singleUser.getDestinationToOneUser().getCode();
-            }
-        }
-        return userDestination;
-    }
-
-
-    public Graph.CostPathPair getShortestPath(String departure, String destination) {
-        Db2Dijkstra db2Dijkstra = new Db2Dijkstra();
-        Graph graph = new Graph(db2Dijkstra.getVertexList(),db2Dijkstra.getEdgeDijkstraList());
-        Graph.CostPathPair shortestPath = Dijkstra.getShortestPath(
-                graph,
-                db2Dijkstra.getVertex(departure),
-                db2Dijkstra.getVertex(destination));
-        return shortestPath;
     }
 }

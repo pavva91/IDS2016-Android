@@ -37,11 +37,18 @@ public class Db2Dijkstra {
     private List<Graph.Vertex> vertexList = new ArrayList<>();
     private List<Graph.Edge> edgeDijkstraList = new ArrayList<>();
 
-    public Db2Dijkstra(){
+    /**
+     * Costruisco il Grafo
+     * @param emergencyState
+     */
+    public Db2Dijkstra(boolean emergencyState){
         this.setDijkstraVertex();
-        this.setDijkstraEdge();
+        this.setDijkstraEdge(emergencyState);
     }
 
+    /**
+     * Prendo i Vertici dal DB
+     */
     public void setDijkstraVertex() {
         List<Node> nodeList = nodeDao.loadAll();
         for (Node node : nodeList) {
@@ -54,10 +61,21 @@ public class Db2Dijkstra {
         return this.vertexList;
     }
 
-    public void setDijkstraEdge() {
+    /**
+     * Prendo gli Archi dal DB
+     * @param emergencyState
+     */
+    public void setDijkstraEdge(boolean emergencyState) {
         List<Edge> edgeList = edgeDao.loadAll();
+        Double cost;
         for (Edge edge : edgeList) {
-            Graph.Edge edgeDijkstra = new Graph.Edge((int)edge.getC(),getVertex(edge.getDepartureToOne().getCode()),getVertex(edge.getDestinationToOne().getCode()));
+            if(emergencyState){
+                cost = edge.getEm_cost();
+            } else {
+                cost = edge.getNo_em_cost();
+            }
+            cost = cost * 100; // Perchè Graph.Edge lavora su valori interi di costo, evito approssimazione
+            Graph.Edge edgeDijkstra = new Graph.Edge(cost.intValue(),getVertex(edge.getDepartureToOne().getCode()),getVertex(edge.getDestinationToOne().getCode()));
             edgeDijkstraList.add(edgeDijkstra);
         }
 
@@ -76,5 +94,4 @@ public class Db2Dijkstra {
         }
         return vertexToReturn;
     }
-
 }

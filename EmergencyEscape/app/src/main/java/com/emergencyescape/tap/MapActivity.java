@@ -33,7 +33,7 @@ import butterknife.OnTouch;
 
 public class MapActivity extends CommonBehaviourActivity<TapView,MapPresenter> {
 
-    @BindView(R.id.floorImage) ImageView floorImage;
+    @BindView(R.id.floorImage) MyDrawView floorImage;
     @BindView(R.id.toolbar) Toolbar toolbar;
 
     @NonNull
@@ -87,24 +87,36 @@ public class MapActivity extends CommonBehaviourActivity<TapView,MapPresenter> {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_maptap);
+        try {
+            setContentView(R.layout.activity_maptap);
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
 
+        /*
         RelativeLayout parent = (RelativeLayout) findViewById(R.id.floorImageRelativeLayout);
-        MyDrawView myDrawView = new MyDrawView(this);
+        MyDrawView myDrawView = new MyDrawView(this,);
         parent.addView(myDrawView);
+        */
 
 
         ButterKnife.bind(this);
 
-        populateImageView(getIntent().getExtras().getString("floor"));
+        //populateImageView(getIntent().getExtras().getString("floor"));
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
+    /*
+
+
     public void populateImageView(String floor){
         floorImage.setImageDrawable(presenter.getFloorImage(floor));
     }
+
+    */
 
     /*@OnTouch(R.id.floorImage)
     public boolean floorImageClick(MotionEvent event){

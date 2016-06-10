@@ -91,7 +91,8 @@ public class ItineraryActivity extends CommonBehaviourActivity<ItineraryView,Iti
     public void showShortestPathNoEmergency(){ // No emergency, sembra funzionare
         Graph.CostPathPair shortestPath = presenter.getShortestPath(
                 presenter.getDeparture(),
-                presenter.getDestination());
+                presenter.getDestination(),
+                false);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, shortestPath.getPath());

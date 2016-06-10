@@ -49,8 +49,6 @@ public class Server2Db {
     private ImageDao imageDao = daoSession.getImageDao();
     private DBHelper dbHelper = MyApplication.getInstance().getDbHelper();
     private SQLiteDatabase db = null;
-    private Cursor cursor;
-
 
     public void loadNodes(){
 
@@ -125,7 +123,7 @@ public class Server2Db {
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.e(LOG, e.toString());
+                        Log.e(LOG+" Edge: ", e.toString());
                     }
 
                     @Override
@@ -145,6 +143,9 @@ public class Server2Db {
                         edge.setLos(response.getLos());
                         edge.setLength(response.getLength());
                         edge.setSurface(response.getArea());
+
+                        edge.setEm_cost(response.getEmgcost());
+                        edge.setNo_em_cost(response.getLength());
 
                         edgeDao.insert(edge);
 

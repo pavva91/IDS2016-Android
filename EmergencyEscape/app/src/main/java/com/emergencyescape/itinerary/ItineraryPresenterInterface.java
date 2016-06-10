@@ -13,5 +13,5 @@ public interface ItineraryPresenterInterface {
     String getDestination();
     List<String> getEmergencyDestinations();
     Graph.CostPathPair getEmergencyShortestPath(String departure, List<String> allEmergencyExit);
-    Graph.CostPathPair getShortestPath(String departure, String destination);
+    Graph.CostPathPair getShortestPath(String departure, String destination, Boolean emergencyState);
 }

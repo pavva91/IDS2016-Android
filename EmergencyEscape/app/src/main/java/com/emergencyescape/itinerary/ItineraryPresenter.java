@@ -80,15 +80,16 @@ public class ItineraryPresenter extends CommonBehaviourPresenter<ItineraryView> 
         List<Graph.CostPathPair> allEmergencyPath = new ArrayList<>();
         Graph.CostPathPair shortestPath = new Graph.CostPathPair(0, new ArrayList<>());
         boolean shortestPathNotAValue = true;
-        for (String singleEmergencyExit : allEmergencyExit) {
+        for (String singleEmergencyExit : allEmergencyExit) { // Calcolo il miglior percorso per ogni uscita di emergenza
             allEmergencyPath.add(this.getShortestPath(
                     departure,
-                    singleEmergencyExit));
+                    singleEmergencyExit,
+                    true));
             if(shortestPathNotAValue){
                 shortestPath = allEmergencyPath.get(allEmergencyPath.size()-1);
                 shortestPathNotAValue = false;
             }
-            if(allEmergencyPath.get(allEmergencyPath.size()-1).getCost() <= shortestPath.getCost()){
+            if(allEmergencyPath.get(allEmergencyPath.size()-1).getCost() <= shortestPath.getCost()){ // Scelgo quello a costo minore
                 shortestPath = allEmergencyPath.get(allEmergencyPath.size()-1);
             }
         }
@@ -96,8 +97,8 @@ public class ItineraryPresenter extends CommonBehaviourPresenter<ItineraryView> 
     }
 
     @Override
-    public Graph.CostPathPair getShortestPath(String departure, String destination) {
-        Db2Dijkstra db2Dijkstra = new Db2Dijkstra();
+    public Graph.CostPathPair getShortestPath(String departure, String destination, Boolean emergencyState) {
+        Db2Dijkstra db2Dijkstra = new Db2Dijkstra(emergencyState);
         Graph graph = new Graph(db2Dijkstra.getVertexList(),db2Dijkstra.getEdgeDijkstraList());
         Graph.CostPathPair shortestPath = Dijkstra.getShortestPath(
                 graph,
