@@ -63,7 +63,7 @@ public class AccessDB {
         	throw new SQLException("Errore inserimento mappa!");
 	}
 	
-	//meto do che inserisce un nodo nel DB
+	//metodo che inserisce un nodo nel DB
 	public Node insertNode(Connection con, Map m, Node n) throws SQLException{
 		int numRecord;
 		String mapName = m.getNome();
@@ -527,4 +527,28 @@ public class AccessDB {
 		}
 		return userList;
 	}
+	
+	//metodo che inserisce un nodo nel DB
+	public void insertDevice(Connection con, Device d) throws SQLException{
+		PreparedStatement stmt = con.prepareStatement("INSERT INTO dispositivi (registrationID) VALUES(?)");
+		stmt.setString(1, d.getRegistrationID());
+		int numRecord = stmt.executeUpdate();
+        if (numRecord == 0) {
+        	//se non è stato inserito nessun record allora genero un'eccezione
+            throw new SQLException("Errore inserimento registrationID!");
+        }
+	}
+	
+	//metodo che inserisce un nodo nel DB
+	public void deleteDevice(Connection con, Device d) throws SQLException{
+		PreparedStatement stmt = con.prepareStatement("DELETE FROM dispositivi where registrationID=?");
+		stmt.setString(1, d.getRegistrationID());
+		int numRecord = stmt.executeUpdate();
+        if (numRecord == 0) {
+        	//se non è stato cancellato nessun record allora genero un'eccezione
+            throw new SQLException("Errore inserimento registrationID!");
+        }
+	}
+
+	
 }
