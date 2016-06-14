@@ -15,6 +15,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.emergencyescape.FloorBitmap;
+import com.emergencyescape.FloorPathHelper;
 import com.emergencyescape.R;
 import com.emergencyescape.commonbehaviour.CommonBehaviourActivity;
 import com.emergencyescape.dijkstra.Graph;
@@ -109,7 +110,7 @@ public class ItineraryActivity extends CommonBehaviourActivity<ItineraryView,Iti
     }
 
     @Override
-    public Graph.CostPathPair getShortestPath(){
+    public Graph.CostPathPair getShortestPath(){ // Esegue il calcolo vero e proprio
         Graph.CostPathPair shortestPath;
         if(getEmergencyState()){
             shortestPath = presenter.getEmergencyShortestPath(
@@ -172,7 +173,9 @@ public class ItineraryActivity extends CommonBehaviourActivity<ItineraryView,Iti
     }
 
     protected Path getFloorPath(Graph.CostPathPair shortestPath){ // TODO: Cambiare in coordinate mappa
-        return new Path();
+        Path floorPath = presenter.getScaledPath(shortestPath);
+
+        return floorPath;
     }
 
     protected void setPaintStyle(int paintColor){

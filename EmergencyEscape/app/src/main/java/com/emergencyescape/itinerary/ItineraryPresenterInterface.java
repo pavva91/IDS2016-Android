@@ -1,5 +1,7 @@
 package com.emergencyescape.itinerary;
 
+import android.graphics.Path;
+
 import com.emergencyescape.dijkstra.Graph;
 import com.emergencyescape.greendao.Node;
 
@@ -16,4 +18,5 @@ public interface ItineraryPresenterInterface {
     List<String> getEmergencyDestinations();
     Graph.CostPathPair getEmergencyShortestPath(String departure, List<String> allEmergencyExit);
     Graph.CostPathPair getShortestPath(String departure, String destination, Boolean emergencyState);
+    Path getScaledPath(Graph.CostPathPair shortestPath);
 }

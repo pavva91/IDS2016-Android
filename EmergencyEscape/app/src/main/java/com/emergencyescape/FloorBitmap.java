@@ -12,8 +12,6 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.drawable.BitmapDrawable;
 
-import com.emergencyescape.dijkstra.Graph;
-
 /**
  * com.emergencyescape
  * FloorBitmap - Effettua il draw del path e restituisce una bitmap
@@ -35,8 +33,7 @@ public class FloorBitmap extends BitmapDrawable {
     private Paint drawPaint;
 
     private Bitmap scaledBitmap;
-    Bitmap image;
-    Canvas canvas;
+    private Bitmap floorImage;
 
     /**
      * Create drawable from a bitmap, setting initial target density based on
@@ -51,27 +48,23 @@ public class FloorBitmap extends BitmapDrawable {
         super(res, floorBitmap);
         drawPaint = floorPaint;
         path = floorPath;
-        //draw(canvas);
+    }
+
+    private Path createCustomPath(){
+        Path customPath = new Path();
+        customPath.moveTo(160,150); // INIZIO PATH
+        customPath.lineTo(200,300);
+        customPath.lineTo(500,300);
+        customPath.lineTo(100,400);
+        customPath.lineTo(250,300);
+        customPath.lineTo(100,120);
+        return customPath;
     }
 
     @Override
     public void draw(Canvas canvas) {
-        //lineStylePaint();
-        image = getBitmap();
-        canvas.drawBitmap(image,0,0,drawPaint);
-        //canvas.drawPath(path, drawPaint);
-        canvas.drawText("PROVA TEXT",DeviceDimensionsHelper.convertDpToPixel(150f,context),DeviceDimensionsHelper.convertDpToPixel(200f,context),drawPaint);
-        canvas.drawLine(130f,140f,170f,135f,drawPaint);
-    }
-
-    private void lineStylePaint() {
-        // Setup paint with color and stroke styles
-        drawPaint = new Paint();
-        drawPaint.setColor(paintColor);
-        drawPaint.setAntiAlias(true);
-        drawPaint.setStrokeWidth(5);
-        drawPaint.setStyle(Paint.Style.STROKE);
-        drawPaint.setStrokeJoin(Paint.Join.ROUND);
-        drawPaint.setStrokeCap(Paint.Cap.ROUND);
+        floorImage = getBitmap();
+        canvas.drawBitmap(floorImage,0,0,drawPaint);
+        canvas.drawPath(createCustomPath(), drawPaint);
     }
 }

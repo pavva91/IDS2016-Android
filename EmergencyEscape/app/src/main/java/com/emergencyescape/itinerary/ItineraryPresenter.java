@@ -3,6 +3,7 @@ package com.emergencyescape.itinerary;
  * Created by Valerio Mattioli on 24/05/2016.
  */
 
+import android.graphics.Path;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 
@@ -12,6 +13,8 @@ import com.emergencyescape.dijkstra.Db2Dijkstra;
 import com.emergencyescape.dijkstra.Dijkstra;
 import com.emergencyescape.dijkstra.Graph;
 import com.emergencyescape.greendao.DaoSession;
+import com.emergencyescape.greendao.Edge;
+import com.emergencyescape.greendao.EdgeDao;
 import com.emergencyescape.greendao.NodeDao;
 import com.emergencyescape.greendao.User;
 import com.emergencyescape.greendao.UserDao;
@@ -36,6 +39,7 @@ public class ItineraryPresenter extends CommonBehaviourPresenter<ItineraryView> 
     DaoSession daoSession = MyApplication.getSession();
     UserDao userDao = daoSession.getUserDao();
     NodeDao nodeDao = daoSession.getNodeDao();
+    EdgeDao edgeDao = daoSession.getEdgeDao();
 
     @Override
     public String getDepartureCode() {
@@ -118,4 +122,31 @@ public class ItineraryPresenter extends CommonBehaviourPresenter<ItineraryView> 
                 db2Dijkstra.getVertex(destination));
         return shortestPath;
     }
+
+    @Override
+    public Path getScaledPath(Graph.CostPathPair shortestPath){
+        com.emergencyescape.greendao.Node departureNode = getDeparture();
+        Integer quoteInteger = departureNode.getQuote();
+
+        if(quoteInteger==145){
+
+        } else if(quoteInteger==150){
+
+        } else if(quoteInteger==155){
+
+        }
+    }
+
+    public List<com.emergencyescape.greendao.Node> CostPathPair2ListGreenDaoNode(Graph.CostPathPair path){
+        // TODO: Trasformare il path Dijkstra in Path greenDao
+        List<Graph.Edge> edgeList = path.getPath();
+        List<Edge> allDbValues = edgeDao.loadAll();
+        for (Graph.Edge edge : edgeList) {
+            Graph.Vertex fromVertex = edge.getFromVertex();
+            Graph.Vertex toVertex = edge.getToVertex(); // CODE
+        }
+    }
+    }
+
+
 }
