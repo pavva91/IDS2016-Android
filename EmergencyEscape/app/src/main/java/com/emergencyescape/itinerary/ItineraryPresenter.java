@@ -38,12 +38,24 @@ public class ItineraryPresenter extends CommonBehaviourPresenter<ItineraryView> 
     NodeDao nodeDao = daoSession.getNodeDao();
 
     @Override
-    public String getDeparture() {
+    public String getDepartureCode() {
         String userDeparture = "";
         List<User> allUser = userDao.loadAll(); // select *
         for (User singleUser : allUser) {
             if(singleUser.getName().equalsIgnoreCase("vale")){
                 userDeparture = singleUser.getDepartureToOneUser().getCode();
+            }
+        }
+        return userDeparture;
+    }
+
+    @Override
+    public com.emergencyescape.greendao.Node getDeparture() {
+        com.emergencyescape.greendao.Node userDeparture = new com.emergencyescape.greendao.Node();
+        List<User> allUser = userDao.loadAll(); // select *
+        for (User singleUser : allUser) {
+            if(singleUser.getName().equalsIgnoreCase("vale")){
+                userDeparture = singleUser.getDepartureToOneUser();
             }
         }
         return userDeparture;

@@ -60,7 +60,7 @@ public class TapActivity extends CommonBehaviourActivity<TapView,TapPresenter> {
     public void populateFloorListView(List<String> floorList){
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_1,
-                addStringValueListView(getResources().getString(R.string.quote), floorList));
+                floorList);
         floorListView.setAdapter(adapter);
     }
 
@@ -69,6 +69,12 @@ public class TapActivity extends CommonBehaviourActivity<TapView,TapPresenter> {
         Intent intentToStart = new Intent(this, MapActivity.class);
         intentToStart.putExtra("floor",floorListView.getItemAtPosition(position).toString());
         intentToStart.putExtra("id",R.drawable.q145);
+        intentToStart.putExtra("emergencyState",getEmergencyState());
         startActivity(intentToStart);
+    }
+
+    private Boolean getEmergencyState(){
+        Boolean emergencyState = getIntent().getBooleanExtra("emergencyState",true);
+        return emergencyState;
     }
 }

@@ -6,6 +6,7 @@ package com.emergencyescape;
 import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Environment;
 import android.util.Log;
 
 import com.emergencyescape.greendao.DaoSession;
@@ -21,6 +22,14 @@ import com.emergencyescape.server.model.Image;
 import com.emergencyescape.server.model.MapResponse;
 import com.emergencyescape.server.model.Node;
 
+import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.Arrays;
 import java.util.List;
 
@@ -49,6 +58,67 @@ public class Server2Db {
     private ImageDao imageDao = daoSession.getImageDao();
     private DBHelper dbHelper = MyApplication.getInstance().getDbHelper();
     private SQLiteDatabase db = null;
+
+    public void downloadFromUrl(String DownloadUrl, String fileName) {
+
+        try {
+            File root = Environment.getExternalStorageDirectory();
+
+            File dir = new File (root.getAbsolutePath() + "/floor");
+            if(dir.exists()==false) {
+                dir.mkdirs();
+            }
+
+            URL url = new URL(DownloadUrl); //you can write here any link
+            File file = new File(dir, fileName);
+
+            long startTime = System.currentTimeMillis();
+            Log.d("DownloadManager", "download begining");
+            Log.d("DownloadManager", "download url:" + url);
+            Log.d("DownloadManager", "downloaded file name:" + fileName);
+
+           /* Open a connection to that URL. */
+            URLConnection ucon = url.openConnection();
+
+           /*
+            * Define InputStreams to read from the URLConnection.
+            */
+            InputStream is = ucon.getInputStream();
+            BufferedInputStream bis = new BufferedInputStream(is);
+
+           /*
+            * Read bytes to the Buffer until there is nothing more to read(-1).
+            */
+            ByteArrayOutputStream baf = new ByteArrayOutputStream();
+            byte[]data = new byte[5000];
+            int current = 0;
+            while ((current = bis.read(data,0,data.length)) != -1) {
+                baf.write(data,0,current);
+            }
+
+
+           /* Convert the Bytes read to a String. */
+            FileOutputStream fos = new FileOutputStream(file);
+            fos.write(baf.toByteArray());
+            fos.flush();
+            fos.close();
+            Log.d("DownloadManager", "download ready in" + ((System.currentTimeMillis() - startTime) / 1000) + " sec");
+
+        } catch (IOException e) {
+            Log.d("DownloadManager", "Error: " + e);
+        }
+
+    }
+
+    public void downloadFloorImages(){
+        List<com.emergencyescape.greendao.Image> imageList;
+        imageList = imageDao.loadAll();
+
+        for(com.emergencyescape.greendao.Image imageSingle : imageList){
+            Integer quote = imageSingle.getQuote();
+            this.downloadFromUrl(imageSingle.getUrl(), quote.toString() + ".png");
+        }
+    }
 
     public void loadNodes(){
 

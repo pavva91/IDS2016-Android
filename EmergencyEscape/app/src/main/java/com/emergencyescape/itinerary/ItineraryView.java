@@ -1,6 +1,7 @@
 package com.emergencyescape.itinerary;
 
 import com.emergencyescape.commonbehaviour.CommonBehaviourView;
+import com.emergencyescape.dijkstra.Graph;
 
 /**
  * Created by Valerio Mattioli on 24/05/2016.
@@ -8,4 +9,5 @@ import com.emergencyescape.commonbehaviour.CommonBehaviourView;
 public interface ItineraryView extends CommonBehaviourView {
     void showShortestPathNoEmergency();
     void showShortestPathEmergency();
+    Graph.CostPathPair getShortestPath();
 }

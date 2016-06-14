@@ -3,139 +3,151 @@ package com.emergencyescape;
  * Created by Valerio Mattioli on 10/06/2016.
  */
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.Rect;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
+import android.os.AsyncTask;
+import android.os.Environment;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.MotionEvent;
+import android.view.View;
 import android.widget.ImageView;
+
+import com.emergencyescape.dijkstra.Graph;
+
+import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * com.emergencyescape
  * FloorImageView
  */
 public class FloorImageView extends ImageView {
-    private Bitmap mBitmap;
-    private Canvas mCanvas;
-    private Path mPath;
-    private Paint mBitmapPaint;
-    private Paint mPaint;
+    Context context = MyApplication.getInstance().getApplicationContext();
+    // Get height or width of screen
+    int screenHeight = DeviceDimensionsHelper.getDisplayHeight(context);
+    int screenWidth = DeviceDimensionsHelper.getDisplayWidth(context);
+    // Convert dp to pixels
+    float px = DeviceDimensionsHelper.convertDpToPixel(25f, context);
+    // Convert pixels to dp
+    float dp = DeviceDimensionsHelper.convertPixelsToDp(25f, context);
 
-    private Drawable mDrawable;
+    private Path path = new Path();
 
-    public FloorImageView(Context c, AttributeSet attributeSet) {
-        super(c,attributeSet);
+    private final int paintColor = Color.BLACK;
+    // defines paint and canvas
+    private Paint drawPaint;
 
-        mPath = new Path();
-        mBitmapPaint = new Paint(Paint.DITHER_FLAG);
+    private Bitmap scaledBitmap;
+    Bitmap image;
+    FloorBitmap floorBitmap;
 
-        mDrawable = getResources().getDrawable(R.drawable.q145);
-        this.setBackgroundDrawable(mDrawable);
+    private int mWidth;
+    private int mHeight;
+    private float mAngle;
 
-        mPaint = new Paint();
-        mPaint.setAntiAlias(true);
-        mPaint.setDither(true);
-        mPaint.setColor(getResources().getColor(android.R.color.holo_blue_light)); // Colore del Path
-        mPaint.setStyle(Paint.Style.STROKE);
-        mPaint.setStrokeJoin(Paint.Join.ROUND);
-        mPaint.setStrokeCap(Paint.Cap.ROUND);
-        mPaint.setStrokeWidth(3);
-    }
-
+    /**
+     * This is called during layout when the size of this view has changed. If
+     * you were just added to the view hierarchy, you're called with the old
+     * values of 0.
+     *
+     * @param w    Current width of this view.
+     * @param h    Current height of this view.
+     * @param oldw Old width of this view.
+     * @param oldh Old height of this view.
+     */
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-        mBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
-        mCanvas = new Canvas(mBitmap);
+    }
+
+    public FloorImageView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+
+        setFocusable(true);
+        setVerticalScrollBarEnabled(true);
+
+        setFocusableInTouchMode(true);
+        setBitmap();
+
+        lineStylePaint();
+    }
+
+    private void setBitmap(){
+        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inMutable = true;
+        image = BitmapFactory.decodeResource(getContext().getResources(),R.drawable.q145,options); // TODO: Devo lavorare, misure originali: image.getWidth()
+        //floorBitmap = new FloorBitmap(getResources(),image);
+        if(context.getResources().getConfiguration().orientation==1) {
+            scaledBitmap = ScalingUtilities.createScaledBitmap(image, screenWidth, screenHeight, ScalingUtilities.ScalingLogic.FIT);
+        }else scaledBitmap = ScalingUtilities.createScaledBitmap(image, screenWidth, screenHeight, ScalingUtilities.ScalingLogic.FIT); // TODO: Sistemare scaling immagine
+
+    }
+
+    // Setup paint with color and stroke styles
+    private void lineStylePaint() {
+        // Setup paint with color and stroke styles
+        drawPaint = new Paint();
+        drawPaint.setColor(paintColor);
+        drawPaint.setAntiAlias(true);
+        drawPaint.setStrokeWidth(5);
+        drawPaint.setStyle(Paint.Style.STROKE);
+        drawPaint.setStrokeJoin(Paint.Join.ROUND);
+        drawPaint.setStrokeCap(Paint.Cap.ROUND);
     }
 
     @Override
-    protected void onDraw(Canvas canvas) {
-        canvas.drawBitmap(mBitmap, 0, 0, mBitmapPaint);
-
-        canvas.drawPath(mPath, mPaint);
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
 
-    private float mX, mY;
-    private static final float TOUCH_TOLERANCE = 4;
+    @Override
+    protected void onDraw(Canvas canvas)
+    {
+        canvas.drawBitmap(image,0,0,drawPaint);
+        canvas.drawPath(path, drawPaint);
+        canvas.drawText("PROVA TEXT",DeviceDimensionsHelper.convertDpToPixel(150f,context),DeviceDimensionsHelper.convertDpToPixel(200f,context),drawPaint);
+        canvas.drawLine(130f,140f,170f,135f,drawPaint);
+        // TODO: Così funzionerebbe perfettamente lo scaling del draw se solo trovassi un modo per scalare ora il risultato (Canvas)
 
-    private void touch_start(float x, float y) {
-        mPath.reset();
-        mPath.moveTo(x, y);
-        mX = x;
-        mY = y;
+        // Non si riesce a scalare direttamente Canvas, provo:
+        // TODO: Salvare Canvas come immagine e ricreare Bitmap con quell'immagine "disegnata"
     }
-    private void touch_move(float x, float y) {
-        float dx = Math.abs(x - mX);
-        float dy = Math.abs(y - mY);
-        if (dx >= TOUCH_TOLERANCE || dy >= TOUCH_TOLERANCE) {
-            mPath.quadTo(mX, mY, (x + mX)/2, (y + mY)/2);
-            mX = x;
-            mY = y;
+
+    public Bitmap saveSignature(){
+
+        Bitmap  bitmap = Bitmap.createBitmap(this.getWidth(), this.getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        this.draw(canvas);
+
+        File file = new File(Environment.getExternalStorageDirectory() + "/sign.png");
+
+        try {
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, new FileOutputStream(file));
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-    }
-    private void touch_up() {
-        mPath.lineTo(mX, mY);
-        // commit the path to our offscreen
-        mCanvas.drawPath(mPath, mPaint);
-        // kill this so we don't double draw
-        mPath.reset();
+
+        return bitmap;
     }
 
 
-    public boolean onTouchEvent(MotionEvent event) {
-        float x = event.getX();
-        float y = event.getY();
 
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                touch_start(x, y);
-                invalidate();
-                break;
-            case MotionEvent.ACTION_MOVE:
-                touch_move(x, y);
-                invalidate();
-                break;
-            case MotionEvent.ACTION_UP:
-                touch_up();
-                invalidate();
-                break;
-        }
-        return true;
-    }
-
-    public void clear(){
-        mBitmap.eraseColor(Color.TRANSPARENT);
-        invalidate();
-        System.gc();
-    }
-
-    /*
-            Paint paint = new Paint();
-
-        paint.setStyle(Paint.Style.FILL);
-        paint.setColor(Color.RED);
-        canvas.drawPaint(paint);
-        Path path = new Path();
-        //canvas.drawColor(Color.CYAN);
-
-        for (int i = 5; i < 50; i++) {
-
-            path.moveTo(4, i-1);
-            path.lineTo(4, i);
-
-        }
-        path.close();
-
-        paint.setStrokeWidth(3);
-        paint.setPathEffect(null);
-        paint.setColor(Color.WHITE);
-        paint.setStyle(Paint.Style.STROKE);
-
-        canvas.drawPath(path, paint);
-     */
 }

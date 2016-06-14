@@ -51,6 +51,9 @@ public class MainActivity extends CommonBehaviourActivity<MainView,MainPresenter
             editor.commit();
         }
 
+
+
+
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 

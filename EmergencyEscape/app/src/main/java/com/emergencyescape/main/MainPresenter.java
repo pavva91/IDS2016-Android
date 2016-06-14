@@ -22,5 +22,6 @@ public class MainPresenter extends CommonBehaviourPresenter<MainView> {
         server2Db.loadNodes();
         server2Db.loadEdges();
         server2Db.loadImages();
+        server2Db.downloadFloorImages();
     }
 }

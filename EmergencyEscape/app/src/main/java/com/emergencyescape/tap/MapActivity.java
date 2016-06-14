@@ -17,9 +17,12 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.emergencyescape.FloorImageView;
 import com.emergencyescape.MyDrawView;
 import com.emergencyescape.R;
 import com.emergencyescape.commonbehaviour.CommonBehaviourActivity;
+import com.emergencyescape.itinerary.ItineraryActivity;
+import com.emergencyescape.text.TextDepartureActivity;
 import com.emergencyescape.text.TextDestinationActivity;
 
 import java.io.FileNotFoundException;
@@ -33,7 +36,7 @@ import butterknife.OnTouch;
 
 public class MapActivity extends CommonBehaviourActivity<TapView,MapPresenter> {
 
-    @BindView(R.id.floorImage) MyDrawView floorImage;
+    @BindView(R.id.floorImage) ImageView floorImage;
     @BindView(R.id.toolbar) Toolbar toolbar;
 
     @NonNull
@@ -48,7 +51,7 @@ public class MapActivity extends CommonBehaviourActivity<TapView,MapPresenter> {
     private Bitmap bitmap;
 
 
-    // TODO: Schifo assoluto
+    // TODO:  va bene
     int aulamagna=-8355841;
     int dacs= -8388896;
     int dardus=-4129024;
@@ -94,31 +97,26 @@ public class MapActivity extends CommonBehaviourActivity<TapView,MapPresenter> {
             e.printStackTrace();
         }
 
-        /*
-        RelativeLayout parent = (RelativeLayout) findViewById(R.id.floorImageRelativeLayout);
-        MyDrawView myDrawView = new MyDrawView(this,);
-        parent.addView(myDrawView);
-        */
-
-
         ButterKnife.bind(this);
 
-        //populateImageView(getIntent().getExtras().getString("floor"));
+        populateImageView(getIntent().getExtras().getString("floor"));
+        quote();
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-    /*
+
 
 
     public void populateImageView(String floor){
         floorImage.setImageDrawable(presenter.getFloorImage(floor));
     }
 
-    */
 
-    /*@OnTouch(R.id.floorImage)
+
+/*
+    @OnTouch(R.id.floorImage)
     public boolean floorImageClick(MotionEvent event){
 
         floorImage.buildDrawingCache();
@@ -133,39 +131,50 @@ public class MapActivity extends CommonBehaviourActivity<TapView,MapPresenter> {
         Log.v(LOG,"x: " + event.getY());
         Log.v(LOG,"raw x: " + event.getRawX());
         Log.v(LOG,"raw y: " + event.getRawY());
-
-
-
-
-
-
         return false;
-    }*/
+    }
+*/
 
 
-    private void quote(){ // TODO: Spostare questa funzione secondo il pattern utilizzando il model
+    private void quote(){ // TODO: Spostare questa funzione secondo il pattern utilizzando il model, fanculo siamo indietro come le palle dei cani
+        //final Intent a = new Intent(MapActivity.this, TextDestinationActivity.class);
+        final Intent a;
+        if (this.getEmergencyState()) {
+             a = new Intent(MapActivity.this, ItineraryActivity.class);
+        }else{
+             a = new Intent(MapActivity.this,TextDestinationActivity.class);
+        }
 
         String quota = getIntent().getExtras().getString("floor");
         System.out.println("quota " + String.valueOf(quota));
 
+        floorImage.setDrawingCacheEnabled(true);
+        floorImage.buildDrawingCache(true);
+
 
         if (quota.equals("145")) {
+            /*
             final ImageView imgView = (ImageView) findViewById(R.id.image);
             imgView.setImageResource(getIntent().getIntExtra("id", R.id.image)); // ImageView
             imgView.setDrawingCacheEnabled(true);
             imgView.buildDrawingCache(true);
             Drawable d = getResources().getDrawable(R.drawable.q145); // Drawable
-            imgView.setOnTouchListener(new View.OnTouchListener() {
+            */
+
+            floorImage.setOnTouchListener(new View.OnTouchListener() {
 
                 public boolean onTouch(View v, MotionEvent event) {
 
                     if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                        bitmap = imgView.getDrawingCache();
+                        bitmap = floorImage.getDrawingCache();
                         int pixel = bitmap.getPixel((int) event.getX(), (int) event.getY());
 
-                       /*     int r = Color.red(pixel);
+
+                            /*
+                            int r = Color.red(pixel);
                             int b = Color.blue(pixel);
-                            int g = Color.green(pixel);*/
+                            int g = Color.green(pixel);
+                            */
 
                         System.out.println("pixel " + String.valueOf(pixel));
 
@@ -177,31 +186,26 @@ public class MapActivity extends CommonBehaviourActivity<TapView,MapPresenter> {
                             case MotionEvent.ACTION_DOWN:
 
                                 if (pixel == aulamagna) {
-                                    Intent a = new Intent(MapActivity.this, TextDestinationActivity.class);
                                     a.putExtra("aula", "Aula magna");
                                     a.putExtra("quotap", "145");
                                     startActivity(a);
                                 }
                                 if (pixel == dacs) {
-                                    Intent a = new Intent(MapActivity.this, TextDestinationActivity.class);
                                     a.putExtra("aula", "DACS");
                                     a.putExtra("quotap", "145");
                                     startActivity(a);
                                 }
                                 if (pixel == dardus) {
-                                    Intent a = new Intent(MapActivity.this, TextDestinationActivity.class);
                                     a.putExtra("aula", "DARDUS");
                                     a.putExtra("quotap", "145");
                                     startActivity(a);
                                 }
                                 if (pixel == dacs) {
-                                    Intent a = new Intent(MapActivity.this, TextDestinationActivity.class);
                                     a.putExtra("aula", "DACS");
                                     a.putExtra("quotap", "145");
                                     startActivity(a);
                                 }
                                 if (pixel == g1) {
-                                    Intent a = new Intent(MapActivity.this, TextDestinationActivity.class);
                                     a.putExtra("aula", "G1");
                                     a.putExtra("quotap", "145");
                                     startActivity(a);
@@ -232,13 +236,11 @@ public class MapActivity extends CommonBehaviourActivity<TapView,MapPresenter> {
                                         startActivity(a);
                                     }*/
                                 if (pixel == dipmeccanica) {
-                                    Intent a = new Intent(MapActivity.this, TextDestinationActivity.class);
                                     a.putExtra("aula", "Dipartimento di meccanica");
                                     a.putExtra("quotap", "145");
                                     startActivity(a);
                                 }
                                 if (pixel == isac) {
-                                    Intent a = new Intent(MapActivity.this, TextDestinationActivity.class);
                                     a.putExtra("aula", "ISAC");
                                     a.putExtra("quotap", "145");
                                     startActivity(a);
@@ -253,17 +255,20 @@ public class MapActivity extends CommonBehaviourActivity<TapView,MapPresenter> {
         }
         if (quota.equals("150")) {
 
+            /*
             final ImageView imgView = (ImageView) findViewById(R.id.image);
+
             imgView.setImageResource(getIntent().getIntExtra("id", R.id.image));
             imgView.setDrawingCacheEnabled(true);
             imgView.buildDrawingCache(true);
+            */
 
-            imgView.setOnTouchListener(new View.OnTouchListener() {
+            floorImage.setOnTouchListener(new View.OnTouchListener() {
 
                 public boolean onTouch(View v, MotionEvent event) {
 
                     if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                        bitmap = imgView.getDrawingCache();
+                        bitmap = floorImage.getDrawingCache();
 
                         int pixel = bitmap.getPixel((int) event.getX(), (int) event.getY());
                         System.out.println("pixel " + String.valueOf(pixel));
@@ -275,19 +280,16 @@ public class MapActivity extends CommonBehaviourActivity<TapView,MapPresenter> {
                             case MotionEvent.ACTION_DOWN:
 
                                 if (pixel == aulamagna) {
-                                    Intent a = new Intent(MapActivity.this, TextDestinationActivity.class);
                                     a.putExtra("aula", "Aula magna");
                                     a.putExtra("quotap", "150");
                                     startActivity(a);
                                 }
                                 if (pixel == dacs) {
-                                    Intent a = new Intent(MapActivity.this, TextDestinationActivity.class);
                                     a.putExtra("aula", "DACS");
                                     a.putExtra("quotap", "150");
                                     startActivity(a);
                                 }
                                 if (pixel == g1) {
-                                    Intent a = new Intent(MapActivity.this, TextDestinationActivity.class);
                                     a.putExtra("aula", "G1");
                                     a.putExtra("quotap", "150");
                                     startActivity(a);
@@ -303,7 +305,6 @@ public class MapActivity extends CommonBehaviourActivity<TapView,MapPresenter> {
                                         startActivity(a);
                                     }*/
                                 if (pixel == salalettura) {
-                                    Intent a = new Intent(MapActivity.this, TextDestinationActivity.class);
                                     a.putExtra("aula", "Sala lettura");
                                     a.putExtra("quotap", "150");
                                     startActivity(a);
@@ -315,32 +316,27 @@ public class MapActivity extends CommonBehaviourActivity<TapView,MapPresenter> {
                                     startActivity(a);
                                 }*/
                                 if (pixel == atelierinformatica) {
-                                    Intent a = new Intent(MapActivity.this, TextDestinationActivity.class);
                                     a.putExtra("aula", "Atelier informatica");
                                     a.putExtra("quotap", "150");
                                     startActivity(a);
                                 }
 
                                 if (pixel == csal) {
-                                    Intent a = new Intent(MapActivity.this, TextDestinationActivity.class);
                                     a.putExtra("aula", "CSAL");
                                     a.putExtra("quotap", "150");
                                     startActivity(a);
                                 }
                                 if (pixel == biblioteca) {
-                                    Intent a = new Intent(MapActivity.this, TextDestinationActivity.class);
                                     a.putExtra("aula", "Biblioteca");
                                     a.putExtra("quotap", "150");
                                     startActivity(a);
                                 }
                                 if (pixel == dipbiochimica) {
-                                    Intent a = new Intent(MapActivity.this, TextDestinationActivity.class);
                                     a.putExtra("aula", "Dipartimento biochimica");
                                     a.putExtra("quotap", "150");
                                     startActivity(a);
                                 }
                                 if (pixel == dippatologia) {
-                                    Intent a = new Intent(MapActivity.this, TextDestinationActivity.class);
                                     a.putExtra("aula", "Dipartimento patologia");
                                     a.putExtra("quota", "150");
                                     startActivity(a);
@@ -362,17 +358,19 @@ public class MapActivity extends CommonBehaviourActivity<TapView,MapPresenter> {
 
         }
         if (quota.equals("155")) {
+            /*
             final ImageView imgView = (ImageView) findViewById(R.id.image);
             imgView.setImageResource(getIntent().getIntExtra("id", R.id.image));
             imgView.setDrawingCacheEnabled(true);
             imgView.buildDrawingCache(true);
+            */
 
-            imgView.setOnTouchListener(new View.OnTouchListener() {
+            floorImage.setOnTouchListener(new View.OnTouchListener() {
 
                 public boolean onTouch(View v, MotionEvent event) {
 
                     if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                        bitmap = imgView.getDrawingCache();
+                        bitmap = floorImage.getDrawingCache();
                         int pixel = bitmap.getPixel((int) event.getX(), (int) event.getY());
 
                         System.out.println("pixel " + String.valueOf(pixel));
@@ -384,37 +382,31 @@ public class MapActivity extends CommonBehaviourActivity<TapView,MapPresenter> {
                             case MotionEvent.ACTION_DOWN:
 
                                 if (pixel == dacs) {
-                                    Intent a = new Intent(MapActivity.this, TextDestinationActivity.class);
                                     a.putExtra("aula", "DACS");
                                     a.putExtra("quotap", "155");
                                     startActivity(a);
                                 }
                                 if (pixel == dardus) {
-                                    Intent a = new Intent(MapActivity.this, TextDestinationActivity.class);
                                     a.putExtra("aula", "DARDUS");
                                     a.putExtra("quotap", "155");
                                     startActivity(a);
                                 }
                                 if (pixel == isac) {
-                                    Intent a = new Intent(MapActivity.this, TextDestinationActivity.class);
                                     a.putExtra("aula", "ISAC");
                                     a.putExtra("quotap", "155");
                                     startActivity(a);
                                 }
                                 if (pixel == bar) {
-                                    Intent a = new Intent(MapActivity.this, TextDestinationActivity.class);
                                     a.putExtra("aula", "Bar");
                                     a.putExtra("quotap", "155");
                                     startActivity(a);
                                 }
                                 if (pixel == banca) {
-                                    Intent a = new Intent(MapActivity.this, TextDestinationActivity.class);
                                     a.putExtra("aula", "Banca");
                                     a.putExtra("quotap", "155");
                                     startActivity(a);
                                 }
                                 if (pixel == serfotocopie) {
-                                    Intent a = new Intent(MapActivity.this, TextDestinationActivity.class);
                                     a.putExtra("aula", "Servizio fotocopie");
                                     a.putExtra("quotap", "155");
                                     startActivity(a);
@@ -425,49 +417,42 @@ public class MapActivity extends CommonBehaviourActivity<TapView,MapPresenter> {
                                         startActivity(a);
                                     }*/
                                 if (pixel == cesmi) {
-                                    Intent a = new Intent(MapActivity.this, TextDestinationActivity.class);
                                     a.putExtra("aula", "CeSMI");
                                     a.putExtra("quotap", "155");
                                     startActivity(a);
                                 }
                                 if (pixel == fimet) {
-                                    Intent a = new Intent(MapActivity.this, TextDestinationActivity.class);
                                     a.putExtra("aula", "FIMeT");
                                     a.putExtra("quotap", "155");
                                     startActivity(a);
                                 }
                                 if (pixel == salalettura) {
-                                    Intent a = new Intent(MapActivity.this, TextDestinationActivity.class);
                                     a.putExtra("aula", "Sala lettura");
                                     a.putExtra("quotap", "155");
                                     startActivity(a);
                                 }
                                 if (pixel == at1) {
-                                    Intent a = new Intent(MapActivity.this, TextDestinationActivity.class);
                                     a.putExtra("aula", "AT1");
                                     a.putExtra("quotap", "155");
                                     startActivity(a);
                                 }
                                 if (pixel == dipscmat) {
-                                    Intent a = new Intent(MapActivity.this, TextDestinationActivity.class);
                                     a.putExtra("aula", "Dipartimento scienze matematiche");
                                     a.putExtra("quotap", "155");
                                     startActivity(a);
                                 }
                                 if (pixel == dipmeccanica) {
-                                    Intent a = new Intent(MapActivity.this, TextDestinationActivity.class);
                                     a.putExtra("aula", "Dipartimento meccanica");
                                     a.putExtra("quotap", "155");
                                     startActivity(a);
                                 }
                                 if (pixel == dipbiomed) {
-                                    Intent a = new Intent(MapActivity.this, TextDestinationActivity.class);
                                     a.putExtra("aula", "Dipartimento scienze biomediche");
                                     a.putExtra("quotap", "155");
                                     startActivity(a);
                                 }
                                 if (pixel == q155d1) {
-                                    Intent a = new Intent(MapActivity.this, TextDestinationActivity.class);
+
                                     a.putExtra("aula", "155/d1");
                                     a.putExtra("quotap", "155");
                                     startActivity(a);
@@ -485,6 +470,8 @@ public class MapActivity extends CommonBehaviourActivity<TapView,MapPresenter> {
 
         }
     }
+
+
 
     private Boolean getEmergencyState(){
         Boolean emergencyState = getIntent().getBooleanExtra("emergencyState",true);

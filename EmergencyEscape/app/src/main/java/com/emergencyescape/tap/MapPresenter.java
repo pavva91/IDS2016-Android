@@ -26,13 +26,13 @@ public class MapPresenter extends CommonBehaviourPresenter<TapView> {
 
     public Drawable getFloorImage(String floor){ // TODO: Andare a prendere immagini precedentemente caricate
         Drawable drawable = MyApplication.context.getResources().getDrawable(R.drawable.q145);
-        if(floor.equalsIgnoreCase("Quota 145")) {
+        if(floor.equalsIgnoreCase("145")) {
             drawable = MyApplication.context.getResources().getDrawable(R.drawable.q145);
 
-        }else if(floor.equalsIgnoreCase("Quota 150")) {
+        }else if(floor.equalsIgnoreCase("150")) {
             drawable = MyApplication.context.getResources().getDrawable(R.drawable.q150);
 
-        }else if(floor.equalsIgnoreCase("Quota 155")) {
+        }else if(floor.equalsIgnoreCase("155")) {
             drawable = MyApplication.context.getResources().getDrawable(R.drawable.q155);
 
         }
