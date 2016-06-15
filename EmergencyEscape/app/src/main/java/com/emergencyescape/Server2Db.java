@@ -145,7 +145,7 @@ public class Server2Db {
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.e(LOG, e.toString());
+                        Log.e(LOG, "Node: " + e.toString());
                     }
 
                     @Override
@@ -309,7 +309,7 @@ public class Server2Db {
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.e(LOG, e.toString());
+                        Log.e(LOG, "Image: " + e.toString());
                     }
 
                     @Override

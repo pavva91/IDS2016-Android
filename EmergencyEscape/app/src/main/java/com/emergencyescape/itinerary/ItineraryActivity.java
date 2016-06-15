@@ -69,13 +69,13 @@ public class ItineraryActivity extends CommonBehaviourActivity<ItineraryView,Iti
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        /*
+/*
         if(getEmergencyState()){
             showShortestPathEmergency();
         }else{
             showShortestPathNoEmergency();
         }
-        */
+*/
 
         setPaintStyle(Color.BLUE);
         floorBitmap = new FloorBitmap(getResources(),getFloorBitmap(),getFloorPath(getShortestPath()),getPaintStyle()); // ,getFloorPath(getShortestPath()),getPaintStyle()

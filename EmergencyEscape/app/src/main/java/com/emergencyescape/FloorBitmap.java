@@ -65,6 +65,6 @@ public class FloorBitmap extends BitmapDrawable {
     public void draw(Canvas canvas) {
         floorImage = getBitmap();
         canvas.drawBitmap(floorImage,0,0,drawPaint);
-        canvas.drawPath(createCustomPath(), drawPaint);
+        canvas.drawPath(path, drawPaint);
     }
 }

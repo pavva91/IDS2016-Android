@@ -77,6 +77,7 @@ public class Db2Dijkstra {
             cost = cost * 100; // Perchè Graph.Edge lavora su valori interi di costo, evito approssimazione
             Graph.Edge edgeDijkstra = new Graph.Edge(cost.intValue(),getVertex(edge.getDepartureToOne().getCode()),getVertex(edge.getDestinationToOne().getCode()));
             edgeDijkstraList.add(edgeDijkstra);
+
         }
 
     }
