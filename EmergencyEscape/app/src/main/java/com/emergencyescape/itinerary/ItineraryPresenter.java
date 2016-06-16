@@ -25,8 +25,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * com.emergencyescape.qr
- * QrPresenter
+ * com.emergencyescape.itinerary
+ * ItineraryPresenter
  */
 public class ItineraryPresenter extends CommonBehaviourPresenter<ItineraryView> implements ItineraryPresenterInterface {
 
@@ -118,6 +118,11 @@ public class ItineraryPresenter extends CommonBehaviourPresenter<ItineraryView> 
         return shortestPath;
     }
 
+    /**
+     * Trasformo il Path ritornato da Dijkstra nel Path grafico che andrà a stampare in FloorBitmap
+     * @param shortestPath risultato alggoritmo Dijkstra
+     * @return graphics.Path
+     */
     @Override
     public Path getScaledPath(Graph.CostPathPair shortestPath){
         FloorPathHelper pathHelper = new FloorPathHelper();
@@ -126,19 +131,15 @@ public class ItineraryPresenter extends CommonBehaviourPresenter<ItineraryView> 
         List<Coordinate2D> floorPathCoordinates = new ArrayList<>(); // path del piano di departure
         Path pathToPrint = new Path(); // Path da mandare in stampa
         List<Coordinate2D> pathPrintCoordinates;
-
-
         com.emergencyescape.greendao.Node departureNode = getDeparture();
         Integer quoteInteger = departureNode.getQuote();
 
-        for(Coordinate2D singleNodeCoordinates : pathCoordinates){ // TODO: Verificare funzionalità
+        for(Coordinate2D singleNodeCoordinates : pathCoordinates){
             Integer quoteNode = singleNodeCoordinates.getQuote();
             if(quoteNode.equals(quoteInteger)){
                 floorPathCoordinates.add(singleNodeCoordinates);
             }
         }
-
-         // coordinate path da stampare
 
         if(quoteInteger==145){
             pathPrintCoordinates = pathHelper.scale145Path(floorPathCoordinates); // ok
@@ -151,41 +152,43 @@ public class ItineraryPresenter extends CommonBehaviourPresenter<ItineraryView> 
                     pathToPrint.lineTo(DeviceDimensionsHelper.convertDpToPixel(node.getX(), context), DeviceDimensionsHelper.convertDpToPixel(node.getY(), context)); // COLLEGO PUNTI PATH
                 }
             }
-            return pathToPrint; // sembra funzionare
+            return pathToPrint;
 
         } else if(quoteInteger==150){
-            Path customPath = new Path();
-            customPath.moveTo(160,150); // INIZIO PATH
-            customPath.lineTo(200,300);
-            customPath.lineTo(500,300);
-            customPath.lineTo(100,400);
-            customPath.lineTo(250,300);
-            customPath.lineTo(100,120);
-            customPath.lineTo(200,300);
-            customPath.lineTo(500,300);
-            customPath.lineTo(100,400);
-            customPath.lineTo(200,300);
-            customPath.lineTo(500,300);
-            customPath.lineTo(100,400);
-            return customPath;
+            pathPrintCoordinates = pathHelper.scale150Path(floorPathCoordinates); // ok
+            boolean firstNode = true;
+            for(Coordinate2D node:pathPrintCoordinates) { // Costruisco il Path passandogli le coordinate
+                if(firstNode) {
+                    pathToPrint.moveTo(DeviceDimensionsHelper.convertDpToPixel(node.getX(), context), DeviceDimensionsHelper.convertDpToPixel(node.getY(), context)); // INIZIO PATH
+                    firstNode = false;
+                }else {
+                    pathToPrint.lineTo(DeviceDimensionsHelper.convertDpToPixel(node.getX(), context), DeviceDimensionsHelper.convertDpToPixel(node.getY(), context)); // COLLEGO PUNTI PATH
+                }
+            }
+            return pathToPrint;
 
         } else if(quoteInteger==155){
-            Path customPath = new Path();
-            customPath.moveTo(160,150); // INIZIO PATH
-            customPath.lineTo(200,300);
-            customPath.lineTo(500,300);
-            customPath.lineTo(100,400);
-            customPath.lineTo(250,300);
-            customPath.lineTo(100,120);
-            customPath.lineTo(100,400);
-            customPath.lineTo(250,300);
-            customPath.lineTo(100,120);
-            return customPath;
+            pathPrintCoordinates = pathHelper.scale155Path(floorPathCoordinates); // ok
+            boolean firstNode = true;
+            for(Coordinate2D node:pathPrintCoordinates) { // Costruisco il Path passandogli le coordinate
+                if(firstNode) {
+                    pathToPrint.moveTo(DeviceDimensionsHelper.convertDpToPixel(node.getX(), context), DeviceDimensionsHelper.convertDpToPixel(node.getY(), context)); // INIZIO PATH
+                    firstNode = false;
+                }else {
+                    pathToPrint.lineTo(DeviceDimensionsHelper.convertDpToPixel(node.getX(), context), DeviceDimensionsHelper.convertDpToPixel(node.getY(), context)); // COLLEGO PUNTI PATH
+                }
+            }
+            return pathToPrint;
 
         }
         return new Path();
     }
 
+    /**
+     * Trasforma il path Dijkstra in ArrayList<Coordinate2D>
+     * @param path Path risultato dell'algoritmo di Dijkstra
+     * @return List<Coordinate2D>coordinate in metri ordinate del path</Coordinate2D>
+     */
     public List<Coordinate2D> getShortestPathCoordinates(Graph.CostPathPair path){ // Ora funziona ma devo prendere le coordinate da qua dentro
         // TODO: Trasformare il path Dijkstra in Path greenDao - da fare
 
@@ -196,9 +199,7 @@ public class ItineraryPresenter extends CommonBehaviourPresenter<ItineraryView> 
         String destinationDaoValue;
 
         List<Graph.Edge> edgeDijkstraPath = path.getPath(); // lista di lati del path
-        List<Edge> allEdgeValues = edgeDao.loadAll(); // tutti i lati nel DB
-        List<Edge> edgeDaoPath = new ArrayList<>(); // andrà a contenere il sottinsieme dei lati nel DB del path
-
+        List<Edge> allEdgeValues = edgeDao.loadAll(); // tutti i lati nel DB (GRAFO ORIENTATO)
         List<Coordinate2D> pathCoordinates = new ArrayList<>();
         boolean firstNode = true;
 
@@ -220,7 +221,8 @@ public class ItineraryPresenter extends CommonBehaviourPresenter<ItineraryView> 
 
                 if ((depDaoValue == depDijkstraValue && destinationDaoValue == destinationDijkstraValue) || (depDaoValue == destinationDijkstraValue && destinationDaoValue == depDijkstraValue ) ){ //  && (destinationDaoValue == destinationDijkstraValue)
 
-                        edgeDaoPath.add(edgeDao); /* TODO: Non dimenticare quanto sei stato coglione:
+                        //edgeDaoPath.add(edgeDao);
+                        /* TODO: Non dimenticare quanto sei stato coglione:
                                                     Non funziona bene
                                                     Salta valori, forse ciclo troppo grosso e va in overflow
                                                     trovare modo per non andare in overflow, per il resto sembra funzionare
@@ -252,35 +254,15 @@ public class ItineraryPresenter extends CommonBehaviourPresenter<ItineraryView> 
                         singleNode.setY((float) edgeDao.getDestinationToOne().getY());
                         singleNode.setQuote(edgeDao.getDestinationToOne().getQuote());
                     } else{
-                        singleNode.setX((float) edgeDao.getDepartureToOne().getY());
-                        singleNode.setY((float) edgeDao.getDepartureToOne().getX());
+                        singleNode.setX((float) edgeDao.getDepartureToOne().getX());
+                        singleNode.setY((float) edgeDao.getDepartureToOne().getY());
                         singleNode.setQuote(edgeDao.getDepartureToOne().getQuote());
                     }
                     pathCoordinates.add(singleNode);
                 }
             }
         }
-
-        return pathCoordinates; // TODO: Verificare funzionalità, sembra funzionare 23:45 15/6/2016
-    }
-
-    public List<com.emergencyescape.greendao.Node> CostPathPair2ListGreenDaoNode(Graph.CostPathPair path){
-
-        List<com.emergencyescape.greendao.Node> nodeList = new ArrayList<>();
-        List<Graph.Edge> edgeList = path.getPath(); // lista di lati del path
-        List<Edge> allDbValues = edgeDao.loadAll();
-        List<Edge> edgeDaoPath = new ArrayList<>();
-        for(Edge edgeDao : allDbValues) {
-            for (Graph.Edge edge : edgeList) {
-                Graph.Vertex departureVertex = edge.getFromVertex();
-                Graph.Vertex destinationVertex = edge.getToVertex(); // CODE (String)
-                com.emergencyescape.greendao.Node departureNode = edgeDao.getDepartureToOne();
-                if (departureNode.getCode() == departureVertex.getValue().toString()){
-                    edgeDaoPath.add(edgeDao);
-                }
-            }
-        }
-        return nodeList;
+        return pathCoordinates;
     }
 }
 

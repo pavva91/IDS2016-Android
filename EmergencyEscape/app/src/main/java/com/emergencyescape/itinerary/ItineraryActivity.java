@@ -77,7 +77,7 @@ public class ItineraryActivity extends CommonBehaviourActivity<ItineraryView,Iti
         }
 */
 
-        setPaintStyle(Color.BLUE);
+        setPaintStyle(Color.RED);
         floorBitmap = new FloorBitmap(getResources(),getFloorBitmap(),getFloorPath(getShortestPath()),getPaintStyle()); // ,getFloorPath(getShortestPath()),getPaintStyle()
 
         pathImageView.setImageDrawable(floorBitmap);
@@ -172,19 +172,19 @@ public class ItineraryActivity extends CommonBehaviourActivity<ItineraryView,Iti
         return bitmap;
     }
 
-    protected Path getFloorPath(Graph.CostPathPair shortestPath){ // TODO: Cambiare in coordinate mappa
+    protected Path getFloorPath(Graph.CostPathPair shortestPath){
         Path floorPath = presenter.getScaledPath(shortestPath);
-
         return floorPath;
     }
 
     protected void setPaintStyle(int paintColor){
+        // TODO: Sarebbe bello permettere all'utente di modificare lo stile del path da Setting
         Paint drawPaint = new Paint();
 
 
         drawPaint.setColor(paintColor);
         drawPaint.setAntiAlias(true);
-        drawPaint.setStrokeWidth(5);
+        drawPaint.setStrokeWidth(10);
         drawPaint.setStyle(Paint.Style.STROKE);
         drawPaint.setStrokeJoin(Paint.Join.ROUND);
         drawPaint.setStrokeCap(Paint.Cap.ROUND);
