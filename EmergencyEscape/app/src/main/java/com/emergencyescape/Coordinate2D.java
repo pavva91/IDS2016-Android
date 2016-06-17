@@ -5,7 +5,8 @@ package com.emergencyescape;
 
 /**
  * com.emergencyescape
- * Coordinate2D
+ * Coordinate2D - rappresentazione coordinate path
+ * (Risolve problema mapping Dijkstra path - greenDAO path)
  */
 public class Coordinate2D {
     private Float x;

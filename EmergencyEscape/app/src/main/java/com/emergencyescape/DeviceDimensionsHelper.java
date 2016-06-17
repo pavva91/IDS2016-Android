@@ -12,6 +12,7 @@ import android.util.TypedValue;
  * com.emergencyescape
  * DeviceDimensionsHelper
  * Class to get display measures and write relative pixel measure
+ * (Permette corretto utilizzo unità di misura "responsive"(dp))
  */
 public class DeviceDimensionsHelper {
     // DeviceDimensionsHelper.getDisplayWidth(context) => (display width in pixels)
