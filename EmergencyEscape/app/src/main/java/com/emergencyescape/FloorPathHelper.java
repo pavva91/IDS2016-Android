@@ -113,6 +113,13 @@ public class FloorPathHelper {
         return pathScaledCoordinates;
     }
 
+    /**
+     *
+     * @param xx - espresso rispetto 818 px
+     * @param yy - espresso rispetto 477 px
+     * @param floor
+     * @return
+     */
     public Coordinate2D getMetersCoordinates(Float xx, Float yy, String floor){
         Coordinate2D meterCoordinates = new Coordinate2D();
         meterCoordinates.setX(xx);

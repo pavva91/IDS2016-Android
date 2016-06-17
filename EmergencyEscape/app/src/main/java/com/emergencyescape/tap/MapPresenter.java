@@ -71,17 +71,16 @@ public class MapPresenter extends CommonBehaviourPresenter<TapView> {
         Coordinate2D scaledTap = floorPathHelper.getMetersCoordinates(xDp,yDp,floor);
 
         nodeList = nodeDao.loadAll();
-        for (Node node : nodeList){
+        for (Node node : nodeList){ // Prendo solo i nodi del piano
             Integer nodeQuote = node.getQuote();
             Integer floorQuote = Integer.parseInt(floor);
-            boolean condition = nodeQuote.equals(floorQuote);
-            if (condition){
+            if (nodeQuote.equals(floorQuote)){
                 floorNodeList.add(node);
             }
         }
         // floorNodeList = nodeDao.queryBuilder().where(NodeDao.Properties.Quote.eq(Integer.getInteger(floor))).list(); // Errore SQL
         Log.v("floorNodeList", Integer.toString(floorNodeList.size()));
-        for (Node node : floorNodeList){ // Trasformo Node Dao in array di coordinate
+        for (Node node : floorNodeList){ // Trasformo array Node Dao in array di Coordinate2D
             coordinate2D.setX((float)node.getX());
             coordinate2D.setY((float)node.getY());
             coordinate2D.setQuote(node.getQuote());
@@ -98,4 +97,6 @@ public class MapPresenter extends CommonBehaviourPresenter<TapView> {
         }
         return nodeTapped;
     }
+
+
 }

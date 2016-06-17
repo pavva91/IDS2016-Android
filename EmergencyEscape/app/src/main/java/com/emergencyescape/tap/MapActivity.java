@@ -1,13 +1,17 @@
 package com.emergencyescape.tap;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
+import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -109,22 +113,54 @@ public class MapActivity extends CommonBehaviourActivity<TapView,MapPresenter> {
     @OnTouch(R.id.floorImage)
     public boolean floorImageClick(MotionEvent event){
 
+        Drawable drawable = floorImage.getDrawable();
         floorImage.buildDrawingCache();
-        bitmap = floorImage.getDrawingCache();
+        Bitmap bmap = floorImage.getDrawingCache();
+        Integer imageViewWidthpx = bmap.getScaledWidth(getResources().getDisplayMetrics().densityDpi);
+        Integer imageViewHeightpx = bmap.getScaledHeight(getResources().getDisplayMetrics().densityDpi);
+        Float imageWidthpx;
+        Float imageHeightpx;
 
-        Float tappedXpx = event.getX();
-        Float tappedYpx = event.getY();
+        Integer bitmapWidth = drawable.getIntrinsicWidth(); //this is the bitmap's width
+        Integer bitmapHeight = drawable.getIntrinsicHeight(); //this is the bitmap's height
 
-        Float tappedXdp = DeviceDimensionsHelper.convertPixelsToDp(tappedXpx,this);
-        Float tappedYdp = DeviceDimensionsHelper.convertPixelsToDp(tappedYpx,this);
+        Float originalBitmapWidth = DeviceDimensionsHelper.convertPixelsToDp(bitmapWidth,this);
+        Float originalBitmapHeight = DeviceDimensionsHelper.convertPixelsToDp(bitmapHeight,this);
+        Float imageRatio = originalBitmapWidth/originalBitmapHeight; // W/H
 
-        Log.v(LOG,"x pixel: " + tappedXpx);
-        Log.v(LOG,"y pixel: " + tappedYpx);
-        Log.v(LOG,"x dp: " + tappedXdp);
-        Log.v(LOG,"y dp: " + tappedYdp);
+        Float tappedImageViewXpx = event.getX();
+        Float tappedImageViewYpx = event.getY();
 
+        Log.v("X ImageView px: ",tappedImageViewXpx.toString());
+        Log.v("Y ImageView px: ",tappedImageViewYpx.toString());
+
+        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){ // Calcolo le grandezze in pixel dell'immagine stampata a schermo
+            imageWidthpx = (float)imageViewWidthpx;
+            imageHeightpx = (float)imageViewWidthpx / imageRatio;
+        }else if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
+            imageWidthpx = (float)imageViewHeightpx * imageRatio;
+            imageHeightpx = (float)imageViewHeightpx;
+        }else{
+            imageWidthpx = (float)imageViewWidthpx;
+            imageHeightpx = (float)imageViewWidthpx / imageRatio;
+        }
+
+        // TODO: Da Questi valori posso calcolare padding ImageView - vera immagine
+        // TODO: il padding sarà poi l'offset da togliere ai getX e getY
+        // TODO: tolti i padding ho le coordinate in px schermo del tap sull'immagine
+        // TODO: trasformo ora queste coordinate nei pixel rispetto l'immagine originale (818x477)
+
+        Log.v("screen image width px", Float.toString(imageWidthpx));
+        Log.v("screen Image height px", Float.toString(imageHeightpx));
+
+        Log.v("scaled ImageView H px: ", Float.toString(bmap.getScaledHeight(getResources().getDisplayMetrics().densityDpi)));
+        Log.v("scaled ImageView W px: ", Float.toString(bmap.getScaledWidth(getResources().getDisplayMetrics().densityDpi)));
+
+
+        /*
         Node nodeTapped = presenter.getNodeTapped(tappedXdp,tappedYdp,getIntent().getExtras().getString("floor"));
         presenter.setUserDeparture(nodeTapped);
+
 
         final Intent intentToStart;
         if (this.getEmergencyState()) {
@@ -133,6 +169,7 @@ public class MapActivity extends CommonBehaviourActivity<TapView,MapPresenter> {
             intentToStart = new Intent(MapActivity.this,TextDestinationActivity.class);
         }
         startActivity(intentToStart);
+        */
         return false;
     }
 
