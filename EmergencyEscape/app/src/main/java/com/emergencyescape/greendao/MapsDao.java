@@ -23,9 +23,9 @@ public class MapsDao extends AbstractDao<Maps, Long> {
      * Can be used for QueryBuilder and for referencing column names.
     */
     public static class Properties {
-        public final static Property Id = new Property(0, long.class, "id", true, "_id");
+        public final static Property Id = new Property(0, Long.class, "id", true, "_id");
         public final static Property Name = new Property(1, String.class, "name", false, "NAME");
-        public final static Property LastUpdate = new Property(2, java.util.Date.class, "lastUpdate", false, "LAST_UPDATE");
+        public final static Property LastUpdate = new Property(2, String.class, "lastUpdate", false, "LAST_UPDATE");
     };
 
     private DaoSession daoSession;
@@ -44,9 +44,9 @@ public class MapsDao extends AbstractDao<Maps, Long> {
     public static void createTable(SQLiteDatabase db, boolean ifNotExists) {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"MAPS\" (" + //
-                "\"_id\" INTEGER PRIMARY KEY NOT NULL ," + // 0: id
+                "\"_id\" INTEGER PRIMARY KEY ," + // 0: id
                 "\"NAME\" TEXT NOT NULL ," + // 1: name
-                "\"LAST_UPDATE\" INTEGER);"); // 2: lastUpdate
+                "\"LAST_UPDATE\" TEXT);"); // 2: lastUpdate
     }
 
     /** Drops the underlying database table. */
@@ -59,12 +59,16 @@ public class MapsDao extends AbstractDao<Maps, Long> {
     @Override
     protected void bindValues(SQLiteStatement stmt, Maps entity) {
         stmt.clearBindings();
-        stmt.bindLong(1, entity.getId());
+ 
+        Long id = entity.getId();
+        if (id != null) {
+            stmt.bindLong(1, id);
+        }
         stmt.bindString(2, entity.getName());
  
-        java.util.Date lastUpdate = entity.getLastUpdate();
+        String lastUpdate = entity.getLastUpdate();
         if (lastUpdate != null) {
-            stmt.bindLong(3, lastUpdate.getTime());
+            stmt.bindString(3, lastUpdate);
         }
     }
 
@@ -77,16 +81,16 @@ public class MapsDao extends AbstractDao<Maps, Long> {
     /** @inheritdoc */
     @Override
     public Long readKey(Cursor cursor, int offset) {
-        return cursor.getLong(offset + 0);
+        return cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0);
     }    
 
     /** @inheritdoc */
     @Override
     public Maps readEntity(Cursor cursor, int offset) {
         Maps entity = new Maps( //
-            cursor.getLong(offset + 0), // id
+            cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
             cursor.getString(offset + 1), // name
-            cursor.isNull(offset + 2) ? null : new java.util.Date(cursor.getLong(offset + 2)) // lastUpdate
+            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2) // lastUpdate
         );
         return entity;
     }
@@ -94,9 +98,9 @@ public class MapsDao extends AbstractDao<Maps, Long> {
     /** @inheritdoc */
     @Override
     public void readEntity(Cursor cursor, Maps entity, int offset) {
-        entity.setId(cursor.getLong(offset + 0));
+        entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
         entity.setName(cursor.getString(offset + 1));
-        entity.setLastUpdate(cursor.isNull(offset + 2) ? null : new java.util.Date(cursor.getLong(offset + 2)));
+        entity.setLastUpdate(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
      }
     
     /** @inheritdoc */

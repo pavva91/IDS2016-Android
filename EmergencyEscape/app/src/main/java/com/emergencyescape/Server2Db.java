@@ -59,7 +59,10 @@ public class Server2Db {
     private DBHelper dbHelper = MyApplication.getInstance().getDbHelper();
     private SQLiteDatabase db = null;
 
-    public void downloadFromUrl(String DownloadUrl, String fileName) {
+    private String mapName ="univpm_mod"; //TODO: Collegare col model
+    private String token = "12m2t7oc43godndv767tkj9hue";
+
+    public void downloadFromUrl(String DownloadUrl, String fileName) { // TODO: Sistemare query DB
 
         try {
             File root = Environment.getExternalStorageDirectory();
@@ -73,17 +76,17 @@ public class Server2Db {
             File file = new File(dir, fileName);
 
             long startTime = System.currentTimeMillis();
-            Log.d("DownloadManager", "download begining");
-            Log.d("DownloadManager", "download url:" + url);
-            Log.d("DownloadManager", "downloaded file name:" + fileName);
+            Log.v("DownloadManager", "download begining");
+            Log.v("DownloadManager", "download url:" + url);
+            Log.v("DownloadManager", "downloaded file name:" + fileName);
 
            /* Open a connection to that URL. */
-            URLConnection ucon = url.openConnection();
+            URLConnection ucon = url.openConnection(); // Ok, fin qui funziona
 
            /*
             * Define InputStreams to read from the URLConnection.
             */
-            InputStream is = ucon.getInputStream();
+            InputStream is = ucon.getInputStream(); // TODO: Qui non funziona, sistemare
             BufferedInputStream bis = new BufferedInputStream(is);
 
            /*
@@ -112,7 +115,7 @@ public class Server2Db {
 
     public void downloadFloorImages(){
         List<com.emergencyescape.greendao.Image> imageList;
-        imageList = imageDao.loadAll();
+        imageList = imageDao.loadAll(); // loadAll() = 0;
 
         for(com.emergencyescape.greendao.Image imageSingle : imageList){
             Integer quote = imageSingle.getQuote();
@@ -125,12 +128,6 @@ public class Server2Db {
         setDb();
         NodeDao.dropTable(db,true);
         NodeDao.createTable(db,false);
-
-
-        String mapName ="univpm"; //TODO: Collegare col model
-        String token = "12m2t7oc43godndv767tkj9hue";
-
-
 
         Observable<MapResponse> mapResponseObservable = service.getAPI().getMap(mapName,token);
         Observable<Node> nodeObservable= service.getNodes(mapResponseObservable); // Deserializzo la risposta
@@ -152,6 +149,10 @@ public class Server2Db {
                     public void onNext(Node response) {
                         Log.v("onNextIterationNodeId",response.getId().toString());
 
+                        List<com.emergencyescape.greendao.Maps> mapsList = mapsDao.queryBuilder()
+                                .where(MapsDao.Properties.Name.eq(response.getMapName()))
+                                .list();
+
                         // Salvo i nodi presi dal server nel DB
                         com.emergencyescape.greendao.Node node = new com.emergencyescape.greendao.Node(response.getId());
                         node.setCode(response.getCode());
@@ -161,7 +162,9 @@ public class Server2Db {
                         node.setY(response.getY());
                         node.setWidth(response.getWidth());
                         node.setType(response.getType());
-                        //node.setMapId(response.getMapName()) // TODO: Sistemare questa cosa
+                        node.setMapId(mapsList
+                                .get(0)
+                                .getId()); // TODO: Sistemare questa cosa
 
                         nodeDao.insert(node);
                     }
@@ -175,8 +178,6 @@ public class Server2Db {
         EdgeDao.createTable(db,false);
 
 
-        String mapName ="univpm"; //TODO: Collegare col model
-        String token = "12m2t7oc43godndv767tkj9hue";
 
 
 
@@ -218,8 +219,6 @@ public class Server2Db {
                         edge.setNo_em_cost(response.getLength());
 
                         edgeDao.insert(edge);
-
-
                     }
                 });
     }
@@ -231,9 +230,6 @@ public class Server2Db {
         MapsDao.createTable(db,false); // Bypassa l'errore, altrimenti andrebbe ad aggiungere gli stessi campi
         // duplicando gli id, così io ogni volta cancello e ricreo la tabella
         // TODO: Sostituire con un controllo per vedere se andare a popolare la tabella
-
-        // TODO: Collegare col Model
-        String token = "12m2t7oc43godndv767tkj9hue";
 
         Observable<List<MapResponse>> mapsResponseObservable = service.getAPI().getMaps(token);
         Observable<List<MapResponse>> mapsObservable = service.getMaps(mapsResponseObservable);
@@ -257,14 +253,16 @@ public class Server2Db {
                             Log.v("onNextIteration", singleMapResponse.getName().toString());
 
                             // Salvo le mappe prese dal server nel DB
-                            com.emergencyescape.greendao.Maps maps = new com.emergencyescape.greendao.Maps();
+                            com.emergencyescape.greendao.Maps maps = new Maps();
                             maps.setName(singleMapResponse.getName());
+                            maps.setLastUpdate(singleMapResponse.getLastUpdateMap());
+
+
 
                             mapsDao.insert(maps); // TODO: Sarebbe meglio creare un vettore e inserire nel DB tutto il vettore (performance)
                         }
                     }
                 });
-
     }
 
     public void loadUser(){
@@ -278,22 +276,14 @@ public class Server2Db {
         user.setName("vale");
         user.setPassword("123");
         user.setToken("12m2t7oc43godndv767tkj9hue");
-
         userDao.insert(user);
     }
 
     public void loadImages(){
 
-
         setDb();
         ImageDao.dropTable(db,true);
         ImageDao.createTable(db,false);
-
-
-        String mapName ="univpm"; //TODO: Collegare col model
-        String token = "12m2t7oc43godndv767tkj9hue";
-
-
 
         Observable<MapResponse> mapResponseObservable = service.getAPI().getMap(mapName,token);
         Observable<Image> imageObservable= service.getImages(mapResponseObservable); // Deserializzo la risposta
@@ -310,6 +300,7 @@ public class Server2Db {
                     @Override
                     public void onError(Throwable e) {
                         Log.e(LOG, "Image: " + e.toString());
+
                     }
 
                     @Override
@@ -328,11 +319,14 @@ public class Server2Db {
                         image.setMapId(mapsList
                                 .get(0)
                                 .getId());
-
                         imageDao.insert(image);
+                        // downloadFromUrl(image.getUrl(), Integer.toString(image.getQuote()) + ".png"); //TODO: Sistemare Download
                     }
                 });
+    }
 
+    public void loadDb(){
+        // TODO: Inserire tutti i metodi che riempono le varie tabelle in un'unica server call
     }
 
     private void setDb(){

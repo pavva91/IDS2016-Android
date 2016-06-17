@@ -21,7 +21,7 @@ public class MainPresenter extends CommonBehaviourPresenter<MainView> {
         server2Db.loadUser(); // TODO: Da eliminare una volta integrato login e registrazione corretti
         server2Db.loadNodes();
         server2Db.loadEdges();
-        server2Db.loadImages();
+        server2Db.loadImages(); // se attivo downloadFloorImages() non carica imagesDao
         //server2Db.downloadFloorImages();
     }
 }

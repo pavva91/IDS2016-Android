@@ -10,10 +10,10 @@ import de.greenrobot.dao.DaoException;
  */
 public class Maps {
 
-    private long id;
+    private Long id;
     /** Not-null value. */
     private String name;
-    private java.util.Date lastUpdate;
+    private String lastUpdate;
 
     /** Used to resolve relations */
     private transient DaoSession daoSession;
@@ -27,11 +27,11 @@ public class Maps {
     public Maps() {
     }
 
-    public Maps(long id) {
+    public Maps(Long id) {
         this.id = id;
     }
 
-    public Maps(long id, String name, java.util.Date lastUpdate) {
+    public Maps(Long id, String name, String lastUpdate) {
         this.id = id;
         this.name = name;
         this.lastUpdate = lastUpdate;
@@ -43,11 +43,11 @@ public class Maps {
         myDao = daoSession != null ? daoSession.getMapsDao() : null;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -61,11 +61,11 @@ public class Maps {
         this.name = name;
     }
 
-    public java.util.Date getLastUpdate() {
+    public String getLastUpdate() {
         return lastUpdate;
     }
 
-    public void setLastUpdate(java.util.Date lastUpdate) {
+    public void setLastUpdate(String lastUpdate) {
         this.lastUpdate = lastUpdate;
     }
 

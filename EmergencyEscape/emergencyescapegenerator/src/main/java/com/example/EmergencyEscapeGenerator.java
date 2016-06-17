@@ -70,9 +70,9 @@ public class EmergencyEscapeGenerator {
         node.addIntProperty("n_people");
     }
     private static void addMaps(Entity map) {
-        map.addIdProperty().notNull().primaryKey();
+        map.addIdProperty().primaryKey();
         map.addStringProperty("name").notNull();
-        map.addDateProperty("lastUpdate");
+        map.addStringProperty("lastUpdate");
     }
     private static void addImage(Entity image) {
         image.addIdProperty().primaryKey();

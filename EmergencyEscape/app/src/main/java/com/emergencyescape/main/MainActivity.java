@@ -45,10 +45,11 @@ public class MainActivity extends CommonBehaviourActivity<MainView,MainPresenter
         if (isFirstRun)
         {
             presenter.loadServer2Db();  // Carico il DB al primo lancio dell'app
-
+/*/
             SharedPreferences.Editor editor = wmbPreference.edit();
             editor.putBoolean("FIRSTRUN", false);
             editor.commit();
+            */
         }
 
 

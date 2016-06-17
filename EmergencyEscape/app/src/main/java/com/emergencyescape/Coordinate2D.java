@@ -36,4 +36,12 @@ public class Coordinate2D {
     public Integer getQuote(){
         return quote;
     }
+
+    public Double getDistance(Float xx, Float yy){
+        Float xDifference = Math.abs(x - xx);
+        Float yDifference = Math.abs(y - yy);
+        Double euclideanDistance = Math.sqrt((xDifference*xDifference)+(yDifference*yDifference));
+
+        return euclideanDistance;
+    }
 }

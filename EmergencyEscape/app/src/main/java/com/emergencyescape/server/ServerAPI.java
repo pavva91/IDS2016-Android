@@ -15,7 +15,7 @@ import retrofit2.http.Query;
 import rx.Observable;
 
 /**
- * all the Service alls to use for the retrofit requests.
+ * all the Service calls to use for the retrofit requests.
  * Forniscono risposte JSON "grezze"
  */
 public interface ServerAPI {

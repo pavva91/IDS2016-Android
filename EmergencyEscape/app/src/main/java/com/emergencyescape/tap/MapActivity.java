@@ -5,18 +5,23 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 
+import com.emergencyescape.DeviceDimensionsHelper;
 import com.emergencyescape.R;
 import com.emergencyescape.commonbehaviour.CommonBehaviourActivity;
+import com.emergencyescape.greendao.Node;
 import com.emergencyescape.itinerary.ItineraryActivity;
 import com.emergencyescape.text.TextDestinationActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnTouch;
 
 
 public class MapActivity extends CommonBehaviourActivity<TapView,MapPresenter> {
@@ -85,7 +90,7 @@ public class MapActivity extends CommonBehaviourActivity<TapView,MapPresenter> {
         ButterKnife.bind(this);
 
         populateImageView(getIntent().getExtras().getString("floor"));
-        quote();
+        //quote();
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -100,25 +105,39 @@ public class MapActivity extends CommonBehaviourActivity<TapView,MapPresenter> {
 
 
 
-/*
+
     @OnTouch(R.id.floorImage)
     public boolean floorImageClick(MotionEvent event){
 
         floorImage.buildDrawingCache();
         bitmap = floorImage.getDrawingCache();
 
-        int pixel = bitmap.getPixel((int) event.getX(), (int) event.getY());
-        int rawPixel = bitmap.getPixel((int) event.getRawX(),(int) event.getRawY()); // bitmap measures
-        Toast.makeText(this,"pixel: " + pixel + "rawPixel: " + rawPixel,Toast.LENGTH_SHORT).show();
-        Log.v(LOG,"pixel: " + pixel);
-        Log.v(LOG,"rawPixel: "+ rawPixel);
-        Log.v(LOG,"x: " + event.getX());
-        Log.v(LOG,"x: " + event.getY());
-        Log.v(LOG,"raw x: " + event.getRawX());
-        Log.v(LOG,"raw y: " + event.getRawY());
+        Float tappedXpx = event.getX();
+        Float tappedYpx = event.getY();
+
+        Float tappedXdp = DeviceDimensionsHelper.convertPixelsToDp(tappedXpx,this);
+        Float tappedYdp = DeviceDimensionsHelper.convertPixelsToDp(tappedYpx,this);
+
+        Log.v(LOG,"x pixel: " + tappedXpx);
+        Log.v(LOG,"y pixel: " + tappedYpx);
+        Log.v(LOG,"x dp: " + tappedXdp);
+        Log.v(LOG,"y dp: " + tappedYdp);
+
+        Node nodeTapped = presenter.getNodeTapped(tappedXdp,tappedYdp,getIntent().getExtras().getString("floor"));
+        presenter.setUserDeparture(nodeTapped);
+
+        final Intent intentToStart;
+        if (this.getEmergencyState()) {
+            intentToStart = new Intent(MapActivity.this, ItineraryActivity.class);
+        }else{
+            intentToStart = new Intent(MapActivity.this,TextDestinationActivity.class);
+        }
+        startActivity(intentToStart);
         return false;
     }
-*/
+
+
+
 
 
     private void quote(){ // TODO: Spostare questa funzione secondo il pattern utilizzando il model, fanculo siamo indietro come le palle dei cani
