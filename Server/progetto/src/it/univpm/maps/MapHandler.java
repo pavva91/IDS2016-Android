@@ -210,4 +210,42 @@ public class MapHandler{
 			return Response.ok(m, MediaType.APPLICATION_JSON).build();
 		}
 	
+		
+		//metodo che permette di attivare o disattivare la modalità allarme
+		//ritorna FORBIDDEN se l'utente non ha i privilegi necessari
+		//ritorna NOT FOUND 404 se si la mappa non esiste
+		//ritorna OK se la mappa viene caricata correttamente
+		@POST
+		@Produces("application/json")
+		@Path("{mapName}/emergency/{emergency}")
+		public Response handleAlertMap(@PathParam("mapName") String mapName, @QueryParam("token")String token, @PathParam("emergency") Boolean emergency){
+			Map m=new Map();
+			try{
+				Database db = new Database();
+				Connection con = db.getConnection();
+				AccessDB access = new AccessDB();
+				
+				if(access.getUser(con, token).getUsername().equals(Config.ADMINISTRATOR_USER))
+					if(!access.searchMap(con, mapName)){
+						//errore mappa non trovata
+						return Response.status(Response.Status.NOT_FOUND).entity("ERRORE: Mappa non trovata!").build();
+					}else{
+						access.setEmergency(con, mapName, emergency);
+						access.updateMapDate(con, mapName);
+						m = access.getMapInfo(con, mapName);
+					}	
+				else
+					//errore utente non autorizzato a modificare mappe
+					return Response.status(Response.Status.FORBIDDEN).entity("ERRORE: Utente non autorizzato!").build();
+			}catch(SQLException esql){
+				//errore inserimento mappa //restituire 409
+				return Response.status(Response.Status.CONFLICT).entity(esql.getMessage()).build();
+			}catch (Exception ex){
+				System.out.println(ex);
+			}
+			return Response.ok(m, MediaType.APPLICATION_JSON).build();
+		}
+		
+		
+		
 }

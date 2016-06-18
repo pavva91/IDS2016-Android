@@ -39,7 +39,7 @@ public class AccessDB {
 	public void insertMap(Connection con, Map m) throws SQLException{
 		int numRecord;
 		//inserisco mappa
-		PreparedStatement stmt = con.prepareStatement("INSERT INTO mappe (nome) VALUES (?)");
+		PreparedStatement stmt = con.prepareStatement("INSERT INTO mappe (nome, data_aggiornamento) VALUES (?,NOW())");
 		stmt.setString(1, m.getNome());
 		numRecord = stmt.executeUpdate();
         if (numRecord == 0) {
@@ -236,12 +236,13 @@ public class AccessDB {
 			img.setUrl(rs.getString("url"));
 			m.AggiungiImmagine(img);
 		}
-		//recupero data aggiornamento mappa
+		//recupero data aggiornamento mappa e emergenza
 		stmt = con.prepareStatement("SELECT * FROM mappe WHERE nome=?");
 		stmt.setString(1, mapName);
 		rs = stmt.executeQuery();
 		if(rs.next()){
 			m.setLastUpdateMap(rs.getTimestamp("data_aggiornamento"));
+			m.setEmergency(rs.getBoolean("emergenza"));
 		}
 		return m;
 	}
@@ -413,14 +414,14 @@ public class AccessDB {
 		Double i=e.getI();
 		Double c=e.getC();
 		int numPersone=e.getNumPers();
-		stmt = con.prepareStatement("UPDATE archi SET v=?, i=?, c=?, num_persone=? ,los="+Config.DEF_LOS+", costo_emg"+Config.COST_EMG+ " WHERE partenza=? AND destinazione=?");
+		stmt = con.prepareStatement("UPDATE archi SET v=?, i=?, c=?, num_persone=? ,los="+Config.DEF_LOS+", costo_emg="+Config.COST_EMG+ " WHERE partenza=? AND destinazione=?");
 		stmt.setDouble(1, v);
 		stmt.setDouble(2, i);
 		stmt.setDouble(3, c);
 		stmt.setInt(4, numPersone);
 		stmt.setInt(5, edgeFrom);
 		stmt.setInt(6, edgeTo);
-		stmt.executeUpdate();	
+		stmt.executeUpdate();
 		stmt.close();
 		e=getEdge(con, edgeFrom, edgeTo);
 		return e;
@@ -456,7 +457,7 @@ public class AccessDB {
 	
 	//metodo che recupera un arco a partire dai nodi di partenza e destinazione
 	public Edge getEdge (Connection con, int from, int to) throws SQLException {
-		Edge a = new Edge();
+		Edge e = new Edge();
 		PreparedStatement stmt;
 		//stmt = con.prepareStatement("SELECT * FROM archi, nodi WHERE partenza=? AND destinazione=? AND (archi.partenza=nodi.id OR archi.destinazione=nodi.id)");
 		stmt = con.prepareStatement("SELECT n1.codice AS partenza, n2.codice AS destinazione, a.v, a.i, a.c,"
@@ -466,20 +467,20 @@ public class AccessDB {
 		stmt.setInt(2, to);
 		ResultSet rs = stmt.executeQuery();
 		if(rs.next()){
-			a.setFrom(rs.getString("partenza"));
-			a.setTo(rs.getString("destinazione"));
-			a.setLength(rs.getDouble("lunghezza"));
-			a.setV(rs.getDouble("v"));
-			a.setI(rs.getDouble("i"));
-			a.setC(rs.getDouble("c"));
-			a.setLos(rs.getDouble("los"));
-			a.setArea(rs.getDouble("superficie"));
-			a.setNumPers(rs.getInt("num_persone"));
-			a.setEmgCost(rs.getDouble("costo_img"));
+			e.setFrom(rs.getString("partenza"));
+			e.setTo(rs.getString("destinazione"));
+			e.setLength(rs.getDouble("lunghezza"));
+			e.setV(rs.getDouble("v"));
+			e.setI(rs.getDouble("i"));
+			e.setC(rs.getDouble("c"));
+			e.setLos(rs.getDouble("los"));
+			e.setArea(rs.getDouble("superficie"));
+			e.setNumPers(rs.getInt("num_persone"));
+			e.setEmgCost(rs.getDouble("costo_emg"));
 		}else{
 			new SQLException("ERRORE: arco non trovato!");
 		}
-		return a;
+		return e;
 	}
 	
 	//metodo che aggiorna settando a NOW la data di aggiornamento mappa
@@ -502,6 +503,7 @@ public class AccessDB {
 		if(rs.next()){
 			m.setNome(mapName);
 			m.setLastUpdateMap(rs.getTimestamp("data_aggiornamento"));
+			m.setEmergency(rs.getBoolean("emergenza"));
 		}else{
 			new SQLException("ERRORE: mappa non trovata!");
 		}
@@ -532,11 +534,12 @@ public class AccessDB {
 	public void insertDevice(Connection con, Device d) throws SQLException{
 		PreparedStatement stmt = con.prepareStatement("INSERT INTO dispositivi (registrationID) VALUES(?)");
 		stmt.setString(1, d.getRegistrationID());
-		int numRecord = stmt.executeUpdate();
-        if (numRecord == 0) {
+		stmt.executeUpdate();
+		//int numRecord = stmt.executeUpdate();
+        //if (numRecord == 0) {
         	//se non è stato inserito nessun record allora genero un'eccezione
-            throw new SQLException("Errore inserimento registrationID!");
-        }
+        //    throw new SQLException("Errore inserimento registrationID!");
+        //}
 	}
 	
 	//metodo che inserisce un nodo nel DB
@@ -546,9 +549,20 @@ public class AccessDB {
 		int numRecord = stmt.executeUpdate();
         if (numRecord == 0) {
         	//se non è stato cancellato nessun record allora genero un'eccezione
-            throw new SQLException("Errore inserimento registrationID!");
+            throw new SQLException("Errore cancellazione registrationID!");
         }
 	}
 
+	//metodo che setta o resetta la modalità emergenza
+	public void setEmergency(Connection con, String mapName, Boolean emergency) throws SQLException{
+		PreparedStatement stmt = con.prepareStatement("UPDATE mappe SET emergenza=? where nome=?");
+		stmt.setBoolean(1, emergency);
+		stmt.setString(2, mapName);
+		int numRecord = stmt.executeUpdate();
+        if (numRecord == 0) {
+        	//se non è stato aggiornato nessun record allora genero un'eccezione
+            throw new SQLException("Errore nel settaggio condizione di emergenza!");
+        }
+	}
 	
 }

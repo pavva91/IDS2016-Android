@@ -42,9 +42,9 @@ public class UserHandler {
 		String salt = new String(new BigInteger(64, random).toString(32));//genero salt
 		u.setToken(newToken);
 		u.setSalt(salt);
-		newPassword=cryptPassword(u.getPassword(), salt);//cifro la password
-		u.setPassword(newPassword);//setto password cifrata
 		try{
+			newPassword=cryptPassword(u.getPassword(), salt);//cifro la password
+			u.setPassword(newPassword);//setto password cifrata
 			Database db = new Database();
 			Connection con = db.getConnection();
 			AccessDB access = new AccessDB();
@@ -115,20 +115,16 @@ public class UserHandler {
 	
 	//metodo che cripta la password e ritorna la password cifrata
 	//prende come parametri la password e il salt
-	public String cryptPassword(String password, String salt) {
+	public String cryptPassword(String password, String salt) throws NoSuchAlgorithmException {
 	   	password=password.concat(salt);
 	   	MessageDigest messageDigest;
-		try {
-			messageDigest = MessageDigest.getInstance("SHA-256");
-			byte arrayDigest[] = messageDigest.digest(password.getBytes());     
-			StringBuffer hexString = new StringBuffer();
-			for (int i=0; i<arrayDigest.length; i++)
-			    hexString.append(Integer.toHexString(0xFF & arrayDigest[i]));
-		    password=hexString.toString();
-		} catch (NoSuchAlgorithmException ex) {
-			ex.printStackTrace();
-		}
-	    return password;
+		messageDigest = MessageDigest.getInstance("SHA-256");
+		byte arrayDigest[] = messageDigest.digest(password.getBytes());     
+		StringBuffer hexString = new StringBuffer();
+		for (int i=0; i<arrayDigest.length; i++)
+		    hexString.append(Integer.toHexString(0xFF & arrayDigest[i]));
+	    password=hexString.toString();
+    return password;
 	}
 	
 	//metodo che restituisce elenco di username, password e salt
@@ -146,7 +142,7 @@ public class UserHandler {
 			AccessDB access = new AccessDB();
 			userList = access.getUsersList(con);
 		}catch (Exception ex){
-			ex.printStackTrace();
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("ERRORE: Errore, algoritmo crittografico non supportato!").build();
 		}
 		GenericEntity entity = new GenericEntity<ArrayList<User>>(userList) {};
 		return Response.ok(entity, MediaType.APPLICATION_JSON).build();

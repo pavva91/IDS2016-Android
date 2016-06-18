@@ -22,6 +22,8 @@ public class Map {
 	private ArrayList<Image> images = new ArrayList<Image>();
 	@XmlElement
 	private Date lastUpdateMap;
+	@XmlElement
+	private Boolean emergency;
 
 	//costruttore 
 	public Map(String name){
@@ -71,6 +73,12 @@ public class Map {
 	}
 	public Date getLastUpdateMap(){
 		return this.lastUpdateMap;
+	}
+	public Boolean getEmergency(){
+		return this.emergency;
+	}
+	public void setEmergency(Boolean emergency){
+		this.emergency=emergency;
 	}
 	
 }
