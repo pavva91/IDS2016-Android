@@ -118,29 +118,27 @@ public class MapActivity extends CommonBehaviourActivity<TapView,MapPresenter> {
         Bitmap bmap = floorImage.getDrawingCache();
         Integer imageViewWidthpx = bmap.getScaledWidth(getResources().getDisplayMetrics().densityDpi);
         Integer imageViewHeightpx = bmap.getScaledHeight(getResources().getDisplayMetrics().densityDpi);
+
         Float imageWidthpx;
         Float imageHeightpx;
 
-        Integer bitmapWidth = drawable.getIntrinsicWidth(); //this is the bitmap's width (818px)
-        Integer bitmapHeight = drawable.getIntrinsicHeight(); //this is the bitmap's height (477px)
+        Integer bitmapWidth = drawable.getIntrinsicWidth(); //this is the original bitmap's width (818px)
+        Integer bitmapHeight = drawable.getIntrinsicHeight(); //this is the original bitmap's height (477px)
 
         Float originalBitmapWidth = DeviceDimensionsHelper.convertPixelsToDp(bitmapWidth,this);
         Float originalBitmapHeight = DeviceDimensionsHelper.convertPixelsToDp(bitmapHeight,this);
         Float imageRatio = originalBitmapWidth/originalBitmapHeight; // W/H
 
-        Float tappedImageViewXpx = event.getX();
+        Float tappedImageViewXpx = event.getX(); // grandezza ImageView nello schermo
         Float tappedImageViewYpx = event.getY();
-
-        Log.v("X ImageView px: ",tappedImageViewXpx.toString());
-        Log.v("Y ImageView px: ",tappedImageViewYpx.toString());
 
         Float paddingTopY = 0f;
         Float paddingLeftX = 0f;
 
-        Float imageXcoord;
+        Float imageXcoord; // coordinate rispetto misure schermo
         Float imageYcoord;
 
-        Float tappedXdp;
+        Float tappedXdp; // coordinate rispetto .png originale
         Float tappedYdp;
 
         if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){ // Calcolo le grandezze in pixel dell'immagine stampata a schermo
@@ -168,21 +166,6 @@ public class MapActivity extends CommonBehaviourActivity<TapView,MapPresenter> {
         // trasformo ora queste coordinate nei pixel rispetto l'immagine originale (818x477)
         tappedXdp = (imageXcoord/imageWidthpx)*originalBitmapWidth;
         tappedYdp = (imageYcoord/imageHeightpx)*originalBitmapHeight;
-
-
-        // TODO: Da Questi valori posso calcolare padding ImageView - vera immagine
-        // TODO: il padding sarà poi l'offset da togliere ai getX e getY
-        // TODO: tolti i padding ho le coordinate in px schermo del tap sull'immagine
-        // TODO: trasformo ora queste coordinate nei pixel rispetto l'immagine originale (818x477)
-        // TODO: Verificare se ora funziona
-
-        Log.v("screen image width px", Float.toString(imageWidthpx));
-        Log.v("screen Image height px", Float.toString(imageHeightpx));
-
-        Log.v("scaled ImageView H px: ", Float.toString(bmap.getScaledHeight(getResources().getDisplayMetrics().densityDpi)));
-        Log.v("scaled ImageView W px: ", Float.toString(bmap.getScaledWidth(getResources().getDisplayMetrics().densityDpi)));
-
-
 
         Node nodeTapped = presenter.getNodeTapped(tappedXdp,tappedYdp,getIntent().getExtras().getString("floor"));
         presenter.setUserDeparture(nodeTapped);

@@ -10,10 +10,12 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.emergencyescape.DeviceDimensionsHelper;
 import com.emergencyescape.FloorBitmap;
 import com.emergencyescape.FloorPathHelper;
 import com.emergencyescape.R;
@@ -24,6 +26,7 @@ import com.emergencyescape.server.ServerService;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 
 public class ItineraryActivity extends CommonBehaviourActivity<ItineraryView,ItineraryPresenter> implements ItineraryView {
@@ -32,8 +35,6 @@ public class ItineraryActivity extends CommonBehaviourActivity<ItineraryView,Iti
 
     @BindView(R.id.toolbar) Toolbar toolbar;
     //@BindView(R.id.Percorso) TextView rxResponse;
-
-    @BindView(R.id.pathListView) ListView pathListView;
     @BindView(R.id.pathImageView) ImageView pathImageView;
     private FloorBitmap floorBitmap;
     private Paint paintStyle;
@@ -61,9 +62,6 @@ public class ItineraryActivity extends CommonBehaviourActivity<ItineraryView,Iti
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_itinerary);
 
-
-
-
         ButterKnife.bind(this);
 
         setSupportActionBar(toolbar);
@@ -76,20 +74,21 @@ public class ItineraryActivity extends CommonBehaviourActivity<ItineraryView,Iti
             showShortestPathNoEmergency();
         }
 */
-
         setPaintStyle(Color.RED);
-        floorBitmap = new FloorBitmap(getResources(),getFloorBitmap(),getFloorPath(getShortestPath()),getPaintStyle()); // ,getFloorPath(getShortestPath()),getPaintStyle()
+        floorBitmap = new FloorBitmap(getResources(),getFloorBitmap(),getFloorPath(getShortestPath()),getPaintStyle());
 
         pathImageView.setImageDrawable(floorBitmap);
-
-
-
 
         if(savedInstanceState!=null){
             rxCallInWorks = savedInstanceState.getBoolean(EXTRA_RX);
         }
 
 
+    }
+
+    @OnClick(R.id.forwardButton)
+    public void clickForward(){
+        // TODO: Aggiornare con posizione successiva ed effettuare ricalcolo
     }
 
 
@@ -129,6 +128,7 @@ public class ItineraryActivity extends CommonBehaviourActivity<ItineraryView,Iti
 
     @Override
     public void showShortestPathNoEmergency(){ // TODO: Da eliminare
+        /*
         Graph.CostPathPair shortestPath = presenter.getShortestPath(
                 presenter.getDepartureCode(),
                 presenter.getDestination(),
@@ -139,11 +139,13 @@ public class ItineraryActivity extends CommonBehaviourActivity<ItineraryView,Iti
                 android.R.layout.simple_list_item_1, shortestPath.getPath());
 
         pathListView.setAdapter(adapter);
+        */
 
     }
 
     @Override
     public void showShortestPathEmergency() { // TODO: Da eliminare
+        /*
         Graph.CostPathPair shortestPath = presenter.getEmergencyShortestPath(
                 presenter.getDepartureCode(),
                 presenter.getEmergencyDestinations());
@@ -154,10 +156,11 @@ public class ItineraryActivity extends CommonBehaviourActivity<ItineraryView,Iti
 
         pathListView.setAdapter(adapter);
 
+*/
 
     }
 
-    protected Bitmap getFloorBitmap(){ // FUNZIONA
+    protected Bitmap getFloorBitmap(){
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.q145);
         Node departure = presenter.getDeparture();
         Integer quoteInteger = departure.getQuote();
@@ -184,7 +187,7 @@ public class ItineraryActivity extends CommonBehaviourActivity<ItineraryView,Iti
 
         drawPaint.setColor(paintColor);
         drawPaint.setAntiAlias(true);
-        drawPaint.setStrokeWidth(10);
+        drawPaint.setStrokeWidth(DeviceDimensionsHelper.convertDpToPixel(13f,getApplicationContext())); // 10
         drawPaint.setStyle(Paint.Style.STROKE);
         drawPaint.setStrokeJoin(Paint.Join.ROUND);
         drawPaint.setStrokeCap(Paint.Cap.ROUND);
@@ -195,9 +198,6 @@ public class ItineraryActivity extends CommonBehaviourActivity<ItineraryView,Iti
     protected Paint getPaintStyle(){
         return paintStyle;
     }
-
-
-
 
     private Boolean getEmergencyState(){
         Boolean emergencyState = getIntent().getBooleanExtra("emergencyState",true);

@@ -37,6 +37,12 @@ public class Coordinate2D {
         return quote;
     }
 
+    /**
+     * Ritorna distanza Euclidea rispetto al punto passato come parametro
+     * @param xx ascissa del punto da cui misurare distanza
+     * @param yy odinata del punto da cui misurare distanza
+     * @return Distanza Euclidea
+     */
     public Double getDistance(Float xx, Float yy){
         Float xDifference = Math.abs(x - xx);
         Float yDifference = Math.abs(y - yy);

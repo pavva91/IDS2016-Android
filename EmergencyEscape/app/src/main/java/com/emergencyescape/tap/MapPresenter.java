@@ -59,6 +59,13 @@ public class MapPresenter extends CommonBehaviourPresenter<TapView> {
         return drawable;
     }
 
+    /**
+     * Ritorna il nodo cliccato
+     * @param xDp Rispetto misure immagine originale
+     * @param yDp Rispetto misure immagine originale
+     * @param floor
+     * @return
+     */
     public Node getNodeTapped(Float xDp, Float yDp, String floor){
         Node nodeTapped = new Node();
         List<Node> queryNodeList = new ArrayList<>();
@@ -68,7 +75,7 @@ public class MapPresenter extends CommonBehaviourPresenter<TapView> {
 
         Double minDistance = Double.POSITIVE_INFINITY;
         FloorPathHelper floorPathHelper = new FloorPathHelper();
-        Coordinate2D scaledTap = floorPathHelper.getMetersCoordinates(xDp,yDp,floor);
+        Coordinate2D scaledTap = floorPathHelper.getMetersCoordinates(xDp,yDp,floor); // trasformo coordinate tap da pixel immagine originale in metri
 
         nodeList = nodeDao.loadAll();
         for (Node node : nodeList){ // Prendo solo i nodi del piano
@@ -78,16 +85,13 @@ public class MapPresenter extends CommonBehaviourPresenter<TapView> {
                 floorNodeList.add(node); // ok
             }
         }
-        // floorNodeList = nodeDao.queryBuilder().where(NodeDao.Properties.Quote.eq(Integer.getInteger(floor))).list(); // Errore SQL
-        Log.v("floorNodeList", Integer.toString(floorNodeList.size()));
         for (Node node : floorNodeList){ // Trasformo array Node Dao in array di Coordinate2D
             Coordinate2D coordinate2D = new Coordinate2D();
             coordinate2D.setX((float)node.getX());
             coordinate2D.setY((float)node.getY());
             coordinate2D.setQuote(node.getQuote());
-            coordinate2DList.add(coordinate2D); // funziona
+            coordinate2DList.add(coordinate2D);
         }
-        Log.v("floorNodeCoordinates", Integer.toString(coordinate2DList.size()));
         int i = 0;
         for (Coordinate2D nodeCoordinates : coordinate2DList){ // Prendo il nodo a distanza minore dal tap
             Double distance = nodeCoordinates.getDistance(scaledTap.getX(),scaledTap.getY());
