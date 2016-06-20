@@ -65,7 +65,7 @@ public class MapPresenter extends CommonBehaviourPresenter<TapView> {
         List<Node> nodeList = new ArrayList<>();
         List<Node> floorNodeList = new ArrayList<>();
         List<Coordinate2D> coordinate2DList= new ArrayList<>(); // Coordinate di tutti i nodi del grafo
-        Coordinate2D coordinate2D = new Coordinate2D();
+
         Double minDistance = Double.POSITIVE_INFINITY;
         FloorPathHelper floorPathHelper = new FloorPathHelper();
         Coordinate2D scaledTap = floorPathHelper.getMetersCoordinates(xDp,yDp,floor);
@@ -75,16 +75,17 @@ public class MapPresenter extends CommonBehaviourPresenter<TapView> {
             Integer nodeQuote = node.getQuote();
             Integer floorQuote = Integer.parseInt(floor);
             if (nodeQuote.equals(floorQuote)){
-                floorNodeList.add(node);
+                floorNodeList.add(node); // ok
             }
         }
         // floorNodeList = nodeDao.queryBuilder().where(NodeDao.Properties.Quote.eq(Integer.getInteger(floor))).list(); // Errore SQL
         Log.v("floorNodeList", Integer.toString(floorNodeList.size()));
         for (Node node : floorNodeList){ // Trasformo array Node Dao in array di Coordinate2D
+            Coordinate2D coordinate2D = new Coordinate2D();
             coordinate2D.setX((float)node.getX());
             coordinate2D.setY((float)node.getY());
             coordinate2D.setQuote(node.getQuote());
-            coordinate2DList.add(coordinate2D);
+            coordinate2DList.add(coordinate2D); // funziona
         }
         Log.v("floorNodeCoordinates", Integer.toString(coordinate2DList.size()));
         int i = 0;
@@ -94,7 +95,7 @@ public class MapPresenter extends CommonBehaviourPresenter<TapView> {
                 nodeTapped = floorNodeList.get(i);
                 minDistance = distance;
             }
-            i++;
+            i=i+1;
         }
         return nodeTapped;
     }

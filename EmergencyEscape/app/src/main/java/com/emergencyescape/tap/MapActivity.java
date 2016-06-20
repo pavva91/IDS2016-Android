@@ -166,8 +166,8 @@ public class MapActivity extends CommonBehaviourActivity<TapView,MapPresenter> {
         }
 
         // trasformo ora queste coordinate nei pixel rispetto l'immagine originale (818x477)
-        tappedXdp = imageXcoord/imageWidthpx*originalBitmapWidth;
-        tappedYdp = imageYcoord/imageHeightpx*originalBitmapHeight;
+        tappedXdp = (imageXcoord/imageWidthpx)*originalBitmapWidth;
+        tappedYdp = (imageYcoord/imageHeightpx)*originalBitmapHeight;
 
 
         // TODO: Da Questi valori posso calcolare padding ImageView - vera immagine

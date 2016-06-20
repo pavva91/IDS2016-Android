@@ -5,8 +5,10 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 
+import com.emergencyescape.MyApplication;
 import com.emergencyescape.login.LoginActivity;
 import com.emergencyescape.main.MainPresenter;
 import com.emergencyescape.qr.QrActivity;
@@ -47,7 +49,7 @@ public abstract class CommonBehaviourActivity<V extends CommonBehaviourView, P e
             return true;
         }
 
-        if(id == R.id.action_emqr){  // TODO: Sistemare il qr-code in modo da fare un intent interno (QrActivity) che a sua volta interagisce con zxing
+        if(id == R.id.action_emqr){
             Intent intent = new Intent("com.google.zxing.client.android.SCAN");
             intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
             emergencyState = true;
@@ -109,15 +111,13 @@ public abstract class CommonBehaviourActivity<V extends CommonBehaviourView, P e
         if (requestCode == 0) {
             if (resultCode == RESULT_OK) {
                 String qrValue = data.getStringExtra("SCAN_RESULT"); //this is the result
-                Log.v("QR Value: ", qrValue); //ok
                 Intent intentQr = new Intent(this, QrActivity.class);
                 intentQr.putExtra("qrValue",qrValue).putExtra("emergencyState",emergencyState);
-
                 startActivity(intentQr);
 
             } else
             if (resultCode == RESULT_CANCELED) {
-                Log.v("QR Result non Ok: ", Integer.toString(resultCode));
+                Toast.makeText(this,getResources().getString(R.string.error_qr),Toast.LENGTH_LONG).show();
             }
         }
     }

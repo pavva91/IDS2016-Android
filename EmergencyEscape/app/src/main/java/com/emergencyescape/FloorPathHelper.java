@@ -128,21 +128,21 @@ public class FloorPathHelper {
         Float yOffset;
         Float xRatio;
         Float yRatio;
-        if(floor=="145"){
+        if(floor.equals("145")){
             xOffset=xOffset145;
             yOffset=yOffset145;
             xRatio=xRatio145;
             yRatio=yRatio145;
             meterCoordinates.setQuote(Integer.getInteger("145"));
             meterCoordinates = convertDpToMeter(meterCoordinates,xOffset,yOffset,xRatio,yRatio);
-        }else if(floor=="150"){
+        }else if(floor.equals("150")){
             xOffset=xOffset150;
             yOffset=yOffset150;
             xRatio=xRatio150;
             yRatio=yRatio150;
             meterCoordinates.setQuote(Integer.getInteger("150"));
             meterCoordinates = convertDpToMeter(meterCoordinates,xOffset,yOffset,xRatio,yRatio);
-        }else if(floor=="155"){
+        }else if(floor.equals("155")){
             xOffset=xOffset155;
             yOffset=yOffset155;
             xRatio=xRatio155;
@@ -186,12 +186,13 @@ public class FloorPathHelper {
     private Coordinate2D convertDpToMeter(Coordinate2D coordinate2D,Float xOffset,Float yOffset, Float xRatio, Float yRatio){
         coordinate2D.setX(coordinate2D.getX() + xOffset);
 
-        coordinate2D.setY(coordinate2D.getY() + yOffset);
         coordinate2D.setY(-coordinate2D.getY()); // L'asse delle y è invertita dai m a dp
+        coordinate2D.setY(coordinate2D.getY() + yOffset);
+
 
         coordinate2D.setX(coordinate2D.getX() / xRatio);
 
         coordinate2D.setY(coordinate2D.getY() / yRatio);
-        return coordinate2D;
+        return coordinate2D; // funziona
     }
 }
