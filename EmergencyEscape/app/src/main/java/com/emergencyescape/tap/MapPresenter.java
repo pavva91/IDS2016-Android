@@ -92,6 +92,7 @@ public class MapPresenter extends CommonBehaviourPresenter<TapView> {
             Double distance = nodeCoordinates.getDistance(scaledTap.getX(),scaledTap.getY());
             if (distance < minDistance){
                 nodeTapped = floorNodeList.get(i);
+                minDistance = distance;
             }
             i++;
         }

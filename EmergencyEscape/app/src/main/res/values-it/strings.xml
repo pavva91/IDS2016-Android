@@ -40,4 +40,5 @@
     <string name="pref_enable_notifications_true">Abilitata</string>
     <string name="pref_enable_notifications_label">Notifica Emergenza</string>
     <string name="pref_enable_notifications_false">Non Abilitata</string>
+    <string name="wrong_qr">Il QR code decodificato non rappresenta un\'aula, inserire un QR-code corretto</string>
 </resources>

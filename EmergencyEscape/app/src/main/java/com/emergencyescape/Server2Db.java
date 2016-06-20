@@ -3,6 +3,7 @@ package com.emergencyescape;
  * Created by Valerio Mattioli on 01/06/2016.
  */
 
+import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -325,7 +326,7 @@ public class Server2Db {
                 });
     }
 
-    public void loadDb(){
+    public void initializeDb(){
         // TODO: Inserire tutti i metodi che riempono le varie tabelle in un'unica server call
     }
 

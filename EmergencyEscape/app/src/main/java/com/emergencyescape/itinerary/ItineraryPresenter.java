@@ -147,6 +147,7 @@ public class ItineraryPresenter extends CommonBehaviourPresenter<ItineraryView> 
             for(Coordinate2D node:pathPrintCoordinates) { // Costruisco il Path passandogli le coordinate
                 if(firstNode) {
                     pathToPrint.moveTo(DeviceDimensionsHelper.convertDpToPixel(node.getX(), context), DeviceDimensionsHelper.convertDpToPixel(node.getY(), context)); // INIZIO PATH
+                    // TODO: Aggiungere img start
                     firstNode = false;
                 }else {
                     pathToPrint.lineTo(DeviceDimensionsHelper.convertDpToPixel(node.getX(), context), DeviceDimensionsHelper.convertDpToPixel(node.getY(), context)); // COLLEGO PUNTI PATH

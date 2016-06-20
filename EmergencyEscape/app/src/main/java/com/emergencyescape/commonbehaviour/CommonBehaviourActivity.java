@@ -1,6 +1,7 @@
 package com.emergencyescape.commonbehaviour;
 
 import android.content.Intent;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -8,6 +9,7 @@ import android.view.MenuItem;
 
 import com.emergencyescape.login.LoginActivity;
 import com.emergencyescape.main.MainPresenter;
+import com.emergencyescape.qr.QrActivity;
 import com.emergencyescape.settings.SettingsActivity;
 import com.emergencyescape.text.TextDepartureActivity;
 import com.emergencyescape.tap.TapActivity;
@@ -25,12 +27,13 @@ import com.hannesdorfmann.mosby.mvp.MvpPresenter;
 
 public abstract class CommonBehaviourActivity<V extends CommonBehaviourView, P extends MvpPresenter<V>> extends MvpActivity<V,P>
         implements CommonBehaviourView {
-
+    boolean emergencyState = false; // Aggiunto per gestire qr-code  (zxing elimina l'extra)
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
         int id = item.getItemId();
+
 
         if(id == R.id.action_emtext){
             Intent intent = new Intent(this,TextDepartureActivity.class).putExtra("emergencyState",true);
@@ -45,10 +48,11 @@ public abstract class CommonBehaviourActivity<V extends CommonBehaviourView, P e
         }
 
         if(id == R.id.action_emqr){  // TODO: Sistemare il qr-code in modo da fare un intent interno (QrActivity) che a sua volta interagisce con zxing
-            /*Intent intent = new Intent("com.google.zxing.client.android.SCAN"); //Intent zxing
-            intent.putExtra("SCAN_MODE", "QR_CODE_MODE"); // "PRODUCT_MODE" for bar codes
-            startActivityForResult(intent, 0); //start barcode scanner zxing
-            return true;*/
+            Intent intent = new Intent("com.google.zxing.client.android.SCAN");
+            intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
+            emergencyState = true;
+            startActivityForResult(intent, 0);
+            return true;
         }
 
 
@@ -65,10 +69,11 @@ public abstract class CommonBehaviourActivity<V extends CommonBehaviourView, P e
         }
 
         if(id == R.id.action_noemqr){
-            /*Intent intent = new Intent("com.google.zxing.client.android.SCAN"); //Intent zxing
-            intent.putExtra("SCAN_MODE", "QR_CODE_MODE"); // "PRODUCT_MODE" for bar codes
-            startActivityForResult(intent, 0); //start barcode scanner zxing
-            return true;*/
+            Intent intent = new Intent("com.google.zxing.client.android.SCAN");
+            intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
+            emergencyState = false;
+            startActivityForResult(intent, 0);
+            return true;
         }
         if (id == R.id.action_settings) {
             startActivity(new Intent(this, SettingsActivity.class));
@@ -96,6 +101,25 @@ public abstract class CommonBehaviourActivity<V extends CommonBehaviourView, P e
 
 
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 0) {
+            if (resultCode == RESULT_OK) {
+                String qrValue = data.getStringExtra("SCAN_RESULT"); //this is the result
+                Log.v("QR Value: ", qrValue); //ok
+                Intent intentQr = new Intent(this, QrActivity.class);
+                intentQr.putExtra("qrValue",qrValue).putExtra("emergencyState",emergencyState);
+
+                startActivity(intentQr);
+
+            } else
+            if (resultCode == RESULT_CANCELED) {
+                Log.v("QR Result non Ok: ", Integer.toString(resultCode));
+            }
+        }
     }
 
 

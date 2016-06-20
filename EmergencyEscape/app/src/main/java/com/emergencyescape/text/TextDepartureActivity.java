@@ -74,6 +74,7 @@ public class TextDepartureActivity extends CommonBehaviourActivity<TexterView,Te
         ArrayList<String> nodes = presenter.getNodesList();
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.select_dialog_multichoice, nodes);
 
+        // TODO: Diminuire font select_dialog_multichoice
         aulaPartenzaTextView.setThreshold(1);
         aulaPartenzaTextView.setAdapter(adapter);
     }

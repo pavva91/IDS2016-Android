@@ -86,6 +86,7 @@
     <string name="map_value_0" translatable="false">univpm</string>
     <string name="select_floor">Select floor</string>
     <string name="select_map">Select Map</string>
+    <string name="wrong_qr">The QR code value doesn\'t rappresent a valid room, please insert a correct QR-code</string>
 
 
 </resources>

@@ -40,16 +40,18 @@ public class MainActivity extends CommonBehaviourActivity<MainView,MainPresenter
 
         ButterKnife.bind(this);
 
-        SharedPreferences wmbPreference = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences wmbPreference = PreferenceManager.getDefaultSharedPreferences(this); // TODO: Usare shared Betta
         boolean isFirstRun = wmbPreference.getBoolean("FIRSTRUN", true);
         if (isFirstRun)
         {
+
             presenter.loadServer2Db();  // Carico il DB al primo lancio dell'app
-/*/
+
+
             SharedPreferences.Editor editor = wmbPreference.edit();
             editor.putBoolean("FIRSTRUN", false);
             editor.commit();
-            */
+
         }
 
 

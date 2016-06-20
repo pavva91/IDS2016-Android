@@ -121,8 +121,8 @@ public class MapActivity extends CommonBehaviourActivity<TapView,MapPresenter> {
         Float imageWidthpx;
         Float imageHeightpx;
 
-        Integer bitmapWidth = drawable.getIntrinsicWidth(); //this is the bitmap's width
-        Integer bitmapHeight = drawable.getIntrinsicHeight(); //this is the bitmap's height
+        Integer bitmapWidth = drawable.getIntrinsicWidth(); //this is the bitmap's width (818px)
+        Integer bitmapHeight = drawable.getIntrinsicHeight(); //this is the bitmap's height (477px)
 
         Float originalBitmapWidth = DeviceDimensionsHelper.convertPixelsToDp(bitmapWidth,this);
         Float originalBitmapHeight = DeviceDimensionsHelper.convertPixelsToDp(bitmapHeight,this);
@@ -134,21 +134,47 @@ public class MapActivity extends CommonBehaviourActivity<TapView,MapPresenter> {
         Log.v("X ImageView px: ",tappedImageViewXpx.toString());
         Log.v("Y ImageView px: ",tappedImageViewYpx.toString());
 
+        Float paddingTopY = 0f;
+        Float paddingLeftX = 0f;
+
+        Float imageXcoord;
+        Float imageYcoord;
+
+        Float tappedXdp;
+        Float tappedYdp;
+
         if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){ // Calcolo le grandezze in pixel dell'immagine stampata a schermo
             imageWidthpx = (float)imageViewWidthpx;
             imageHeightpx = (float)imageViewWidthpx / imageRatio;
+            paddingTopY = (imageViewHeightpx-imageHeightpx)/2; // calcolo padding in pixel dello schermo
         }else if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
             imageWidthpx = (float)imageViewHeightpx * imageRatio;
             imageHeightpx = (float)imageViewHeightpx;
+            paddingLeftX = (imageViewWidthpx-imageWidthpx)/2; // calcolo paddin in pixel dello schermo
         }else{
             imageWidthpx = (float)imageViewWidthpx;
             imageHeightpx = (float)imageViewWidthpx / imageRatio;
+            paddingTopY = (imageViewHeightpx-imageHeightpx)/2;
+
         }
+
+        // tolti i padding ho le coordinate in px schermo del tap sull'immagine
+        imageXcoord = tappedImageViewXpx - paddingLeftX;
+        imageYcoord = tappedImageViewYpx - paddingTopY;
+        if (imageXcoord>imageWidthpx||imageYcoord>imageHeightpx||imageXcoord < 0 || imageYcoord < 0){ // escludo tap nei punti a sx, dx, sopra e sotto l'immagine
+            return false;
+        }
+
+        // trasformo ora queste coordinate nei pixel rispetto l'immagine originale (818x477)
+        tappedXdp = imageXcoord/imageWidthpx*originalBitmapWidth;
+        tappedYdp = imageYcoord/imageHeightpx*originalBitmapHeight;
+
 
         // TODO: Da Questi valori posso calcolare padding ImageView - vera immagine
         // TODO: il padding sarà poi l'offset da togliere ai getX e getY
         // TODO: tolti i padding ho le coordinate in px schermo del tap sull'immagine
         // TODO: trasformo ora queste coordinate nei pixel rispetto l'immagine originale (818x477)
+        // TODO: Verificare se ora funziona
 
         Log.v("screen image width px", Float.toString(imageWidthpx));
         Log.v("screen Image height px", Float.toString(imageHeightpx));
@@ -157,7 +183,7 @@ public class MapActivity extends CommonBehaviourActivity<TapView,MapPresenter> {
         Log.v("scaled ImageView W px: ", Float.toString(bmap.getScaledWidth(getResources().getDisplayMetrics().densityDpi)));
 
 
-        /*
+
         Node nodeTapped = presenter.getNodeTapped(tappedXdp,tappedYdp,getIntent().getExtras().getString("floor"));
         presenter.setUserDeparture(nodeTapped);
 
@@ -169,7 +195,7 @@ public class MapActivity extends CommonBehaviourActivity<TapView,MapPresenter> {
             intentToStart = new Intent(MapActivity.this,TextDestinationActivity.class);
         }
         startActivity(intentToStart);
-        */
+
         return false;
     }
 
