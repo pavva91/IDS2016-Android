@@ -5,6 +5,7 @@ package com.emergencyescape.itinerary;
 
 import android.content.Context;
 import android.graphics.Path;
+import android.widget.Toast;
 
 import com.emergencyescape.Coordinate2D;
 import com.emergencyescape.DeviceDimensionsHelper;
@@ -17,6 +18,7 @@ import com.emergencyescape.dijkstra.Graph;
 import com.emergencyescape.greendao.DaoSession;
 import com.emergencyescape.greendao.Edge;
 import com.emergencyescape.greendao.EdgeDao;
+import com.emergencyescape.greendao.Node;
 import com.emergencyescape.greendao.NodeDao;
 import com.emergencyescape.greendao.User;
 import com.emergencyescape.greendao.UserDao;
@@ -30,11 +32,18 @@ import java.util.List;
  */
 public class ItineraryPresenter extends CommonBehaviourPresenter<ItineraryView> implements ItineraryPresenterInterface {
 
-    Context context = MyApplication.getInstance().getApplicationContext();
-    DaoSession daoSession = MyApplication.getSession();
-    UserDao userDao = daoSession.getUserDao();
-    NodeDao nodeDao = daoSession.getNodeDao();
-    EdgeDao edgeDao = daoSession.getEdgeDao();
+    private Context context = MyApplication.getInstance().getApplicationContext();
+    private DaoSession daoSession = MyApplication.getSession();
+    private UserDao userDao = daoSession.getUserDao();
+    private NodeDao nodeDao = daoSession.getNodeDao();
+    private EdgeDao edgeDao = daoSession.getEdgeDao();
+
+    // Coordinate dei nodi in cui stampare icone:
+    private Coordinate2D startingNode = new Coordinate2D();
+    private Coordinate2D destinationNode = new Coordinate2D();
+
+    private String printStairsMessage = "";
+    private boolean booleanPrintStairsMessage = false;
 
     @Override
     public String getDepartureCode() {
@@ -58,6 +67,17 @@ public class ItineraryPresenter extends CommonBehaviourPresenter<ItineraryView> 
             }
         }
         return userDeparture;
+    }
+
+    public com.emergencyescape.greendao.Node getDestinationNodeDao() {
+        com.emergencyescape.greendao.Node userDestination = new com.emergencyescape.greendao.Node();
+        List<User> allUser = userDao.loadAll(); // select *
+        for (User singleUser : allUser) {
+            if(singleUser.getName().equalsIgnoreCase("vale")){
+                userDestination = singleUser.getDestinationToOneUser();
+            }
+        }
+        return userDestination;
     }
 
     @Override
@@ -125,20 +145,29 @@ public class ItineraryPresenter extends CommonBehaviourPresenter<ItineraryView> 
      */
     @Override
     public Path getScaledPath(Graph.CostPathPair shortestPath){
+        booleanPrintStairsMessage = false;
         FloorPathHelper pathHelper = new FloorPathHelper();
         // Old: List<Edge> edgeDaoPath = getShortestPathCoordinates(shortestPath); // Shortest Path di Edge (problema grafo che si ripercuote su Coordinates
-        List<Coordinate2D> pathCoordinates = getShortestPathCoordinates(shortestPath); // OK
+        List<Coordinate2D> pathCoordinates = getShortestPathCoordinates(shortestPath); //
         List<Coordinate2D> floorPathCoordinates = new ArrayList<>(); // path del piano di departure
         Path pathToPrint = new Path(); // Path da mandare in stampa
         List<Coordinate2D> pathPrintCoordinates;
         com.emergencyescape.greendao.Node departureNode = getDeparture();
         Integer quoteInteger = departureNode.getQuote();
 
-        for(Coordinate2D singleNodeCoordinates : pathCoordinates){
+        int i = 0;
+        int j = 0;
+        for(Coordinate2D singleNodeCoordinates : pathCoordinates){ // Prendo solo i nodi del piano
             Integer quoteNode = singleNodeCoordinates.getQuote();
             if(quoteNode.equals(quoteInteger)){
                 floorPathCoordinates.add(singleNodeCoordinates);
+                j=i;
             }
+            i = i +1;
+        }
+        if (floorPathCoordinates.size()==1 && pathCoordinates.size()>1){
+            printStairsMessage = pathCoordinates.get(j+1).getQuote().toString();
+            booleanPrintStairsMessage = true;
         }
 
         if(quoteInteger==145){
@@ -148,9 +177,13 @@ public class ItineraryPresenter extends CommonBehaviourPresenter<ItineraryView> 
                 if(firstNode) {
                     pathToPrint.moveTo(DeviceDimensionsHelper.convertDpToPixel(node.getX(), context), DeviceDimensionsHelper.convertDpToPixel(node.getY(), context)); // INIZIO PATH
                     // TODO: Aggiungere img start
+                    startingNode.setX(DeviceDimensionsHelper.convertDpToPixel(node.getX(), context));
+                    startingNode.setY(DeviceDimensionsHelper.convertDpToPixel(node.getY(), context));
                     firstNode = false;
                 }else {
                     pathToPrint.lineTo(DeviceDimensionsHelper.convertDpToPixel(node.getX(), context), DeviceDimensionsHelper.convertDpToPixel(node.getY(), context)); // COLLEGO PUNTI PATH
+                    destinationNode.setX(DeviceDimensionsHelper.convertDpToPixel(node.getX(), context));
+                    destinationNode.setY(DeviceDimensionsHelper.convertDpToPixel(node.getY(), context));
                 }
             }
             return pathToPrint;
@@ -161,9 +194,13 @@ public class ItineraryPresenter extends CommonBehaviourPresenter<ItineraryView> 
             for(Coordinate2D node:pathPrintCoordinates) { // Costruisco il Path passandogli le coordinate
                 if(firstNode) {
                     pathToPrint.moveTo(DeviceDimensionsHelper.convertDpToPixel(node.getX(), context), DeviceDimensionsHelper.convertDpToPixel(node.getY(), context)); // INIZIO PATH
+                    startingNode.setX(DeviceDimensionsHelper.convertDpToPixel(node.getX(), context));
+                    startingNode.setY(DeviceDimensionsHelper.convertDpToPixel(node.getY(), context));
                     firstNode = false;
                 }else {
                     pathToPrint.lineTo(DeviceDimensionsHelper.convertDpToPixel(node.getX(), context), DeviceDimensionsHelper.convertDpToPixel(node.getY(), context)); // COLLEGO PUNTI PATH
+                    destinationNode.setX(DeviceDimensionsHelper.convertDpToPixel(node.getX(), context));
+                    destinationNode.setY(DeviceDimensionsHelper.convertDpToPixel(node.getY(), context));
                 }
             }
             return pathToPrint;
@@ -174,9 +211,13 @@ public class ItineraryPresenter extends CommonBehaviourPresenter<ItineraryView> 
             for(Coordinate2D node:pathPrintCoordinates) { // Costruisco il Path passandogli le coordinate
                 if(firstNode) {
                     pathToPrint.moveTo(DeviceDimensionsHelper.convertDpToPixel(node.getX(), context), DeviceDimensionsHelper.convertDpToPixel(node.getY(), context)); // INIZIO PATH
+                    startingNode.setX(DeviceDimensionsHelper.convertDpToPixel(node.getX(), context));
+                    startingNode.setY(DeviceDimensionsHelper.convertDpToPixel(node.getY(), context));
                     firstNode = false;
                 }else {
                     pathToPrint.lineTo(DeviceDimensionsHelper.convertDpToPixel(node.getX(), context), DeviceDimensionsHelper.convertDpToPixel(node.getY(), context)); // COLLEGO PUNTI PATH
+                    destinationNode.setX(DeviceDimensionsHelper.convertDpToPixel(node.getX(), context));
+                    destinationNode.setY(DeviceDimensionsHelper.convertDpToPixel(node.getY(), context));
                 }
             }
             return pathToPrint;
@@ -264,6 +305,43 @@ public class ItineraryPresenter extends CommonBehaviourPresenter<ItineraryView> 
             }
         }
         return pathCoordinates;
+    }
+
+    public Long getDepartureIdFromName(String departureName){
+        List<Node> allNodes = nodeDao.loadAll();
+        Long departureId = -1L;
+        for (Node singleNode : allNodes) {
+            if(singleNode.getCode().equalsIgnoreCase(departureName)){
+                departureId = singleNode.getId();
+            }
+        }
+        return departureId;
+    }
+
+    public void setUserDeparture(String departure) { // TODO: Aggiornare anche il Server
+        List<User> allUser = userDao.loadAll();
+        for (User singleUser : allUser) {
+            if(singleUser.getName().equalsIgnoreCase("vale")){
+                singleUser.setDepartureId(this.getDepartureIdFromName(departure));
+                userDao.update(singleUser);
+            }
+        }
+    }
+
+    public Coordinate2D getStartingNode(){
+        return startingNode;
+    }
+
+    public Coordinate2D getDestinationNode(){
+        return destinationNode;
+    }
+
+    public String getPrintStairsMessage(){
+        return printStairsMessage;
+    }
+
+    public boolean getBooleanPrintStairsMessage(){
+        return booleanPrintStairsMessage;
     }
 }
 

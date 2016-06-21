@@ -13,6 +13,11 @@ public class Coordinate2D {
     private Float y;
     private Integer quote;
 
+    public Coordinate2D(){
+        x=0f;
+        y=0f;
+    }
+
     public void setX(Float xx){
         x = xx;
     }

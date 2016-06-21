@@ -9,20 +9,19 @@ import android.graphics.Path;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
-import android.widget.ArrayAdapter;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.Toast;
 
+import com.emergencyescape.Coordinate2D;
 import com.emergencyescape.DeviceDimensionsHelper;
 import com.emergencyescape.FloorBitmap;
-import com.emergencyescape.FloorPathHelper;
 import com.emergencyescape.R;
 import com.emergencyescape.commonbehaviour.CommonBehaviourActivity;
 import com.emergencyescape.dijkstra.Graph;
 import com.emergencyescape.greendao.Node;
 import com.emergencyescape.server.ServerService;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -38,6 +37,10 @@ public class ItineraryActivity extends CommonBehaviourActivity<ItineraryView,Iti
     @BindView(R.id.pathImageView) ImageView pathImageView;
     private FloorBitmap floorBitmap;
     private Paint paintStyle;
+
+    private Coordinate2D startingNode = new Coordinate2D();
+    private static final String STARTING_NODE_X = "textValueX";
+    private static final String STARTING_NODE_Y = "textValueY";
     //Bitmap bitmap;
 
 
@@ -67,6 +70,13 @@ public class ItineraryActivity extends CommonBehaviourActivity<ItineraryView,Iti
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        if (savedInstanceState != null) {// Non funziona
+            Float savedX = savedInstanceState.getFloat(STARTING_NODE_X);
+            startingNode.setX(savedX);
+            Float savedY = savedInstanceState.getFloat(STARTING_NODE_Y);
+            startingNode.setY(savedY);
+        }
+
 /*
         if(getEmergencyState()){
             showShortestPathEmergency();
@@ -76,19 +86,53 @@ public class ItineraryActivity extends CommonBehaviourActivity<ItineraryView,Iti
 */
         setPaintStyle(Color.RED);
         floorBitmap = new FloorBitmap(getResources(),getFloorBitmap(),getFloorPath(getShortestPath()),getPaintStyle());
+        startingNode = presenter.getStartingNode(); // TODO: Vedere se funziona
+
+        floorBitmap.setPlaceIconNode(startingNode);
 
         pathImageView.setImageDrawable(floorBitmap);
 
         if(savedInstanceState!=null){
             rxCallInWorks = savedInstanceState.getBoolean(EXTRA_RX);
         }
-
-
     }
 
+    @Override
+    protected void onSaveInstanceState (Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putFloat(STARTING_NODE_X, startingNode.getX());
+        outState.putFloat(STARTING_NODE_Y, startingNode.getY());
+    }
+
+    /**
+     * Aggiorna posizione successiva ed effettua il ricalcolo (comprese modifiche FloorBitmap
+     */
     @OnClick(R.id.forwardButton)
     public void clickForward(){
-        // TODO: Aggiornare con posizione successiva ed effettuare ricalcolo
+        List<Graph.Edge> shortestPath = getShortestPath().getPath();
+        if (shortestPath.size()>0) {
+            Graph.Vertex nextDepartureDijkstra = shortestPath.get(0).getToVertex();
+            String DepNextString = nextDepartureDijkstra.getValue().toString();
+            presenter.setUserDeparture(DepNextString);
+            floorBitmap = new FloorBitmap(getResources(),getFloorBitmap(),getFloorPath(getShortestPath()),getPaintStyle());
+
+            startingNode = presenter.getStartingNode();
+            floorBitmap.setPlaceIconNode(startingNode);
+
+            pathImageView.setImageDrawable(floorBitmap);
+            Integer departureQuote = presenter.getDeparture().getQuote();
+            Integer destinationQuote = presenter.getDestinationNodeDao().getQuote();
+            if(presenter.getBooleanPrintStairsMessage()){
+                Toast.makeText(this,getResources().getString(R.string.stairs_message) + " " + presenter.getPrintStairsMessage(), Toast.LENGTH_LONG).show();
+            }
+
+        }
+        if(shortestPath.size()<=1){
+            startingNode = presenter.getDestinationNode();
+            floorBitmap.setPlaceIconNode(startingNode);
+            Toast.makeText(this, getResources().getString(R.string.arrived_message), Toast.LENGTH_LONG).show();
+
+        }
     }
 
 
@@ -96,11 +140,6 @@ public class ItineraryActivity extends CommonBehaviourActivity<ItineraryView,Iti
     protected void onPause() {
         super.onPause();
 
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
     }
 
     @Override

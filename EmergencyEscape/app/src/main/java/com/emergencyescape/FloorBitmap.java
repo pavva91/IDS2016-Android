@@ -5,6 +5,7 @@ package com.emergencyescape;
 
 import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
@@ -20,6 +21,7 @@ public class FloorBitmap extends BitmapDrawable {
     private Path path = new Path();
     private Paint drawPaint;
     private Bitmap floorImage;
+    private Coordinate2D placeIconNode = new Coordinate2D();
 
     /**
      * Create drawable from a bitmap, setting initial target density based on
@@ -34,6 +36,8 @@ public class FloorBitmap extends BitmapDrawable {
         super(res, floorBitmap);
         drawPaint = floorPaint;
         path = floorPath;
+        placeIconNode.setX(0f);
+        placeIconNode.setY(0f);
     }
 
     @Override
@@ -41,5 +45,10 @@ public class FloorBitmap extends BitmapDrawable {
         floorImage = getBitmap();
         canvas.drawBitmap(floorImage,0,0,drawPaint);
         canvas.drawPath(path, drawPaint);
+        canvas.drawBitmap(BitmapFactory.decodeResource(MyApplication.context.getResources(),R.drawable.ic_place_red_900_48dp),placeIconNode.getX()-DeviceDimensionsHelper.convertDpToPixel(24f,MyApplication.context),placeIconNode.getY()-DeviceDimensionsHelper.convertDpToPixel(48f,MyApplication.context),null);
+    }
+
+    public void setPlaceIconNode(Coordinate2D placeIconNode){
+        this.placeIconNode = placeIconNode;
     }
 }
