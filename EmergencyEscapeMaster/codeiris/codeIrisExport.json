@@ -1,0 +1,1 @@
+[{"packageName":"com.emergencyescape.qr","superClass":null,"className":"QrView","associations":[],"usages":[],"interfaces":["com.emergencyescape.commonbehaviour.CommonBehaviourView"],"type":"INTERFACE"},{"packageName":"com.emergencyescape.commonbehaviour","superClass":null,"className":"CommonBehaviourView","associations":[],"usages":[],"interfaces":[],"type":"INTERFACE"}]

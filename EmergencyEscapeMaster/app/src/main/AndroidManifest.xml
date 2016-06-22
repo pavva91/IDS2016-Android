@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+package="com.emergencyescape">
+
+
+<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+<uses-permission android:name="android.permission.INTERNET"/>
+<uses-permission android:name="android.permission.CAMERA"/>
+<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!-- servono per le push -->
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <permission android:name="it.html.googleservices.push.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+    <uses-permission android:name="it.html.googleservices.push.permission.C2D_MESSAGE" />
+
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/logobar"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:name=".server.RxApplication"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".login.LoginActivity"
+            android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".main.MainActivity"
+            android:label=" "
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".text.TextDepartureActivity"
+            android:label=" "
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".main.MainActivity" />
+        </activity>
+        <activity
+            android:name=".tap.TapActivity"
+            android:label=" "
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".main.MainActivity" />
+        </activity>
+        <activity
+            android:name=".qr.QrActivity"
+            android:label=" "
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".main.MainActivity" />
+        </activity>
+        <activity
+            android:name=".text.TextDestinationActivity"
+            android:label=" "
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".main.MainActivity" />
+        </activity>
+        <activity
+            android:name=".itinerary.ItineraryActivity"
+            android:label=" "
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".main.MainActivity" />
+        </activity>
+        <activity
+            android:name=".tap.MapTapActivity"
+            android:label=" "
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".main.MainActivity" />
+        </activity>
+        <activity android:name=".registration.RegistraActivity" />
+
+        <!-- questi due ultimi tag servo per le push -->
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <receiver
+            android:name=".NotificationReceiver">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <category android:name="it.html.googleservices.push" />
+            </intent-filter>
+        </receiver>
+
+    </application>
+</manifest>

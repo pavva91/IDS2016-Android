@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+       <item
+        android:id="@+id/action_em"
+        android:orderInCategory="100"
+        android:title="@string/action_emergency"
+        app:showAsAction="always">
+
+         <menu>
+              <item
+                  android:id="@+id/action_emtext"
+                  android:title="@string/action_text"/>
+             <item
+                 android:id="@+id/action_emtap"
+                 android:title="@string/action_tap"/>
+             <item
+                 android:id="@+id/action_emqr"
+                 android:title="@string/action_qr_code"/>
+         </menu>
+        </item>
+
+
+    <item
+        android:id="@+id/action_noem"
+        android:orderInCategory="100"
+        android:title="@string/action_no_emergency"
+        app:showAsAction="always">
+
+    <menu>
+        <item
+            android:id="@+id/action_noemtext"
+            android:title="@string/action_text"/>
+        <item
+            android:id="@+id/action_noemtap"
+            android:title="@string/action_tap"/>
+        <item
+            android:id="@+id/action_noemqr"
+            android:title="@string/action_qr_code"/>
+    </menu>
+    </item>
+
+   </menu>
