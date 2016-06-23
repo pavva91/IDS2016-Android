@@ -40,8 +40,15 @@ public class RegistraActivity extends AppCompatActivity
                 String u = user.getText().toString();
                 String p = psw.getText().toString();
 
-                ServerConnection scon = ServerConnection.getInstance(getApplicationContext());
-                scon.sendRegistraParameters(u,p);
+                if (u.equals("") || p.equals(""))
+                {
+                    Toast.makeText(getApplicationContext(), "Tutti i campi sono obbligatori", Toast.LENGTH_LONG).show();
+                }
+                else
+                {
+                    ServerConnection scon = ServerConnection.getInstance(getApplicationContext());
+                    scon.sendRegistraParameters(u, p);
+                }
 
             }
         });

@@ -1,6 +1,9 @@
 package com.emergencyescape.businesslogic;
 
+import android.app.Notification;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -10,6 +13,7 @@ import android.os.Bundle;
 import android.support.v7.app.NotificationCompat;
 
 import com.emergencyescape.R;
+import com.emergencyescape.main.MainActivity;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 
@@ -29,6 +33,7 @@ public class NotificationReceiver extends BroadcastReceiver
     {
         GoogleCloudMessaging gcm = GoogleCloudMessaging.getInstance(context);
         Bundle extras = intent.getExtras();
+        String msg = intent.getStringExtra("message");
 
         String messageType = gcm.getMessageType(intent);
 
@@ -37,7 +42,7 @@ public class NotificationReceiver extends BroadcastReceiver
             if (GoogleCloudMessaging.MESSAGE_TYPE_MESSAGE.equals(messageType))
             {
                 // emette una notifica sul dispositivo
-                sendNotification(context,"E' arrivata la tua prima notifica attraverso GCM!");
+                sendNotification(context,msg);
 
             }
         }
@@ -56,6 +61,19 @@ public class NotificationReceiver extends BroadcastReceiver
                         .setContentTitle("ATTENZIONE: situazione di emergenza")
                         .setContentText(msg)
                         .setSound(sound);
+
+
+        Intent notificationIntent = new Intent(ctx, MainActivity.class);
+        android.support.v4.app.TaskStackBuilder sb = android.support.v4.app.TaskStackBuilder.create(ctx);
+        sb.addParentStack(MainActivity.class);
+        sb.addNextIntent(notificationIntent);
+
+       notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+
+        PendingIntent intent = sb.getPendingIntent(0,PendingIntent.FLAG_UPDATE_CURRENT);
+        mBuilder.setContentIntent(intent);
+
+        mBuilder.build().flags |= Notification.FLAG_AUTO_CANCEL;
 
         // effettua la notifica
         mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());

@@ -124,32 +124,45 @@ public class LoginActivity extends AppCompatActivity
                 String p = psw.getText().toString();
                 String r = String.valueOf(ricorda.isChecked());
 
-               if(lp.checkConnection()==true) //siamo online
-               {
-                   ServerConnection scon = ServerConnection.getInstance(getApplicationContext());
-                   scon.sendLoginParameters(u, p, r);
-               }
-               else // siamo offline
-               {
-                   ut = new UtenteTable(getApplicationContext());
-                   //riprendo il salt dell'utente inserito
-                   String salt = ut.takeSalt(u);
-                   if (salt.equals("niente")) {    Toast.makeText(getApplicationContext(), "ERRORE: username o password errati! ", Toast.LENGTH_LONG).show();  }
-                   else
-                   {
-                       //cripto la password
-                       String criptopsw = lp.cryptPassword(p, salt);
-                       //se l'utente esiste
-                       if (ut.checkUser(u, criptopsw) != 0)
-                       {
-                           SessionClass sc = SessionClass.getInstance();
-                           //salvo la password da inviare appena siamo online al server
-                           sc.setPassword(p,getApplicationContext());
+                if (u.equals("") || p.equals(""))
+                {
+                    Toast.makeText(getApplicationContext(), "I campi Username e Password sono obbligatori", Toast.LENGTH_LONG).show();
+                }
+                else
+                {
+                    if(lp.checkConnection()==true) //siamo online
+                    {
+                        ServerConnection scon = ServerConnection.getInstance(getApplicationContext());
+                        scon.sendLoginParameters(u, p, r);
+                    }
+                    else // siamo offline
+                    {
+                        ut = new UtenteTable(getApplicationContext());
+                        //riprendo il salt dell'utente inserito
+                        String salt = ut.takeSalt(u);
+                        if (salt.equals("niente"))
+                        {
+                            Toast.makeText(getApplicationContext(), "ERRORE: username o password errati! ", Toast.LENGTH_LONG).show();
+                        }
+                        else
+                        {
+                            //cripto la password
+                            String criptopsw = lp.cryptPassword(p, salt);
+                            //se l'utente esiste
+                            if (ut.checkUser(u, criptopsw) != 0)
+                            {
+                                SessionClass sc = SessionClass.getInstance();
+                                //salvo la password da inviare appena siamo online al server
+                                sc.setPassword(p, getApplicationContext());
 
-                           lp.loginOK(u, p, r);
-                       }
-                       else {  Toast.makeText(getApplicationContext(), "ERRORE: username o password errati! ", Toast.LENGTH_LONG).show();   }
-                   }
+                                lp.loginOK(u, p, r);
+                            }
+                            else
+                            {
+                                Toast.makeText(getApplicationContext(), "ERRORE: username o password errati! ", Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    }
                }
             }
         });

@@ -89,7 +89,7 @@ package="com.emergencyescape">
             android:value="@integer/google_play_services_version" />
 
         <receiver
-            android:name=".NotificationReceiver">
+            android:name=".businesslogic.NotificationReceiver">
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
                 <category android:name="it.html.googleservices.push" />
