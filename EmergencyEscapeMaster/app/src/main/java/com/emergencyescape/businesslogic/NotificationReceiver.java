@@ -58,22 +58,18 @@ public class NotificationReceiver extends BroadcastReceiver
         NotificationCompat.Builder mBuilder =
                 (NotificationCompat.Builder) new NotificationCompat.Builder(ctx)
                         .setSmallIcon(R.drawable.logo1piccolo)
-                        .setContentTitle("ATTENZIONE: situazione di emergenza")
+                        .setContentTitle("Emergency Escape")
                         .setContentText(msg)
-                        .setSound(sound);
-
+                        .setSound(sound)
+                        .setAutoCancel(true);
 
         Intent notificationIntent = new Intent(ctx, MainActivity.class);
         android.support.v4.app.TaskStackBuilder sb = android.support.v4.app.TaskStackBuilder.create(ctx);
         sb.addParentStack(MainActivity.class);
         sb.addNextIntent(notificationIntent);
 
-       notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-
         PendingIntent intent = sb.getPendingIntent(0,PendingIntent.FLAG_UPDATE_CURRENT);
         mBuilder.setContentIntent(intent);
-
-        mBuilder.build().flags |= Notification.FLAG_AUTO_CANCEL;
 
         // effettua la notifica
         mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
