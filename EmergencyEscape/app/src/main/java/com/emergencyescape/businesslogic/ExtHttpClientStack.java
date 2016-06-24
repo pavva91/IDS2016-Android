@@ -1,9 +1,9 @@
 package com.emergencyescape.businesslogic;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Request.Method;
+import com.android.volley.toolbox.HttpStack;
 
 import org.apache.http.ProtocolVersion;
 import org.apache.http.StatusLine;
@@ -12,9 +12,14 @@ import org.apache.http.message.BasicHeader;
 import org.apache.http.message.BasicHttpResponse;
 import org.apache.http.message.BasicStatusLine;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 import khandroid.ext.apache.http.Header;
-import khandroid.ext.apache.http.HttpResponse;
 import khandroid.ext.apache.http.HttpEntity;
+import khandroid.ext.apache.http.HttpResponse;
 import khandroid.ext.apache.http.NameValuePair;
 import khandroid.ext.apache.http.client.HttpClient;
 import khandroid.ext.apache.http.client.methods.HttpDelete;
@@ -27,11 +32,6 @@ import khandroid.ext.apache.http.entity.ByteArrayEntity;
 import khandroid.ext.apache.http.message.BasicNameValuePair;
 import khandroid.ext.apache.http.params.HttpConnectionParams;
 import khandroid.ext.apache.http.params.HttpParams;
-
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.Request.Method;
-import com.android.volley.toolbox.HttpStack;
 
 
 public class ExtHttpClientStack implements HttpStack

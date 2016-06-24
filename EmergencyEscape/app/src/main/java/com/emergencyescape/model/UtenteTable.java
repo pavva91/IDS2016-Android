@@ -18,6 +18,7 @@ public class UtenteTable
     private static final String TABLENAME = "utente";
     private static final String DBCOLUMNUSER = "user";
     private static final String DBCOLUMNPSW = "psw";
+    private static final String DBCOLUMNSALT = "salt";
     private DataBaseHelper dbh;
 
 
@@ -26,8 +27,8 @@ public class UtenteTable
         dbh = new DataBaseHelper(context);
     }
 
-    //inserisce l'utente
-    public long inserisciUtente (String user, String psw)
+    //inserisce gli utentei passati dal db
+    public long inserisciUtente (String user, String salt,String psw)
     {
          long ris;
          dbh.openDB();
@@ -37,9 +38,11 @@ public class UtenteTable
         ContentValues cv = new ContentValues();
         cv.put(DBCOLUMNUSER, user);
         cv.put(DBCOLUMNPSW, psw);
+        cv.put(DBCOLUMNSALT, salt);
 
         Log.i("Nome inserito", user);
         Log.i("Password inserita", psw);
+        Log.i("Salt inserito", salt);
 
         ris = db.insert(TABLENAME, null, cv);
 
@@ -62,7 +65,31 @@ public class UtenteTable
                                "AND " + DBCOLUMNPSW + " = '" + psw + "'", null);
 
         ris = c.getCount();
+
         Log.i("Result checkUser", String.valueOf(ris));
+        dbh.close();
+        return ris;
+    }
+
+    //prende il salt dell'utente per il calcolo della password
+    public String takeSalt (String user)
+    {
+        String ris;
+        dbh.openDB();
+
+        SQLiteDatabase db = dbh.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery("SELECT " + DBCOLUMNSALT + " " +
+                "FROM " + TABLENAME + " " +
+                "WHERE " + DBCOLUMNUSER + " = '" + user + "'", null);
+
+        if(cursor.moveToFirst())
+        {
+            ris = cursor.getString(cursor.getColumnIndex(DBCOLUMNSALT));
+        }
+        else  { ris = "niente";  }
+
+        Log.i("Result takeSalt", String.valueOf(ris));
         dbh.close();
         return ris;
     }
