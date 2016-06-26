@@ -42,6 +42,7 @@ public class MainActivity extends CommonBehaviourActivity<MainView,MainPresenter
 
         SharedPreferences wmbPreference = PreferenceManager.getDefaultSharedPreferences(this); // TODO: Usare shared Betta
         boolean isFirstRun = wmbPreference.getBoolean("FIRSTRUN", true);
+
         if (isFirstRun)
         {
 

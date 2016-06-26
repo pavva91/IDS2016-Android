@@ -69,14 +69,14 @@ public class TextDeparturePresenter extends CommonBehaviourPresenter<TexterView>
         List<User> allUser = userDao.loadAll();
         for (User singleUser : allUser) {
             if(singleUser.getName().equalsIgnoreCase("vale")){
-                singleUser.setDestinationId(this.getDestinationIdFromName(destination));
+                singleUser.setDestinationId(this.getNodeIdFromName(destination));
                 userDao.update(singleUser);
             }
         }
     }
 
     @Override
-    public Long getDestinationIdFromName(String destinationName){
+    public Long getNodeIdFromName(String destinationName){
         List<Node> allNodes = nodeDao.loadAll();
         Long destinationId = -1L;
         for (Node singleNode : allNodes) {

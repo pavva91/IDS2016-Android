@@ -74,6 +74,7 @@ public class Graph<T extends Comparable<T>> {
      */
     public Graph(TYPE type, Collection<Vertex<T>> vertices, Collection<Edge<T>> edges) {
         this(type);
+        this.type = type;
 
         this.allVertices.addAll(vertices);
         this.allEdges.addAll(edges);

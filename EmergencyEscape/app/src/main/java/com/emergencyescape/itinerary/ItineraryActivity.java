@@ -1,14 +1,19 @@
 package com.emergencyescape.itinerary;
 
 
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -19,13 +24,13 @@ import com.emergencyescape.R;
 import com.emergencyescape.commonbehaviour.CommonBehaviourActivity;
 import com.emergencyescape.dijkstra.Graph;
 import com.emergencyescape.greendao.Node;
-import com.emergencyescape.server.ServerService;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnFocusChange;
 
 
 public class ItineraryActivity extends CommonBehaviourActivity<ItineraryView,ItineraryPresenter> implements ItineraryView {
@@ -33,20 +38,17 @@ public class ItineraryActivity extends CommonBehaviourActivity<ItineraryView,Iti
     // TODO: Creare Background Thread (RxJava) che va a fare il calcolo prendendo i valori(Departure (e) Destination) (per ora) da CommonBehaviourViewState
 
     @BindView(R.id.toolbar) Toolbar toolbar;
-    //@BindView(R.id.Percorso) TextView rxResponse;
     @BindView(R.id.pathImageView) ImageView pathImageView;
+    @BindView(R.id.bestPathButton) Button bestPathButton;
+    @BindView(R.id.alterntivePathButton) Button alternativePathButton;
+    @BindView(R.id.forwardBestButton) ImageButton forwardBestButton;
+    @BindView(R.id.forwardAlternativeButton) ImageButton forwardAlternativeButton;
     private FloorBitmap floorBitmap;
     private Paint paintStyle;
 
     private Coordinate2D startingNode = new Coordinate2D();
-    private static final String STARTING_NODE_X = "textValueX";
-    private static final String STARTING_NODE_Y = "textValueY";
-    //Bitmap bitmap;
 
 
-    private static final String EXTRA_RX = "EXTRA_RX";
-    private ServerService service;
-    private boolean rxCallInWorks = false;
 
     /**
      * Instantiate a presenter instance
@@ -70,69 +72,109 @@ public class ItineraryActivity extends CommonBehaviourActivity<ItineraryView,Iti
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        if (savedInstanceState != null) {// Non funziona
-            Float savedX = savedInstanceState.getFloat(STARTING_NODE_X);
-            startingNode.setX(savedX);
-            Float savedY = savedInstanceState.getFloat(STARTING_NODE_Y);
-            startingNode.setY(savedY);
+
+        // Leggo stato Best/Alternative Path
+        SharedPreferences wmbPreference = PreferenceManager.getDefaultSharedPreferences(this); // TODO: Usare shared Betta
+        boolean showBestPath = wmbPreference.getBoolean("BEST_PATH_UI", true);
+
+        Graph.CostPathPair shortestPath = getShortestPath();
+
+        if (showBestPath) {
+            getBestPath();
+        }else {
+            getAlternativePath();
         }
 
-/*
-        if(getEmergencyState()){
-            showShortestPathEmergency();
-        }else{
-            showShortestPathNoEmergency();
+
+
+
+        if(presenter.getBooleanPrintStairsMessage()){
+            Toast.makeText(this,getResources().getString(R.string.stairs_message) + " " + presenter.getPrintStairsMessage(), Toast.LENGTH_LONG).show();
         }
-*/
-        setPaintStyle(Color.RED);
-        floorBitmap = new FloorBitmap(getResources(),getFloorBitmap(),getFloorPath(getShortestPath()),getPaintStyle());
-        startingNode = presenter.getStartingNode(); // TODO: Vedere se funziona
 
-        floorBitmap.setPlaceIconNode(startingNode);
-
-        pathImageView.setImageDrawable(floorBitmap);
-
-        if(savedInstanceState!=null){
-            rxCallInWorks = savedInstanceState.getBoolean(EXTRA_RX);
+        if(shortestPath.getCost()==0){
+            Toast.makeText(this, getResources().getString(R.string.arrived_message), Toast.LENGTH_LONG).show();
         }
+
     }
 
-    @Override
-    protected void onSaveInstanceState (Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putFloat(STARTING_NODE_X, startingNode.getX());
-        outState.putFloat(STARTING_NODE_Y, startingNode.getY());
+
+    /**
+     * Stampa percorso alternativo (Alternative Path)
+     */
+    @OnClick(R.id.alterntivePathButton)
+    public void getAlternativePath(){
+
+        // Salvo stato Best/Alternative Path
+        setAlternativePathUI();
+
+        Graph.CostPathPair alternativePath = presenter.getAlternativePath();
+        setPaintStyle(Color.BLUE);
+        floorBitmap = new FloorBitmap(getResources(),getFloorBitmap(),getFloorPath(alternativePath),getPaintStyle());
+        startingNode = presenter.getStartingNode();
+        floorBitmap.setPlaceIconNode(startingNode);
+        pathImageView.setImageDrawable(floorBitmap);
+
+        showAlternativeButton();
+    }
+
+    /**
+     * Stampa percorso migliore (Shortest/Best Path)
+     */
+    @OnClick(R.id.bestPathButton)
+    public void getBestPath(){
+        // Salvo stato Best/Alternative Path
+        setBestPathUI();
+
+        setPaintStyle(Color.RED);
+        floorBitmap = new FloorBitmap(getResources(), getFloorBitmap(), getFloorPath(getShortestPath()), getPaintStyle());
+        startingNode = presenter.getStartingNode();
+        floorBitmap.setPlaceIconNode(startingNode);
+        pathImageView.setImageDrawable(floorBitmap);
+
+        showBestButton();
     }
 
     /**
      * Aggiorna posizione successiva ed effettua il ricalcolo (comprese modifiche FloorBitmap
      */
-    @OnClick(R.id.forwardButton)
+    @OnClick(R.id.forwardBestButton)
     public void clickForward(){
+        setPaintStyle(Color.RED);
         List<Graph.Edge> shortestPath = getShortestPath().getPath();
         if (shortestPath.size()>0) {
             Graph.Vertex nextDepartureDijkstra = shortestPath.get(0).getToVertex();
             String DepNextString = nextDepartureDijkstra.getValue().toString();
             presenter.setUserDeparture(DepNextString);
-            floorBitmap = new FloorBitmap(getResources(),getFloorBitmap(),getFloorPath(getShortestPath()),getPaintStyle());
 
+            setPaintStyle(Color.RED);
+            Graph.CostPathPair forwardShortestPath = getShortestPath();
+            floorBitmap = new FloorBitmap(getResources(),getFloorBitmap(),getFloorPath(forwardShortestPath),getPaintStyle());
             startingNode = presenter.getStartingNode();
             floorBitmap.setPlaceIconNode(startingNode);
-
             pathImageView.setImageDrawable(floorBitmap);
-            Integer departureQuote = presenter.getDeparture().getQuote();
-            Integer destinationQuote = presenter.getDestinationNodeDao().getQuote();
+
             if(presenter.getBooleanPrintStairsMessage()){
                 Toast.makeText(this,getResources().getString(R.string.stairs_message) + " " + presenter.getPrintStairsMessage(), Toast.LENGTH_LONG).show();
             }
 
         }
         if(shortestPath.size()<=1){
-            startingNode = presenter.getDestinationNode();
+            setPaintStyle(Color.RED);
+
+            if(shortestPath.size()==0) {
+                startingNode = presenter.getDestinationNode();
+            }
             floorBitmap.setPlaceIconNode(startingNode);
             Toast.makeText(this, getResources().getString(R.string.arrived_message), Toast.LENGTH_LONG).show();
 
         }
+    }
+
+    @OnClick(R.id.forwardAlternativeButton)
+    public void clickAlternativeForward() {
+        setPaintStyle(Color.BLUE);
+        // TODO: Scorrere (non ricalcolo) alternative path precedentemente calcolato
     }
 
 
@@ -147,8 +189,13 @@ public class ItineraryActivity extends CommonBehaviourActivity<ItineraryView,Iti
         super.onResume();
     }
 
+    /**
+     * Esegue il calcolo vero e proprio del percorso richiamando le rispettive funzioni Dijkstra
+     * a seconda dello stato di emergenza (emergencyState)
+     * @return
+     */
     @Override
-    public Graph.CostPathPair getShortestPath(){ // Esegue il calcolo vero e proprio
+    public Graph.CostPathPair getShortestPath(){
         Graph.CostPathPair shortestPath;
         if(getEmergencyState()){
             shortestPath = presenter.getEmergencyShortestPath(
@@ -161,42 +208,6 @@ public class ItineraryActivity extends CommonBehaviourActivity<ItineraryView,Iti
                     false);
         }
         return shortestPath;
-    }
-
-
-
-    @Override
-    public void showShortestPathNoEmergency(){ // TODO: Da eliminare
-        /*
-        Graph.CostPathPair shortestPath = presenter.getShortestPath(
-                presenter.getDepartureCode(),
-                presenter.getDestination(),
-                false);
-
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, shortestPath.getPath());
-
-        pathListView.setAdapter(adapter);
-        */
-
-    }
-
-    @Override
-    public void showShortestPathEmergency() { // TODO: Da eliminare
-        /*
-        Graph.CostPathPair shortestPath = presenter.getEmergencyShortestPath(
-                presenter.getDepartureCode(),
-                presenter.getEmergencyDestinations());
-
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, shortestPath.getPath());//TODO: Far ritornare List<Edge> (Edge del greenDAO)
-
-        pathListView.setAdapter(adapter);
-
-*/
-
     }
 
     protected Bitmap getFloorBitmap(){
@@ -241,5 +252,19 @@ public class ItineraryActivity extends CommonBehaviourActivity<ItineraryView,Iti
     private Boolean getEmergencyState(){
         Boolean emergencyState = getIntent().getBooleanExtra("emergencyState",true);
         return emergencyState;
+    }
+
+    private void showBestButton(){
+        forwardBestButton.setVisibility(View.VISIBLE);
+        forwardAlternativeButton.setVisibility(View.GONE);
+        bestPathButton.setVisibility(View.GONE);
+        alternativePathButton.setVisibility(View.VISIBLE);
+    }
+
+    private void showAlternativeButton(){
+        forwardBestButton.setVisibility(View.GONE);
+        forwardAlternativeButton.setVisibility(View.VISIBLE);
+        bestPathButton.setVisibility(View.VISIBLE);
+        alternativePathButton.setVisibility(View.GONE);
     }
 }

@@ -1,6 +1,8 @@
 package com.emergencyescape.commonbehaviour;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -35,21 +37,23 @@ public abstract class CommonBehaviourActivity<V extends CommonBehaviourView, P e
     public boolean onOptionsItemSelected(MenuItem item) {
 
         int id = item.getItemId();
-
-
+        
         if(id == R.id.action_emtext){
+            setBestPathUI();
             Intent intent = new Intent(this,TextDepartureActivity.class).putExtra("emergencyState",true);
             startActivity(intent);
             return true;
         }
 
         if(id == R.id.action_emtap){
+            setBestPathUI();
             Intent intent = new Intent(this,TapActivity.class).putExtra("emergencyState",true);
             startActivity(intent);
             return true;
         }
 
         if(id == R.id.action_emqr){
+            setBestPathUI();
             Intent intent = new Intent("com.google.zxing.client.android.SCAN");
             intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
             emergencyState = true;
@@ -59,18 +63,21 @@ public abstract class CommonBehaviourActivity<V extends CommonBehaviourView, P e
 
 
         if(id == R.id.action_noemtext){
+            setBestPathUI();
             Intent intent = new Intent(this,TextDepartureActivity.class).putExtra("emergencyState",false);
             startActivity(intent);
             return true;
         }
 
         if(id == R.id.action_noemtap){
+            setBestPathUI();
             Intent intent = new Intent(this,TapActivity.class).putExtra("emergencyState",false);
             startActivity(intent);
             return true;
         }
 
         if(id == R.id.action_noemqr){
+            setBestPathUI();
             Intent intent = new Intent("com.google.zxing.client.android.SCAN");
             intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
             emergencyState = false;
@@ -92,17 +99,27 @@ public abstract class CommonBehaviourActivity<V extends CommonBehaviourView, P e
                 }
             return true;
         }
-
         return super.onOptionsItemSelected(item);
+    }
+
+    protected void setBestPathUI(){
+        SharedPreferences wmbPreference = PreferenceManager.getDefaultSharedPreferences(this); // TODO: Usare shared Betta
+        SharedPreferences.Editor editor = wmbPreference.edit();
+        editor.putBoolean("BEST_PATH_UI", true);
+        editor.commit();
+    }
+
+    protected void setAlternativePathUI(){
+        SharedPreferences wmbPreference = PreferenceManager.getDefaultSharedPreferences(this); // TODO: Usare shared Betta
+        SharedPreferences.Editor editor = wmbPreference.edit();
+        editor.putBoolean("BEST_PATH_UI", false);
+        editor.commit();
     }
 
     public boolean onCreateOptionsMenu(Menu menu) { // Action bar
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.activity_main_actions, menu);
         return super.onCreateOptionsMenu(menu);
-
-
-
     }
 
     @Override
@@ -121,7 +138,4 @@ public abstract class CommonBehaviourActivity<V extends CommonBehaviourView, P e
             }
         }
     }
-
-
-
 }

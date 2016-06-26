@@ -28,7 +28,7 @@ import rx.Subscription;
  * Db2Dijkstra
  * Classe che popola le classi Graph, Vertex, Edge del package Dijkstra con i valori del DB
  */
-public class Db2Dijkstra {
+public class    Db2Dijkstra {
     private String LOG = this.toString();
     private DaoSession daoSession = MyApplication.getSession();
     private NodeDao nodeDao = daoSession.getNodeDao();

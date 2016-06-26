@@ -44,4 +44,6 @@
     <string name="error_qr">Errore nel codificare il QR-code, inserire un QR-code valido.</string>
     <string name="arrived_message">Sei arrivato a destinazione!</string>
     <string name="stairs_message">Vai a quota</string>
+    <string name="action_second_path">Calcola percorso alternativo</string>
+    <string name="action_best_path">Calcola percorso migliore</string>
 </resources>

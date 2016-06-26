@@ -60,7 +60,7 @@ public class Server2Db {
     private DBHelper dbHelper = MyApplication.getInstance().getDbHelper();
     private SQLiteDatabase db = null;
 
-    private String mapName ="univpm_mod"; //TODO: Collegare col model
+    private String mapName ="univpm_valori_casuali"; //TODO: Collegare col model
     private String token = "12m2t7oc43godndv767tkj9hue";
 
     public void downloadFromUrl(String DownloadUrl, String fileName) { // TODO: Sistemare query DB

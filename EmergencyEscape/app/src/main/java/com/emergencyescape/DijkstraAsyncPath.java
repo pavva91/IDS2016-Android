@@ -1,16 +1,12 @@
-package com.emergencyescape.itinerary;
+package com.emergencyescape;
 /**
- * Created by Valerio Mattioli on 24/05/2016.
+ * Created by Valerio Mattioli on 25/06/2016.
  */
 
 import android.content.Context;
 import android.graphics.Path;
+import android.os.AsyncTask;
 
-import com.emergencyescape.Coordinate2D;
-import com.emergencyescape.DeviceDimensionsHelper;
-import com.emergencyescape.FloorPathHelper;
-import com.emergencyescape.MyApplication;
-import com.emergencyescape.commonbehaviour.CommonBehaviourPresenter;
 import com.emergencyescape.dijkstra.Db2Dijkstra;
 import com.emergencyescape.dijkstra.Dijkstra;
 import com.emergencyescape.dijkstra.Graph;
@@ -26,10 +22,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * com.emergencyescape.itinerary
- * ItineraryPresenter
+ * com.emergencyescape
+ * DijkstraAsyncPath
  */
-public class ItineraryPresenter extends CommonBehaviourPresenter<ItineraryView> implements ItineraryPresenterInterface {
+public class DijkstraAsyncPath extends AsyncTask{
 
     private Context context = MyApplication.getInstance().getApplicationContext();
     private DaoSession daoSession = MyApplication.getSession();
@@ -48,7 +44,7 @@ public class ItineraryPresenter extends CommonBehaviourPresenter<ItineraryView> 
     public Graph dijkstraGraph;
     public Db2Dijkstra db2Dijkstra;
 
-    @Override
+
     public String getDepartureCode() {
         String userDeparture = "";
         List<User> allUser = userDao.loadAll(); // select *
@@ -60,7 +56,7 @@ public class ItineraryPresenter extends CommonBehaviourPresenter<ItineraryView> 
         return userDeparture;
     }
 
-    @Override
+
     public com.emergencyescape.greendao.Node getDeparture() {
         com.emergencyescape.greendao.Node userDeparture = new com.emergencyescape.greendao.Node();
         List<User> allUser = userDao.loadAll(); // select *
@@ -83,7 +79,7 @@ public class ItineraryPresenter extends CommonBehaviourPresenter<ItineraryView> 
         return userDestination;
     }
 
-    @Override
+
     public String getDestination() {
         String userDestination = "";
         List<User> allUser = userDao.loadAll();
@@ -95,11 +91,7 @@ public class ItineraryPresenter extends CommonBehaviourPresenter<ItineraryView> 
         return userDestination;
     }
 
-    /**
-     * Get All emergency destinations in DB
-     * @return
-     */
-    @Override
+
     public List<String> getEmergencyDestinations() {
         String singleEmergencyExit;
         List<String> allEmergencyExit = new ArrayList<>();
@@ -113,7 +105,6 @@ public class ItineraryPresenter extends CommonBehaviourPresenter<ItineraryView> 
         return allEmergencyExit;
     }
 
-    @Override
     public Graph.CostPathPair getEmergencyShortestPath(String departure, List<String> allEmergencyExit) {
         List<Graph.CostPathPair> allEmergencyPath = new ArrayList<>();
         Graph.CostPathPair shortestPath = new Graph.CostPathPair(0, new ArrayList<>());
@@ -131,22 +122,13 @@ public class ItineraryPresenter extends CommonBehaviourPresenter<ItineraryView> 
                 shortestPath = allEmergencyPath.get(allEmergencyPath.size()-1);
             }
         }
-        this.shortestPath = shortestPath;
-        List<Graph.Edge> path = shortestPath.getPath();
-        if (path.size()!=0) {
-            Graph.Edge lastEdge = path.get(path.size() - 1);
-            Graph.Vertex destinationVertex = lastEdge.getToVertex();
-            setUserDestination(destinationVertex.getValue().toString());
-        }
-
         return shortestPath;
     }
 
-    @Override
     public Graph.CostPathPair getShortestPath(String departure, String destination, Boolean emergencyState) {
         Db2Dijkstra db2Dijkstra = new Db2Dijkstra(emergencyState);
         Graph graph = new Graph(db2Dijkstra.getVertexList(),db2Dijkstra.getEdgeDijkstraList());
-        Graph.CostPathPair shortestPath = Dijkstra.getShortestPath( // TODO: Spostare AsyncTask
+        Graph.CostPathPair shortestPath = Dijkstra.getShortestPath(
                 graph,
                 db2Dijkstra.getVertex(departure),
                 db2Dijkstra.getVertex(destination));
@@ -161,38 +143,37 @@ public class ItineraryPresenter extends CommonBehaviourPresenter<ItineraryView> 
      * @return
      */
     public Graph.CostPathPair getAlternativePath(){
+
+        // PERCHE' NON FUNZIONA!!!
         List<Graph.Edge> path = shortestPath.getPath();
-        if (path.size()!=0) {
-            Graph.Vertex fromVertex = path.get(0).getFromVertex();
-            Graph.Vertex toVertex = path.get(0).getToVertex();
-            Graph originalGraph = this.dijkstraGraph;
-            List<Graph.Edge> edgeList = originalGraph.getEdges();
-            List<Graph.Vertex> vertexList = originalGraph.getVertices();
-            List<Graph.Edge> modifiedEdgeList = new ArrayList<>();
+        Graph.Vertex fromVertex = path.get(0).getFromVertex();
+        Graph.Vertex toVertex = path.get(0).getToVertex();
+        Graph originalGraph = this.dijkstraGraph;
+        List<Graph.Edge> edgeList = originalGraph.getEdges();
+        List<Graph.Vertex> vertexList = originalGraph.getVertices();
+        List<Graph.Edge> modifiedEdgeList = new ArrayList<>();
 
-            int i = 0;
-            for (Graph.Edge edge : edgeList) {
-                Comparable edgeToValue = edge.getToVertex().getValue();
-                Comparable edgeFromValue = edge.getFromVertex().getValue();
+        int i = 0;
+        for (Graph.Edge edge : edgeList){
+            Comparable edgeToValue = edge.getToVertex().getValue();
+            Comparable edgeFromValue = edge.getFromVertex().getValue();
 
-                Comparable fromValue = fromVertex.getValue();
-                Comparable ToValue = toVertex.getValue();
+            Comparable fromValue = fromVertex.getValue();
+            Comparable ToValue = toVertex.getValue();
 
-                if ((edgeFromValue.equals(fromValue) && edgeToValue.equals(ToValue)) || (edgeFromValue.equals(ToValue) && edgeToValue.equals(fromValue))) {
-                    edge.setCost(99999); // Valore troppo grosso con Integer.MAX_VALUE, va in overflow
-                }
-                modifiedEdgeList.add(edge);
-                i = i + 1;
+            if (edgeFromValue.equals(fromValue) && edgeToValue.equals(ToValue)){
+                edge.setCost(Integer.MAX_VALUE);
+
             }
-            Graph modifiedGraph = new Graph(Graph.TYPE.DIRECTED, vertexList, modifiedEdgeList);
-            Graph.CostPathPair alternativePath = Dijkstra.getShortestPath(
-                    modifiedGraph,
-                    db2Dijkstra.getVertex(getDepartureCode()),
-                    db2Dijkstra.getVertex(getDestination()));
-            return alternativePath;
-        }else{
-            return shortestPath;
+            modifiedEdgeList.add(edge);
+            i = i +1;
         }
+        Graph modifiedGraph = new Graph(Graph.TYPE.DIRECTED , vertexList , modifiedEdgeList);
+        Graph.CostPathPair alternativePath = Dijkstra.getShortestPath(
+                modifiedGraph,
+                db2Dijkstra.getVertex(getDepartureCode()),
+                db2Dijkstra.getVertex(getDestination()));
+        return alternativePath;
     }
 
     /**
@@ -200,47 +181,31 @@ public class ItineraryPresenter extends CommonBehaviourPresenter<ItineraryView> 
      * @param shortestPath risultato alggoritmo Dijkstra
      * @return graphics.Path
      */
-    @Override
     public Path getScaledPath(Graph.CostPathPair shortestPath){
         booleanPrintStairsMessage = false;
         FloorPathHelper pathHelper = new FloorPathHelper();
         // Old: List<Edge> edgeDaoPath = getShortestPathCoordinates(shortestPath); // Shortest Path di Edge (problema grafo che si ripercuote su Coordinates
-        List<Coordinate2D> pathCoordinates = getShortestPathCoordinates(shortestPath);
+        List<Coordinate2D> pathCoordinates = getShortestPathCoordinates(shortestPath); //
         List<Coordinate2D> floorPathCoordinates = new ArrayList<>(); // path del piano di departure
         Path pathToPrint = new Path(); // Path da mandare in stampa
         List<Coordinate2D> pathPrintCoordinates;
         com.emergencyescape.greendao.Node departureNode = getDeparture();
         Integer quoteInteger = departureNode.getQuote();
 
-
-        boolean dontComeBackInFloor = false;
         int i = 0;
         int j = 0;
         // TODO: Sistemare Bug che riprende nodi successivi del piano (es: quando un path fa 145-150-145 di stampare solo i primi nodi di 145 e non i secondi)
         for(Coordinate2D singleNodeCoordinates : pathCoordinates){ // Prendo solo i nodi del piano
             Integer quoteNode = singleNodeCoordinates.getQuote();
-            if(quoteNode.equals(quoteInteger) && !dontComeBackInFloor){
+            if(quoteNode.equals(quoteInteger)){
                 floorPathCoordinates.add(singleNodeCoordinates);
                 j=i;
-                if (pathCoordinates.size()>i+1) {
-                    if (!pathCoordinates.get(i+1).getQuote().equals(quoteInteger)) {
-                        dontComeBackInFloor = true;
-                    }
-                }
             }
             i = i +1;
         }
         if (floorPathCoordinates.size()==1 && pathCoordinates.size()>1){ // Controllo per stampare indicazione scale
             printStairsMessage = pathCoordinates.get(j+1).getQuote().toString();
             booleanPrintStairsMessage = true;
-        }
-
-        if (floorPathCoordinates.size()==0){ // TODO: Risolve assegnamento partenza quando path nullo
-            Coordinate2D departureCoordinate = new Coordinate2D();
-            departureCoordinate.setX((float)departureNode.getX());
-            departureCoordinate.setY((float)departureNode.getY());
-            departureCoordinate.setQuote(quoteInteger);
-            floorPathCoordinates.add(departureCoordinate);
         }
 
         if(quoteInteger==145){
@@ -334,15 +299,24 @@ public class ItineraryPresenter extends CommonBehaviourPresenter<ItineraryView> 
                 depDaoValue = departureNode.getCode();
                 destinationDaoValue = destinationNode.getCode();
 
-                if ((depDaoValue.equals(depDijkstraValue) && destinationDaoValue.equals(destinationDijkstraValue))|| (depDaoValue.equals(destinationDijkstraValue) && destinationDaoValue.equals(depDijkstraValue)) ){
+                if ((depDaoValue == depDijkstraValue && destinationDaoValue == destinationDijkstraValue) || (depDaoValue == destinationDijkstraValue && destinationDaoValue == depDijkstraValue ) ){ //  && (destinationDaoValue == destinationDijkstraValue)
 
+                    //edgeDaoPath.add(edgeDao);
+                        /* TODO: Non dimenticare quanto sei stato coglione:
+                                                    Non funziona bene
+                                                    Salta valori, forse ciclo troppo grosso e va in overflow
+                                                    trovare modo per non andare in overflow, per il resto sembra funzionare
+                                                    non sembra andare in overflow, se metto solo una condizione funziona
+                                                    guardare perché colori arancione/verde variabili
+                                                    TROVATO BUG: IL GRAFO DAO è ORIENTATO - IL GRAFO DIJKSTRA è NON ORIENTATO
+                                                    SONO UN DEFICIENTE*/
 
                     // TODO: Ora quel problema dei due grafi devo sistemarlo anche per andare a prendere le coordinate, lo devo fare qui dentro
 
 
                     if(firstNode) {
                         Coordinate2D singleFirstNode = new Coordinate2D();
-                        if (depDaoValue.equals(depDijkstraValue)) {
+                        if (depDaoValue == depDijkstraValue) {
                             singleFirstNode.setX((float) edgeDao.getDepartureToOne().getX());
                             singleFirstNode.setY((float) edgeDao.getDepartureToOne().getY());
                             singleFirstNode.setQuote(edgeDao.getDepartureToOne().getQuote());
@@ -355,7 +329,7 @@ public class ItineraryPresenter extends CommonBehaviourPresenter<ItineraryView> 
                         firstNode = false;
                     }
                     Coordinate2D singleNode = new Coordinate2D();
-                    if (depDaoValue.equals(depDijkstraValue)) {
+                    if (depDaoValue == depDijkstraValue) {
                         singleNode.setX((float) edgeDao.getDestinationToOne().getX());
                         singleNode.setY((float) edgeDao.getDestinationToOne().getY());
                         singleNode.setQuote(edgeDao.getDestinationToOne().getQuote());
@@ -371,34 +345,22 @@ public class ItineraryPresenter extends CommonBehaviourPresenter<ItineraryView> 
         return pathCoordinates;
     }
 
-
-
-    public Long getNodeIdFromName(String nodeName){
+    public Long getDepartureIdFromName(String departureName){
         List<Node> allNodes = nodeDao.loadAll();
-        Long nodeId = -1L;
+        Long departureId = -1L;
         for (Node singleNode : allNodes) {
-            if(singleNode.getCode().equalsIgnoreCase(nodeName)){
-                nodeId = singleNode.getId();
+            if(singleNode.getCode().equalsIgnoreCase(departureName)){
+                departureId = singleNode.getId();
             }
         }
-        return nodeId;
+        return departureId;
     }
 
     public void setUserDeparture(String departure) { // TODO: Aggiornare anche il Server
         List<User> allUser = userDao.loadAll();
         for (User singleUser : allUser) {
             if(singleUser.getName().equalsIgnoreCase("vale")){
-                singleUser.setDepartureId(this.getNodeIdFromName(departure));
-                userDao.update(singleUser);
-            }
-        }
-    }
-
-    public void setUserDestination(String destination) { // TODO: Aggiornare anche il Server
-        List<User> allUser = userDao.loadAll();
-        for (User singleUser : allUser) {
-            if(singleUser.getName().equalsIgnoreCase("vale")){
-                singleUser.setDestinationId(this.getNodeIdFromName(destination));
+                singleUser.setDepartureId(this.getDepartureIdFromName(departure));
                 userDao.update(singleUser);
             }
         }
@@ -419,7 +381,24 @@ public class ItineraryPresenter extends CommonBehaviourPresenter<ItineraryView> 
     public boolean getBooleanPrintStairsMessage(){
         return booleanPrintStairsMessage;
     }
+
+
+    /**
+     * Override this method to perform a computation on a background thread. The
+     * specified parameters are the parameters passed to {@link #execute}
+     * by the caller of this task.
+     * <p>
+     * This method can call {@link #publishProgress} to publish updates
+     * on the UI thread.
+     *
+     * @param params The parameters of the task.
+     * @return A result, defined by the subclass of this task.
+     * @see #onPreExecute()
+     * @see #onPostExecute
+     * @see #publishProgress
+     */
+    @Override
+    protected Object doInBackground(Object[] params) {
+        return null;
+    }
 }
-
-
-

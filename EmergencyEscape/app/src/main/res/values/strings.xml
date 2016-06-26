@@ -90,6 +90,8 @@
     <string name="error_qr">An error occoured when decoding the QR-code, not a QR-code.</string>
     <string name="arrived_message">You arrived to destination!</string>
     <string name="stairs_message">Go to quote</string>
+    <string name="action_second_path">Get alternative path</string>
+    <string name="action_best_path">Get best path</string>
 
 
 </resources>
