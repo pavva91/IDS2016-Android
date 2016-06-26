@@ -37,7 +37,7 @@ public abstract class CommonBehaviourActivity<V extends CommonBehaviourView, P e
     public boolean onOptionsItemSelected(MenuItem item) {
 
         int id = item.getItemId();
-        
+
         if(id == R.id.action_emtext){
             setBestPathUI();
             Intent intent = new Intent(this,TextDepartureActivity.class).putExtra("emergencyState",true);

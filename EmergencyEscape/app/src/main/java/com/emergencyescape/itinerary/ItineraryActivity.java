@@ -25,12 +25,12 @@ import com.emergencyescape.commonbehaviour.CommonBehaviourActivity;
 import com.emergencyescape.dijkstra.Graph;
 import com.emergencyescape.greendao.Node;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.OnFocusChange;
 
 
 public class ItineraryActivity extends CommonBehaviourActivity<ItineraryView,ItineraryPresenter> implements ItineraryView {
@@ -82,6 +82,8 @@ public class ItineraryActivity extends CommonBehaviourActivity<ItineraryView,Iti
         if (showBestPath) {
             getBestPath();
         }else {
+            // TODO: Prima di effettuare il ricalcolo deve andare a cercare alternativePath, se è già stato calcolato stamparlo
+            // altrimenti effettuare ricalcolo (getAlternativePath)
             getAlternativePath();
         }
 
@@ -108,7 +110,7 @@ public class ItineraryActivity extends CommonBehaviourActivity<ItineraryView,Iti
         // Salvo stato Best/Alternative Path
         setAlternativePathUI();
 
-        Graph.CostPathPair alternativePath = presenter.getAlternativePath();
+        Graph.CostPathPair alternativePath = presenter.calculateAlternativePath();
         setPaintStyle(Color.BLUE);
         floorBitmap = new FloorBitmap(getResources(),getFloorBitmap(),getFloorPath(alternativePath),getPaintStyle());
         startingNode = presenter.getStartingNode();
@@ -136,19 +138,19 @@ public class ItineraryActivity extends CommonBehaviourActivity<ItineraryView,Iti
     }
 
     /**
-     * Aggiorna posizione successiva ed effettua il ricalcolo (comprese modifiche FloorBitmap
+     * Aggiorna posizione successiva ed effettua il ricalcolo (comprese modifiche FloorBitmap)
      */
     @OnClick(R.id.forwardBestButton)
     public void clickForward(){
         setPaintStyle(Color.RED);
         List<Graph.Edge> shortestPath = getShortestPath().getPath();
         if (shortestPath.size()>0) {
-            Graph.Vertex nextDepartureDijkstra = shortestPath.get(0).getToVertex();
+            Graph.Vertex nextDepartureDijkstra = shortestPath.get(0).getToVertex(); // Scorre la posizione di partenza
             String DepNextString = nextDepartureDijkstra.getValue().toString();
             presenter.setUserDeparture(DepNextString);
 
             setPaintStyle(Color.RED);
-            Graph.CostPathPair forwardShortestPath = getShortestPath();
+            Graph.CostPathPair forwardShortestPath = getShortestPath(); // Ricalcola il bestPath con la nuova posizione
             floorBitmap = new FloorBitmap(getResources(),getFloorBitmap(),getFloorPath(forwardShortestPath),getPaintStyle());
             startingNode = presenter.getStartingNode();
             floorBitmap.setPlaceIconNode(startingNode);
@@ -167,14 +169,61 @@ public class ItineraryActivity extends CommonBehaviourActivity<ItineraryView,Iti
             }
             floorBitmap.setPlaceIconNode(startingNode);
             Toast.makeText(this, getResources().getString(R.string.arrived_message), Toast.LENGTH_LONG).show();
-
         }
     }
 
+    /**
+     * Aggiorna a posizione successiva e scorre alternativePath (calcolato in precedenza in getAlternativePath)
+     * senza effettuare ricalcolo (comprese modifiche FloorBitmap)
+     */
     @OnClick(R.id.forwardAlternativeButton)
     public void clickAlternativeForward() {
         setPaintStyle(Color.BLUE);
         // TODO: Scorrere (non ricalcolo) alternative path precedentemente calcolato
+        // TODO: Aggiornare posizione partenza utente
+        // TODO: Gestire il refresh activity
+        Graph.CostPathPair alternative = presenter.getAlternativePath();
+        List<Graph.Edge> alternativePath = alternative.getPath();
+        if (alternativePath.size()>0) {
+            Graph.Vertex nextDepartureDijkstra = alternativePath.get(0).getToVertex();
+            String DepNextString = nextDepartureDijkstra.getValue().toString();
+            presenter.setUserDeparture(DepNextString);
+
+            boolean firstEdge = true;
+            int cost = 0;
+            List<Graph.Edge> forwardAlternativePath = new ArrayList<>();
+            for (Graph.Edge edge : alternativePath){ // Scorre semplicemente il path calcolato in precedenza senza ricalcolarlo
+                if (!firstEdge){
+                    forwardAlternativePath.add(edge);
+                    cost = cost + edge.getCost();
+                }
+                firstEdge = false;
+            }
+
+            Graph.CostPathPair forwardAlternative = new Graph.CostPathPair(cost,forwardAlternativePath);
+
+            setPaintStyle(Color.BLUE);
+            floorBitmap = new FloorBitmap(getResources(),getFloorBitmap(),getFloorPath(forwardAlternative),getPaintStyle());
+            startingNode = presenter.getStartingNode();
+            floorBitmap.setPlaceIconNode(startingNode);
+            pathImageView.setImageDrawable(floorBitmap);
+
+            if(presenter.getBooleanPrintStairsMessage()){
+                Toast.makeText(this,getResources().getString(R.string.stairs_message) + " " + presenter.getPrintStairsMessage(), Toast.LENGTH_LONG).show();
+            }
+
+            presenter.setAlternativePath(forwardAlternative);
+
+        }
+        if(alternativePath.size()<=1){
+            setPaintStyle(Color.RED);
+
+            if(alternativePath.size()==0) {
+                startingNode = presenter.getDestinationNode();
+            }
+            floorBitmap.setPlaceIconNode(startingNode);
+            Toast.makeText(this, getResources().getString(R.string.arrived_message), Toast.LENGTH_LONG).show();
+        }
     }
 
 

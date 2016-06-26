@@ -48,13 +48,10 @@ public class MapPresenter extends CommonBehaviourPresenter<TapView> {
         Drawable drawable = MyApplication.context.getResources().getDrawable(R.drawable.q145);
         if(floor.equalsIgnoreCase("145")) {
             drawable = MyApplication.context.getResources().getDrawable(R.drawable.q145);
-
         }else if(floor.equalsIgnoreCase("150")) {
             drawable = MyApplication.context.getResources().getDrawable(R.drawable.q150);
-
         }else if(floor.equalsIgnoreCase("155")) {
             drawable = MyApplication.context.getResources().getDrawable(R.drawable.q155);
-
         }
         return drawable;
     }

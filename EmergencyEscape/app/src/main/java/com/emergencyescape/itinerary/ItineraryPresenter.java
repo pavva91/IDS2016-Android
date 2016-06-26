@@ -45,6 +45,7 @@ public class ItineraryPresenter extends CommonBehaviourPresenter<ItineraryView> 
     private boolean booleanPrintStairsMessage = false;
 
     public Graph.CostPathPair shortestPath;
+    private Graph.CostPathPair alternativePath;
     public Graph dijkstraGraph;
     public Db2Dijkstra db2Dijkstra;
 
@@ -160,7 +161,7 @@ public class ItineraryPresenter extends CommonBehaviourPresenter<ItineraryView> 
      * Calcola il peroorso alternativo assegnando un costo infinito al primo arco del shortestPath
      * @return
      */
-    public Graph.CostPathPair getAlternativePath(){
+    public Graph.CostPathPair calculateAlternativePath(){
         List<Graph.Edge> path = shortestPath.getPath();
         if (path.size()!=0) {
             Graph.Vertex fromVertex = path.get(0).getFromVertex();
@@ -189,6 +190,7 @@ public class ItineraryPresenter extends CommonBehaviourPresenter<ItineraryView> 
                     modifiedGraph,
                     db2Dijkstra.getVertex(getDepartureCode()),
                     db2Dijkstra.getVertex(getDestination()));
+            this.alternativePath = alternativePath;
             return alternativePath;
         }else{
             return shortestPath;
@@ -216,8 +218,7 @@ public class ItineraryPresenter extends CommonBehaviourPresenter<ItineraryView> 
         boolean dontComeBackInFloor = false;
         int i = 0;
         int j = 0;
-        // TODO: Sistemare Bug che riprende nodi successivi del piano (es: quando un path fa 145-150-145 di stampare solo i primi nodi di 145 e non i secondi)
-        for(Coordinate2D singleNodeCoordinates : pathCoordinates){ // Prendo solo i nodi del piano
+        for(Coordinate2D singleNodeCoordinates : pathCoordinates){ // Prendo solo i nodi del piano al primo giro
             Integer quoteNode = singleNodeCoordinates.getQuote();
             if(quoteNode.equals(quoteInteger) && !dontComeBackInFloor){
                 floorPathCoordinates.add(singleNodeCoordinates);
@@ -235,7 +236,7 @@ public class ItineraryPresenter extends CommonBehaviourPresenter<ItineraryView> 
             booleanPrintStairsMessage = true;
         }
 
-        if (floorPathCoordinates.size()==0){ // TODO: Risolve assegnamento partenza quando path nullo
+        if (floorPathCoordinates.size()==0){ // Risolve assegnamento partenza quando path nullo
             Coordinate2D departureCoordinate = new Coordinate2D();
             departureCoordinate.setX((float)departureNode.getX());
             departureCoordinate.setY((float)departureNode.getY());
@@ -294,7 +295,6 @@ public class ItineraryPresenter extends CommonBehaviourPresenter<ItineraryView> 
                 }
             }
             return pathToPrint;
-
         }
         return new Path();
     }
@@ -318,7 +318,6 @@ public class ItineraryPresenter extends CommonBehaviourPresenter<ItineraryView> 
         List<Coordinate2D> pathCoordinates = new ArrayList<>();
         boolean firstNode = true;
 
-
         for (Graph.Edge edge : edgeDijkstraPath) {
             Graph.Vertex departureVertex = edge.getFromVertex();
             Graph.Vertex destinationVertex = edge.getToVertex(); // CODE (String)
@@ -334,12 +333,7 @@ public class ItineraryPresenter extends CommonBehaviourPresenter<ItineraryView> 
                 depDaoValue = departureNode.getCode();
                 destinationDaoValue = destinationNode.getCode();
 
-                if ((depDaoValue.equals(depDijkstraValue) && destinationDaoValue.equals(destinationDijkstraValue))|| (depDaoValue.equals(destinationDijkstraValue) && destinationDaoValue.equals(depDijkstraValue)) ){
-
-
-                    // TODO: Ora quel problema dei due grafi devo sistemarlo anche per andare a prendere le coordinate, lo devo fare qui dentro
-
-
+                if ((depDaoValue.equals(depDijkstraValue) && destinationDaoValue.equals(destinationDijkstraValue)) || (depDaoValue.equals(destinationDijkstraValue) && destinationDaoValue.equals(depDijkstraValue))){
                     if(firstNode) {
                         Coordinate2D singleFirstNode = new Coordinate2D();
                         if (depDaoValue.equals(depDijkstraValue)) {
@@ -418,6 +412,13 @@ public class ItineraryPresenter extends CommonBehaviourPresenter<ItineraryView> 
 
     public boolean getBooleanPrintStairsMessage(){
         return booleanPrintStairsMessage;
+    }
+
+    public Graph.CostPathPair getAlternativePath(){
+        return this.alternativePath;
+    }
+    public void setAlternativePath(Graph.CostPathPair alternativePath){
+        this.alternativePath = alternativePath;
     }
 }
 
