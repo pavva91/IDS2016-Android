@@ -1,37 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-package="com.emergencyescape">
+    package="com.emergencyescape">
 
-<!-- To auto-complete the email text field in the login form with the user's emails
-<uses-permission android:name="android.permission.GET_ACCOUNTS" />
-<uses-permission android:name="android.permission.READ_PROFILE" />
-<uses-permission android:name="android.permission.READ_CONTACTS" />-->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.READ_PROFILE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <!-- servono per le push -->
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <permission android:name="it.html.googleservices.push.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+    <uses-permission android:name="it.html.googleservices.push.permission.C2D_MESSAGE" />
 
-
-<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-<uses-permission android:name="android.permission.INTERNET"/>
-<uses-permission android:name="android.permission.CAMERA"/>
-<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
+        android:name=".MyApplication"
         android:allowBackup="true"
-        android:icon="@drawable/logobar"
+        android:icon="@mipmap/emergency_escape_logo"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:name=".server.RxApplication"
         android:theme="@style/AppTheme">
         <activity
             android:name=".login.LoginActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".main.MainActivity"
-            android:label=" "
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
         <activity
             android:name=".text.TextDepartureActivity"
             android:label=" "
@@ -73,13 +79,41 @@ package="com.emergencyescape">
                 android:value=".main.MainActivity" />
         </activity>
         <activity
-            android:name=".tap.MapTapActivity"
+            android:name=".tap.MapActivity"
             android:label=" "
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".main.MainActivity" />
+                android:value=".tap.TapActivity" />
         </activity>
-        <activity android:name="registration.RegistraActivity" />
+        <activity
+            android:name=".settings.SettingsActivity"
+            android:parentActivityName=".main.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.emergencyescape.main.MainActivity" />
+        </activity>
+
+
+    <activity android:name=".registration.RegistraActivity" />
+
+
+    <!-- questi due ultimi tag servo per le push -->
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <receiver
+            android:name=".businesslogic.NotificationReceiver">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <category android:name="it.html.googleservices.push" />
+            </intent-filter>
+        </receiver>
+
+
+
     </application>
+
 </manifest>

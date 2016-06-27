@@ -23,7 +23,6 @@
         android:layout_alignStart="@+id/psw"
         android:layout_marginTop="33dp" />
 
-
     <EditText
         android:id="@+id/psw"
         android:layout_width="match_parent"
@@ -40,7 +39,6 @@
         android:layout_alignStart="@+id/remember"
         android:layout_marginTop="22dp" />
 
-
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -55,7 +53,6 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="@string/action_remember_me"
-
         android:id="@+id/remember"
         android:checked="false"
         android:layout_marginTop="31dp"
@@ -68,9 +65,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textStyle="bold"
-
         android:text="@string/action_sign_in"
-
         android:id="@+id/registra"
         android:clickable="true"
         android:layout_alignParentTop="true"
@@ -80,9 +75,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
         android:text="@string/action_log_in"
-
         android:id="@+id/loginbutton"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"

@@ -3,26 +3,30 @@ package com.emergencyescape.qr;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.StringRes;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.View;
+import android.widget.Toast;
 
 import com.emergencyescape.R;
 import com.emergencyescape.commonbehaviour.CommonBehaviourActivity;
+import com.emergencyescape.itinerary.ItineraryActivity;
+import com.emergencyescape.main.MainPresenter;
+import com.emergencyescape.main.MainView;
+import com.emergencyescape.text.TextDestinationActivity;
 import com.hannesdorfmann.mosby.mvp.MvpPresenter;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class QrActivity extends CommonBehaviourActivity {
+public class QrActivity extends CommonBehaviourActivity<QrView,QrPresenter> {
     @BindView(R.id.toolbar) Toolbar toolbar;
 
     /**
      * Instantiate a presenter instance
      *
-     * @return The {@link MvpPresenter} for this view
+     * @return The {@link QrPresenter} for this view
      */
     @NonNull
     @Override
@@ -33,16 +37,25 @@ public class QrActivity extends CommonBehaviourActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_emqr);
+        setContentView(R.layout.activity_qr);
 
         ButterKnife.bind(this);
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        scanNow();
-
-
+        Intent intentToStart;
+        if (this.getEmergencyState()) {
+            intentToStart = new Intent(QrActivity.this, ItineraryActivity.class);
+        }else{
+            intentToStart = new Intent(QrActivity.this,TextDestinationActivity.class);
+        }
+        if (correctNameQr(getIntent().getStringExtra("qrValue"))){
+            presenter.setUserDeparture(this.getAula());
+            startActivity(intentToStart);
+        }else{
+            Toast.makeText(this, getResources().getString(R.string.wrong_qr), Toast.LENGTH_LONG).show();
+        }
     }
 
     private Boolean getEmergencyState(){
@@ -50,24 +63,22 @@ public class QrActivity extends CommonBehaviourActivity {
         return emergencyState;
     }
 
-    private void scanNow(){
-        // TODO: Rifinire interfacciamento con zxing, per ora metto le 3 righe base che lo richiamano
-        Intent intent = new Intent("com.google.zxing.client.android.SCAN"); //Intent zxing
-        intent.putExtra("SCAN_MODE", "QR_CODE_MODE"); // "PRODUCT_MODE" for bar codes
-        startActivityForResult(intent, 0); //start barcode scanner zxing
+    private String getAula(){
+        return getIntent().getStringExtra("qrValue");
     }
 
-
-    public void onActivityResult(int requestCode, int resultCode, Intent intent){
-        if(requestCode == 0){
-            if(resultCode == RESULT_OK){
-                String contents = intent.getStringExtra("SCAN_RESULT");
-                String format = intent.getStringExtra("SCAN_RESULT_FORMAT");
-                Log.i("xZing", "contents: "+contents+" format: "+format); // Handle successful scan
-            }
-            else if(resultCode == RESULT_CANCELED){ // Handle cancel
-                Log.i("xZing", "Cancelled");
+    /**
+     * Verifica esistenza qrValue nel DB
+     * @param qrValue
+     * @return
+     */
+    private boolean correctNameQr(String qrValue){
+        List<String> nodesList = presenter.getNodesList();
+        for (String nodeName : nodesList){
+            if (qrValue.equals(nodeName)){
+                return true;
             }
         }
+        return false;
     }
 }

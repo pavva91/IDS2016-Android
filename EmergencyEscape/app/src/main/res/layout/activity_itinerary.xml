@@ -5,9 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-
     tools:context=".itinerary.ItineraryActivity">
-
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -31,21 +29,49 @@
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="70dp">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/itinerary"
-        android:id="@+id/percorso"/>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/pathImageView"
+            />
 
-        <Button
+
+        <ImageButton
+            style="?android:attr/borderlessButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Mostra Mappe"
-            android:id="@+id/buttonRx"
-            android:layout_marginBottom="126dp"
-            android:layout_alignParentBottom="true" />
-
+            android:src="@drawable/ic_forward_indigo_a400_36dp"
+            android:id="@+id/forwardAlternativeButton"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+        <ImageButton
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_forward_red_900_36dp"
+            android:id="@+id/forwardBestButton"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/action_best_path"
+            android:id="@+id/bestPathButton"
+            android:layout_alignTop="@+id/forwardAlternativeButton"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/action_second_path"
+            android:id="@+id/alterntivePathButton"
+            android:layout_alignTop="@+id/forwardBestButton"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
 
     </RelativeLayout>
 </android.support.design.widget.CoordinatorLayout>

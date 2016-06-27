@@ -1,29 +1,30 @@
 package com.emergencyescape.businesslogic;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
-//utilizzare la liberia VOLLEY ci permette di non doverci preoccupare di
-//creare thread a parte o gestire le risorse per la rete! FA TUTTO LUI!
-import com.android.volley.AuthFailureError;
-import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.emergencyescape.R;
+import com.emergencyescape.login.LoginActivity;
+import com.emergencyescape.login.LoginPresenter;
+import com.emergencyescape.model.UtenteTable;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Map;
 
-import static android.app.PendingIntent.getActivity;
+//utilizzare la liberia VOLLEY ci permette di non doverci preoccupare di
+//creare thread a parte o gestire le risorse per la rete! FA TUTTO LUI!
 
 /**
  * Created by Betta73 on 10/05/2016.
@@ -36,6 +37,9 @@ public class ServerConnection
     // variabile che uso se devo vedere se l'operazione è andata a buon fine o meno per continuare a fare coperazioni nell'activity
     private boolean result;
     RequestQueue coda;
+    String u;
+    String p;
+    String r;
 
     private ServerConnection(Context context)
     {
@@ -54,15 +58,24 @@ public class ServerConnection
         return instance;
     }
 
+    // prendo i parametri passati al login
+    private void setParam(String u, String p, String r)
+    {
+        this.u = u;
+        this.p = p;
+        this.r = r;
+    }
+
+
     // inizializza la coda
     private RequestQueue getRequestQueue()
     {
         if (coda == null)
         {
-
-            //InputStream keyStore = context.getResources().openRawResource(R.raw.keystoreprogettoandroid);
-            //coda = Volley.newRequestQueue(context.getApplicationContext(),new ExtHttpClientStack(new SslHttpClient(keyStore, "123456789", 443)));
-            coda = Volley.newRequestQueue(context.getApplicationContext());
+            InputStream keyStore = context.getResources().openRawResource(R.raw.keystoreprogettoandroid);
+            coda = Volley.newRequestQueue(context.getApplicationContext(),new ExtHttpClientStack(new SslHttpClient(keyStore, "123456789")));
+            //da usare se non prende il certificato commentando le due qui sopra
+            //coda = Volley.newRequestQueue(context.getApplicationContext());
         }
         return coda;
     }
@@ -85,6 +98,20 @@ public class ServerConnection
         return jo;
     }
 
+    private JSONObject createJsonObject(String id)
+    {
+        JSONObject jo = new JSONObject();
+        try
+        {
+            jo.put("registrationID", id);
+        }
+        catch (JSONException e) {   Log.v("ERRORE JSONOBJECT", e.getMessage());    }
+
+        Log.v("CREAZIONE JSON", jo.toString());
+
+        return jo;
+    }
+
 
     /*
     *
@@ -92,10 +119,10 @@ public class ServerConnection
     *
     */
 
-    private static final String GETELENCOMAPPE = "https://213.26.178.148/progetto/maps?token="; //aggiungi token
-    private static final String GETMAPPABYNOME = "https://213.26.178.148/progetto/maps/";
+    private static final String GETELENCOUTENTI = "http://213.26.178.148/progetto/users/list"; //aggiungi token
     private static final String SENDREGISTRAZIONE = "http://213.26.178.148/progetto/users/"; //per inviare i dati della registrazioni (POST)
     private static final String SENDLOGIN = "http://213.26.178.148/progetto/users/";
+    private static final String SENDREGISTRATIONID = "http://213.26.178.148/progetto/devices/";
 
 
     /*
@@ -104,9 +131,6 @@ public class ServerConnection
     *
     */
 
-    protected String setElencoMappeUri(String token) {  return GETELENCOMAPPE+token;    }
-
-    protected String setMappabyNomeUri(String token, String nomemapp) {   return GETMAPPABYNOME+nomemapp+"?token="+token; }
 
     protected String setLoginUri(String user, String psw) {   return SENDLOGIN+user+"/login?password="+psw;  }
 
@@ -118,21 +142,34 @@ public class ServerConnection
     */
 
 
-    //da utilizzare quando vogliamo inviare idati al server per il login
-    public boolean SendRegistraParameters(final String user, final String psw)
+    //da utilizzare quando vogliamo inviare idati al server per la REGISTRAZIONE
+    public void sendRegistraParameters(final String user, final String psw)
     {
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST, //tipo richiesta
-                SENDREGISTRAZIONE,//uri richiesta
-                createJsonObject(user,psw),
+                SENDREGISTRAZIONE, //uri richiesta
+                createJsonObject(user,psw), //passo il jsonobject con i parametri
                 successListenerRegistrazione, //cosa fare in caso di risposta corretta
                 errorListenerRegistrazione); //cosa fare in caso di risposta errata
-
 
         addToRequestQueue(jsonObjReq); // aggiungo la richiesta alla coda delle richieste
 
         Log.i("Registrazione", jsonObjReq.getBodyContentType());
 
-        return result;
+    }
+
+    //da utilizzare quando vogliamo inviare il registrationID per le notifiche push
+    public void sendRegistrationID(final String id)
+    {
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST, //tipo richiesta
+                SENDREGISTRATIONID, //uri richiesta
+                createJsonObject(id), //passo il jsonobject con i parametri
+                successListenerRegistrationID, //cosa fare in caso di risposta corretta
+                errorListenerRegistrationID); //cosa fare in caso di risposta errata
+
+        addToRequestQueue(jsonObjReq); // aggiungo la richiesta alla coda delle richieste
+
+        Log.i("RegistrationID", jsonObjReq.getBodyContentType());
+
     }
 
 
@@ -144,21 +181,50 @@ public class ServerConnection
     */
 
 
-    //da utilizzare quando vogliamo inviare idati al server per il login
-    public boolean SendLoginParameters(final String user, final String psw)
+    //da utilizzare quando vogliamo inviare idati al server per il LOGIN
+    public void sendLoginParameters(final String user, final String psw, final String ricorda)
     {
-        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET, //tipo richiesta
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest (Request.Method.GET, //tipo richiesta
                 setLoginUri(user,psw),//uri richiesta
                 successListenerLogin, //cosa fare in caso di risposta corretta
                 errorListenerLogin); //cosa fare in caso di risposta errata
 
         Log.i("SLP", setLoginUri(user,psw));
 
+        setParam(user,psw,ricorda); //per riprenderli dopo nel login success
+
         addToRequestQueue(jsonObjReq); // aggiungo la richiesta alla coda delle richieste
 
-        return result;
     }
 
+    //da utilizzare quando vogliamo ricevere solo il token doo che ci siamo autenticati offline
+    public void getToken (final String user, final String psw)
+    {
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest (Request.Method.GET, //tipo richiesta
+                setLoginUri(user,psw),//uri richiesta
+                successListenergetToken, //cosa fare in caso di risposta corretta
+                errorListenerGetToken); //cosa fare in caso di risposta errata
+
+        Log.i("Get Token", setLoginUri(user,psw));
+
+        addToRequestQueue(jsonObjReq); // aggiungo la richiesta alla coda delle richieste
+
+    }
+
+
+    //da utilizzare quando vogliamo riprendere tutti gli utenti nel db
+    public void getUsersList()
+    {
+        JsonArrayRequest jsonObjReq = new JsonArrayRequest (Request.Method.GET, //tipo richiesta
+                GETELENCOUTENTI,//uri richiesta
+                successListenerUtenti, //cosa fare in caso di risposta corretta
+                errorListenerUtenti); //cosa fare in caso di risposta errata
+
+        Log.i("Get Utenti", GETELENCOUTENTI);
+
+        addToRequestQueue(jsonObjReq); // aggiungo la richiesta alla coda delle richieste
+
+    }
 
 
     /*
@@ -168,15 +234,6 @@ public class ServerConnection
     */
 
 
-    // listener generale d successo
-    private Response.Listener<JSONObject> successGeneralListener = new Response.Listener<JSONObject>()
-    {
-        @Override
-        public void onResponse(JSONObject response)
-        {
-            Log.i("Comunicazione Server", "buon fine");
-        }
-    };
 
     //in caso di RISPOSTA CORRETTA al LOGIN riprendo dal file che mi rinvia il server la sessionkey server
     private Response.Listener<JSONObject> successListenerLogin = new Response.Listener<JSONObject>()
@@ -185,48 +242,107 @@ public class ServerConnection
         public void onResponse(JSONObject response)
         {
             Log.v("SLP", "ok");
+            Log.v("SLP", response.toString());
+
             String token = null;
+            try { token = response.getString("token");  }
+            catch (JSONException e) {   e.printStackTrace();  }
 
-            try //riprendo il token che mi rimanda il server
-            {
-                Log.i("SLP", response.toString());
-                token = response.getString("token");
-                SessionClass sc = SessionClass.getInstance();
-                sc.setSessionkeyserver(token, context); //setto il token nella classe di sessione
-                result = true;
-            }
-            catch (JSONException e)
-            {
-                Log.i("SLP", e.getMessage());
-                result = false;
-            }
-
+            SessionClass sc = SessionClass.getInstance();
+            sc.setServerKey(token, context); //setto il token nella classe di sessione
+            LoginPresenter lp = new LoginPresenter(context);
+            lp.loginOK(u, p, r);
         }
+
     };
 
-    //in caso di RISPOSTA CORRETTA al LOGIN riprendo dal file che mi rinvia il server la sessionkey server
+    //in caso di RISPOSTA CORRETTA per PRENDERE IL TOKEN
+    private Response.Listener<JSONObject> successListenergetToken = new Response.Listener<JSONObject>()
+    {
+        @Override
+        public void onResponse(JSONObject response)
+        {
+            Log.v("Preso Token", "ok");
+            Log.v("Preso TOken", response.toString());
+
+            String token = null;
+            try { token = response.getString("token");  }
+            catch (JSONException e) {   e.printStackTrace();  }
+
+            SessionClass sc = SessionClass.getInstance();
+            //setto il token nella classe di sessione
+            sc.setServerKey(token, context);
+            //cancello password da shared preferences
+            sc.clearPassword(context);
+        }
+
+    };
+
+    //in caso di RISPOSTA CORRETTA alla REGISTRAZIONE vedo se il server mi rimanda qualcosa
     private Response.Listener<JSONObject> successListenerRegistrazione= new Response.Listener<JSONObject>()
     {
         @Override
         public void onResponse(JSONObject response)
         {
             Log.v("SRP", "ok");
-            String token = null;
+            Log.i("SRP", response.toString());
 
-            try //riprendo il token che mi rimanda il server
+            Toast.makeText(context, "Registrazione avvenuta con successo!", Toast.LENGTH_LONG).show();
+            // definisco l'intenzione
+            Intent openPage1 = new Intent(context, LoginActivity.class);
+            openPage1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            // passo all'attivazione dell'activity Pagina.java
+            context.startActivity(openPage1);
+
+        }
+    };
+
+    //in caso di RISPOSTA CORRETTA alla REGISTRAZIONEID
+    private Response.Listener<JSONObject> successListenerRegistrationID= new Response.Listener<JSONObject>()
+    {
+        @Override
+        public void onResponse(JSONObject response)
+        {
+            //setto il flag per dire che abbiamo mandato il regID e non lo faremo più
+            SessionClass sc = SessionClass.getInstance();
+            sc.setRegistrationIdFlag(context);
+            Log.v("RegistazionID", "ok");
+        }
+    };
+
+    //in caso di RISPOSTA CORRETTA al DOWNLOAD UTENTI vedo se il server mi rimanda qualcosa
+    private Response.Listener<JSONArray> successListenerUtenti= new Response.Listener<JSONArray>()
+    {
+        @Override
+        public void onResponse(JSONArray response)
+        {
+            Log.v("Get Utenti", "ok");
+            Log.i("Get Utenti", response.toString());
+
+            if (response!= null)
             {
-                Log.i("SRP", response.toString());
-                token = response.getString("token");
+                for (int i = 0; i < response.length(); i++)
+                {
+                    JSONObject jo = new JSONObject();
+                    String user = null;
+                    String salt = null;
+                    String password = null;
+
+                    try
+                    {
+                        jo = response.getJSONObject(i);
+                        user = jo.getString("username");
+                        password = jo.getString("password");
+                        salt = jo.getString("salt");
+                        UtenteTable ut = new UtenteTable(context);
+                        ut.inserisciUtente(user,salt,password);
+                    }
+                    catch (JSONException e) { e.printStackTrace(); }
+                }
+
                 SessionClass sc = SessionClass.getInstance();
-                sc.setSessionkeyserver(token, context); //setto il token nella classe di sessione
-                result = true;
+                sc.setDownloadFlag(context);
             }
-            catch (JSONException e)
-            {
-                Log.i("SRP", e.getMessage());
-                result = false;
-            }
-
         }
     };
 
@@ -238,15 +354,6 @@ public class ServerConnection
     */
 
 
-    // listener generale di errore
-    private Response.ErrorListener errorGeneralListener = new Response.ErrorListener()
-    {
-        @Override
-        public void onErrorResponse(VolleyError err)
-        {
-            Log.i("Comunicazione Server", err.getMessage());
-        }
-    };
 
     //cosa fare in caso di ERRORE LOGIN
     private Response.ErrorListener errorListenerLogin = new Response.ErrorListener()
@@ -254,12 +361,23 @@ public class ServerConnection
         @Override
         public void onErrorResponse(VolleyError error)
         {
-            NetworkResponse networkResponse = error.networkResponse;
-            if (networkResponse != null && networkResponse.statusCode == 403)
-            {
-                Toast.makeText(context, "ERRORE: username o password errati! ", Toast.LENGTH_LONG).show();
-            }
-            result = false;
+            Log.i("SLP", "errore");
+            if(error.getMessage() != null)
+                Log.i("SLP", error.getMessage());
+
+            Toast.makeText(context, "ERRORE: username o password errati! ", Toast.LENGTH_LONG).show();
+        }
+    };
+
+    //cosa fare in caso di ERRORE getToken)
+    private Response.ErrorListener errorListenerGetToken = new Response.ErrorListener()
+    {
+        @Override
+        public void onErrorResponse(VolleyError error)
+        {
+            Log.i("Get Token", "errore");
+            if(error.getMessage() != null)
+                Log.i("SLP", error.getMessage());
         }
     };
 
@@ -270,7 +388,36 @@ public class ServerConnection
         public void onErrorResponse(VolleyError error)
         {
             Log.i("SRP", "errore");
-            result = false;
+            if(error.getMessage() != null)
+                Log.i("SRP", error.getMessage());
+
+            Toast.makeText(context, "ERRORE: username già utilizzato!", Toast.LENGTH_LONG).show();
+        }
+    };
+
+    //cosa fare in caso di ERRORE GET ELENCO UTENTI
+    private Response.ErrorListener errorListenerUtenti = new Response.ErrorListener()
+    {
+        @Override
+        public void onErrorResponse(VolleyError error)
+        {
+            Log.i("Get Utenti", "errore");
+            if(error.getMessage() != null)
+                Log.i("Get Utenti", error.getMessage());
+
+        }
+    };
+
+    //cosa fare in caso di ERRORE SEND REGISTRATIONID
+    private Response.ErrorListener errorListenerRegistrationID = new Response.ErrorListener()
+    {
+        @Override
+        public void onErrorResponse(VolleyError error)
+        {
+            Log.i("RegistrationID", "errore");
+            if(error.getMessage() != null)
+                Log.i("Registration ID", error.getMessage());
+
         }
     };
 

@@ -19,26 +19,16 @@
             android:background="?attr/colorPrimary"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
+
     </android.support.design.widget.AppBarLayout>
 
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/action_logout"
-        android:id="@+id/logoutbutton"
-        android:gravity="center"
-        android:layout_marginTop="500dp"
-
-        />
-<!--=======
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="LOGOUT"
-        android:id="@+id/logoutbutton"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="185dp" />
->>>>>>> origin/betta-->
+        android:id="@+id/imageView"
+        android:src="@drawable/logo1piccolo"
+        android:layout_gravity="center"
+        />
+
 
 </android.support.design.widget.CoordinatorLayout>
