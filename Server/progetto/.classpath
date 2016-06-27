@@ -2,18 +2,34 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="lib"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk1.7.0_79">
-		<attributes>
-			<attribute name="owner.project.facets" value="java"/>
-		</attributes>
-	</classpathentry>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
+	<classpathentry exported="true" kind="lib" path="lib/mysql-connector-java-5.0.8-bin.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
+	<classpathentry kind="lib" path="C:/glassfish4/glassfish/modules/javax.ws.rs-api.jar"/>
+	<classpathentry kind="lib" path="C:/glassfish4/glassfish/modules/javax.servlet.jsp.jar"/>
+	<classpathentry kind="lib" path="C:/glassfish4/glassfish/modules/javax.servlet-api.jar"/>
+	<classpathentry kind="lib" path="C:/glassfish4/glassfish/modules/jersey-client.jar"/>
+	<classpathentry kind="lib" path="C:/glassfish4/glassfish/modules/jersey-common.jar"/>
+	<classpathentry kind="lib" path="C:/glassfish4/glassfish/modules/jersey-server.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Roby/workspace/progetto/lib/jersey-media-multipart-2.17.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Roby/workspace/progetto/lib/mimepull-1.9.3.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="lib" path="C:/Users/Roby/workspace/progetto/lib/hk2-api-2.3.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Roby/workspace/progetto/lib/hk2-locator-2.3.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Roby/workspace/progetto/lib/hk2-utils-2.3.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Roby/workspace/progetto/lib/hk2-maven-2.3.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Roby/workspace/progetto/lib/hk2-testng-2.3.0.jar"/>
 	<classpathentry kind="con" path="oracle.eclipse.tools.glassfish.lib.system">
 		<attributes>
 			<attribute name="owner.project.facets" value="jst.web"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
-	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
-	<classpathentry kind="lib" path="lib/mysql-connector-java-5.0.8-bin.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
+		<attributes>
+			<attribute name="owner.project.facets" value="java"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/Roby/workspace/progetto/lib/json-20160212.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Roby/workspace/progetto/lib/mockito-all-1.9.5.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
