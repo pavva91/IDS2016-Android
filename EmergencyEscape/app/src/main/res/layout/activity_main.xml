@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.emergencyescape.MainActivity">
+    tools:context=".main.MainActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -19,8 +19,16 @@
             android:background="?attr/colorPrimary"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
+
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_main" />
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView"
+        android:src="@drawable/logo1piccolo"
+        android:layout_gravity="center"
+        />
+
 
 </android.support.design.widget.CoordinatorLayout>

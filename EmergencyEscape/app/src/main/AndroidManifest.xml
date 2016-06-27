@@ -2,26 +2,30 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.emergencyescape">
 
-    <!-- To auto-complete the email text field in the login form with the user's emails -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
-
-    <!--
-         The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
-         Google Maps Android API v2, but you must specify either coarse or fine
-         location permissions for the 'MyLocation' functionality.
-    -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <!-- servono per le push -->
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <permission android:name="it.html.googleservices.push.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+    <uses-permission android:name="it.html.googleservices.push.permission.C2D_MESSAGE" />
+
 
     <application
+        android:name=".MyApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/emergency_escape_logo"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".LoginActivity"
+            android:name=".login.LoginActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -30,90 +34,86 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
-            android:label=" "
-            android:theme="@style/AppTheme.NoActionBar" />
-
-        <activity
-            android:name=".EmTextActivity"
-            android:label=" "
-            android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.emergencyescape.MainActivity" />
-        </activity>
-        <activity
-            android:name=".NoemTextActivity"
-            android:label=" "
-            android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.emergencyescape.MainActivity" />
-        </activity>
-        <activity
-            android:name=".EmTapActivity"
-            android:label=" "
-            android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.emergencyescape.MainActivity" />
-        </activity>
-        <activity
-            android:name=".NoemTapActivity"
-            android:label=" "
-            android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.emergencyescape.MainActivity" />
-        </activity>
-        <activity
-            android:name=".EmQrActivity"
-            android:label=" "
+            android:name=".main.MainActivity"
+            android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.emergencyescape.MainActivity" />
         </activity>
         <activity
-            android:name=".NoemQrActivity"
-            android:label=" "
-            android:theme="@style/AppTheme.NoActionBar" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.emergencyescape.MainActivity" />
-        </activity>
-        <activity
-            android:name=".DestinationActivity"
+            android:name=".text.TextDepartureActivity"
             android:label=" "
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.emergencyescape.MainActivity" />
+                android:value=".main.MainActivity" />
         </activity>
         <activity
-            android:name=".ItineraryActivity"
+            android:name=".tap.TapActivity"
             android:label=" "
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.emergencyescape.MainActivity" />
+                android:value=".main.MainActivity" />
+        </activity>
+        <activity
+            android:name=".qr.QrActivity"
+            android:label=" "
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".main.MainActivity" />
+        </activity>
+        <activity
+            android:name=".text.TextDestinationActivity"
+            android:label=" "
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".main.MainActivity" />
+        </activity>
+        <activity
+            android:name=".itinerary.ItineraryActivity"
+            android:label=" "
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".main.MainActivity" />
+        </activity>
+        <activity
+            android:name=".tap.MapActivity"
+            android:label=" "
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".tap.TapActivity" />
+        </activity>
+        <activity
+            android:name=".settings.SettingsActivity"
+            android:parentActivityName=".main.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.emergencyescape.main.MainActivity" />
         </activity>
 
-        <!--
-             The API key for Google Maps-based APIs is defined as a string resource.
-             (See the file "res/values/google_maps_api.xml").
-             Note that the API key is linked to the encryption key used to sign the APK.
-             You need a different API key for each encryption key, including the release key that is used to
-             sign the APK for publishing.
-             You can define the keys for the debug and release targets in src/debug/ and src/release/.
-        -->
+
+    <activity android:name=".registration.RegistraActivity" />
+
+
+    <!-- questi due ultimi tag servo per le push -->
         <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_maps_key" />
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
 
-        <activity
-            android:name=".MapsActivity"
-            android:label="@string/title_activity_maps"></activity>
+        <receiver
+            android:name=".businesslogic.NotificationReceiver">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <category android:name="it.html.googleservices.push" />
+            </intent-filter>
+        </receiver>
+
+
+
     </application>
 
 </manifest>

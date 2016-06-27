@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.example.valer.emergencyescape.TapActivity">
+    tools:context=".tap.TapActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -21,6 +21,42 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_tap" />
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="25dp"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="90dp"
+        android:gravity="center_horizontal"
+
+        >
+
+        <TextView android:text="@string/select_floor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/selection_floor"
+            android:textSize="30dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:textColor="#000000"/>
+
+        <ListView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/floorListView"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/selection_floor" />
+
+
+
+
+
+
+
+    </RelativeLayout>
+
+
 
 </android.support.design.widget.CoordinatorLayout>
