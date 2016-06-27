@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!--<EditTextPreference
+    <EditTextPreference
         android:title="@string/pref_location_label"
         android:key="@string/pref_location_key"
         android:defaultValue="@string/pref_location_default"
@@ -9,11 +9,12 @@
         android:singleLine="true" />
 
     <ListPreference
-        android:title="@string/pref_units_label"
+        android:title="@string/select_map_label"
         android:key="@string/pref_units_key"
-        android:defaultValue="@string/pref_units_metric"
-        android:entryValues="@array/pref_units_values"
-        android:entries="@array/pref_units_options" />-->
+        android:entryValues="@array/map_id"
+        android:entries="@array/map_label"
+        android:defaultValue="@string/map_id_0"  />
+
 
     <CheckBoxPreference
         android:title="@string/pref_enable_notifications_label"

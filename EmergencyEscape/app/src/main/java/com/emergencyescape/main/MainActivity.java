@@ -1,24 +1,22 @@
 package com.emergencyescape.main;
 
-import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
-import android.widget.Button;
 
-import com.emergencyescape.LoginActivity;
 import com.emergencyescape.R;
 import com.emergencyescape.commonbehaviour.CommonBehaviourActivity;
+import com.facebook.stetho.Stetho;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 
 public class MainActivity extends CommonBehaviourActivity<MainView,MainPresenter> {
-    @BindView(R.id.logoutbutton) Button logout;
+
     @BindView(R.id.toolbar) Toolbar toolbar;
 
     /**
@@ -35,31 +33,30 @@ public class MainActivity extends CommonBehaviourActivity<MainView,MainPresenter
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Stetho.initializeWithDefaults(this);
         setContentView(R.layout.activity_main);
 
         PreferenceManager.setDefaultValues(this, R.xml.settings_file, false); // Carica i valori di default delle opzioni
 
         ButterKnife.bind(this);
 
-        setSupportActionBar(toolbar);
+        SharedPreferences wmbPreference = PreferenceManager.getDefaultSharedPreferences(this); // TODO: Usare shared Betta
+        boolean isFirstRun = wmbPreference.getBoolean("FIRSTRUN", true);
+        if (isFirstRun)
+        {
 
-    }
+            presenter.loadServer2Db();  // Carico il DB al primo lancio dell'app
 
 
-    @OnClick(R.id.logoutbutton) // On click listener
-    public void logout()
-    {
-        assert logout != null; // cosa serve?
+            SharedPreferences.Editor editor = wmbPreference.edit();
+            editor.putBoolean("FIRSTRUN", false);
+            editor.commit();
 
-        boolean logoutOk = presenter.logout(getApplicationContext()); // chiama il CommonBehaviourPresenter
-
-        if (logoutOk){
-            Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
-            startActivity(loginIntent);
         }
 
-        // Le funzioni di prima per il logout le ho spostate nel CommonBehaviourPresenter
+
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
     }
-
-
 }

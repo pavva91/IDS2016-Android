@@ -5,12 +5,9 @@ package com.emergencyescape.commonbehaviour;
 
 import android.content.Context;
 import android.util.Log;
-import android.widget.Toast;
 
-import com.emergencyescape.SessionClass;
-import com.emergencyescape.UtenteTable;
+import com.emergencyescape.businesslogic.SessionClass;
 import com.hannesdorfmann.mosby.mvp.MvpBasePresenter;
-import com.hannesdorfmann.mosby.mvp.MvpPresenter;
 import com.hannesdorfmann.mosby.mvp.MvpView;
 
 /**
@@ -19,21 +16,25 @@ import com.hannesdorfmann.mosby.mvp.MvpView;
  */
 public abstract class CommonBehaviourPresenter<V extends MvpView> extends MvpBasePresenter<V>{
 
-    public boolean logout(Context AppContext){
-        try {
-            // TODO:Spostare in un task asincrono?
+    public boolean logout(Context AppContext)
+    {
+        try
+        {
             SessionClass sc = SessionClass.getInstance();
-            //canella dal db la session key
-            UtenteTable ut = new UtenteTable(AppContext);
-            ut.destroySession(sc.getSessionvalue());
             //pulisce le variabili globali
-            sc.clearSessionvalue();
-            sc.clearSessionvalue();
+            sc.clearSessionKey(AppContext);
+            sc.clearUser(AppContext);
+            sc.clearServerKey(AppContext);
+            sc.clearServerKey(AppContext);
+            sc.clearDownloadFlag(AppContext);
+
             return true;
         }
-        catch(Exception e){
+        catch (Exception e)
+        {
             Log.e("LogoutError", e.toString());
             return false;
+
         }
     }
 

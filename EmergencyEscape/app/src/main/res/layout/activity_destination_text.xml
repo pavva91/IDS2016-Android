@@ -52,13 +52,13 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="160dp"
-            android:layout_below="@+id/partenza"
+            android:layout_below="@+id/txtPartenza"
             />
 
-        <EditText
+        <AutoCompleteTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/editDestinazione"
+            android:id="@+id/editDestination"
             android:layout_below="@+id/txtDestinazione"
             android:layout_alignLeft="@+id/txtDestinazione"
             android:layout_alignStart="@+id/txtDestinazione"
@@ -72,7 +72,7 @@
             android:layout_height="wrap_content"
             android:text="@string/action_ok"
             android:id="@+id/btnDestinazione"
-            android:layout_below="@+id/editDestinazione"
+            android:layout_below="@+id/editDestination"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"/>
     </RelativeLayout>

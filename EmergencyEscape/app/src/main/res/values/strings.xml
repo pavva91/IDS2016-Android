@@ -77,7 +77,21 @@
 
     <!-- Value in SharedPreferences for imperial temperature unit option [CHAR LIMIT=NONE] -->
     <string name="pref_units_imperial" translatable="false">imperial</string>
-    <string name="title_activity_settings2">Settings2Activity</string>
+
+    <string name="title_activity_settings2">Settings</string>
+
+    <string name="select_map_label">Select Map</string>
+    <string name="select_map_key" translatable="false">id</string>
+    <string name="map_id_0" translatable="false">0</string>
+    <string name="map_value_0" translatable="false">univpm</string>
+    <string name="select_floor">Select floor</string>
+    <string name="select_map">Select Map</string>
+    <string name="wrong_qr">The QR code value doesn\'t rappresent a valid room, please insert a correct QR-code</string>
+    <string name="error_qr">An error occoured when decoding the QR-code, not a QR-code.</string>
+    <string name="arrived_message">You arrived to destination!</string>
+    <string name="stairs_message">Go to quote</string>
+    <string name="action_second_path">Get alternative path</string>
+    <string name="action_best_path">Get best path</string>
 
 
 </resources>
