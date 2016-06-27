@@ -25,13 +25,10 @@ public class TextDeparturePresenter extends CommonBehaviourPresenter<TexterView>
     private DaoSession daoSession = MyApplication.getSession();
     private NodeDao nodeDao = daoSession.getNodeDao();
     private UserDao userDao = daoSession.getUserDao();
-    private DBHelper dbHelper = MyApplication.getInstance().getDbHelper();
-
-
 
     @Override
     public ArrayList<String> getNodesList(){
-        ArrayList<String> allNames = new ArrayList<String>();
+        ArrayList<String> allNames = new ArrayList<>();
         List<Node> allNodes = nodeDao.loadAll();
         for (Node singleNode : allNodes) {
             String singleName = singleNode.getCode().toString();
@@ -62,40 +59,5 @@ public class TextDeparturePresenter extends CommonBehaviourPresenter<TexterView>
         }
         return departureId;
     }
-    /*
-
-    @Override
-    public void setUserDestination(String destination) {
-        List<User> allUser = userDao.loadAll();
-        for (User singleUser : allUser) {
-            if(singleUser.getName().equalsIgnoreCase("vale")){
-                singleUser.setDestinationId(this.getNodeIdFromName(destination));
-                userDao.update(singleUser);
-            }
-        }
-    }
-
-    @Override
-    public Long getNodeIdFromName(String destinationName){
-        List<Node> allNodes = nodeDao.loadAll();
-        Long destinationId = -1L;
-        for (Node singleNode : allNodes) {
-            if(singleNode.getCode().equalsIgnoreCase(destinationName)){
-                destinationId = singleNode.getId();
-            }
-        }
-        return destinationId;
-    }
-    @Override
-    public String getUserDeparture() {
-        String userDeparture = "";
-        List<User> allUser = userDao.loadAll();
-        for (User singleUser : allUser) {
-            if(singleUser.getName().equalsIgnoreCase("vale")){
-                userDeparture = singleUser.getDepartureToOneUser().getCode();
-            }
-        }
-        return userDeparture;
-    }*/
 
 }

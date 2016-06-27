@@ -51,6 +51,7 @@ public class TextDepartureActivity extends CommonBehaviourActivity<TexterView,Te
 
     @OnClick(R.id.btnPartenza)
     public void submitDeparture(){
+        // TODO: Aggiungere validation input utente
         Intent intentToStart;
         if (this.getEmergencyState()) {
             intentToStart = new Intent(TextDepartureActivity.this, ItineraryActivity.class);

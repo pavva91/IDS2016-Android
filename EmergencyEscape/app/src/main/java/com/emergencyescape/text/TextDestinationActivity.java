@@ -48,12 +48,11 @@ public class TextDestinationActivity extends CommonBehaviourActivity<TexterView,
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         this.setPartenza();
-
-       // this.setQuota();
     }
 
     @OnClick(R.id.btnDestinazione)
     public void submitDestination(){
+        // TODO: Aggiungere validation input utente
         presenter.setUserDestination(this.getAula());
 
         startActivity(new Intent(TextDestinationActivity.this, ItineraryActivity.class).putExtra("emergencyState", false));

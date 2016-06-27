@@ -28,9 +28,6 @@ public class TextDestinationPresenter extends CommonBehaviourPresenter<TexterVie
     private DaoSession daoSession = MyApplication.getSession();
     private NodeDao nodeDao = daoSession.getNodeDao();
     private UserDao userDao = daoSession.getUserDao();
-    private DBHelper dbHelper = MyApplication.getInstance().getDbHelper();
-
-
 
     @Override
     public ArrayList<String> getNodesList(){
@@ -77,6 +74,7 @@ public class TextDestinationPresenter extends CommonBehaviourPresenter<TexterVie
         }
         return destinationId;
     }
+
     @Override
     public String getUserDeparture() {
         String userDeparture = "";

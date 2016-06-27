@@ -29,7 +29,7 @@ import java.util.List;
  * com.emergencyescape.itinerary
  * ItineraryPresenter
  */
-public class ItineraryPresenter extends CommonBehaviourPresenter<ItineraryView> implements ItineraryPresenterInterface {
+public class ItineraryPresenter extends CommonBehaviourPresenter<ItineraryView> {
 
     private Context context = MyApplication.getInstance().getApplicationContext();
     private DaoSession daoSession = MyApplication.getSession();
@@ -37,7 +37,7 @@ public class ItineraryPresenter extends CommonBehaviourPresenter<ItineraryView> 
     private NodeDao nodeDao = daoSession.getNodeDao();
     private EdgeDao edgeDao = daoSession.getEdgeDao();
 
-    // Coordinate dei nodi in cui stampare icone:
+    // Coordinate dei nodi in cui stampare icona:
     private Coordinate2D startingNode = new Coordinate2D();
     private Coordinate2D destinationNode = new Coordinate2D();
 
@@ -49,8 +49,7 @@ public class ItineraryPresenter extends CommonBehaviourPresenter<ItineraryView> 
     public Graph dijkstraGraph;
     public Db2Dijkstra db2Dijkstra;
 
-    @Override
-    public String getDepartureCode() {
+      public String getDepartureCode() {
         String userDeparture = "";
         List<User> allUser = userDao.loadAll(); // select *
         for (User singleUser : allUser) {
@@ -61,7 +60,6 @@ public class ItineraryPresenter extends CommonBehaviourPresenter<ItineraryView> 
         return userDeparture;
     }
 
-    @Override
     public com.emergencyescape.greendao.Node getDeparture() {
         com.emergencyescape.greendao.Node userDeparture = new com.emergencyescape.greendao.Node();
         List<User> allUser = userDao.loadAll(); // select *
@@ -84,7 +82,6 @@ public class ItineraryPresenter extends CommonBehaviourPresenter<ItineraryView> 
         return userDestination;
     }
 
-    @Override
     public String getDestination() {
         String userDestination = "";
         List<User> allUser = userDao.loadAll();
@@ -100,7 +97,6 @@ public class ItineraryPresenter extends CommonBehaviourPresenter<ItineraryView> 
      * Get All emergency destinations in DB
      * @return
      */
-    @Override
     public List<String> getEmergencyDestinations() {
         String singleEmergencyExit;
         List<String> allEmergencyExit = new ArrayList<>();
@@ -114,10 +110,16 @@ public class ItineraryPresenter extends CommonBehaviourPresenter<ItineraryView> 
         return allEmergencyExit;
     }
 
-    @Override
+    /**
+     * Calculate ShortestPath in emergency state
+     * @param departure
+     * @param allEmergencyExit List<String> con tutte le uscite di emergenza presenti nella mappa
+     * @return
+     */
     public Graph.CostPathPair getEmergencyShortestPath(String departure, List<String> allEmergencyExit) {
         List<Graph.CostPathPair> allEmergencyPath = new ArrayList<>();
         Graph.CostPathPair shortestPath = new Graph.CostPathPair(0, new ArrayList<>());
+        Graph.CostPathPair lengthPath = new Graph.CostPathPair(0, new ArrayList<>()); // length shortestPath
         boolean shortestPathNotAValue = true;
         for (String singleEmergencyExit : allEmergencyExit) { // Calcolo il miglior percorso per ogni uscita di emergenza
             allEmergencyPath.add(this.getShortestPath(
@@ -126,9 +128,18 @@ public class ItineraryPresenter extends CommonBehaviourPresenter<ItineraryView> 
                     true));
             if(shortestPathNotAValue){
                 shortestPath = allEmergencyPath.get(allEmergencyPath.size()-1);
+                lengthPath = getShortestPath(departure,singleEmergencyExit,false);
                 shortestPathNotAValue = false;
             }
-            if(allEmergencyPath.get(allEmergencyPath.size()-1).getCost() <= shortestPath.getCost()){ // Scelgo quello a costo minore
+            if (allEmergencyPath.get(allEmergencyPath.size()-1).getCost() == shortestPath.getCost()){ // Se hanno lo stesso valore in emergenza vado a confrontare valori in non emergenza
+                Graph.CostPathPair lengthShortestPath = this.getShortestPath(departure,singleEmergencyExit,false); // length path calcolato nel ciclo
+                if(lengthShortestPath.getCost()<lengthPath.getCost()){
+                    lengthPath = lengthShortestPath;
+                    shortestPath = allEmergencyPath.get(allEmergencyPath.size()-1);
+                }
+            }
+            if(allEmergencyPath.get(allEmergencyPath.size()-1).getCost() < shortestPath.getCost()){ // Scelgo quello a costo minore
+
                 shortestPath = allEmergencyPath.get(allEmergencyPath.size()-1);
             }
         }
@@ -143,7 +154,13 @@ public class ItineraryPresenter extends CommonBehaviourPresenter<ItineraryView> 
         return shortestPath;
     }
 
-    @Override
+    /**
+     * Calcola shortest path dati in input partenza e destinazione
+     * @param departure
+     * @param destination
+     * @param emergencyState
+     * @return
+     */
     public Graph.CostPathPair getShortestPath(String departure, String destination, Boolean emergencyState) {
         Db2Dijkstra db2Dijkstra = new Db2Dijkstra(emergencyState);
         Graph graph = new Graph(db2Dijkstra.getVertexList(),db2Dijkstra.getEdgeDijkstraList());
@@ -202,7 +219,6 @@ public class ItineraryPresenter extends CommonBehaviourPresenter<ItineraryView> 
      * @param shortestPath risultato alggoritmo Dijkstra
      * @return graphics.Path
      */
-    @Override
     public Path getScaledPath(Graph.CostPathPair shortestPath){
         booleanPrintStairsMessage = false;
         FloorPathHelper pathHelper = new FloorPathHelper();
@@ -304,9 +320,7 @@ public class ItineraryPresenter extends CommonBehaviourPresenter<ItineraryView> 
      * @param path Path risultato dell'algoritmo di Dijkstra
      * @return List<Coordinate2D>coordinate in metri ordinate del path</Coordinate2D>
      */
-    public List<Coordinate2D> getShortestPathCoordinates(Graph.CostPathPair path){ // Ora funziona ma devo prendere le coordinate da qua dentro
-        // TODO: Trasformare il path Dijkstra in Path greenDao - da fare
-
+    public List<Coordinate2D> getShortestPathCoordinates(Graph.CostPathPair path){
         String depDijkstraValue;
         String destinationDijkstraValue;
 
@@ -365,8 +379,6 @@ public class ItineraryPresenter extends CommonBehaviourPresenter<ItineraryView> 
         return pathCoordinates;
     }
 
-
-
     public Long getNodeIdFromName(String nodeName){
         List<Node> allNodes = nodeDao.loadAll();
         Long nodeId = -1L;
@@ -417,6 +429,7 @@ public class ItineraryPresenter extends CommonBehaviourPresenter<ItineraryView> 
     public Graph.CostPathPair getAlternativePath(){
         return this.alternativePath;
     }
+
     public void setAlternativePath(Graph.CostPathPair alternativePath){
         this.alternativePath = alternativePath;
     }

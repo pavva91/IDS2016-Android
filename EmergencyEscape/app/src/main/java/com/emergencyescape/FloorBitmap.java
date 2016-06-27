@@ -15,13 +15,14 @@ import android.graphics.drawable.BitmapDrawable;
  * com.emergencyescape
  * FloorBitmap - Effettua il draw del path e restituisce una bitmap in modo da poterla poi
  * richiamare con una semplice ImageView
+ * prende in input una bitmap e fornisce come output la bitmap dopo le modifiche (draw)
  */
 public class FloorBitmap extends BitmapDrawable {
 
     private Path path = new Path();
     private Paint drawPaint;
     private Bitmap floorImage;
-    private Coordinate2D placeIconNode = new Coordinate2D();
+    private Coordinate2D placeIconNode = new Coordinate2D(); // Coordinate del Place Icon (io sono qui)
 
     /**
      * Create drawable from a bitmap, setting initial target density based on

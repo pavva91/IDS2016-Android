@@ -33,7 +33,6 @@ public class MapPresenter extends CommonBehaviourPresenter<TapView> {
     private NodeDao nodeDao = daoSession.getNodeDao();
     private UserDao userDao = daoSession.getUserDao();
 
-
     public void setUserDeparture(Node departureNode) { // TODO: Aggiornare anche il Server
         List<User> allUser = userDao.loadAll();
         for (User singleUser : allUser) {

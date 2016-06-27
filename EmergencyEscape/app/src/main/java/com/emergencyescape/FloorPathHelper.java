@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * com.emergencyescape
- * FloorPathHelper Mapping .png - coordinate DB
+ * FloorPathHelper Mapping .png(dp) - coordinate DB(m)
  */
 public class FloorPathHelper {
     // OFFSET (dp)
@@ -40,18 +40,7 @@ public class FloorPathHelper {
         List<Coordinate2D> pathScaledCoordinates = new ArrayList<>();
 
         for(Coordinate2D coordinates:floorPathCoordinates){
-            // TRASFORMA m --> dp
-            coordinates.setX(coordinates.getX() * xRatio145);
-
-            coordinates.setY(coordinates.getY() * yRatio145);
-
-            coordinates.setX(coordinates.getX() - xOffset145);
-
-            coordinates.setY(coordinates.getY() - yOffset145);
-            coordinates.setY(-coordinates.getY()); // L'asse delle y è invertita dai m a dp
-
-            //coordinates = convertMeterToDp(coordinates,xOffset145,yOffset145,xRatio145,yRatio145);
-
+            coordinates = convertMeterToDp(coordinates,xOffset145,yOffset145,xRatio145,yRatio145);
             pathScaledCoordinates.add(coordinates);
         }
         return pathScaledCoordinates;
@@ -66,20 +55,7 @@ public class FloorPathHelper {
         List<Coordinate2D> pathScaledCoordinates = new ArrayList<>();
 
         for(Coordinate2D coordinates:floorPathCoordinates){
-            // TRASFORMA m --> dp
-            // TODO: Fare qua Scaling e offset
-
-            coordinates.setX(coordinates.getX() * xRatio150);
-
-            coordinates.setY(coordinates.getY() * yRatio150);
-
-            coordinates.setX(coordinates.getX() - xOffset150);
-
-            coordinates.setY(coordinates.getY() - yOffset150);
-            coordinates.setY(-coordinates.getY()); // L'asse delle y è invertita dai m a dp
-
-            //coordinates = convertMeterToDp(coordinates,xOffset150,yOffset150,xRatio150,yRatio150);
-
+            coordinates = convertMeterToDp(coordinates,xOffset150,yOffset150,xRatio150,yRatio150);
             pathScaledCoordinates.add(coordinates);
         }
         return pathScaledCoordinates;
@@ -94,20 +70,7 @@ public class FloorPathHelper {
         List<Coordinate2D> pathScaledCoordinates = new ArrayList<>();
 
         for(Coordinate2D coordinates:floorPathCoordinates){
-            // TRASFORMA m --> dp
-            // TODO: Fare qua Scaling e offset
-
-            coordinates.setX(coordinates.getX() * xRatio155);
-
-            coordinates.setY(coordinates.getY() * yRatio155);
-
-            coordinates.setX(coordinates.getX() - xOffset155);
-
-            coordinates.setY(coordinates.getY() - yOffset155);
-            coordinates.setY(-coordinates.getY()); // L'asse delle y è invertita dai m a dp
-
-            //coordinates = convertMeterToDp(coordinates,xOffset155,yOffset155,xRatio155,yRatio155); //TODO: Una volta finito riconoscimento tap fare refactoring disegno path con questa
-
+            coordinates = convertMeterToDp(coordinates,xOffset155,yOffset155,xRatio155,yRatio155);
             pathScaledCoordinates.add(coordinates);
         }
         return pathScaledCoordinates;
@@ -163,12 +126,11 @@ public class FloorPathHelper {
      * @return
      */
     private Coordinate2D convertMeterToDp(Coordinate2D coordinate2D,Float xOffset,Float yOffset, Float xRatio, Float yRatio){
+        // TRASFORMA m --> dp
         coordinate2D.setX(coordinate2D.getX() * xRatio);
-
         coordinate2D.setY(coordinate2D.getY() * yRatio);
 
         coordinate2D.setX(coordinate2D.getX() - xOffset);
-
         coordinate2D.setY(coordinate2D.getY() - yOffset);
         coordinate2D.setY(-coordinate2D.getY()); // L'asse delle y è invertita dai m a dp
         return coordinate2D;
@@ -184,15 +146,13 @@ public class FloorPathHelper {
      * @return
      */
     private Coordinate2D convertDpToMeter(Coordinate2D coordinate2D,Float xOffset,Float yOffset, Float xRatio, Float yRatio){
+        // TRASFORMA dp --> m
         coordinate2D.setX(coordinate2D.getX() + xOffset);
-
         coordinate2D.setY(-coordinate2D.getY()); // L'asse delle y è invertita dai m a dp
         coordinate2D.setY(coordinate2D.getY() + yOffset);
 
-
         coordinate2D.setX(coordinate2D.getX() / xRatio);
-
         coordinate2D.setY(coordinate2D.getY() / yRatio);
-        return coordinate2D; // funziona
+        return coordinate2D;
     }
 }

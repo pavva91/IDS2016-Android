@@ -16,7 +16,6 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
-
 import com.emergencyescape.Coordinate2D;
 import com.emergencyescape.DeviceDimensionsHelper;
 import com.emergencyescape.FloorBitmap;
@@ -24,18 +23,14 @@ import com.emergencyescape.R;
 import com.emergencyescape.commonbehaviour.CommonBehaviourActivity;
 import com.emergencyescape.dijkstra.Graph;
 import com.emergencyescape.greendao.Node;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 
-public class ItineraryActivity extends CommonBehaviourActivity<ItineraryView,ItineraryPresenter> implements ItineraryView {
-
-    // TODO: Creare Background Thread (RxJava) che va a fare il calcolo prendendo i valori(Departure (e) Destination) (per ora) da CommonBehaviourViewState
+public class ItineraryActivity extends CommonBehaviourActivity<ItineraryView,ItineraryPresenter>{
 
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.pathImageView) ImageView pathImageView;
@@ -94,7 +89,7 @@ public class ItineraryActivity extends CommonBehaviourActivity<ItineraryView,Iti
             Toast.makeText(this,getResources().getString(R.string.stairs_message) + " " + presenter.getPrintStairsMessage(), Toast.LENGTH_LONG).show();
         }
 
-        if(shortestPath.getCost()==0){
+        if(shortestPath.getCost()==0 && shortestPath.getPath().size() == 0){ // valutando size la valutazione del costo è superflua
             Toast.makeText(this, getResources().getString(R.string.arrived_message), Toast.LENGTH_LONG).show();
         }
 
@@ -179,8 +174,6 @@ public class ItineraryActivity extends CommonBehaviourActivity<ItineraryView,Iti
     @OnClick(R.id.forwardAlternativeButton)
     public void clickAlternativeForward() {
         setPaintStyle(Color.BLUE);
-        // TODO: Scorrere (non ricalcolo) alternative path precedentemente calcolato
-        // TODO: Aggiornare posizione partenza utente
         // TODO: Gestire il refresh activity
         Graph.CostPathPair alternative = presenter.getAlternativePath();
         List<Graph.Edge> alternativePath = alternative.getPath();
@@ -243,7 +236,6 @@ public class ItineraryActivity extends CommonBehaviourActivity<ItineraryView,Iti
      * a seconda dello stato di emergenza (emergencyState)
      * @return
      */
-    @Override
     public Graph.CostPathPair getShortestPath(){
         Graph.CostPathPair shortestPath;
         if(getEmergencyState()){
@@ -259,7 +251,12 @@ public class ItineraryActivity extends CommonBehaviourActivity<ItineraryView,Iti
         return shortestPath;
     }
 
+    /**
+     * Seleziona la bitmap del pianod
+     * @return
+     */
     protected Bitmap getFloorBitmap(){
+        // TODO: Cambiare da drawable a download
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.q145);
         Node departure = presenter.getDeparture();
         Integer quoteInteger = departure.getQuote();
@@ -274,11 +271,20 @@ public class ItineraryActivity extends CommonBehaviourActivity<ItineraryView,Iti
         return bitmap;
     }
 
+    /**
+     * Ritorna il Path grafico dal path logico (dijkstra)
+     * @param shortestPath Dijkstra.Graph.CostPathPair
+     * @return Graphics.Path
+     */
     protected Path getFloorPath(Graph.CostPathPair shortestPath){
         Path floorPath = presenter.getScaledPath(shortestPath);
         return floorPath;
     }
 
+    /**
+     * Stile grafico del path
+     * @param paintColor
+     */
     protected void setPaintStyle(int paintColor){
         // TODO: Sarebbe bello permettere all'utente di modificare lo stile del path da Setting
         Paint drawPaint = new Paint();
@@ -303,6 +309,9 @@ public class ItineraryActivity extends CommonBehaviourActivity<ItineraryView,Iti
         return emergencyState;
     }
 
+    /**
+     * Mostra i bottoni inerenti all'UI ShortestPath e nasconde quelli dell'UI AlternativePath
+     */
     private void showBestButton(){
         forwardBestButton.setVisibility(View.VISIBLE);
         forwardAlternativeButton.setVisibility(View.GONE);
@@ -310,6 +319,9 @@ public class ItineraryActivity extends CommonBehaviourActivity<ItineraryView,Iti
         alternativePathButton.setVisibility(View.VISIBLE);
     }
 
+    /**
+     * Mostra i bottoni inerenti all'UI AlternativePath e nasconde quelli dell'UI ShortestPath
+     */
     private void showAlternativeButton(){
         forwardBestButton.setVisibility(View.GONE);
         forwardAlternativeButton.setVisibility(View.VISIBLE);

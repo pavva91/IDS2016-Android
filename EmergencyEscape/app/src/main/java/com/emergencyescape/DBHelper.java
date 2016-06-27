@@ -13,7 +13,7 @@ import com.emergencyescape.greendao.DaoSession;
 
 /**
  * com.emergencyescape
- * DBHelper
+ * DBHelper - crea DB
  */
 public class DBHelper {
     private Context context;

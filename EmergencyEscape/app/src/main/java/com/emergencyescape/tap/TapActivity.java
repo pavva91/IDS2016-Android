@@ -49,14 +49,6 @@ public class TapActivity extends CommonBehaviourActivity<TapView,TapPresenter> {
         return presenter.getFloorList();
     }
 
-    public List<String> addStringValueListView(String stringToAdd , List<String> floorList){
-        List<String> newListView = new ArrayList<>();
-        for (String singleFloor:floorList){
-            newListView.add(stringToAdd + " " + singleFloor);
-        }
-        return newListView;
-    }
-
     public void populateFloorListView(List<String> floorList){
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_1,

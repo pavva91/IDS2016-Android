@@ -10,8 +10,8 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 
-import com.emergencyescape.MyApplication;
-import com.emergencyescape.login.LoginActivity;
+
+import com.emergencyescape.main.MainActivity;
 import com.emergencyescape.main.MainPresenter;
 import com.emergencyescape.qr.QrActivity;
 import com.emergencyescape.settings.SettingsActivity;
@@ -54,8 +54,8 @@ public abstract class CommonBehaviourActivity<V extends CommonBehaviourView, P e
 
         if(id == R.id.action_emqr){
             setBestPathUI();
-            Intent intent = new Intent("com.google.zxing.client.android.SCAN");
-            intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
+                Intent intent = new Intent("com.google.zxing.client.android.SCAN");
+                intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
             emergencyState = true;
             startActivityForResult(intent, 0);
             return true;
@@ -94,7 +94,7 @@ public abstract class CommonBehaviourActivity<V extends CommonBehaviourView, P e
                 boolean logoutOk = presenterCommonBehaviourDescendentan.logout(getApplicationContext()); // Effettua il logout
 
                 if (logoutOk) {
-                    Intent loginIntent = new Intent(this, LoginActivity.class); // Reindirizzo al login
+                    Intent loginIntent = new Intent(this, MainActivity.class); // Reindirizzo al login
                     startActivity(loginIntent);
                 }
             return true;

@@ -25,10 +25,12 @@ import java.util.List;
 public class TapPresenter extends CommonBehaviourPresenter<TapView> {
 
     private DaoSession daoSession = MyApplication.getSession();
-    private UserDao userDao = daoSession.getUserDao();
-    private NodeDao nodeDao = daoSession.getNodeDao();
     private static final String SQL_DISTINCT_ENAME = "SELECT DISTINCT "+NodeDao.Properties.Quote.columnName+" FROM "+NodeDao.TABLENAME+";";
 
+    /**
+     * Funzione che ritorna la lista di piani presenti nella mappa
+     * @return
+     */
     public List<String> getFloorList(){
         ArrayList<String> result = new ArrayList<>();
         Cursor c = daoSession.getDatabase().rawQuery(SQL_DISTINCT_ENAME, null);

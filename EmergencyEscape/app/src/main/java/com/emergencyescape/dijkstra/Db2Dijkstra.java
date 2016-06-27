@@ -62,7 +62,7 @@ public class    Db2Dijkstra {
     }
 
     /**
-     * Prendo gli Archi dal DB
+     * Prendo gli Archi dal DB assegna costi diversi a seconda dell'emergencyState
      * @param emergencyState
      */
     public void setDijkstraEdge(boolean emergencyState) {
