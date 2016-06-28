@@ -8,14 +8,16 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <!-- servono per le push -->
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
-    <permission android:name="it.html.googleservices.push.permission.C2D_MESSAGE"
-        android:protectionLevel="signature" />
-    <uses-permission android:name="it.html.googleservices.push.permission.C2D_MESSAGE" />
 
+    <permission
+        android:name="it.html.googleservices.push.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+
+    <uses-permission android:name="it.html.googleservices.push.permission.C2D_MESSAGE" />
 
     <application
         android:name=".MyApplication"
@@ -36,8 +38,7 @@
         <activity
             android:name=".main.MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar" >
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".text.TextDepartureActivity"
             android:label=" "
@@ -94,25 +95,20 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.emergencyescape.main.MainActivity" />
         </activity>
+        <activity android:name=".registration.RegistraActivity" />
 
-
-    <activity android:name=".registration.RegistraActivity" />
-
-
-    <!-- questi due ultimi tag servo per le push -->
+        <!-- questi due ultimi tag servo per le push -->
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <receiver
-            android:name=".businesslogic.NotificationReceiver">
+        <receiver android:name=".businesslogic.NotificationReceiver">
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+
                 <category android:name="it.html.googleservices.push" />
             </intent-filter>
         </receiver>
-
-
 
     </application>
 

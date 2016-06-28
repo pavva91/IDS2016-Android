@@ -46,4 +46,5 @@
     <string name="stairs_message">Vai a quota</string>
     <string name="action_second_path">Calcola percorso alternativo</string>
     <string name="action_best_path">Calcola percorso migliore</string>
+    <string name="action_refresh_data">Ricarica</string>
 </resources>

@@ -99,6 +99,10 @@ public abstract class CommonBehaviourActivity<V extends CommonBehaviourView, P e
             }
             return true;
         }
+        if (id == R.id.action_refresh_data) {
+            startActivity(new Intent(this, MainActivity.class).putExtra("refresh",true));
+            return true;
+        }
         return super.onOptionsItemSelected(item);
     }
 

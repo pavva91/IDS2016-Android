@@ -176,7 +176,7 @@ public class ItineraryActivity extends CommonBehaviourActivity<ItineraryView,Iti
         setPaintStyle(Color.BLUE);
         // TODO: Gestire il refresh activity
         Graph.CostPathPair alternative = presenter.getAlternativePath();
-        List<Graph.Edge> alternativePath = alternative.getPath();
+        List<Graph.Edge> alternativePath = alternative.getPath(); // TODO: Gestire Exception quando ruota schermo senza path
         if (alternativePath.size()>0) {
             Graph.Vertex nextDepartureDijkstra = alternativePath.get(0).getToVertex();
             String DepNextString = nextDepartureDijkstra.getValue().toString();

@@ -104,7 +104,7 @@ public class UtenteTable
     }
 
 
-    public ArrayList<ArrayList<String>> getAllFromUser()
+    public ArrayList<ArrayList<String>> getAllFromUser() // TODO: Usare questa per copiare Tabella utenti
     {
         dbh.openDB();
         SQLiteDatabase db = dbh.getReadableDatabase();

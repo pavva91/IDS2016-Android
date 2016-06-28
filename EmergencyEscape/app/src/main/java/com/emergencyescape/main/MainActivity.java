@@ -54,6 +54,10 @@ public class MainActivity extends CommonBehaviourActivity<MainView,MainPresenter
 
         }
 
+        if(getIntent().getBooleanExtra("refresh",true)){
+            presenter.loadServer2Db();
+        }
+
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);

@@ -36,7 +36,7 @@ dependencies {
     apt 'com.jakewharton:butterknife-compiler:8.0.1'
     compile 'com.hannesdorfmann.mosby:mvp:2.0.1'
     // Mosby library
-    compile 'com.hannesdorfmann.mosby:viewstate:2.0.1'
+    //compile 'com.hannesdorfmann.mosby:viewstate:2.0.1'
     // optional viewstate feature
     compile 'com.squareup.retrofit2:retrofit:2.0.2'
     // Retrofit
@@ -62,7 +62,7 @@ dependencies {
     compile 'com.google.android.gms:play-services:6.+'
     compile 'com.google.code.gson:gson:2.6.2'
     //INSTRUMENTED
-    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2'
+    //androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2'
     // Solves "versions for app (23.3.0) and test app (23.1.1) differ"
     androidTestCompile 'com.android.support:support-annotations:23.3.0'
     compile files('libs/khandroid-httpclient-4.2.3.jar')
