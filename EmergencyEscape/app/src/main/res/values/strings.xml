@@ -95,6 +95,7 @@
     <string name="action_second_path">Get alternative path</string>
     <string name="action_best_path">Get best path</string>
     <string name="action_refresh_data">Refresh</string>
+    <string name="wrong_text_input">Wrong Input, Please insert a correct one (hint: 145DICEA)</string>
 
 
 </resources>

@@ -128,6 +128,7 @@ public class ServerConnection
     private static final String SENDREGISTRAZIONE = "http://213.26.178.148/progetto/users/"; //per inviare i dati della registrazioni (POST)
     private static final String SENDLOGIN = "http://213.26.178.148/progetto/users/";
     private static final String SENDREGISTRATIONID = "http://213.26.178.148/progetto/devices/";
+    private static final String SENDPOSITION = "http://213.26.178.148/progetto/users/";
 
 
     /*
@@ -138,6 +139,7 @@ public class ServerConnection
 
 
     protected String setLoginUri(String user, String psw) {   return SENDLOGIN+user+"/login?password="+psw;  }
+    protected String setPositionUri(String user, String token) {   return SENDPOSITION+user+"/position?token="+token;  }
 
 
     /*
@@ -146,6 +148,24 @@ public class ServerConnection
     *
     */
 
+    public void updateUserPosition(final String nodeId, final String userName, final String token)
+    {
+        JSONObject jo = new JSONObject();
+
+        try {    jo.put("position", nodeId);    }
+        catch (Exception e){    System.out.println(e);    }
+
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST, //tipo richiesta
+                setPositionUri(userName,token), //uri richiesta
+                jo, //passo il jsonobject con i parametri
+                successListenerPosition, //cosa fare in caso di risposta corretta
+                errorListenerPosition); //cosa fare in caso di risposta errata
+
+        addToRequestQueue(jsonObjReq); // aggiungo la richiesta alla coda delle richieste
+
+        Log.i("Position", jsonObjReq.getBodyContentType());
+
+    }
 
     //da utilizzare quando vogliamo inviare idati al server per la REGISTRAZIONE
     public void sendRegistraParameters(final String user, final String psw)
@@ -184,6 +204,7 @@ public class ServerConnection
     *       SEZIONE FUNZIONE DI GET
     *
     */
+
 
 
     //da utilizzare quando vogliamo inviare idati al server per il LOGIN
@@ -239,6 +260,17 @@ public class ServerConnection
     */
 
 
+    //in caso di RISPOSTA CORRETTA all'invio della posizione
+    private Response.Listener<JSONObject> successListenerPosition = new Response.Listener<JSONObject>()
+    {
+        @Override
+        public void onResponse(JSONObject response)
+        {
+            Log.v("Position", "ok");
+            Log.v("Position", response.toString());
+        }
+
+    };
 
     //in caso di RISPOSTA CORRETTA al LOGIN riprendo dal file che mi rinvia il server la sessionkey server
     private Response.Listener<JSONObject> successListenerLogin = new Response.Listener<JSONObject>()
@@ -346,9 +378,6 @@ public class ServerConnection
 
                         ut.inserisciUtente(user,salt,password);
 */
-
-
-
                         // TODO: Spostare da BETTA A valerio
                         server2Db.addUser(user,password,salt); // Funziona
 
@@ -369,6 +398,19 @@ public class ServerConnection
     *
     */
 
+
+    //cosa fare in caso di ERRORE POSIZIONE
+    private Response.ErrorListener errorListenerPosition = new Response.ErrorListener()
+    {
+        @Override
+        public void onErrorResponse(VolleyError error)
+        {
+            Log.i("Position", "errore");
+            if(error.getMessage() != null)
+                Log.i("Position", error.getMessage());
+
+        }
+    };
 
 
     //cosa fare in caso di ERRORE LOGIN

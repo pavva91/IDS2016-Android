@@ -7,6 +7,7 @@ package com.emergencyescape.text;
 
 import com.emergencyescape.DBHelper;
 import com.emergencyescape.MyApplication;
+import com.emergencyescape.businesslogic.ServerConnection;
 import com.emergencyescape.businesslogic.SessionClass;
 import com.emergencyescape.commonbehaviour.CommonBehaviourPresenter;
 import com.emergencyescape.greendao.DaoSession;
@@ -28,6 +29,8 @@ public class TextDeparturePresenter extends CommonBehaviourPresenter<TexterView>
     private UserDao userDao = daoSession.getUserDao();
     private SessionClass sessionClass = SessionClass.getInstance();
     private String userName = sessionClass.getUser(MyApplication.context);
+    private String token = sessionClass.getServerKey(MyApplication.context);
+    ServerConnection serverConnection = ServerConnection.getInstance(MyApplication.context);
 
     @Override
     public ArrayList<String> getNodesList(){
@@ -48,6 +51,7 @@ public class TextDeparturePresenter extends CommonBehaviourPresenter<TexterView>
             if(singleUser.getName().equals(userName)){
                 singleUser.setDepartureId(this.getDepartureIdFromName(departure));
                 userDao.update(singleUser);
+                serverConnection.updateUserPosition(this.getDepartureIdFromName(departure).toString(),userName,token);
             }
         }
     }

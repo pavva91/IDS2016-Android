@@ -10,6 +10,7 @@ import com.emergencyescape.Coordinate2D;
 import com.emergencyescape.DeviceDimensionsHelper;
 import com.emergencyescape.FloorPathHelper;
 import com.emergencyescape.MyApplication;
+import com.emergencyescape.businesslogic.ServerConnection;
 import com.emergencyescape.businesslogic.SessionClass;
 import com.emergencyescape.commonbehaviour.CommonBehaviourPresenter;
 import com.emergencyescape.dijkstra.Db2Dijkstra;
@@ -52,6 +53,9 @@ public class ItineraryPresenter extends CommonBehaviourPresenter<ItineraryView> 
 
     private SessionClass sessionClass = SessionClass.getInstance();
     private String userName = sessionClass.getUser(MyApplication.context); // userName from SharedPreferences
+
+    private String token = sessionClass.getServerKey(MyApplication.context);
+    private ServerConnection serverConnection = ServerConnection.getInstance(MyApplication.context);
 
     public String getDepartureCode() {
         String userDeparture = "";
@@ -168,7 +172,7 @@ public class ItineraryPresenter extends CommonBehaviourPresenter<ItineraryView> 
     public Graph.CostPathPair getShortestPath(String departure, String destination, Boolean emergencyState) {
         Db2Dijkstra db2Dijkstra = new Db2Dijkstra(emergencyState);
         Graph graph = new Graph(db2Dijkstra.getVertexList(),db2Dijkstra.getEdgeDijkstraList());
-        Graph.CostPathPair shortestPath = Dijkstra.getShortestPath( // TODO: Spostare AsyncTask
+        Graph.CostPathPair shortestPath = Dijkstra.getShortestPath(
                 graph,
                 db2Dijkstra.getVertex(departure),
                 db2Dijkstra.getVertex(destination));
@@ -400,6 +404,7 @@ public class ItineraryPresenter extends CommonBehaviourPresenter<ItineraryView> 
             if(singleUser.getName().equalsIgnoreCase(userName)){
                 singleUser.setDepartureId(this.getNodeIdFromName(departure));
                 userDao.update(singleUser);
+                serverConnection.updateUserPosition(this.getNodeIdFromName(departure).toString(),userName,token);
             }
         }
     }
@@ -410,6 +415,7 @@ public class ItineraryPresenter extends CommonBehaviourPresenter<ItineraryView> 
             if(singleUser.getName().equalsIgnoreCase(userName)){
                 singleUser.setDestinationId(this.getNodeIdFromName(destination));
                 userDao.update(singleUser);
+                serverConnection.updateUserPosition(this.getNodeIdFromName(destination).toString(),userName,token);
             }
         }
     }

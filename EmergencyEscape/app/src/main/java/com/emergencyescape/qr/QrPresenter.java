@@ -4,6 +4,8 @@ package com.emergencyescape.qr;
  */
 
 import com.emergencyescape.MyApplication;
+import com.emergencyescape.businesslogic.ServerConnection;
+import com.emergencyescape.businesslogic.SessionClass;
 import com.emergencyescape.commonbehaviour.CommonBehaviourPresenter;
 import com.emergencyescape.greendao.DaoSession;
 import com.emergencyescape.greendao.Node;
@@ -23,12 +25,19 @@ public class QrPresenter extends CommonBehaviourPresenter<QrView> {
     private NodeDao nodeDao = daoSession.getNodeDao();
     private UserDao userDao = daoSession.getUserDao();
 
+    private SessionClass sessionClass = SessionClass.getInstance();
+    private String userName = sessionClass.getUser(MyApplication.context); // userName from SharedPreferences
+
+    private String token = sessionClass.getServerKey(MyApplication.context);
+    private ServerConnection serverConnection = ServerConnection.getInstance(MyApplication.context);
+
     public void setUserDeparture(String departure) { // TODO: Aggiornare anche il Server
         List<User> allUser = userDao.loadAll();
         for (User singleUser : allUser) {
-            if(singleUser.getName().equalsIgnoreCase("vale")){
+            if(singleUser.getName().equalsIgnoreCase(userName)){
                 singleUser.setDepartureId(this.getDepartureIdFromName(departure));
                 userDao.update(singleUser);
+                serverConnection.updateUserPosition(this.getDepartureIdFromName(departure).toString(),userName,token);
             }
         }
     }

@@ -120,12 +120,12 @@ public class LoginActivity extends AppCompatActivity
 
     private void login()
     {
-        Button log = (Button) findViewById(R.id.loginbutton);
+        Button loginButton = (Button) findViewById(R.id.loginbutton);
         final EditText psw = (EditText) findViewById(R.id.psw);
         final EditText user = (EditText) findViewById(R.id.user);
         final CheckBox ricorda = (CheckBox) findViewById(R.id.remember);
 
-        log.setOnClickListener(new OnClickListener()
+        loginButton.setOnClickListener(new OnClickListener()
         {
             @Override
             public void onClick(View v)
