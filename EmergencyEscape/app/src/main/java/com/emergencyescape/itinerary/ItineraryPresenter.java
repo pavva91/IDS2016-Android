@@ -10,6 +10,7 @@ import com.emergencyescape.Coordinate2D;
 import com.emergencyescape.DeviceDimensionsHelper;
 import com.emergencyescape.FloorPathHelper;
 import com.emergencyescape.MyApplication;
+import com.emergencyescape.businesslogic.SessionClass;
 import com.emergencyescape.commonbehaviour.CommonBehaviourPresenter;
 import com.emergencyescape.dijkstra.Db2Dijkstra;
 import com.emergencyescape.dijkstra.Dijkstra;
@@ -49,11 +50,14 @@ public class ItineraryPresenter extends CommonBehaviourPresenter<ItineraryView> 
     public Graph dijkstraGraph;
     public Db2Dijkstra db2Dijkstra;
 
+    private SessionClass sessionClass = SessionClass.getInstance();
+    private String userName = sessionClass.getUser(MyApplication.context); // userName from SharedPreferences
+
     public String getDepartureCode() {
         String userDeparture = "";
         List<User> allUser = userDao.loadAll(); // select *
         for (User singleUser : allUser) {
-            if(singleUser.getName().equalsIgnoreCase("vale")){
+            if(singleUser.getName().equals(userName)){
                 userDeparture = singleUser.getDepartureToOneUser().getCode();
             }
         }
@@ -64,7 +68,7 @@ public class ItineraryPresenter extends CommonBehaviourPresenter<ItineraryView> 
         com.emergencyescape.greendao.Node userDeparture = new com.emergencyescape.greendao.Node();
         List<User> allUser = userDao.loadAll(); // select *
         for (User singleUser : allUser) {
-            if(singleUser.getName().equalsIgnoreCase("vale")){
+            if(singleUser.getName().equals(userName)){
                 userDeparture = singleUser.getDepartureToOneUser();
             }
         }
@@ -75,7 +79,7 @@ public class ItineraryPresenter extends CommonBehaviourPresenter<ItineraryView> 
         com.emergencyescape.greendao.Node userDestination = new com.emergencyescape.greendao.Node();
         List<User> allUser = userDao.loadAll(); // select *
         for (User singleUser : allUser) {
-            if(singleUser.getName().equalsIgnoreCase("vale")){
+            if(singleUser.getName().equals(userName)){
                 userDestination = singleUser.getDestinationToOneUser();
             }
         }
@@ -86,7 +90,7 @@ public class ItineraryPresenter extends CommonBehaviourPresenter<ItineraryView> 
         String userDestination = "";
         List<User> allUser = userDao.loadAll();
         for (User singleUser : allUser) {
-            if(singleUser.getName().equalsIgnoreCase("vale")){
+            if(singleUser.getName().equals(userName)){
                 userDestination = singleUser.getDestinationToOneUser().getCode();
             }
         }
@@ -393,7 +397,7 @@ public class ItineraryPresenter extends CommonBehaviourPresenter<ItineraryView> 
     public void setUserDeparture(String departure) { // TODO: Aggiornare anche il Server
         List<User> allUser = userDao.loadAll();
         for (User singleUser : allUser) {
-            if(singleUser.getName().equalsIgnoreCase("vale")){
+            if(singleUser.getName().equalsIgnoreCase(userName)){
                 singleUser.setDepartureId(this.getNodeIdFromName(departure));
                 userDao.update(singleUser);
             }
@@ -403,7 +407,7 @@ public class ItineraryPresenter extends CommonBehaviourPresenter<ItineraryView> 
     public void setUserDestination(String destination) { // TODO: Aggiornare anche il Server
         List<User> allUser = userDao.loadAll();
         for (User singleUser : allUser) {
-            if(singleUser.getName().equalsIgnoreCase("vale")){
+            if(singleUser.getName().equalsIgnoreCase(userName)){
                 singleUser.setDestinationId(this.getNodeIdFromName(destination));
                 userDao.update(singleUser);
             }

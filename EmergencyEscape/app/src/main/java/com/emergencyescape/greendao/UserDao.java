@@ -28,10 +28,10 @@ public class UserDao extends AbstractDao<User, Long> {
      * Can be used for QueryBuilder and for referencing column names.
     */
     public static class Properties {
-        public final static Property Id = new Property(0, long.class, "id", true, "_id");
+        public final static Property Id = new Property(0, Long.class, "id", true, "_id");
         public final static Property Name = new Property(1, String.class, "name", false, "NAME");
         public final static Property Password = new Property(2, String.class, "password", false, "PASSWORD");
-        public final static Property Token = new Property(3, String.class, "token", false, "TOKEN");
+        public final static Property Salt = new Property(3, String.class, "salt", false, "SALT");
         public final static Property DepartureId = new Property(4, long.class, "departureId", false, "DEPARTURE_ID");
         public final static Property DestinationId = new Property(5, long.class, "destinationId", false, "DESTINATION_ID");
     };
@@ -54,10 +54,10 @@ public class UserDao extends AbstractDao<User, Long> {
     public static void createTable(SQLiteDatabase db, boolean ifNotExists) {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"USER\" (" + //
-                "\"_id\" INTEGER PRIMARY KEY NOT NULL ," + // 0: id
+                "\"_id\" INTEGER PRIMARY KEY ," + // 0: id
                 "\"NAME\" TEXT NOT NULL ," + // 1: name
                 "\"PASSWORD\" TEXT NOT NULL ," + // 2: password
-                "\"TOKEN\" TEXT NOT NULL ," + // 3: token
+                "\"SALT\" TEXT," + // 3: salt
                 "\"DEPARTURE_ID\" INTEGER NOT NULL ," + // 4: departureId
                 "\"DESTINATION_ID\" INTEGER NOT NULL );"); // 5: destinationId
     }
@@ -72,10 +72,18 @@ public class UserDao extends AbstractDao<User, Long> {
     @Override
     protected void bindValues(SQLiteStatement stmt, User entity) {
         stmt.clearBindings();
-        stmt.bindLong(1, entity.getId());
+ 
+        Long id = entity.getId();
+        if (id != null) {
+            stmt.bindLong(1, id);
+        }
         stmt.bindString(2, entity.getName());
         stmt.bindString(3, entity.getPassword());
-        stmt.bindString(4, entity.getToken());
+ 
+        String salt = entity.getSalt();
+        if (salt != null) {
+            stmt.bindString(4, salt);
+        }
         stmt.bindLong(5, entity.getDepartureId());
         stmt.bindLong(6, entity.getDestinationId());
     }
@@ -89,17 +97,17 @@ public class UserDao extends AbstractDao<User, Long> {
     /** @inheritdoc */
     @Override
     public Long readKey(Cursor cursor, int offset) {
-        return cursor.getLong(offset + 0);
+        return cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0);
     }    
 
     /** @inheritdoc */
     @Override
     public User readEntity(Cursor cursor, int offset) {
         User entity = new User( //
-            cursor.getLong(offset + 0), // id
+            cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
             cursor.getString(offset + 1), // name
             cursor.getString(offset + 2), // password
-            cursor.getString(offset + 3), // token
+            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // salt
             cursor.getLong(offset + 4), // departureId
             cursor.getLong(offset + 5) // destinationId
         );
@@ -109,10 +117,10 @@ public class UserDao extends AbstractDao<User, Long> {
     /** @inheritdoc */
     @Override
     public void readEntity(Cursor cursor, User entity, int offset) {
-        entity.setId(cursor.getLong(offset + 0));
+        entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
         entity.setName(cursor.getString(offset + 1));
         entity.setPassword(cursor.getString(offset + 2));
-        entity.setToken(cursor.getString(offset + 3));
+        entity.setSalt(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
         entity.setDepartureId(cursor.getLong(offset + 4));
         entity.setDestinationId(cursor.getLong(offset + 5));
      }

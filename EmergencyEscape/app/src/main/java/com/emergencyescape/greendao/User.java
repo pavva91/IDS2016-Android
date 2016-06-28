@@ -9,13 +9,12 @@ import de.greenrobot.dao.DaoException;
  */
 public class User {
 
-    private long id;
+    private Long id;
     /** Not-null value. */
     private String name;
     /** Not-null value. */
     private String password;
-    /** Not-null value. */
-    private String token;
+    private String salt;
     private long departureId;
     private long destinationId;
 
@@ -35,15 +34,15 @@ public class User {
     public User() {
     }
 
-    public User(long id) {
+    public User(Long id) {
         this.id = id;
     }
 
-    public User(long id, String name, String password, String token, long departureId, long destinationId) {
+    public User(Long id, String name, String password, String salt, long departureId, long destinationId) {
         this.id = id;
         this.name = name;
         this.password = password;
-        this.token = token;
+        this.salt = salt;
         this.departureId = departureId;
         this.destinationId = destinationId;
     }
@@ -54,11 +53,11 @@ public class User {
         myDao = daoSession != null ? daoSession.getUserDao() : null;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -82,14 +81,12 @@ public class User {
         this.password = password;
     }
 
-    /** Not-null value. */
-    public String getToken() {
-        return token;
+    public String getSalt() {
+        return salt;
     }
 
-    /** Not-null value; ensure this value is available before it is saved to the database. */
-    public void setToken(String token) {
-        this.token = token;
+    public void setSalt(String salt) {
+        this.salt = salt;
     }
 
     public long getDepartureId() {

@@ -7,6 +7,7 @@ package com.emergencyescape.text;
 
 import com.emergencyescape.DBHelper;
 import com.emergencyescape.MyApplication;
+import com.emergencyescape.businesslogic.SessionClass;
 import com.emergencyescape.commonbehaviour.CommonBehaviourPresenter;
 import com.emergencyescape.dijkstra.Db2Dijkstra;
 import com.emergencyescape.dijkstra.Dijkstra;
@@ -28,6 +29,9 @@ public class TextDestinationPresenter extends CommonBehaviourPresenter<TexterVie
     private DaoSession daoSession = MyApplication.getSession();
     private NodeDao nodeDao = daoSession.getNodeDao();
     private UserDao userDao = daoSession.getUserDao();
+
+    private SessionClass sessionClass = SessionClass.getInstance();
+    private String userName = sessionClass.getUser(MyApplication.context); // userName from SharedPreferences
 
     @Override
     public ArrayList<String> getNodesList(){
@@ -56,7 +60,7 @@ public class TextDestinationPresenter extends CommonBehaviourPresenter<TexterVie
     public void setUserDestination(String destination) {
         List<User> allUser = userDao.loadAll();
         for (User singleUser : allUser) {
-            if(singleUser.getName().equalsIgnoreCase("vale")){
+            if(singleUser.getName().equalsIgnoreCase(userName)){
                 singleUser.setDestinationId(this.getDestinationIdFromName(destination));
                 userDao.update(singleUser);
             }
@@ -80,7 +84,7 @@ public class TextDestinationPresenter extends CommonBehaviourPresenter<TexterVie
         String userDeparture = "";
         List<User> allUser = userDao.loadAll();
         for (User singleUser : allUser) {
-            if(singleUser.getName().equalsIgnoreCase("vale")){
+            if(singleUser.getName().equalsIgnoreCase(userName)){
                 userDeparture = singleUser.getDepartureToOneUser().getCode();
             }
         }

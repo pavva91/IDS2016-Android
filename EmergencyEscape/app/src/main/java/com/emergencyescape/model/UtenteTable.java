@@ -6,7 +6,13 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import com.emergencyescape.MyApplication;
+import com.emergencyescape.greendao.DaoSession;
+import com.emergencyescape.greendao.User;
+import com.emergencyescape.greendao.UserDao;
+
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Betta73 on 05/04/2016.
@@ -21,6 +27,8 @@ public class UtenteTable
     private static final String DBCOLUMNSALT = "salt";
     private DataBaseHelper dbh;
 
+    private DaoSession daoSession = MyApplication.getSession();
+    private UserDao userDao = daoSession.getUserDao();
 
     public UtenteTable (Context context)
     {
@@ -52,7 +60,25 @@ public class UtenteTable
     }
 
     //verifica se l'utente è registrato
-    public int checkUser (String user, String psw)
+    public boolean checkUser (String userName, String psw)
+    {
+        boolean userExist = false;
+
+        UserDao userDao = daoSession.getUserDao();
+        List<User> userList = userDao.loadAll();
+
+        for (User user : userList){
+            if (user.getName().equals(userName) && user.getPassword().equals(psw)) {
+                userExist = true;
+                break;
+            }
+        }
+
+        Log.i("Result checkUser", String.valueOf(userExist));
+        return userExist;
+    }
+    /*
+        public int checkUser (String user, String psw)
     {
         int ris = 0;
         dbh.openDB();
@@ -70,8 +96,27 @@ public class UtenteTable
         dbh.close();
         return ris;
     }
+     */
 
     //prende il salt dell'utente per il calcolo della password
+    public String takeSalt (String userName) // ok, funziona
+    {
+        String salt = "not value";
+
+        UserDao userDao = daoSession.getUserDao();
+        List<User> userList = userDao.loadAll();
+
+        for (User user : userList){
+            if (user.getName().equals(userName)) {
+                salt = user.getSalt();
+                break;
+            }
+        }
+
+        Log.i("Result takeSalt", String.valueOf(salt));
+        return salt;
+    }
+    /*
     public String takeSalt (String user)
     {
         String ris;
@@ -92,7 +137,8 @@ public class UtenteTable
         Log.i("Result takeSalt", String.valueOf(ris));
         dbh.close();
         return ris;
-    }
+    }*/
+
 
     //viene fatto la prima volta dopo il login
     //setta la chiave di sessione come user+password
@@ -104,7 +150,7 @@ public class UtenteTable
     }
 
 
-    public ArrayList<ArrayList<String>> getAllFromUser() // TODO: Usare questa per copiare Tabella utenti
+    public ArrayList<ArrayList<String>> getAllFromUser()
     {
         dbh.openDB();
         SQLiteDatabase db = dbh.getReadableDatabase();

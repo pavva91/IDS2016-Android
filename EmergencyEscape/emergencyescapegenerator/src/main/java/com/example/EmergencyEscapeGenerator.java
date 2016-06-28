@@ -42,7 +42,7 @@ public class EmergencyEscapeGenerator {
     }
 
     private static void addUser(Entity user) {
-        user.addIdProperty().notNull().primaryKey();
+        user.addIdProperty().primaryKey();
         user.addStringProperty("name").notNull();
         user.addStringProperty("password").notNull();
         user.addStringProperty("salt");

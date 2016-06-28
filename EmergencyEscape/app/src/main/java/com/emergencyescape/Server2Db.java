@@ -3,10 +3,6 @@ package com.emergencyescape;
  * Created by Valerio Mattioli on 01/06/2016.
  */
 
-import android.content.SharedPreferences;
-import android.content.pm.PackageInstaller;
-import android.content.res.TypedArray;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Environment;
 import android.util.Log;
@@ -18,6 +14,7 @@ import com.emergencyescape.greendao.ImageDao;
 import com.emergencyescape.greendao.Maps;
 import com.emergencyescape.greendao.MapsDao;
 import com.emergencyescape.greendao.NodeDao;
+import com.emergencyescape.greendao.User;
 import com.emergencyescape.greendao.UserDao;
 import com.emergencyescape.server.ServerService;
 import com.emergencyescape.server.model.Edge;
@@ -33,9 +30,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.Arrays;
 import java.util.List;
 
+import de.greenrobot.dao.query.QueryBuilder;
 import rx.Observable;
 import rx.Observer;
 import rx.Subscription;
@@ -226,6 +223,7 @@ public class Server2Db {
                         edge.setEm_cost(response.getEmgcost());
                         edge.setNo_em_cost(response.getLength());
 
+
                         edgeDao.insert(edge);
                     }
                 });
@@ -273,18 +271,43 @@ public class Server2Db {
                 });
     }
 
-    public void loadUser(){
+    public void loadUserTable(){
+        setDb();
+        UserDao.createTable(db,true);
+    }
+
+    public void dropUserTable(){
         setDb();
         UserDao.dropTable(db,true);
-        UserDao.createTable(db,false); // Bypassa l'errore, altrimenti andrebbe ad aggiungere gli stessi campi
-        // duplicando gli id, così io ogni volta cancello e ricreo la tabella
-        // TODO: Sostituire con un controllo per vedere se andare a popolare la tabella
+    }
 
+    public void addUser(String name, String password, String salt){
+        loadUserTable();
         com.emergencyescape.greendao.User user = new com.emergencyescape.greendao.User();
-        user.setName("vale");
-        user.setPassword("123");
-        user.setToken("12m2t7oc43godndv767tkj9hue");
-        userDao.insert(user);
+        user.setName(name);
+        user.setPassword(password);
+        user.setSalt(salt);
+        Log.v("UserName: ", user.getName());
+        Log.v("Password: ", user.getPassword());
+        Log.v("Salt: ", user.getSalt());
+
+
+        boolean insertData = true;
+
+        List<User> userList = userDao.loadAll();
+        for (User user1 : userList){
+            if (user1.getPassword().equals(user.getPassword()) && user1.getName().equals(user.getName())){
+                insertData = false;
+                break;
+            }
+        }
+
+        if(insertData){
+            userDao.insert(user);
+        }
+
+
+
     }
 
     public void loadImages(){
@@ -338,11 +361,13 @@ public class Server2Db {
         UserDao.dropTable(db,true);
         UserDao.createTable(db,false);
 
+        /*
         com.emergencyescape.greendao.User user = new com.emergencyescape.greendao.User();
         user.setName("vale");
         user.setPassword("123");
         user.setToken("12m2t7oc43godndv767tkj9hue");
         userDao.insert(user);
+        */
 
         NodeDao.dropTable(db,true);
         NodeDao.createTable(db,false);

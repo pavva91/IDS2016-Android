@@ -12,7 +12,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.emergencyescape.MyApplication;
 import com.emergencyescape.R;
+import com.emergencyescape.Server2Db;
+import com.emergencyescape.greendao.UserDao;
 import com.emergencyescape.login.LoginActivity;
 import com.emergencyescape.login.LoginPresenter;
 import com.emergencyescape.model.UtenteTable;
@@ -31,9 +34,11 @@ import java.io.InputStream;
  */
 public class ServerConnection
 {
+    private Server2Db server2Db = new Server2Db();
+    private MyApplication myApplication = MyApplication.getInstance();
     //classe singleton
     public static ServerConnection instance;
-    private Context context;
+    private Context context = MyApplication.context;
     // variabile che uso se devo vedere se l'operazione è andata a buon fine o meno per continuare a fare coperazioni nell'activity
     private boolean result;
     RequestQueue coda;
@@ -43,7 +48,7 @@ public class ServerConnection
 
     private ServerConnection(Context context)
     {
-        this.context = context; // inizializzo la variabile
+        this.context = MyApplication.context; // inizializzo la variabile
         coda = getRequestQueue(); //inizializzo la coda
     }
 
@@ -320,7 +325,9 @@ public class ServerConnection
             Log.i("Get Utenti", response.toString());
 
             if (response!= null)
+                // server2Db.dropUserTable();
             {
+
                 for (int i = 0; i < response.length(); i++)
                 {
                     JSONObject jo = new JSONObject();
@@ -334,8 +341,17 @@ public class ServerConnection
                         user = jo.getString("username");
                         password = jo.getString("password");
                         salt = jo.getString("salt");
+                        /*
                         UtenteTable ut = new UtenteTable(context);
+
                         ut.inserisciUtente(user,salt,password);
+*/
+
+
+
+                        // TODO: Spostare da BETTA A valerio
+                        server2Db.addUser(user,password,salt); // Funziona
+
                     }
                     catch (JSONException e) { e.printStackTrace(); }
                 }

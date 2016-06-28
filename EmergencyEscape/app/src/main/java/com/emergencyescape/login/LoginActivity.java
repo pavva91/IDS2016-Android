@@ -11,12 +11,22 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.emergencyescape.MyApplication;
 import com.emergencyescape.R;
 import com.emergencyescape.businesslogic.ServerConnection;
 import com.emergencyescape.businesslogic.SessionClass;
+import com.emergencyescape.greendao.DaoSession;
+import com.emergencyescape.greendao.EdgeDao;
+import com.emergencyescape.greendao.MapsDao;
+import com.emergencyescape.greendao.NodeDao;
+import com.emergencyescape.greendao.User;
+import com.emergencyescape.greendao.UserDao;
 import com.emergencyescape.main.MainActivity;
 import com.emergencyescape.model.UtenteTable;
 import com.emergencyescape.registration.RegistraActivity;
+import com.facebook.stetho.Stetho;
+
+import java.util.List;
 
 /**
  *
@@ -31,6 +41,7 @@ public class LoginActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        Stetho.initializeWithDefaults(this);
         setContentView(R.layout.activity_login);
         lp = new LoginPresenter(getApplicationContext());
 
@@ -119,11 +130,11 @@ public class LoginActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                String u = user.getText().toString();
-                String p = psw.getText().toString();
-                String r = String.valueOf(ricorda.isChecked());
+                String userNameText = user.getText().toString();
+                String passwordText = psw.getText().toString();
+                String rememberLogin = String.valueOf(ricorda.isChecked());
 
-                if (u.equals("") || p.equals(""))
+                if (userNameText.equals("") || passwordText.equals(""))
                 {
                     Toast.makeText(getApplicationContext(), "I campi Username e Password sono obbligatori", Toast.LENGTH_LONG).show();
                 }
@@ -132,13 +143,14 @@ public class LoginActivity extends AppCompatActivity
                     if(lp.checkConnection()==true) //siamo online
                     {
                         ServerConnection scon = ServerConnection.getInstance(getApplicationContext());
-                        scon.sendLoginParameters(u, p, r);
+                        scon.sendLoginParameters(userNameText, passwordText, rememberLogin);
                     }
                     else // siamo offline
                     {
                         ut = new UtenteTable(getApplicationContext());
+
                         //riprendo il salt dell'utente inserito
-                        String salt = ut.takeSalt(u);
+                        String salt = ut.takeSalt(userNameText);
                         if (salt.equals("niente"))
                         {
                             Toast.makeText(getApplicationContext(), "ERRORE: username o password errati! ", Toast.LENGTH_LONG).show();
@@ -146,15 +158,15 @@ public class LoginActivity extends AppCompatActivity
                         else
                         {
                             //cripto la password
-                            String criptopsw = lp.cryptPassword(p, salt);
+                            String criptopsw = lp.cryptPassword(passwordText, salt);
                             //se l'utente esiste
-                            if (ut.checkUser(u, criptopsw) != 0)
+                            if (ut.checkUser(userNameText, criptopsw) == true)
                             {
                                 SessionClass sc = SessionClass.getInstance();
                                 //salvo la password da inviare appena siamo online al server
-                                sc.setPassword(p, getApplicationContext());
+                                sc.setPassword(passwordText, getApplicationContext());
 
-                                lp.loginOK(u, p, r);
+                                lp.loginOK(userNameText, passwordText, rememberLogin);
                             }
                             else
                             {

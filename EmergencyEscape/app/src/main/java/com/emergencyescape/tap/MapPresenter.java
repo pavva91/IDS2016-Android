@@ -11,6 +11,7 @@ import com.emergencyescape.Coordinate2D;
 import com.emergencyescape.FloorPathHelper;
 import com.emergencyescape.MyApplication;
 import com.emergencyescape.R;
+import com.emergencyescape.businesslogic.SessionClass;
 import com.emergencyescape.commonbehaviour.CommonBehaviourPresenter;
 import com.emergencyescape.greendao.DaoSession;
 import com.emergencyescape.greendao.Node;
@@ -33,10 +34,13 @@ public class MapPresenter extends CommonBehaviourPresenter<TapView> {
     private NodeDao nodeDao = daoSession.getNodeDao();
     private UserDao userDao = daoSession.getUserDao();
 
+    private SessionClass sessionClass = SessionClass.getInstance();
+    private String userName = sessionClass.getUser(MyApplication.context);
+
     public void setUserDeparture(Node departureNode) { // TODO: Aggiornare anche il Server
         List<User> allUser = userDao.loadAll();
         for (User singleUser : allUser) {
-            if(singleUser.getName().equalsIgnoreCase("vale")){
+            if(singleUser.getName().equalsIgnoreCase(userName)){
                 singleUser.setDepartureId(departureNode.getId());
                 userDao.update(singleUser);
             }
