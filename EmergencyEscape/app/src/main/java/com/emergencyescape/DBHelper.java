@@ -17,7 +17,7 @@ import com.emergencyescape.greendao.DaoSession;
  */
 public class DBHelper {
     private Context context;
-    private String DB_NAME = "EmergencyEscape2";
+    private String DB_NAME = "EmergencyEscape";
     private String TAG = this.getClass().getName();
     private SQLiteDatabase _db = null;
     private DaoSession _session = null;

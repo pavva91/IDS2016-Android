@@ -10,7 +10,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 
-
+import com.emergencyescape.Server2Db;
 import com.emergencyescape.main.MainActivity;
 import com.emergencyescape.main.MainPresenter;
 import com.emergencyescape.qr.QrActivity;
@@ -46,6 +46,8 @@ public abstract class CommonBehaviourActivity<V extends CommonBehaviourView, P e
         }
 
         if(id == R.id.action_emtap){
+            Server2Db server2Db = new Server2Db();
+            server2Db.loadUser();
             setBestPathUI();
             Intent intent = new Intent(this,TapActivity.class).putExtra("emergencyState",true);
             startActivity(intent);
