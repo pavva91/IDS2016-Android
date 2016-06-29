@@ -107,10 +107,6 @@ public abstract class CommonBehaviourActivity<V extends CommonBehaviourView, P e
             }
             return true;
         }
-        if (id == R.id.action_refresh_data) {
-            refreshDB();
-            return true;
-        }
         return super.onOptionsItemSelected(item);
     }
 

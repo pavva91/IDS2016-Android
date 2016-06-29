@@ -49,8 +49,4 @@
         android:title="@string/action_logout"
         android:orderInCategory="100"
         app:showAsAction="never" />
-    <item android:id="@+id/action_refresh_data"
-        android:title="@string/action_refresh_data"
-        android:orderInCategory="100"
-        app:showAsAction="never" />
    </menu>
