@@ -5,6 +5,7 @@ import android.content.Context;
 
 import com.emergencyescape.greendao.DaoSession;
 import com.emergencyescape.server.ServerService;
+import com.facebook.stetho.Stetho;
 
 
 /**
@@ -34,6 +35,8 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         _INSTANCE = this;
+
+        Stetho.initializeWithDefaults(this);
         context = getApplicationContext();
 
         serverService = new ServerService(); // Collegamento Server

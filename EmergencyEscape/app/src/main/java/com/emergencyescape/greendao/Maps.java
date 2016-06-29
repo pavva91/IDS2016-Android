@@ -13,7 +13,7 @@ public class Maps {
     private Long id;
     /** Not-null value. */
     private String name;
-    private String lastUpdate;
+    private java.util.Date lastUpdate;
 
     /** Used to resolve relations */
     private transient DaoSession daoSession;
@@ -31,7 +31,7 @@ public class Maps {
         this.id = id;
     }
 
-    public Maps(Long id, String name, String lastUpdate) {
+    public Maps(Long id, String name, java.util.Date lastUpdate) {
         this.id = id;
         this.name = name;
         this.lastUpdate = lastUpdate;
@@ -61,11 +61,11 @@ public class Maps {
         this.name = name;
     }
 
-    public String getLastUpdate() {
+    public java.util.Date getLastUpdate() {
         return lastUpdate;
     }
 
-    public void setLastUpdate(String lastUpdate) {
+    public void setLastUpdate(java.util.Date lastUpdate) {
         this.lastUpdate = lastUpdate;
     }
 

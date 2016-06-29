@@ -25,7 +25,7 @@ public class MapsDao extends AbstractDao<Maps, Long> {
     public static class Properties {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
         public final static Property Name = new Property(1, String.class, "name", false, "NAME");
-        public final static Property LastUpdate = new Property(2, String.class, "lastUpdate", false, "LAST_UPDATE");
+        public final static Property LastUpdate = new Property(2, java.util.Date.class, "lastUpdate", false, "LAST_UPDATE");
     };
 
     private DaoSession daoSession;
@@ -46,7 +46,7 @@ public class MapsDao extends AbstractDao<Maps, Long> {
         db.execSQL("CREATE TABLE " + constraint + "\"MAPS\" (" + //
                 "\"_id\" INTEGER PRIMARY KEY ," + // 0: id
                 "\"NAME\" TEXT NOT NULL ," + // 1: name
-                "\"LAST_UPDATE\" TEXT);"); // 2: lastUpdate
+                "\"LAST_UPDATE\" INTEGER);"); // 2: lastUpdate
     }
 
     /** Drops the underlying database table. */
@@ -66,9 +66,9 @@ public class MapsDao extends AbstractDao<Maps, Long> {
         }
         stmt.bindString(2, entity.getName());
  
-        String lastUpdate = entity.getLastUpdate();
+        java.util.Date lastUpdate = entity.getLastUpdate();
         if (lastUpdate != null) {
-            stmt.bindString(3, lastUpdate);
+            stmt.bindLong(3, lastUpdate.getTime());
         }
     }
 
@@ -90,7 +90,7 @@ public class MapsDao extends AbstractDao<Maps, Long> {
         Maps entity = new Maps( //
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
             cursor.getString(offset + 1), // name
-            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2) // lastUpdate
+            cursor.isNull(offset + 2) ? null : new java.util.Date(cursor.getLong(offset + 2)) // lastUpdate
         );
         return entity;
     }
@@ -100,7 +100,7 @@ public class MapsDao extends AbstractDao<Maps, Long> {
     public void readEntity(Cursor cursor, Maps entity, int offset) {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
         entity.setName(cursor.getString(offset + 1));
-        entity.setLastUpdate(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
+        entity.setLastUpdate(cursor.isNull(offset + 2) ? null : new java.util.Date(cursor.getLong(offset + 2)));
      }
     
     /** @inheritdoc */

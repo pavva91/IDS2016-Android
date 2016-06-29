@@ -33,7 +33,6 @@ public class MainActivity extends CommonBehaviourActivity<MainView,MainPresenter
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Stetho.initializeWithDefaults(this);
         setContentView(R.layout.activity_main);
 
         PreferenceManager.setDefaultValues(this, R.xml.settings_file, false); // Carica i valori di default delle opzioni
@@ -52,10 +51,6 @@ public class MainActivity extends CommonBehaviourActivity<MainView,MainPresenter
             editor.putBoolean("FIRSTRUN", false);
             editor.commit();
 
-        }
-
-        if(getIntent().getBooleanExtra("refresh",true)){
-            presenter.loadServer2Db();
         }
 
 

@@ -6,6 +6,7 @@ package com.emergencyescape.commonbehaviour;
 import android.content.Context;
 import android.util.Log;
 
+import com.emergencyescape.Server2Db;
 import com.emergencyescape.businesslogic.SessionClass;
 import com.hannesdorfmann.mosby.mvp.MvpBasePresenter;
 import com.hannesdorfmann.mosby.mvp.MvpView;
@@ -36,6 +37,11 @@ public abstract class CommonBehaviourPresenter<V extends MvpView> extends MvpBas
             return false;
 
         }
+    }
+
+    public void refreshDB(){
+        Server2Db server2Db = new Server2Db();
+        server2Db.refreshDb();
     }
 
 

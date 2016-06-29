@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 
+import com.emergencyescape.Server2Db;
 import com.emergencyescape.login.LoginActivity;
 import com.emergencyescape.main.MainActivity;
 import com.emergencyescape.main.MainPresenter;
@@ -39,6 +40,7 @@ public abstract class CommonBehaviourActivity<V extends CommonBehaviourView, P e
         int id = item.getItemId();
 
         if(id == R.id.action_emtext){
+            refreshDB();
             setBestPathUI();
             Intent intent = new Intent(this,TextDepartureActivity.class).putExtra("emergencyState",true);
             startActivity(intent);
@@ -46,6 +48,7 @@ public abstract class CommonBehaviourActivity<V extends CommonBehaviourView, P e
         }
 
         if(id == R.id.action_emtap){
+            refreshDB();
             setBestPathUI();
             Intent intent = new Intent(this,TapActivity.class).putExtra("emergencyState",true);
             startActivity(intent);
@@ -53,6 +56,7 @@ public abstract class CommonBehaviourActivity<V extends CommonBehaviourView, P e
         }
 
         if(id == R.id.action_emqr){
+            refreshDB();
             setBestPathUI();
             Intent intent = new Intent("com.google.zxing.client.android.SCAN");
             intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
@@ -63,6 +67,7 @@ public abstract class CommonBehaviourActivity<V extends CommonBehaviourView, P e
 
 
         if(id == R.id.action_noemtext){
+            refreshDB();
             setBestPathUI();
             Intent intent = new Intent(this,TextDepartureActivity.class).putExtra("emergencyState",false);
             startActivity(intent);
@@ -70,6 +75,7 @@ public abstract class CommonBehaviourActivity<V extends CommonBehaviourView, P e
         }
 
         if(id == R.id.action_noemtap){
+            refreshDB();
             setBestPathUI();
             Intent intent = new Intent(this,TapActivity.class).putExtra("emergencyState",false);
             startActivity(intent);
@@ -77,6 +83,7 @@ public abstract class CommonBehaviourActivity<V extends CommonBehaviourView, P e
         }
 
         if(id == R.id.action_noemqr){
+            refreshDB();
             setBestPathUI();
             Intent intent = new Intent("com.google.zxing.client.android.SCAN");
             intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
@@ -100,10 +107,15 @@ public abstract class CommonBehaviourActivity<V extends CommonBehaviourView, P e
             return true;
         }
         if (id == R.id.action_refresh_data) {
-            startActivity(new Intent(this, MainActivity.class).putExtra("refresh",true));
+            refreshDB();
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    protected void refreshDB(){
+        Server2Db server2Db = new Server2Db();
+        server2Db.refreshDb();
     }
 
     protected void setBestPathUI(){

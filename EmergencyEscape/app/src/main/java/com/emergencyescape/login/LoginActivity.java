@@ -41,7 +41,6 @@ public class LoginActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        Stetho.initializeWithDefaults(this);
         setContentView(R.layout.activity_login);
         lp = new LoginPresenter(getApplicationContext());
 

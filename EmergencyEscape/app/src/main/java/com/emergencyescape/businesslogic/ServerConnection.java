@@ -12,13 +12,12 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.emergencyescape.ISO8601DateParser;
 import com.emergencyescape.MyApplication;
 import com.emergencyescape.R;
 import com.emergencyescape.Server2Db;
-import com.emergencyescape.greendao.UserDao;
 import com.emergencyescape.login.LoginActivity;
 import com.emergencyescape.login.LoginPresenter;
-import com.emergencyescape.model.UtenteTable;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -129,6 +128,7 @@ public class ServerConnection
     private static final String SENDLOGIN = "http://213.26.178.148/progetto/users/";
     private static final String SENDREGISTRATIONID = "http://213.26.178.148/progetto/devices/";
     private static final String SENDPOSITION = "http://213.26.178.148/progetto/users/";
+    private static final String GETMAP = "http://213.26.178.148/progetto/maps";
 
 
     /*
@@ -140,7 +140,8 @@ public class ServerConnection
 
     protected String setLoginUri(String user, String psw) {   return SENDLOGIN+user+"/login?password="+psw;  }
     protected String setPositionUri(String user, String token) {   return SENDPOSITION+user+"/position?token="+token;  }
-
+    protected String setMapNameUri(String mapName, String token){      return GETMAP + "/" + mapName + "?token="+token;    }
+    protected String setMapListUri(String token){      return GETMAP + "?token="+token;    }
 
     /*
     *
@@ -206,6 +207,33 @@ public class ServerConnection
     */
 
 
+    //da utilizzare quando vogliamo prendere i dati di una mappa dal nome della stessa
+    public void getMapByName(String mapname, String token)
+    {
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest (Request.Method.GET, //tipo richiesta
+                setMapNameUri(mapname, token),//uri richiesta
+                successListenergetMapByName, //cosa fare in caso di risposta corretta
+                errorListenergetMapByName); //cosa fare in caso di risposta errata
+
+        Log.i("getMapbynome", setMapNameUri(mapname, token));
+
+        addToRequestQueue(jsonObjReq); // aggiungo la richiesta alla coda delle richieste
+
+    }
+
+    //da utilizzare quando vogliamo prendere le mappi disponibili sul server
+    public void getElencoMappe(String token)
+    {
+        JsonArrayRequest jsonObjReq = new JsonArrayRequest (Request.Method.GET, //tipo richiesta
+                setMapListUri(token),//uri richiesta
+                successListenerElencoMappe, //cosa fare in caso di risposta corretta
+                errorListenerListMap); //cosa fare in caso di risposta errata
+
+        Log.i("getElencoMappe", setMapListUri(token));
+
+        addToRequestQueue(jsonObjReq); // aggiungo la richiesta alla coda delle richieste
+
+    }
 
     //da utilizzare quando vogliamo inviare idati al server per il LOGIN
     public void sendLoginParameters(final String user, final String psw, final String ricorda)
@@ -251,6 +279,7 @@ public class ServerConnection
         addToRequestQueue(jsonObjReq); // aggiungo la richiesta alla coda delle richieste
 
     }
+
 
 
     /*
@@ -391,6 +420,134 @@ public class ServerConnection
         }
     };
 
+    //in caso di RISPOSTA CORRETTA quando si riprende l'elenco delle mappe
+    private Response.Listener<JSONArray> successListenerElencoMappe= new Response.Listener<JSONArray>()
+    {
+        @Override
+        public void onResponse(JSONArray response)
+        {
+            Log.v("Get Map Response", "ok");
+            Log.i("Get Map Response", response.toString());
+
+            if (response!= null)
+            {
+
+                for (int i = 0; i < response.length(); i++)
+                {
+                    JSONObject jo = new JSONObject();
+                    String nomemappa = null;
+                    String data_aggiornamento = null;
+
+                    try
+                    {
+                        jo = response.getJSONObject(i);
+                        nomemappa = jo.getString("name");
+                        data_aggiornamento = jo.getString("lastUpdateMap");
+
+                        //TODO: salva le stringhe nel db (tabella mappe)
+
+                    }
+                    catch (JSONException e) { e.printStackTrace(); }
+                }
+
+            }
+        }
+    };
+
+    //in caso di RISPOSTA CORRETTA quando si riprende l'elenco delle mappe
+    private Response.Listener<JSONObject> successListenergetMapByName= new Response.Listener<JSONObject>()
+    {
+        @Override
+        public void onResponse(JSONObject response)
+        {
+            Log.v("Get Map Response", "ok");
+            Log.i("Get Map Response", response.toString());
+
+            if (response!= null)
+            {
+                //riprendo l'array nodo
+                JSONArray nodo = new JSONArray();
+                try {    nodo = response.getJSONArray("nodes");    }
+                catch (JSONException e) {  e.printStackTrace();     }
+
+                //riprendo l'array arco
+                JSONArray arco = new JSONArray();
+                try {    arco = response.getJSONArray("edges");    }
+                catch (JSONException e) {  e.printStackTrace();     }
+
+                //ciclo sui nodi
+                for (int i = 0; i < nodo.length(); i++)
+                {
+                    JSONObject jo = new JSONObject();
+
+                    String nomemappa = null;
+                    String id = null;
+                    String code = null;
+                    String descr = null;
+                    String quota = null;
+                    String x = null;
+                    String y = null;
+                    String width = null;
+                    String type = null;
+
+                    try
+                    {
+                        jo = nodo.getJSONObject(i);
+                        nomemappa = jo.getString("mapName");
+                        id = jo.getString("id");
+                        code = jo.getString("code");
+                        descr = jo.getString("descr");
+                        quota = jo.getString("quota");
+                        x = jo.getString("x");
+                        y = jo.getString("y");
+                        width = jo.getString("width");
+                        type = jo.getString("type");
+
+                        //TODO: salva le stringhe nel db (tabella nodi)
+
+                    }
+                    catch (JSONException e) { e.printStackTrace(); }
+                }
+
+                //ciclo sugli archi
+                for (int z = 0; z < arco.length(); z++)
+                {
+                    JSONObject jo = new JSONObject();
+
+                    String v = null;
+                    String i = null;
+                    String los = null;
+                    String c = null;
+                    String length = null;
+                    String from = null;
+                    String to = null;
+                    String area = null;
+                    String numpers = null;
+                    String emgcost = null;
+
+                    try
+                    {
+                        jo = arco.getJSONObject(z);
+                        v = jo.getString("v");
+                        i = jo.getString("i");
+                        los = jo.getString("los");
+                        c = jo.getString("c");
+                        length = jo.getString("length");
+                        from = jo.getString("from");
+                        to = jo.getString("to");
+                        area = jo.getString("area");
+                        emgcost = jo.getString("emgcost");
+
+                        //TODO: salva le stringhe nel db (tabella archi)
+
+                    }
+                    catch (JSONException e) { e.printStackTrace(); }
+                }
+
+            }
+        }
+    };
+
 
     /*
     *
@@ -462,6 +619,30 @@ public class ServerConnection
             Log.i("Get Utenti", "errore");
             if(error.getMessage() != null)
                 Log.i("Get Utenti", error.getMessage());
+
+        }
+    };
+
+    private Response.ErrorListener errorListenerListMap = new Response.ErrorListener()
+    {
+        @Override
+        public void onErrorResponse(VolleyError error)
+        {
+            Log.i("GETLISTMAP", "errore");
+            if(error.getMessage() != null)
+                Log.i("GETLISTMAP", error.getMessage());
+
+        }
+    };
+
+    private Response.ErrorListener errorListenergetMapByName = new Response.ErrorListener()
+    {
+        @Override
+        public void onErrorResponse(VolleyError error)
+        {
+            Log.i("getMapByName", "errore");
+            if(error.getMessage() != null)
+                Log.i("getMapByName", error.getMessage());
 
         }
     };

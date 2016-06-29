@@ -43,6 +43,7 @@ public class SessionClass
     private static final String REGISTRATIONID = "registrationid";
     private static final String SERVERKEY = "sessionkeyserver";
     private static final String SESSIONKEY = "restaconnesso";
+    private static final String DOWNLOADMAPFLAG = "restaconnesso";
     SharedPreferences sp;
     SharedPreferences.Editor editor;
 
@@ -52,7 +53,6 @@ public class SessionClass
     *       SEZIONE SETTER
     *
     */
-
 
     // setta lo username dell'utente loggato in un file chiamato FILENAME
     public void setRegistrationId(String regid, Context x)
@@ -124,6 +124,16 @@ public class SessionClass
         Log.i("RegIDFLAG globale", "inserito");
     }
 
+    // setta il flag per vedere se devo o meno scaricare l'elenco utenti
+    public void setDownloadMapFlag(Context x)
+    {
+        sp = x.getSharedPreferences(FILENAME, x.MODE_PRIVATE);
+        editor = sp.edit();
+        editor.putInt(DOWNLOADMAPFLAG, 1);
+        editor.commit();
+        Log.i("MapDownloadFlag", "inserito");
+    }
+
 
 
     /*
@@ -135,6 +145,7 @@ public class SessionClass
 
     public boolean isRegistrationIDFlag(){ return sp.contains(REGISTRATIONIDFLAG);}
     public boolean isDownloadFlag(){ return sp.contains(DOWNLOADFLAG);}
+    public boolean isDownloadMapFlag(){ return sp.contains(DOWNLOADMAPFLAG);}
 
 
 

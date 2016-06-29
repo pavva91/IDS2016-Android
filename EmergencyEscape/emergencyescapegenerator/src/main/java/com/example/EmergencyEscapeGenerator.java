@@ -72,7 +72,7 @@ public class EmergencyEscapeGenerator {
     private static void addMaps(Entity map) {
         map.addIdProperty().primaryKey();
         map.addStringProperty("name").notNull();
-        map.addStringProperty("lastUpdate");
+        map.addDateProperty("lastUpdate");
     }
     private static void addImage(Entity image) {
         image.addIdProperty().primaryKey();

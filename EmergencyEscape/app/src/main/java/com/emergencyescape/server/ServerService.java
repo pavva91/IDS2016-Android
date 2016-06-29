@@ -194,4 +194,10 @@ public class ServerService { // TODO: Per ora è grezzo e non sfrutta il caching
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
+
+    public Observable<MapResponse> getMap (Observable<MapResponse> mapResponse){
+        return mapResponse
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
 }

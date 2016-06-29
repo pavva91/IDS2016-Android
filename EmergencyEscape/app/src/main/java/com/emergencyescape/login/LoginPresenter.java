@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.emergencyescape.Server2Db;
 import com.emergencyescape.businesslogic.ServerConnection;
 import com.emergencyescape.businesslogic.SessionClass;
 import com.emergencyescape.main.MainActivity;
@@ -30,12 +31,14 @@ public class LoginPresenter
     private String SENDER_ID = "684028198613";
     GoogleCloudMessaging gcm;
     Context context;
+    Server2Db s2d;
 
 
     public LoginPresenter(Context context)
     {
         mHandler = new Handler();
         this.context = context;
+        s2d = new Server2Db();
         gcm = GoogleCloudMessaging.getInstance(context);
     }
 
@@ -64,6 +67,13 @@ public class LoginPresenter
                 String id = sc.getRegistrationId(context);
                 sv.sendRegistrationID(id);
                 Log.i("Task Periodico", "Siamo connessi. Sto inviando la chiave al server...");
+                mHandler.postDelayed(mStatusChecker, mInterval);
+            }
+            else if (checkConnection() == true && sc.isDownloadMapFlag() == false)
+            {
+                //chiedo le mappe al server
+                s2d.initializeDb();
+                Log.i("Task Periodico", "Siamo connessi. Scarico le mappe...");
                 mHandler.postDelayed(mStatusChecker, mInterval);
             }
             else if (checkConnection() == true && sc.isDownloadFlag() == false)
