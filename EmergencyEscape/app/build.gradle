@@ -16,6 +16,7 @@ android {
         versionName "1.0"
         //per test
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled  true // Velocizza Build
     }
     buildTypes {
         release {
@@ -23,6 +24,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
 }
 
 dependencies {

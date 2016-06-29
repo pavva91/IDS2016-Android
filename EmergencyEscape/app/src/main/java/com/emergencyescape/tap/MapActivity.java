@@ -50,10 +50,11 @@ public class MapActivity extends CommonBehaviourActivity<TapView,MapPresenter> {
 
         ButterKnife.bind(this);
 
-        populateImageView(getIntent().getExtras().getString("floor"));
+
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        populateImageView(getIntent().getExtras().getString("floor"));
     }
 
 
