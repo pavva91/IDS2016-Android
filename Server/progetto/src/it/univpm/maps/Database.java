@@ -10,18 +10,18 @@ public class Database {
 	}
 	
 	//parametri di connessione al DB MySQL
-	private static final String usernameDB = "univpm";
-	private static final String passwordDB = "univpm";
-	private static final String ipDB = "localhost";
-	private static final String portDB = "3306";
-	private static final String urlDB = "/progetto";
+	private static final String USERNAME_DB = "univpm";
+	private static final String PASSWORD_DB = "univpm";
+	private static final String IP_DB = "localhost";
+	private static final String PORT_DB = "3306";
+	private static final String URL_DB = "/progetto";
 	
 	//metodo che consente di collegarsi al DB, restituisce la connessione
 	public Connection getConnection() throws Exception{
-		String connectionURL = "jdbc:mysql://"+ipDB+":"+portDB+urlDB;
+		String connectionURL = "jdbc:mysql://"+IP_DB+":"+PORT_DB+URL_DB;
 		Connection connection = null;
 		Class.forName("com.mysql.jdbc.Driver").newInstance();
-		connection = DriverManager.getConnection(connectionURL, usernameDB, passwordDB);
+		connection = DriverManager.getConnection(connectionURL, USERNAME_DB, PASSWORD_DB);
 		return connection;
 	}
 }

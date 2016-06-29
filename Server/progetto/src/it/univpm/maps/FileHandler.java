@@ -96,8 +96,6 @@ public class FileHandler {
 	    	return Response.status(Response.Status.CONFLICT).entity("ERRORE: Impossibile creare cartella per salvataggio immagini!").build();
 	    }catch(SQLException esql){
 	    	return Response.status(Response.Status.FORBIDDEN).entity("ERRORE: Utente non trovato o non autorizzato!").build();
-	    }catch(IOException ioe){
-			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(ioe).build();
 	    }catch(Exception ex){
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(ex).build();
 		}

@@ -12,17 +12,17 @@ public class User {
 
 	//DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss"); //formato data-ora
 	@XmlElement
-	String username; //nome utente
+	private String username; //nome utente
 	@XmlElement
-	String password; //password utente
+	private String password; //password utente
 	@XmlElement
-	String salt; //salt usato per crittografia password con funzione hashUtente
+	private String salt; //salt usato per crittografia password con funzione hashUtente
 	@XmlElement
-	int position; //posizione dell'utente (id codice nodo)
+	private int position; //posizione dell'utente (id codice nodo)
 	@XmlElement
-	String token; //token da usare per la comunicazione con il server
+	private String token; //token da usare per la comunicazione con il server
 	@XmlElement
-	Date lastMapUpdate; //data e ora della mappa
+	private Date lastMapUpdate; //data e ora della mappa
 	
 	//costruttore senza parametri
 	public User(){
@@ -60,7 +60,7 @@ public class User {
 	public void setToken(String token) {
 		this.token = token;
 	}
-	public Date getLasMapUpdate() {
+	public Date getLastMapUpdate() {
 		return lastMapUpdate;
 	}
 	public void setLastMapUpdate(Date lastMapUpdate) {

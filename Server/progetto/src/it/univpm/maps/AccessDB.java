@@ -355,7 +355,17 @@ public class AccessDB {
 	public User updatePositionUser(Connection con, User u, int newPosition) throws SQLException{
 		PreparedStatement stmt;
 		String mapName;
-		int oldPosition = u.getPosition();
+		ResultSet rs;
+		int oldPosition=0;
+		//recupero vecchia posizione utente
+		stmt = con.prepareStatement("SELECT posizione FROM utenti WHERE username=?");
+		stmt.setString(1, u.getUsername());
+		rs = stmt.executeQuery();
+		if(rs.next()){
+			oldPosition = rs.getInt("posizione");
+			if (oldPosition==0)
+				oldPosition=-1;
+		}
 		//se l'utente non aveva una posizione nota allora...
 		if(oldPosition!=-1){
 			//rimuovo una persona da tutti gli archi adiacenti la vecchia posizione dell'utente e aggiorno il LOS
@@ -384,7 +394,7 @@ public class AccessDB {
 		//ricavo nome mappa da codice nodo
 		stmt = con.prepareStatement("SELECT mappa FROM nodi WHERE id=?");
 		stmt.setInt(1, newPosition);
-		ResultSet rs = stmt.executeQuery();
+		rs = stmt.executeQuery();
 		if(!rs.next()){
 			//se il nodo non esiste genero un'eccezione
 			new SQLException("ERRORE: nodo nullo o non trovato!");

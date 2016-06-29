@@ -127,6 +127,8 @@ public class UserHandler {
 			Database db = new Database();
 			Connection con = db.getConnection();
 			AccessDB access = new AccessDB();
+			u.setUsername(username);
+			u.setToken(token);
 			access.verifyToken(con, username, token);
 			u = access.updatePositionUser(con, u, newPosition); //aggiorno posizione utente
 		}catch (Exception ex){

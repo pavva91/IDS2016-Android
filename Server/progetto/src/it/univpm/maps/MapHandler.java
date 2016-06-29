@@ -83,7 +83,7 @@ public class MapHandler{
 					return Response.status(Response.Status.NOT_FOUND).entity("ERRORE: Mappa non trovata!").build();
 				}	
 			else 
-				//errore utente non autorizzato a caricare mappe
+				//errore utente non autorizzato a cancellare mappe
 				return Response.status(Response.Status.FORBIDDEN).entity("ERRORE: Utente non autorizzato!").build();
 		}catch (NullPointerException ex){
 			//questa eccezione si verifica se non esiste la cartella contenente la mappa, viene ignorata per i test
@@ -154,6 +154,7 @@ public class MapHandler{
 	//prende in input l'arco con i nuovi valori aggiornati e restituisce l'arco aggiornato con tutti i dati presenti sul DB
 	//ritorna FORBIDDEN se l'utente non ha i privilegi necessari
 	//ritorna NOT FOUND se l'arco non esiste
+	//ritorns INTERNAL SERVER ERROR in caso di errore diverso dai precedenti
 	//ritorna OK se l'arco viene aggiornato correttamente
 	@PUT
 	@Path("{mapName}/edges")
