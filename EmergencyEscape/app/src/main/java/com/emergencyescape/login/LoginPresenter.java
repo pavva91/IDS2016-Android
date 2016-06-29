@@ -72,7 +72,11 @@ public class LoginPresenter
             else if (checkConnection() == true && sc.isDownloadMapFlag() == false)
             {
                 //chiedo le mappe al server
-                s2d.initializeDb();
+                s2d.setToken();
+                s2d.loadMaps();
+                s2d.loadNodes();
+                s2d.loadEdges();
+                s2d.loadImages();
                 Log.i("Task Periodico", "Siamo connessi. Scarico le mappe...");
                 mHandler.postDelayed(mStatusChecker, mInterval);
             }

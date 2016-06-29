@@ -57,6 +57,7 @@ public class Server2Db {
 
     private String LOG = this.toString();
     private Subscription subscription;
+    private Subscription subscriptionMaps;
     private ServerService service = MyApplication.getInstance().getServerService();
     private DaoSession daoSession = MyApplication.getSession();
     private NodeDao nodeDao = daoSession.getNodeDao();
@@ -393,7 +394,7 @@ public class Server2Db {
 
             Observable<List<MapResponse>> mapsObservable = service.getMaps(mapsResponseObservable);
 
-            subscription = mapsObservable
+            subscriptionMaps = mapsObservable
                     .subscribe(new Observer<List<MapResponse>>() {
 
                         @Override
@@ -570,7 +571,6 @@ public class Server2Db {
     }
 
     public void initializeDb(){
-        setToken();
         Observable<MapResponse> mapResponseObservableRaw = service.getAPI().getMap(mapName,token);
         Observable<MapResponse> mapResponseObservable = service.getMap(mapResponseObservableRaw);
 
@@ -717,7 +717,6 @@ public class Server2Db {
     }
 
     public void refreshDb(){
-        setToken();
         Observable<MapResponse> mapResponseObservableRaw = service.getAPI().getMap(mapName,token);
         Observable<MapResponse> mapResponseObservable = service.getMap(mapResponseObservableRaw);
 
@@ -751,6 +750,8 @@ public class Server2Db {
                             }
                             if (mapResponseDate.after(thisMap.getLastUpdate())) { // TODO: Verificare cosa succede all'inizio
 
+                                thisMap.setLastUpdate(mapResponseDate);
+                                mapResponse.getLastUpdateMap();
                                 ArrayList<com.emergencyescape.greendao.Node> nodeArrayList = new ArrayList<>();
                                 for (Node node : nodes){
                                     dropNodeTable();
@@ -836,6 +837,14 @@ public class Server2Db {
                         }
                     }
                 });
+
+
+
+
+
+
+
+
 
     }
 

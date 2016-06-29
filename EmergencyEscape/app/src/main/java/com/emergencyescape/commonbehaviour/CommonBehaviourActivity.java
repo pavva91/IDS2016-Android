@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 
+import com.emergencyescape.MyApplication;
 import com.emergencyescape.Server2Db;
 import com.emergencyescape.login.LoginActivity;
 import com.emergencyescape.main.MainActivity;
@@ -114,7 +115,8 @@ public abstract class CommonBehaviourActivity<V extends CommonBehaviourView, P e
     }
 
     protected void refreshDB(){
-        Server2Db server2Db = new Server2Db();
+        Server2Db server2Db = MyApplication.getInstance().getServer2Db();
+        server2Db.setToken();
         server2Db.refreshDb();
     }
 
