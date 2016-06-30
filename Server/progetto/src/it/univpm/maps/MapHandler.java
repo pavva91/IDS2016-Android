@@ -51,10 +51,12 @@ public class MapHandler{
 			else
 				//errore utente non autorizzato a caricare mappe
 				return Response.status(Response.Status.FORBIDDEN).entity("ERRORE: Utente non autorizzato!").build();
+		con.close();
 		}catch (Exception ex){
 			//errore inserimento mappa //restituire 409
 			return Response.status(Response.Status.CONFLICT).entity(ex.getMessage()).build();
 		}
+		
 		return Response.ok(m, MediaType.APPLICATION_JSON).build();
 	}
 	
@@ -85,6 +87,7 @@ public class MapHandler{
 			else 
 				//errore utente non autorizzato a cancellare mappe
 				return Response.status(Response.Status.FORBIDDEN).entity("ERRORE: Utente non autorizzato!").build();
+		con.close();
 		}catch (NullPointerException ex){
 			//questa eccezione si verifica se non esiste la cartella contenente la mappa, viene ignorata per i test
 			//altrimenti non si verifica mai
@@ -111,6 +114,8 @@ public class MapHandler{
 				//errore mappa non trovata //restituire 403
 				return Response.status(Response.Status.FORBIDDEN).entity("ERRORE: Utente non loggato!").build();
 			}	
+		
+		con.close();
 		}catch (Exception ex){
 			//errore generico restituire 500
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("ERRORE!").build();
@@ -144,6 +149,7 @@ public class MapHandler{
 				//errore mappa non trovata //restituire 403
 				return Response.status(Response.Status.FORBIDDEN).entity("ERRORE: Utente non autorizzato!").build();
 			}				
+		con.close();
 		}catch (Exception e){
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("ERRORE!").build();
 		}
@@ -179,6 +185,7 @@ public class MapHandler{
 				//errore permessi insufficienti //restituire 403
 				return Response.status(Response.Status.FORBIDDEN).entity("ERRORE: Utente non autorizzato!").build();
 			}	
+		con.close();
 		}catch (Exception ex){
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("ERRORE!").build();
 		}
@@ -207,6 +214,7 @@ public class MapHandler{
 					//errore utente non autorizzato restituire 403
 					return Response.status(Response.Status.FORBIDDEN).entity("ERRORE: Utente non loggato!").build();
 				}	
+			con.close();
 			}catch (Exception ex){
 				return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("ERRORE!").build();
 			}
@@ -241,6 +249,7 @@ public class MapHandler{
 				else
 					//errore utente non autorizzato a modificare mappe
 					return Response.status(Response.Status.FORBIDDEN).entity("ERRORE: Utente non autorizzato!").build();
+			con.close();
 			}catch (Exception ex){
 				//errore generico restituire 500
 				return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Errore!").build();

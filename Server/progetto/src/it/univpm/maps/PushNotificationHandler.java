@@ -31,15 +31,13 @@ public class PushNotificationHandler {
 		DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
 		wr.write(postData);
 		wr.close();
-		
-		
 		//risposta che non gestisco, SENZA QUESTE RIGHE NON ARRIVANO LE NOTIFICHE AL CLIENT
 		BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream())); 
 		//String line; 
 		while ((rd.readLine()) != null) { 
 		    // Process line... 
 			//System.out.println(line);
-		}  
+		} 
 		rd.close(); 
 		
 	}

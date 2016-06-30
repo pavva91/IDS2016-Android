@@ -124,7 +124,7 @@ public class MapHandlerTest {
 			int returnedStatus=res.getStatus();
 			assertTrue("Status diverso da 200", returnedStatus==200);//lo status deve essere 200 OK
 			JSONObject jsonobj = new JSONObject(res.getEntity());
-			String returnedmapname = jsonobj.getString("nome");
+			String returnedmapname = jsonobj.getString("name");
 			String returneddatelastupdate = jsonobj.getString("lastUpdateMap");
 			Boolean returnedemergency = jsonobj.getBoolean("emergency");
 			
@@ -187,7 +187,7 @@ public class MapHandlerTest {
 		returnedStatus=res.getStatus();
 		assertTrue("Status diverso da 200 nel tentativo di scaricare la mappa valida", returnedStatus==200);//lo status deve essere 200 OK
 		JSONObject jsonobj = new JSONObject(res.getEntity());
-		String returnedMapName = jsonobj.getString("nome");
+		String returnedMapName = jsonobj.getString("name");
 		assertEquals("Il nome mappa non corrisponde a quanto atteso!", ConfigTest.mapNameValid, returnedMapName);
 		//test dove recupero la mappa valida usando un token sconosciuto
 		res=testClass.getMap(ConfigTest.mapNameValid, "tokeninesistente");//AUT
@@ -274,7 +274,7 @@ public class MapHandlerTest {
 		returnedStatus=res.getStatus();
 		assertTrue("Status diverso da 200 nel tentativo di recuperare info sulla mappa", returnedStatus==200);//lo status deve essere 200 OK
 		JSONObject jsonobj = new JSONObject(res.getEntity());
-		String returnedMapName = jsonobj.getString("nome");
+		String returnedMapName = jsonobj.getString("name");
 		assertEquals("Il nome mappa non corrisponde a quanto atteso!", ConfigTest.mapNameValid, returnedMapName);//il nome mappa deve essere quello atteso
 		//test su mappa esistente ma permessi insufficienti
 		res=testClass.getMapInfo(ConfigTest.mapNameValid, "token_inesistente");//AUT
@@ -297,7 +297,7 @@ public class MapHandlerTest {
 		returnedStatus=res.getStatus();
 		//System.out.println(jsonobj);
 		assertTrue("Status diverso da 200 nel tentativo di modificare un arco valido", returnedStatus==200);//lo status deve essere 200 OK
-		String returnedMapName = jsonobj.getString("nome");
+		String returnedMapName = jsonobj.getString("name");
 		Boolean returnedEmergency = jsonobj.getBoolean("emergency");
 		assertTrue("Il valore di nome mappa non è quello atteso!", returnedMapName==ConfigTest.mapNameValid);//verifico che il valore di returnedAlarm sia quello atteso
 		assertTrue("Il valore di alarm non è quello atteso!", returnedEmergency);//verifico che il valore di returnedAlarm sia quello atteso

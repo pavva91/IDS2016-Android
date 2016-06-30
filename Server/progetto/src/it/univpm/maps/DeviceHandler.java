@@ -32,6 +32,7 @@ public class DeviceHandler {
 			Connection con = db.getConnection();
 			AccessDB access = new AccessDB();
 			access.insertDevice(con, d);
+			con.close();
 		}catch (Exception e){
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("ERRORE: Impossibile registrare dispositivo!").build();
 		}
@@ -52,6 +53,7 @@ public class DeviceHandler {
 			Connection con = db.getConnection();
 			AccessDB access = new AccessDB();
 			access.deleteDevice(con, d);
+			con.close();
 		}catch (Exception e){
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("ERRORE: Impossibile cancellare device!").build();
 		}

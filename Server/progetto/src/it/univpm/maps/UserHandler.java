@@ -50,6 +50,7 @@ public class UserHandler {
 			Connection con = db.getConnection();
 			AccessDB access = new AccessDB();
 			access.insertUser(con, u);
+			con.close();
 		}catch (Exception e){
 			return Response.status(Response.Status.CONFLICT).entity("ERRORE: Impossibile registrare utente!").build();
 		}
@@ -73,6 +74,7 @@ public class UserHandler {
 			AccessDB access = new AccessDB();
 			if(!access.deleteUser(con, u))
 				return Response.status(Response.Status.NOT_FOUND).entity("ERRORE: Impossibile cancellare utente!").build();
+			con.close();
 		}catch (Exception e){
 			return Response.status(Response.Status.CONFLICT).entity("ERRORE: Impossibile cancellare utente!").build();
 		}
@@ -105,6 +107,7 @@ public class UserHandler {
 			u.setUsername(username);
 			u.setPassword(password);
 			u.setSalt(salt);
+			con.close();
 		}catch (SQLException sqlex){
 			return Response.status(Response.Status.CONFLICT).entity(sqlex.toString()).build();
 		}catch (Exception e){
@@ -131,6 +134,7 @@ public class UserHandler {
 			u.setToken(token);
 			access.verifyToken(con, username, token);
 			u = access.updatePositionUser(con, u, newPosition); //aggiorno posizione utente
+			con.close();
 		}catch (Exception ex){
 			return Response.status(Response.Status.CONFLICT).entity("ERRORE: Aggiornamento posizione utente impossibile!").build();
 		}
@@ -165,6 +169,7 @@ public class UserHandler {
 			Connection con = db.getConnection();
 			AccessDB access = new AccessDB();
 			userList = access.getUsersList(con);
+			con.close();
 		}catch (Exception ex){
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("ERRORE!").build();
 		}

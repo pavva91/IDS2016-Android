@@ -130,7 +130,7 @@ public class AccessDB {
 		int numRecord;
 		PreparedStatement stmt = con.prepareStatement("DELETE FROM mappe where nome=?");
 		stmt.setString(1, m.getName());
-		numRecord = stmt.executeUpdate();
+		numRecord = stmt.executeUpdate();;
         if (numRecord == 0) {
             throw new SQLException("Errore cancellazione mappa!");
         }
@@ -431,7 +431,6 @@ public class AccessDB {
 			stmt.setInt(3, quote);
 			stmt.executeUpdate();	
 		}
-		stmt.close();		
 	}
 
 	//metodo che aggiorna i valori di un arco, usato principalmente per variare i parametri 
@@ -450,7 +449,6 @@ public class AccessDB {
 		stmt.setInt(5, edgeFrom);
 		stmt.setInt(6, edgeTo);
 		stmt.executeUpdate();
-		stmt.close();
 		e=getEdge(con, edgeFrom, edgeTo);
 		return e;
 	}
@@ -517,7 +515,6 @@ public class AccessDB {
 		stmt = con.prepareStatement("UPDATE mappe SET data_aggiornamento=NOW() WHERE nome=?");
 		stmt.setString(1, mapName);
 		stmt.executeUpdate();	
-		stmt.close();
 	}
 	
 	//metodo che recupera le informazioni su una mappa (nome e data ultimo aggiornamento)
@@ -604,5 +601,4 @@ public class AccessDB {
 				pushhandler.sendPushNotification(rs.getString("registrationID"), emergency, Config.MESSAGE_NOT_EMERGENCY);
 		}
 	}
-	
 }

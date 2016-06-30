@@ -53,7 +53,7 @@ public class UserHandlerTest {
 		Response res;
 		int returnedStatus;
 		//login con credenziali di admin (o di altro utente, purchè esistente)
-		res = testClass.userLogin("admin", "univpm");//AUT
+		res = testClass.userLogin(ConfigTest.usernameAdminTest, ConfigTest.passwordAdminTest);//AUT
 		returnedStatus=res.getStatus();
 		assertTrue("Status diverso da 200", returnedStatus==200);//lo status deve essere 200 OK
 		JSONObject jsonobj = new JSONObject(res.getEntity());

@@ -91,7 +91,7 @@ public class FileHandler {
 			access.updateMapImage(con, mapName, quota, fileUrl);
 			//aggiorno data mappa
 			access.updateMapDate(con, mapName);
-	
+			con.close();
 	    }catch(SecurityException se){
 	    	return Response.status(Response.Status.CONFLICT).entity("ERRORE: Impossibile creare cartella per salvataggio immagini!").build();
 	    }catch(SQLException esql){
