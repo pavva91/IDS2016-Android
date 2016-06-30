@@ -36,55 +36,6 @@ public class UserUtil
     }
     Server2Db server2Db = new Server2Db();
 
-    //inserisce gli utentei passati dal db
-    public void inserisciUtente (String user, String salt,String psw)
-    {
-        long ris;
-        server2Db.loadUserTable();
-        com.emergencyescape.greendao.User newUser = new com.emergencyescape.greendao.User();
-        newUser.setName(user);
-        newUser.setPassword(psw);
-        newUser.setSalt(salt);
-        Log.v("UserName: ", newUser.getName());
-        Log.v("Password: ", newUser.getPassword());
-        Log.v("Salt: ", newUser.getSalt());
-
-
-        boolean insertData = true;
-
-        List<User> userList = userDao.loadAll();
-        for (User user1 : userList){
-            if (user1.getPassword().equals(newUser.getPassword()) && user1.getName().equals(newUser.getName())){
-                insertData = false;
-                break;
-            }
-        }
-
-        if(insertData){
-            userDao.insert(newUser);
-        }
-
-        /*
-         long ris;
-         dbh.openDB();
-
-        SQLiteDatabase db = dbh.getWritableDatabase();
-
-        ContentValues cv = new ContentValues();
-        cv.put(DBCOLUMNUSER, user);
-        cv.put(DBCOLUMNPSW, psw);
-        cv.put(DBCOLUMNSALT, salt);
-
-        Log.i("Nome inserito", user);
-        Log.i("Password inserita", psw);
-        Log.i("Salt inserito", salt);
-
-        ris = db.insert(TABLENAME, null, cv);
-
-        dbh.close();
-
-        return ris;*/
-    }
 
     //verifica se l'utente è registrato
     public boolean checkUser (String userName, String psw)
@@ -104,26 +55,7 @@ public class UserUtil
         Log.i("Result checkUser", String.valueOf(userExist));
         return userExist;
     }
-    /*
-        public int checkUser (String user, String psw)
-    {
-        int ris = 0;
-        dbh.openDB();
 
-        SQLiteDatabase db = dbh.getReadableDatabase();
-
-        Cursor c = db.rawQuery("SELECT " + DBCOLUMNUSER + ", " + DBCOLUMNPSW + " " +
-                               "FROM " + TABLENAME + " " +
-                               "WHERE " + DBCOLUMNUSER + " = '" + user+ "' " +
-                               "AND " + DBCOLUMNPSW + " = '" + psw + "'", null);
-
-        ris = c.getCount();
-
-        Log.i("Result checkUser", String.valueOf(ris));
-        dbh.close();
-        return ris;
-    }
-     */
 
     //prende il salt dell'utente per il calcolo della password
     public String takeSalt (String userName) // ok, funziona
@@ -143,28 +75,7 @@ public class UserUtil
         Log.i("Result takeSalt", String.valueOf(salt));
         return salt;
     }
-    /*
-    public String takeSalt (String user)
-    {
-        String ris;
-        dbh.openDB();
 
-        SQLiteDatabase db = dbh.getReadableDatabase();
-
-        Cursor cursor = db.rawQuery("SELECT " + DBCOLUMNSALT + " " +
-                "FROM " + TABLENAME + " " +
-                "WHERE " + DBCOLUMNUSER + " = '" + user + "'", null);
-
-        if(cursor.moveToFirst())
-        {
-            ris = cursor.getString(cursor.getColumnIndex(DBCOLUMNSALT));
-        }
-        else  { ris = "niente";  }
-
-        Log.i("Result takeSalt", String.valueOf(ris));
-        dbh.close();
-        return ris;
-    }*/
 
 
     //viene fatto la prima volta dopo il login

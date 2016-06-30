@@ -42,7 +42,6 @@ import rx.Observable;
 import rx.Observer;
 import rx.Subscription;
 
-import static java.lang.String.format;
 
 /**
  * com.emergencyescape
@@ -235,9 +234,7 @@ public class Server2Db {
 
         Observable<MapResponse> mapResponseObservable = service.getAPI().getMap(mapName,token);
         Observable<Node> nodeObservable= service.getNodes(mapResponseObservable);
-            /*setDb();
-            NodeDao.dropTable(db,true);
-            NodeDao.createTable(db,false);*/
+
 
              // Deserializzo la risposta
             subscription = nodeObservable
@@ -487,25 +484,7 @@ public class Server2Db {
         if(insertData){
             nodeDao.insert(node);
         }
-        /*
-        Log.v("UserName: ", /*user.getName());
-        Log.v("Password: ", user.getPassword());
-        Log.v("Salt: ", user.getSalt());
 
-
-        boolean insertData = true;
-
-        List<User> userList = userDao.loadAll();
-        for (User user1 : userList){
-            if (user1.getPassword().equals(user.getPassword()) && user1.getName().equals(user.getName())){
-                insertData = false;
-                break;
-            }
-        }
-
-        if(insertData){
-            userDao.insert(user);
-        }*/
     }
 
     public void addMap(String mapName, String lastUpdateMap){
