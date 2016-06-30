@@ -12,11 +12,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.emergencyescape.ISO8601DateParser;
 import com.emergencyescape.MyApplication;
 import com.emergencyescape.R;
-import com.emergencyescape.Server2Db;
-import com.emergencyescape.greendao.Maps;
+import com.emergencyescape.utils.Server2Db;
 import com.emergencyescape.login.LoginActivity;
 import com.emergencyescape.login.LoginPresenter;
 
@@ -208,20 +206,6 @@ public class ServerConnection
     */
 
 
-    //da utilizzare quando vogliamo prendere i dati di una mappa dal nome della stessa
-    public void getMapByName(String mapname, String token)
-    {
-        JsonObjectRequest jsonObjReq = new JsonObjectRequest (Request.Method.GET, //tipo richiesta
-                setMapNameUri(mapname, token),//uri richiesta
-                successListenergetMapByName, //cosa fare in caso di risposta corretta
-                errorListenergetMapByName); //cosa fare in caso di risposta errata
-
-        Log.i("getMapbynome", setMapNameUri(mapname, token));
-
-        addToRequestQueue(jsonObjReq); // aggiungo la richiesta alla coda delle richieste
-
-    }
-
     //da utilizzare quando vogliamo prendere le mappi disponibili sul server
     public void getElencoMappe(String token)
     {
@@ -404,7 +388,7 @@ public class ServerConnection
                         password = jo.getString("password");
                         salt = jo.getString("salt");
                         /*
-                        UtenteTable ut = new UtenteTable(context);
+                        UserUtil ut = new UserUtil(context);
 
                         ut.inserisciUtente(user,salt,password);
 */
@@ -460,99 +444,7 @@ public class ServerConnection
         }
     };
 
-    //in caso di RISPOSTA CORRETTA quando si riprende l'elenco delle mappe
-    private Response.Listener<JSONObject> successListenergetMapByName= new Response.Listener<JSONObject>()
-    {
-        @Override
-        public void onResponse(JSONObject response)
-        {
-            Log.v("Get Map Response", "ok");
-            Log.i("Get Map Response", response.toString());
 
-            if (response!= null)
-            {
-                //riprendo l'array nodo
-                JSONArray nodo = new JSONArray();
-                try {    nodo = response.getJSONArray("nodes");    }
-                catch (JSONException e) {  e.printStackTrace();     }
-
-                //riprendo l'array arco
-                JSONArray arco = new JSONArray();
-                try {    arco = response.getJSONArray("edges");    }
-                catch (JSONException e) {  e.printStackTrace();     }
-
-                //ciclo sui nodi
-                for (int i = 0; i < nodo.length(); i++)
-                {
-                    JSONObject jo = new JSONObject();
-
-                    String nomemappa = null;
-                    Long id = null;
-                    String code = null;
-                    String descr = null;
-                    Integer quota = null;
-                    Integer x = null;
-                    Integer y = null;
-                    Double width = null;
-                    String type = null;
-
-                    try
-                    {
-                        jo = nodo.getJSONObject(i);
-                        nomemappa = jo.getString("mapName");
-                        id = jo.getLong("id");
-                        code = jo.getString("code");
-                        descr = jo.getString("descr");
-                        quota = jo.getInt("quota");
-                        x = jo.getInt("x");
-                        y = jo.getInt("y");
-                        width = jo.getDouble("width");
-                        type = jo.getString("type");
-
-                        //TODO: salva le stringhe nel db (tabella nodi)
-
-                    }
-                    catch (JSONException e) { e.printStackTrace(); }
-                }
-
-                //ciclo sugli archi
-                for (int z = 0; z < arco.length(); z++)
-                {
-                    JSONObject jo = new JSONObject();
-
-                    String v = null;
-                    String i = null;
-                    String los = null;
-                    String c = null;
-                    String length = null;
-                    String from = null;
-                    String to = null;
-                    String area = null;
-                    String numpers = null;
-                    String emgcost = null;
-
-                    try
-                    {
-                        jo = arco.getJSONObject(z);
-                        v = jo.getString("v");
-                        i = jo.getString("i");
-                        los = jo.getString("los");
-                        c = jo.getString("c");
-                        length = jo.getString("length");
-                        from = jo.getString("from");
-                        to = jo.getString("to");
-                        area = jo.getString("area");
-                        emgcost = jo.getString("emgcost");
-
-                        //TODO: salva le stringhe nel db (tabella archi)
-
-                    }
-                    catch (JSONException e) { e.printStackTrace(); }
-                }
-
-            }
-        }
-    };
 
 
     /*
@@ -641,17 +533,6 @@ public class ServerConnection
         }
     };
 
-    private Response.ErrorListener errorListenergetMapByName = new Response.ErrorListener()
-    {
-        @Override
-        public void onErrorResponse(VolleyError error)
-        {
-            Log.i("getMapByName", "errore");
-            if(error.getMessage() != null)
-                Log.i("getMapByName", error.getMessage());
-
-        }
-    };
 
     //cosa fare in caso di ERRORE SEND REGISTRATIONID
     private Response.ErrorListener errorListenerRegistrationID = new Response.ErrorListener()

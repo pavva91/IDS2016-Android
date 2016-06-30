@@ -11,7 +11,7 @@ import android.widget.Toast;
 import com.emergencyescape.R;
 import com.emergencyescape.businesslogic.ServerConnection;
 import com.emergencyescape.login.LoginActivity;
-import com.emergencyescape.model.UtenteTable;
+import com.emergencyescape.utils.UserUtil;
 
 public class RegistraActivity extends AppCompatActivity
 {
@@ -59,7 +59,7 @@ public class RegistraActivity extends AppCompatActivity
 
         long ok = -1;
 
-        UtenteTable ut = new UtenteTable(getApplicationContext());
+        UserUtil ut = new UserUtil(getApplicationContext());
         //ok = ut.inserisciUtente(user.getText().toString(), psw.getText().toString());
 
         //Log.i("Rowind nuovo", String.valueOf(ok));

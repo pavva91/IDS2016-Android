@@ -6,9 +6,9 @@ package com.emergencyescape.itinerary;
 import android.content.Context;
 import android.graphics.Path;
 
-import com.emergencyescape.Coordinate2D;
-import com.emergencyescape.DeviceDimensionsHelper;
-import com.emergencyescape.FloorPathHelper;
+import com.emergencyescape.utils.Coordinate2D;
+import com.emergencyescape.utils.DeviceDimensionsHelper;
+import com.emergencyescape.utils.FloorPathHelper;
 import com.emergencyescape.MyApplication;
 import com.emergencyescape.businesslogic.ServerConnection;
 import com.emergencyescape.businesslogic.SessionClass;

@@ -9,12 +9,11 @@ import android.os.Handler;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.emergencyescape.MyApplication;
-import com.emergencyescape.Server2Db;
+import com.emergencyescape.utils.Server2Db;
 import com.emergencyescape.businesslogic.ServerConnection;
 import com.emergencyescape.businesslogic.SessionClass;
 import com.emergencyescape.main.MainActivity;
-import com.emergencyescape.model.UtenteTable;
+import com.emergencyescape.utils.UserUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 import java.io.IOException;
@@ -157,7 +156,7 @@ public class LoginPresenter
         // crea e setta la chiave di sessione se ricordami è selezionato
         if (r.equals("true"))
         {
-            UtenteTable ut = new UtenteTable(context);
+            UserUtil ut = new UserUtil(context);
             //setto in una variabile globale la chiave di sessione
             sc.setSessionKey(ut.createSession(u, p), context);
         }

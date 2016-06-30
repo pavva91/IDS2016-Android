@@ -3,25 +3,16 @@ package com.emergencyescape.dijkstra;
  * Created by Valerio Mattioli on 06/06/2016.
  */
 
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-
-import com.emergencyescape.DBHelper;
+import com.emergencyescape.utils.DBHelper;
 import com.emergencyescape.MyApplication;
 import com.emergencyescape.greendao.DaoSession;
 import com.emergencyescape.greendao.Edge;
 import com.emergencyescape.greendao.EdgeDao;
-import com.emergencyescape.greendao.MapsDao;
 import com.emergencyescape.greendao.Node;
 import com.emergencyescape.greendao.NodeDao;
-import com.emergencyescape.greendao.UserDao;
-import com.emergencyescape.server.ServerService;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-
-import rx.Subscription;
 
 /**
  * com.emergencyescape.dijkstra

@@ -3,7 +3,6 @@ package com.emergencyescape.commonbehaviour;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -11,7 +10,7 @@ import android.widget.Toast;
 
 
 import com.emergencyescape.MyApplication;
-import com.emergencyescape.Server2Db;
+import com.emergencyescape.utils.Server2Db;
 import com.emergencyescape.login.LoginActivity;
 import com.emergencyescape.main.MainActivity;
 import com.emergencyescape.main.MainPresenter;

@@ -4,7 +4,7 @@ package com.emergencyescape.main;
  */
 
 import com.emergencyescape.MyApplication;
-import com.emergencyescape.Server2Db;
+import com.emergencyescape.utils.Server2Db;
 import com.emergencyescape.businesslogic.ServerConnection;
 import com.emergencyescape.commonbehaviour.CommonBehaviourPresenter;
 

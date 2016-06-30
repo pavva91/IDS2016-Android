@@ -11,29 +11,19 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.emergencyescape.MyApplication;
 import com.emergencyescape.R;
 import com.emergencyescape.businesslogic.ServerConnection;
 import com.emergencyescape.businesslogic.SessionClass;
-import com.emergencyescape.greendao.DaoSession;
-import com.emergencyescape.greendao.EdgeDao;
-import com.emergencyescape.greendao.MapsDao;
-import com.emergencyescape.greendao.NodeDao;
-import com.emergencyescape.greendao.User;
-import com.emergencyescape.greendao.UserDao;
 import com.emergencyescape.main.MainActivity;
-import com.emergencyescape.model.UtenteTable;
+import com.emergencyescape.utils.UserUtil;
 import com.emergencyescape.registration.RegistraActivity;
-import com.facebook.stetho.Stetho;
-
-import java.util.List;
 
 /**
  *
  */
 public class LoginActivity extends AppCompatActivity
 {
-    UtenteTable ut;
+    UserUtil ut;
     LoginPresenter lp;
 
 
@@ -146,7 +136,7 @@ public class LoginActivity extends AppCompatActivity
                     }
                     else // siamo offline
                     {
-                        ut = new UtenteTable(getApplicationContext());
+                        ut = new UserUtil(getApplicationContext());
 
                         //riprendo il salt dell'utente inserito
                         String salt = ut.takeSalt(userNameText);

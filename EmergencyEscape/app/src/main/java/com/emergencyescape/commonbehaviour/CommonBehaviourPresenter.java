@@ -6,7 +6,7 @@ package com.emergencyescape.commonbehaviour;
 import android.content.Context;
 import android.util.Log;
 
-import com.emergencyescape.Server2Db;
+import com.emergencyescape.utils.Server2Db;
 import com.emergencyescape.businesslogic.SessionClass;
 import com.hannesdorfmann.mosby.mvp.MvpBasePresenter;
 import com.hannesdorfmann.mosby.mvp.MvpView;

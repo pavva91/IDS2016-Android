@@ -1,4 +1,4 @@
-package com.emergencyescape;
+package com.emergencyescape.utils;
 /**
  * Created by Valerio Mattioli on 14/06/2016.
  */
@@ -10,6 +10,9 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.drawable.BitmapDrawable;
+
+import com.emergencyescape.MyApplication;
+import com.emergencyescape.R;
 
 /**
  * com.emergencyescape
@@ -46,7 +49,7 @@ public class FloorBitmap extends BitmapDrawable {
         floorImage = getBitmap();
         canvas.drawBitmap(floorImage,0,0,drawPaint);
         canvas.drawPath(path, drawPaint);
-        canvas.drawBitmap(BitmapFactory.decodeResource(MyApplication.context.getResources(),R.drawable.ic_place_red_900_48dp),placeIconNode.getX()-DeviceDimensionsHelper.convertDpToPixel(24f,MyApplication.context),placeIconNode.getY()-DeviceDimensionsHelper.convertDpToPixel(48f,MyApplication.context),null);
+        canvas.drawBitmap(BitmapFactory.decodeResource(MyApplication.context.getResources(), R.drawable.ic_place_red_900_48dp),placeIconNode.getX()-DeviceDimensionsHelper.convertDpToPixel(24f,MyApplication.context),placeIconNode.getY()-DeviceDimensionsHelper.convertDpToPixel(48f,MyApplication.context),null);
     }
 
     public void setPlaceIconNode(Coordinate2D placeIconNode){

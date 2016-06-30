@@ -3,12 +3,10 @@ package com.emergencyescape.tap;
  * Created by Valerio Mattioli on 24/05/2016.
  */
 
-import android.database.Cursor;
 import android.graphics.drawable.Drawable;
-import android.util.Log;
 
-import com.emergencyescape.Coordinate2D;
-import com.emergencyescape.FloorPathHelper;
+import com.emergencyescape.utils.Coordinate2D;
+import com.emergencyescape.utils.FloorPathHelper;
 import com.emergencyescape.MyApplication;
 import com.emergencyescape.R;
 import com.emergencyescape.businesslogic.ServerConnection;
@@ -22,8 +20,6 @@ import com.emergencyescape.greendao.UserDao;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import de.greenrobot.dao.query.QueryBuilder;
 
 /**
  * com.emergencyescape.qr

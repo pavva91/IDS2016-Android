@@ -5,13 +5,9 @@ package com.emergencyescape.text;
 
 
 
-import com.emergencyescape.DBHelper;
 import com.emergencyescape.MyApplication;
 import com.emergencyescape.businesslogic.SessionClass;
 import com.emergencyescape.commonbehaviour.CommonBehaviourPresenter;
-import com.emergencyescape.dijkstra.Db2Dijkstra;
-import com.emergencyescape.dijkstra.Dijkstra;
-import com.emergencyescape.dijkstra.Graph;
 import com.emergencyescape.greendao.DaoSession;
 import com.emergencyescape.greendao.Node;
 import com.emergencyescape.greendao.NodeDao;

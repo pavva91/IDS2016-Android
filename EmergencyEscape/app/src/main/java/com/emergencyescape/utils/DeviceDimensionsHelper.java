@@ -1,4 +1,4 @@
-package com.emergencyescape;
+package com.emergencyescape.utils;
 /**
  * Created by Valerio Mattioli on 13/06/2016.
  */

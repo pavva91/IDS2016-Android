@@ -44,6 +44,7 @@ public class SessionClass
     private static final String SERVERKEY = "sessionkeyserver";
     private static final String SESSIONKEY = "restaconnesso"; // todo: usciva eccezione perché sotto aveva lo stesso nome
     private static final String DOWNLOADMAPFLAG = "restaconnesson";
+    private static final String DATE = "lastupdate";
     SharedPreferences sp;
     SharedPreferences.Editor editor;
 
@@ -53,6 +54,16 @@ public class SessionClass
     *       SEZIONE SETTER
     *
     */
+
+    // setta la data di ultimo aggiornamento mappe
+    public void setDate(String date, Context x)
+    {
+        sp = x.getSharedPreferences(FILENAME, x.MODE_PRIVATE);
+        editor = sp.edit();
+        editor.putString(DATE, date);
+        editor.commit();
+        Log.i("DATE globale", "inserito");
+    }
 
     // setta lo username dell'utente loggato in un file chiamato FILENAME
     public void setRegistrationId(String regid, Context x)
@@ -146,6 +157,7 @@ public class SessionClass
     public boolean isRegistrationIDFlag(){ return sp.contains(REGISTRATIONIDFLAG);}
     public boolean isDownloadFlag(){ return sp.contains(DOWNLOADFLAG);}
     public boolean isDownloadMapFlag(){ return sp.contains(DOWNLOADMAPFLAG);}
+    public boolean isDate(){ return sp.contains(DATE);}
 
 
 
@@ -155,6 +167,12 @@ public class SessionClass
     *
     */
 
+    // ritorna lo username dell'utente loggato
+    public String getDate (Context x)
+    {
+        sp = x.getSharedPreferences(FILENAME, Context.MODE_PRIVATE);
+        return sp.getString(DATE, null);
+    }
 
     // ritorna lo username dell'utente loggato
     public String getUser (Context x)

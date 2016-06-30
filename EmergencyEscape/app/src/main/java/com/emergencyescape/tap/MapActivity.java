@@ -3,20 +3,15 @@ package com.emergencyescape.tap;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
-import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MotionEvent;
-import android.view.View;
-import android.view.ViewTreeObserver;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 
-import com.emergencyescape.DeviceDimensionsHelper;
+import com.emergencyescape.utils.DeviceDimensionsHelper;
 import com.emergencyescape.R;
 import com.emergencyescape.commonbehaviour.CommonBehaviourActivity;
 import com.emergencyescape.greendao.Node;

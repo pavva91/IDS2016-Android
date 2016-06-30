@@ -1,16 +1,15 @@
-package com.emergencyescape.model;
+package com.emergencyescape.utils;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.emergencyescape.MyApplication;
-import com.emergencyescape.Server2Db;
 import com.emergencyescape.greendao.DaoSession;
 import com.emergencyescape.greendao.User;
 import com.emergencyescape.greendao.UserDao;
+import com.emergencyescape.model.DataBaseHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +19,7 @@ import java.util.List;
  *
  * Classe che serve per interagire con la tabella user del db
  */
-public class UtenteTable
+public class UserUtil
 {
     private static final String TABLENAME = "utente";
     private static final String DBCOLUMNUSER = "user";
@@ -31,7 +30,7 @@ public class UtenteTable
     private DaoSession daoSession = MyApplication.getSession();
     private UserDao userDao = daoSession.getUserDao();
 
-    public UtenteTable (Context context)
+    public UserUtil(Context context)
     {
         dbh = new DataBaseHelper(context);
     }

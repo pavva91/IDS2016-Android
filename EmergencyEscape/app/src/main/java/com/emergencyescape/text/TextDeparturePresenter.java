@@ -5,7 +5,6 @@ package com.emergencyescape.text;
 
 
 
-import com.emergencyescape.DBHelper;
 import com.emergencyescape.MyApplication;
 import com.emergencyescape.businesslogic.ServerConnection;
 import com.emergencyescape.businesslogic.SessionClass;

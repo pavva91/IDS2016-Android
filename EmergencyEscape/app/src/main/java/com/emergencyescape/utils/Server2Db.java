@@ -1,4 +1,4 @@
-package com.emergencyescape;
+package com.emergencyescape.utils;
 /**
  * Created by Valerio Mattioli on 01/06/2016.
  */
@@ -6,10 +6,10 @@ package com.emergencyescape;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Environment;
-import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
+import com.emergencyescape.MyApplication;
 import com.emergencyescape.businesslogic.SessionClass;
 import com.emergencyescape.greendao.DaoSession;
 import com.emergencyescape.greendao.EdgeDao;
@@ -24,7 +24,6 @@ import com.emergencyescape.server.model.Edge;
 import com.emergencyescape.server.model.Image;
 import com.emergencyescape.server.model.MapResponse;
 import com.emergencyescape.server.model.Node;
-import com.google.gson.internal.bind.util.ISO8601Utils;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
@@ -38,9 +37,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
-import de.greenrobot.dao.query.QueryBuilder;
 import rx.Observable;
 import rx.Observer;
 import rx.Subscription;
@@ -873,6 +870,7 @@ public class Server2Db {
                 });
 
     }
+
 
 
 

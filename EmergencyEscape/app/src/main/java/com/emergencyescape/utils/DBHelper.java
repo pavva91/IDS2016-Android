@@ -1,4 +1,4 @@
-package com.emergencyescape;
+package com.emergencyescape.utils;
 /**
  * Created by Valerio Mattioli on 01/06/2016.
  */
@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.emergencyescape.MyApplication;
 import com.emergencyescape.greendao.DaoMaster;
 import com.emergencyescape.greendao.DaoSession;
 
