@@ -20,7 +20,6 @@ import com.facebook.stetho.Stetho;
  *  - Synchronize DB with Server
  */
 public class MyApplication extends Application {
-    // TODO: All'accensione fare il polling al server per vedere il lastUpdate della mappa
 
     private Server2Db server2Db;
     private ServerService serverService;

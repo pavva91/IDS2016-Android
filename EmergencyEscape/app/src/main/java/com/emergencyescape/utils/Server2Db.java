@@ -48,7 +48,7 @@ import static java.lang.String.format;
  * com.emergencyescape
  * Server2Db
  * Classe che cura la sincronizzazione del DB con i dati del server
- * TODO: Rendere il tutto asincrono
+ *
  */
 public class Server2Db {
 
@@ -65,7 +65,7 @@ public class Server2Db {
     private DBHelper dbHelper = MyApplication.getInstance().getDbHelper();
     private SQLiteDatabase db = null;
 
-    private String mapName ="univpm"; //TODO: Collegare col model
+    private String mapName ="univpm";
     private String token = "";
 
     public String getToken(){
@@ -73,14 +73,14 @@ public class Server2Db {
     }
 
     private void networkConnectionNode(Observable<Node> mapResponseObservable){
-        SharedPreferences wmbPreference = PreferenceManager.getDefaultSharedPreferences(MyApplication.context); // TODO: Usare shared Betta
+        SharedPreferences wmbPreference = PreferenceManager.getDefaultSharedPreferences(MyApplication.context);
         Subscription subscriptionTest;
         subscriptionTest = mapResponseObservable
                 .subscribe(new Observer<Node>() {
                     SharedPreferences wmbPreference = PreferenceManager.getDefaultSharedPreferences(MyApplication.context);
                     @Override
                     public void onCompleted() {
-                         // TODO: Usare shared Betta
+
                         SharedPreferences.Editor editor = wmbPreference.edit();
                         editor.putBoolean("NETWORK_CONNECTION", true);
                         editor.commit();
@@ -88,7 +88,7 @@ public class Server2Db {
 
                     @Override
                     public void onError(Throwable e) {
-                            // TODO: Usare shared Betta
+
                             SharedPreferences.Editor editor = wmbPreference.edit();
                             editor.putBoolean("NETWORK_CONNECTION", false);
                             editor.commit();
@@ -103,14 +103,13 @@ public class Server2Db {
                 });
     }
     private boolean networkConnection(Observable<MapResponse> mapResponseObservable){
-        SharedPreferences wmbPreference = PreferenceManager.getDefaultSharedPreferences(MyApplication.context); // TODO: Usare shared Betta
+        SharedPreferences wmbPreference = PreferenceManager.getDefaultSharedPreferences(MyApplication.context);
         Subscription subscriptionTest;
         subscriptionTest = mapResponseObservable
                 .subscribe(new Observer<MapResponse>() {
                     SharedPreferences wmbPreference = PreferenceManager.getDefaultSharedPreferences(MyApplication.context);
                     @Override
                     public void onCompleted() {
-                        // TODO: Usare shared Betta
                         SharedPreferences.Editor editor = wmbPreference.edit();
                         editor.putBoolean("NETWORK_CONNECTION", true);
                         editor.commit();
@@ -118,7 +117,6 @@ public class Server2Db {
 
                     @Override
                     public void onError(Throwable e) {
-                        // TODO: Usare shared Betta
                         SharedPreferences.Editor editor = wmbPreference.edit();
                         editor.putBoolean("NETWORK_CONNECTION", false);
                         editor.commit();
@@ -133,14 +131,14 @@ public class Server2Db {
     }
 
     private boolean networkConnectionMaps(Observable<List<MapResponse>> mapsResponseObservable){
-        SharedPreferences wmbPreference = PreferenceManager.getDefaultSharedPreferences(MyApplication.context); // TODO: Usare shared Betta
+        SharedPreferences wmbPreference = PreferenceManager.getDefaultSharedPreferences(MyApplication.context);
         Subscription subscriptionTest;
         subscriptionTest = mapsResponseObservable
                 .subscribe(new Observer<List<MapResponse>>() {
 
                     @Override
                     public void onCompleted() {
-                        SharedPreferences wmbPreference = PreferenceManager.getDefaultSharedPreferences(MyApplication.context); // TODO: Usare shared Betta
+                        SharedPreferences wmbPreference = PreferenceManager.getDefaultSharedPreferences(MyApplication.context);
                         SharedPreferences.Editor editor = wmbPreference.edit();
                         editor.putBoolean("NETWORK_CONNECTION", true);
                         editor.commit();
@@ -149,7 +147,7 @@ public class Server2Db {
                     @Override
                     public void onError(Throwable e) {
                         if (e instanceof java.net.ConnectException){
-                            SharedPreferences wmbPreference = PreferenceManager.getDefaultSharedPreferences(MyApplication.context); // TODO: Usare shared Betta
+                            SharedPreferences wmbPreference = PreferenceManager.getDefaultSharedPreferences(MyApplication.context);
                             SharedPreferences.Editor editor = wmbPreference.edit();
                             editor.putBoolean("NETWORK_CONNECTION", false);
                             editor.commit();
@@ -172,7 +170,7 @@ public class Server2Db {
         token = sessionClass.getServerKey(MyApplication.context);
     }
 
-    public void downloadFromUrl(String DownloadUrl, String fileName) { // TODO: Sistemare query DB
+    public void downloadFromUrl(String DownloadUrl, String fileName) {
 
         try {
             File root = Environment.getExternalStorageDirectory();
@@ -196,7 +194,7 @@ public class Server2Db {
            /*
             * Define InputStreams to read from the URLConnection.
             */
-            InputStream is = ucon.getInputStream(); // TODO: Qui non funziona, sistemare
+            InputStream is = ucon.getInputStream();
             BufferedInputStream bis = new BufferedInputStream(is);
 
            /*
@@ -276,7 +274,7 @@ public class Server2Db {
                             node.setType(response.getType());
                             node.setMapId(mapsList
                                     .get(0)
-                                    .getId()); // TODO: Sistemare questa cosa
+                                    .getId());
 
                             loadNodeTable();
 
@@ -370,7 +368,6 @@ public class Server2Db {
 
                         @Override
                         public void onCompleted() {
-                            // TODO: Va a settare flag DownloadMap
                             SessionClass sc = SessionClass.getInstance();
                             sc.setDownloadMapFlag(MyApplication.context);
                         }
@@ -397,7 +394,7 @@ public class Server2Db {
                                 } catch (java.text.ParseException e) {
                                     System.out.println(e.toString());
                                 }
-                                mapsDao.insert(maps); // TODO: Sarebbe meglio creare un vettore e inserire nel DB tutto il vettore (performance)
+                                mapsDao.insert(maps);
                             }
                         }
                     });
@@ -474,9 +471,6 @@ public class Server2Db {
         node.setY(y);
         node.setWidth(width);
         node.setType(type);
-        /*node.setMapId(mapsList
-                .get(0)
-                .getId());*/ // TODO: Sistemare questa cosa
 
         loadNodeTable();
 
@@ -625,7 +619,7 @@ public class Server2Db {
 
 
 
-                            // downloadFromUrl(image.getUrl(), Integer.toString(image.getQuote()) + ".png"); //TODO: Sistemare Download
+                            // downloadFromUrl(image.getUrl(), Integer.toString(image.getQuote()) + ".png");
                         }
                     });
     }
@@ -661,7 +655,7 @@ public class Server2Db {
                                     break;
                                 }
                             }
-                            if (mapResponseDate.after(thisMap.getLastUpdate())) { // TODO: Verificare cosa succede all'inizio
+                            if (mapResponseDate.after(thisMap.getLastUpdate())) {
 
                                 thisMap.setLastUpdate(mapResponseDate);
                                 mapResponse.getLastUpdateMap();
@@ -686,7 +680,7 @@ public class Server2Db {
                                     nodeOrm.setType(node.getType());
                                     nodeOrm.setMapId(mapses
                                             .get(0)
-                                            .getId()); // TODO: Sistemare questa cosa
+                                            .getId());
 
                                     nodeArrayList.add(nodeOrm);
                                 }
@@ -807,7 +801,7 @@ public class Server2Db {
                                 nodeOrm.setType(node.getType());
                                 nodeOrm.setMapId(mapses
                                         .get(0)
-                                        .getId()); // TODO: Sistemare questa cosa
+                                        .getId());
 
                                 nodeArrayList.add(nodeOrm);
                             }

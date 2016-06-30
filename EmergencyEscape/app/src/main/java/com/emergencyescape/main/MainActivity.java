@@ -40,7 +40,7 @@ public class MainActivity extends CommonBehaviourActivity<MainView,MainPresenter
 
         ButterKnife.bind(this);
 
-        SharedPreferences wmbPreference = PreferenceManager.getDefaultSharedPreferences(this); // TODO: Usare shared Betta
+        SharedPreferences wmbPreference = PreferenceManager.getDefaultSharedPreferences(this);
         boolean isFirstRun = wmbPreference.getBoolean("FIRSTRUN", true);
         if (isFirstRun)
         {

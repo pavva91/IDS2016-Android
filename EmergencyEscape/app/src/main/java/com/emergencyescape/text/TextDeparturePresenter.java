@@ -43,7 +43,7 @@ public class TextDeparturePresenter extends CommonBehaviourPresenter<TexterView>
     }
 
     @Override
-    public void setUserDeparture(String departure) { // TODO: Aggiornare anche il Server
+    public void setUserDeparture(String departure) {
         List<User> allUser = userDao.loadAll();
 
         for (User singleUser : allUser) {

@@ -36,7 +36,7 @@ public class FloorPathHelper {
      * @param floorPathCoordinates coordinate espresse in m
      * @return Coordinate espresse in dp
      */
-    public List<Coordinate2D> scale145Path(List<Coordinate2D> floorPathCoordinates){ //TODO: Deve prendere come parametro direttamente l'array di coordinate
+    public List<Coordinate2D> scale145Path(List<Coordinate2D> floorPathCoordinates){
         List<Coordinate2D> pathScaledCoordinates = new ArrayList<>();
 
         for(Coordinate2D coordinates:floorPathCoordinates){
@@ -51,7 +51,7 @@ public class FloorPathHelper {
      * @param floorPathCoordinates coordinate espresse in m
      * @return Coordinate espresse in dp
      */
-    public List<Coordinate2D> scale150Path(List<Coordinate2D> floorPathCoordinates){ //TODO: Deve prendere come parametro direttamente l'array di coordinate
+    public List<Coordinate2D> scale150Path(List<Coordinate2D> floorPathCoordinates){
         List<Coordinate2D> pathScaledCoordinates = new ArrayList<>();
 
         for(Coordinate2D coordinates:floorPathCoordinates){
@@ -66,7 +66,7 @@ public class FloorPathHelper {
      * @param floorPathCoordinates coordinate espresse in m
      * @return Coordinate espresse in dp
      */
-    public List<Coordinate2D> scale155Path(List<Coordinate2D> floorPathCoordinates){ //TODO: Deve prendere come parametro direttamente l'array di coordinate
+    public List<Coordinate2D> scale155Path(List<Coordinate2D> floorPathCoordinates){
         List<Coordinate2D> pathScaledCoordinates = new ArrayList<>();
 
         for(Coordinate2D coordinates:floorPathCoordinates){

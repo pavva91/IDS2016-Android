@@ -31,7 +31,7 @@ public class QrPresenter extends CommonBehaviourPresenter<QrView> {
     private String token = sessionClass.getServerKey(MyApplication.context);
     private ServerConnection serverConnection = ServerConnection.getInstance(MyApplication.context);
 
-    public void setUserDeparture(String departure) { // TODO: Aggiornare anche il Server
+    public void setUserDeparture(String departure) {
         List<User> allUser = userDao.loadAll();
         for (User singleUser : allUser) {
             if(singleUser.getName().equalsIgnoreCase(userName)){

@@ -17,7 +17,6 @@ public class SettingsActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(getResources().getString(R.string.action_settings));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-
         // Display the fragment as the main content.
         getFragmentManager().beginTransaction()
                 .replace(android.R.id.content, new SettingsFragment())

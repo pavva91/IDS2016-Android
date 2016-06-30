@@ -371,7 +371,7 @@ public class ServerConnection
             Log.i("Get Utenti", response.toString());
 
             if (response!= null)
-                //server2Db.dropUserTable(); // Todo: reset table user
+                //server2Db.dropUserTable();
             {
 
                 for (int i = 0; i < response.length(); i++)
@@ -392,7 +392,7 @@ public class ServerConnection
 
                         ut.inserisciUtente(user,salt,password);
 */
-                        // TODO: Spostare da BETTA A valerio
+
                         server2Db.addUser(user,password,salt); // Funziona
 
                     }
@@ -431,7 +431,7 @@ public class ServerConnection
                         nomemappa = jo.getString("name");
                         data_aggiornamento = jo.getString("lastUpdateMap");
 
-                        //TODO: salva le stringhe nel db (tabella mappe)
+                        
 
                         server2Db.addMap(nomemappa,data_aggiornamento);
                         SessionClass sc = SessionClass.getInstance();

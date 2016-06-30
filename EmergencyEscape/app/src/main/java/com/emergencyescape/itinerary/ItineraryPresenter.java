@@ -91,7 +91,7 @@ public class ItineraryPresenter extends CommonBehaviourPresenter<ItineraryView> 
     }
 
     public String getDestination() {
-        String userDestination = "1370"; // TODO: Null pointer exception
+        String userDestination = "1370";
         List<User> allUser = userDao.loadAll();
         for (User singleUser : allUser) {
             if(singleUser.getName().equals(userName)){
@@ -399,7 +399,7 @@ public class ItineraryPresenter extends CommonBehaviourPresenter<ItineraryView> 
         return nodeId;
     }
 
-    public void setUserDeparture(String departure) { // TODO: Aggiornare anche il Server
+    public void setUserDeparture(String departure) {
         List<User> allUser = userDao.loadAll();
         for (User singleUser : allUser) {
             if(singleUser.getName().equalsIgnoreCase(userName)){
@@ -410,7 +410,7 @@ public class ItineraryPresenter extends CommonBehaviourPresenter<ItineraryView> 
         }
     }
 
-    public void setUserDestination(String destination) { // TODO: Aggiornare anche il Server
+    public void setUserDestination(String destination) {
         List<User> allUser = userDao.loadAll();
         for (User singleUser : allUser) {
             if(singleUser.getName().equalsIgnoreCase(userName)){

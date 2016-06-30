@@ -69,7 +69,7 @@ public class ItineraryActivity extends CommonBehaviourActivity<ItineraryView,Iti
 
 
         // Leggo stato Best/Alternative Path
-        SharedPreferences wmbPreference = PreferenceManager.getDefaultSharedPreferences(this); // TODO: Usare shared Betta
+        SharedPreferences wmbPreference = PreferenceManager.getDefaultSharedPreferences(this);
         boolean showBestPath = wmbPreference.getBoolean("BEST_PATH_UI", true);
 
         Graph.CostPathPair shortestPath = getShortestPath();
@@ -77,7 +77,7 @@ public class ItineraryActivity extends CommonBehaviourActivity<ItineraryView,Iti
         if (showBestPath) {
             getBestPath();
         }else {
-            // TODO: Prima di effettuare il ricalcolo deve andare a cercare alternativePath, se è già stato calcolato stamparlo
+
             // altrimenti effettuare ricalcolo (getAlternativePath)
             getAlternativePath();
         }
@@ -174,9 +174,8 @@ public class ItineraryActivity extends CommonBehaviourActivity<ItineraryView,Iti
     @OnClick(R.id.forwardAlternativeButton)
     public void clickAlternativeForward() {
         setPaintStyle(Color.BLUE);
-        // TODO: Gestire il refresh activity
         Graph.CostPathPair alternative = presenter.getAlternativePath();
-        List<Graph.Edge> alternativePath = alternative.getPath(); // TODO: Gestire Exception quando ruota schermo senza path
+        List<Graph.Edge> alternativePath = alternative.getPath();
         if (alternativePath.size()>0) {
             Graph.Vertex nextDepartureDijkstra = alternativePath.get(0).getToVertex();
             String DepNextString = nextDepartureDijkstra.getValue().toString();
@@ -256,7 +255,6 @@ public class ItineraryActivity extends CommonBehaviourActivity<ItineraryView,Iti
      * @return
      */
     protected Bitmap getFloorBitmap(){
-        // TODO: Cambiare da drawable a download
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.q145);
         Node departure = presenter.getDeparture();
         Integer quoteInteger = departure.getQuote();
@@ -286,7 +284,6 @@ public class ItineraryActivity extends CommonBehaviourActivity<ItineraryView,Iti
      * @param paintColor
      */
     protected void setPaintStyle(int paintColor){
-        // TODO: Sarebbe bello permettere all'utente di modificare lo stile del path da Setting
         Paint drawPaint = new Paint();
 
 

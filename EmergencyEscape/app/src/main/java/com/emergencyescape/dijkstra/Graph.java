@@ -58,7 +58,6 @@ public class Graph<T extends Comparable<T>> {
      * @param vertices Collection of vertices
      * @param edges Collection of edges
      */
-    //TODO: Usare questo per passargli il nostro grafo
     public Graph(Collection<Vertex<T>> vertices, Collection<Edge<T>> edges) {
         this(TYPE.UNDIRECTED, vertices, edges);
     }

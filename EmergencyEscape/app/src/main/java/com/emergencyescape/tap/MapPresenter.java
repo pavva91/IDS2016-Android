@@ -37,7 +37,7 @@ public class MapPresenter extends CommonBehaviourPresenter<TapView> {
     private String token = sessionClass.getServerKey(MyApplication.context);
     private ServerConnection serverConnection = ServerConnection.getInstance(MyApplication.context);
 
-    public void setUserDeparture(Node departureNode) { // TODO: Aggiornare anche il Server
+    public void setUserDeparture(Node departureNode) {
         List<User> allUser = userDao.loadAll();
         for (User singleUser : allUser) {
             if(singleUser.getName().equalsIgnoreCase(userName)){
@@ -49,7 +49,7 @@ public class MapPresenter extends CommonBehaviourPresenter<TapView> {
         }
     }
 
-    public Drawable getFloorImage(String floor){ // TODO: Andare a prendere immagini precedentemente caricate
+    public Drawable getFloorImage(String floor){
         Drawable drawable = MyApplication.context.getResources().getDrawable(R.drawable.q145);
         if(floor.equalsIgnoreCase("145")) {
             drawable = MyApplication.context.getResources().getDrawable(R.drawable.q145);

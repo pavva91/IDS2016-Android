@@ -130,14 +130,14 @@ public abstract class CommonBehaviourActivity<V extends CommonBehaviourView, P e
     }
 
     protected void setBestPathUI(){
-        SharedPreferences wmbPreference = PreferenceManager.getDefaultSharedPreferences(this); // TODO: Usare shared Betta
+        SharedPreferences wmbPreference = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = wmbPreference.edit();
         editor.putBoolean("BEST_PATH_UI", true);
         editor.commit();
     }
 
     protected void setAlternativePathUI(){
-        SharedPreferences wmbPreference = PreferenceManager.getDefaultSharedPreferences(this); // TODO: Usare shared Betta
+        SharedPreferences wmbPreference = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = wmbPreference.edit();
         editor.putBoolean("BEST_PATH_UI", false);
         editor.commit();

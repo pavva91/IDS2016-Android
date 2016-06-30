@@ -131,7 +131,7 @@ public class ServerService {
 
         //we are here because we have never created this observable before or we didn't want to use the cache...
 
-        preparedObservable = unPreparedObservable // TODO: Trasformare la risposta JSON (Observable<MapsResponse>) in tanti oggetti da trattare singolarmente(Observable<List<Maps>>)
+        preparedObservable = unPreparedObservable
 
                 .subscribeOn(Schedulers.newThread()) // Background Thread
                 .observeOn(AndroidSchedulers.mainThread()); // UI Thread

@@ -52,7 +52,6 @@ public class TextDepartureActivity extends CommonBehaviourActivity<TexterView,Te
 
     @OnClick(R.id.btnPartenza)
     public void submitDeparture(){
-        // TODO: Aggiungere validation input utente
         String editDepartureText = this.getAula();
         if (editDepartureText.equals("error")||editDepartureText.equals("")){
             Toast.makeText(this, getResources().getString(R.string.wrong_text_input), Toast.LENGTH_SHORT).show();
@@ -84,7 +83,6 @@ public class TextDepartureActivity extends CommonBehaviourActivity<TexterView,Te
         ArrayList<String> nodes = presenter.getNodesList();
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.select_dialog_multichoice, nodes);
 
-        // TODO: Diminuire font select_dialog_multichoice
         aulaPartenzaTextView.setThreshold(1);
         aulaPartenzaTextView.setAdapter(adapter);
         aulaPartenzaTextView.setValidator(new AutoCompleteTextView.Validator(){
