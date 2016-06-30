@@ -546,6 +546,7 @@ public class AccessDB {
 			u.setPassword(rs.getString("password"));
 			u.setSalt(rs.getString("salt"));
 			u.setToken(rs.getString("token"));
+			u.setPosition(rs.getInt("posizione"));
 			userList.add(u);
 		}
 		return userList;
