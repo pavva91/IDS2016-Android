@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.emergencyescape.MyApplication;
 import com.emergencyescape.Server2Db;
 import com.emergencyescape.businesslogic.ServerConnection;
 import com.emergencyescape.businesslogic.SessionClass;
@@ -25,7 +26,7 @@ import java.security.NoSuchAlgorithmException;
  */
 public class LoginPresenter
 {
-    private int mInterval = 60000; // 1 minute by default, can be changed later
+    private int mInterval = 20000; // 1 minute by default, can be changed later
     private Handler mHandler;
     private String regid;
     private String SENDER_ID = "684028198613";
@@ -56,19 +57,39 @@ public class LoginPresenter
                 Log.i("Task Periodico", "Non siamo connessi, mi ripeto");
                 mHandler.postDelayed(mStatusChecker, mInterval);
             }
-            else if(sc.getServerKey(context) != null && sc.isDownloadFlag() == true && sc.isRegistrationIDFlag()== true)
-            {
+            else if(sc.getServerKey(context) != null && sc.isDownloadFlag() == true && sc.isRegistrationIDFlag()== true && sc.isDownloadMapFlag() == true) {
                 Log.i("Task Periodico", "Abbiamo tutto; ho finito il lavoro; ci vediamo la prossima volta");
                 stopRepeatingTask();
+            }else if (checkConnection() == true && sc.isDownloadFlag() == false)
+            {
+                //chiedo utenti al server
+                sv.getUsersList();
+                Log.i("Task Periodico", "Siamo connessi. Ho chisto tabella utenti");
+                mHandler.postDelayed(mStatusChecker, mInterval);
+            }else if(checkConnection() == true && sc.isDownloadMapFlag() == false)
+            {
+                //chiedo le mappe al server
+                s2d.setToken();
+                sv.getElencoMappe(s2d.getToken());
+                s2d.initializeDb();
+                /*
+                s2d.loadMaps();
+                s2d.loadNodes();
+                s2d.loadEdges();
+                s2d.loadImages();
+                */
+                // Todo: lo faccio qua che s2d è un casino
+                Log.i("Task Periodico", "Siamo connessi. Scarico le mappe...");
+                mHandler.postDelayed(mStatusChecker, mInterval);
             }
             else if (checkConnection() == true && sc.isRegistrationIDFlag() == false)
             {
                 //prendo il registration id e lo invio al server
                 String id = sc.getRegistrationId(context);
                 sv.sendRegistrationID(id);
-                Log.i("Task Periodico", "Siamo connessi. Sto inviando la chiave al server...");
+                Log.i("Task Periodico", "Siamo connessi. Sto inviando la chiave al server..."); // si blocca qua
                 mHandler.postDelayed(mStatusChecker, mInterval);
-            }
+            }/*
             else if (checkConnection() == true && sc.isDownloadMapFlag() == false)
             {
                 //chiedo le mappe al server
@@ -77,6 +98,7 @@ public class LoginPresenter
                 s2d.loadNodes();
                 s2d.loadEdges();
                 s2d.loadImages();
+                sc.setDownloadMapFlag(MyApplication.context); // Todo: lo faccio qua che s2d è un casino
                 Log.i("Task Periodico", "Siamo connessi. Scarico le mappe...");
                 mHandler.postDelayed(mStatusChecker, mInterval);
             }
@@ -86,7 +108,7 @@ public class LoginPresenter
                 sv.getUsersList();
                 Log.i("Task Periodico", "Siamo connessi. Ho chisto tabella utenti");
                 mHandler.postDelayed(mStatusChecker, mInterval);
-            }
+            }*/
             else if (checkConnection() == true && sc.getServerKey(context) == null)
             {
                 if(sc.getUser(context) != null && sc.getPassword(context) != null)

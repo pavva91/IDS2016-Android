@@ -71,6 +71,10 @@ public class Server2Db {
     private String mapName ="univpm"; //TODO: Collegare col model
     private String token = "";
 
+    public String getToken(){
+        return token;
+    }
+
     private void networkConnectionNode(Observable<Node> mapResponseObservable){
         SharedPreferences wmbPreference = PreferenceManager.getDefaultSharedPreferences(MyApplication.context); // TODO: Usare shared Betta
         Subscription subscriptionTest;
@@ -298,40 +302,10 @@ public class Server2Db {
 
     }
 
-    public void confrontDate(){
-        Observable<MapResponse> mapResponseObservable = service.getAPI().getMap(mapName,token);
-        subscription = mapResponseObservable
-                .subscribe(new Observer<MapResponse>() {
-                    SharedPreferences wmbPreference = PreferenceManager.getDefaultSharedPreferences(MyApplication.context); // TODO: Usare shared Betta
-
-                    @Override
-                    public void onCompleted() {
-                        Log.v("onCompleted", "END");
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.e(LOG + " Edge: ", e.toString());
-                    }
-
-                    @Override
-                    public void onNext(MapResponse response) {
-                        String JSONDate = response.getLastUpdateMap();
-                        SharedPreferences.Editor editor = wmbPreference.edit();
-                        editor.putString("JSON_DATE", JSONDate);
-                        editor.commit();
-
-                    }
-                });
-    }
 
     public void loadEdges(){
         Observable<MapResponse> mapResponseObservable = service.getAPI().getMap(mapName,token);
-        /*
-            setDb();
-            EdgeDao.dropTable(db,true);
-            EdgeDao.createTable(db,false);
-            */
+
             Observable<Edge> edgeObservable = service.getEdges(mapResponseObservable); // Deserializzo la risposta
 
 
@@ -399,7 +373,9 @@ public class Server2Db {
 
                         @Override
                         public void onCompleted() {
-                            Log.v("onCompleted", "END");
+                            // TODO: Va a settare flag DownloadMap
+                            SessionClass sc = SessionClass.getInstance();
+                            sc.setDownloadMapFlag(MyApplication.context);
                         }
 
                         @Override
@@ -481,6 +457,97 @@ public class Server2Db {
         MapsDao.dropTable(db,true);
     }
 
+    public void addNode(
+            String nomemappa,
+            Long id,
+            String code,
+            String descr,
+            Integer quota,
+            Integer x,
+            Integer y,
+            Double width,
+            String type){
+
+        loadNodeTable();
+        com.emergencyescape.greendao.Node node = new com.emergencyescape.greendao.Node(id);
+        node.setCode(code);
+        node.setDescription(descr);
+        node.setQuote(quota);
+        node.setX(x);
+        node.setY(y);
+        node.setWidth(width);
+        node.setType(type);
+        /*node.setMapId(mapsList
+                .get(0)
+                .getId());*/ // TODO: Sistemare questa cosa
+
+        loadNodeTable();
+
+        boolean insertData = true;
+
+        List<com.emergencyescape.greendao.Node> nodeList = nodeDao.loadAll();
+        for (com.emergencyescape.greendao.Node node1 : nodeList){
+            if (node1.getCode().equals(node.getCode())){
+                insertData = false;
+                break;
+            }
+        }
+
+        if(insertData){
+            nodeDao.insert(node);
+        }
+        /*
+        Log.v("UserName: ", /*user.getName());
+        Log.v("Password: ", user.getPassword());
+        Log.v("Salt: ", user.getSalt());
+
+
+        boolean insertData = true;
+
+        List<User> userList = userDao.loadAll();
+        for (User user1 : userList){
+            if (user1.getPassword().equals(user.getPassword()) && user1.getName().equals(user.getName())){
+                insertData = false;
+                break;
+            }
+        }
+
+        if(insertData){
+            userDao.insert(user);
+        }*/
+    }
+
+    public void addMap(String mapName, String lastUpdateMap){
+        loadMapsTable();
+        com.emergencyescape.greendao.Maps maps = new com.emergencyescape.greendao.Maps();
+        maps.setName(mapName);
+        // Trasformo String Data JSON in util.Date Data greenDAO
+        try {
+            maps.setLastUpdate(ISO8601DateParser.parse(lastUpdateMap));
+        } catch (java.text.ParseException e) {
+            System.out.println(e.toString());
+        }
+        Log.v("UserName: ", maps.getName());
+        Log.v("Password: ", maps.getLastUpdate().toString());
+
+
+/*
+        boolean insertData = true;
+
+        List<Maps> userList = mapsDao.loadAll();
+        for (Maps maps1 : userList){
+            if (maps1.getPassword().equals(maps.getPassword()) && user1.getName().equals(maps.getName())){
+                insertData = false;
+                break;
+            }
+        }
+
+        if(insertData){
+            userDao.insert(maps);
+        }*/
+        mapsDao.insert(maps);
+    }
+
     public void addUser(String name, String password, String salt){
         loadUserTable();
         com.emergencyescape.greendao.User user = new com.emergencyescape.greendao.User();
@@ -509,11 +576,7 @@ public class Server2Db {
 
     public void loadImages(){
         Observable<MapResponse> mapResponseObservable = service.getAPI().getMap(mapName,token);
-        /*
-            setDb();
-            ImageDao.dropTable(db, true);
-            ImageDao.createTable(db, false);
-            */
+
             Observable<Image> imageObservable = service.getImages(mapResponseObservable); // Deserializzo la risposta
 
 
@@ -570,156 +633,9 @@ public class Server2Db {
                     });
     }
 
-    public void initializeDb(){
-        Observable<MapResponse> mapResponseObservableRaw = service.getAPI().getMap(mapName,token);
-        Observable<MapResponse> mapResponseObservable = service.getMap(mapResponseObservableRaw);
-
-        subscription = mapResponseObservable
-                .subscribe(new Observer<MapResponse>() {
-
-                    @Override
-                    public void onCompleted() {
-                        Log.v("onCompleted", "END");
-                        SessionClass sessionClass = SessionClass.getInstance();
-                        sessionClass.setDownloadMapFlag(MyApplication.context);
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.e(LOG, e.toString());
-                    }
-
-                    @Override
-                    public void onNext(MapResponse mapResponse) {
-                            List<Node> nodes = mapResponse.getNodes();
-                            List<Edge> edges = mapResponse.getEdges();
-                            List<Image> images = mapResponse.getImages();
-                            List<Maps> mapsList = mapsDao.loadAll();
-
-                            loadNodeTable();
-                            loadEdgeTable();
-                            loadImageTable();
-
-                        ArrayList<com.emergencyescape.greendao.Node> nodeArrayList = new ArrayList<>();
-                                for (Node node : nodes){
-                                    Log.v("onNextIterationNodeId",node.getId().toString());
-                                    List<Maps> mapses = mapsDao.queryBuilder()
-                                            .where(MapsDao.Properties.Name.eq(node.getMapName()))
-                                            .list();
-
-                                    // Salvo i nodi presi dal server nel DB
-                                    com.emergencyescape.greendao.Node nodeOrm = new com.emergencyescape.greendao.Node(node.getId());
-                                    nodeOrm.setCode(node.getCode());
-                                    nodeOrm.setDescription(node.getDescr());
-                                    nodeOrm.setQuote(node.getQuota());
-                                    nodeOrm.setX(node.getX());
-                                    nodeOrm.setY(node.getY());
-                                    nodeOrm.setWidth(node.getWidth());
-                                    nodeOrm.setType(node.getType());
-                                    nodeOrm.setMapId(mapses
-                                            .get(0)
-                                            .getId()); // TODO: Sistemare questa cosa
-
-
-
-                                    boolean insertData = true;
-
-                                    List<com.emergencyescape.greendao.Node> nodeList = nodeDao.loadAll();
-                                    for (com.emergencyescape.greendao.Node node1 : nodeList){
-                                        if (node1.getCode().equals(nodeOrm.getCode())){
-                                            insertData = false;
-                                            break;
-                                        }
-                                    }
-
-                                    if(insertData){
-                                        nodeArrayList.add(nodeOrm);
-                                    }
-
-
-                                }
-                        nodeDao.insertInTx(nodeArrayList);
-                        ArrayList<com.emergencyescape.greendao.Edge> edgeArrayList = new ArrayList<>();
-                                for (Edge edge : edges){
-                                    loadEdgeTable();
-                                    Log.v("onNextIterationEdgeFrom", edge.getFrom());
-                                    Log.v("onNextIterationEdgeTo", edge.getTo());
-
-                                    List<com.emergencyescape.greendao.Node> nodeDeparture = nodeDao.queryBuilder().where(NodeDao.Properties.Code.eq(edge.getFrom())).list();
-                                    List<com.emergencyescape.greendao.Node> nodeDestination = nodeDao.queryBuilder().where(NodeDao.Properties.Code.eq(edge.getTo())).list();
-
-                                    com.emergencyescape.greendao.Edge edgeOrm = new com.emergencyescape.greendao.Edge();
-                                    edgeOrm.setDepartureToOne(nodeDeparture.get(0));
-                                    edgeOrm.setDestinationToOne(nodeDestination.get(0));
-                                    edgeOrm.setV(edge.getV());
-                                    edgeOrm.setI(edge.getI());
-                                    edgeOrm.setC(edge.getC());
-                                    edgeOrm.setLos(edge.getLos());
-                                    edgeOrm.setLength(edge.getLength());
-                                    edgeOrm.setSurface(edge.getArea());
-
-                                    edgeOrm.setEm_cost(edge.getEmgcost());
-                                    edgeOrm.setNo_em_cost(edge.getLength());
-
-
-                                    boolean insertData = true;
-
-                                    List<com.emergencyescape.greendao.Edge> edgeList = edgeDao.loadAll();
-                                    for (com.emergencyescape.greendao.Edge edge1 : edgeList){
-                                        if (edge1.getDepartureId() == edgeOrm.getDepartureId() && edge1.getDestinationId() == edgeOrm.getDestinationId()){
-                                            insertData = false;
-                                            break;
-                                        }
-                                    }
-
-                                    if(insertData){
-                                        edgeArrayList.add(edgeOrm);
-                                    }
-                                }
-                        edgeDao.insertInTx(edgeArrayList);
-                        ArrayList<com.emergencyescape.greendao.Image> imageArrayList = new ArrayList<>();
-                                for (Image image : images){
-                                    loadImageTable();
-                                    Log.v("onNextIterFloorImage", image.getQuota() + " image url: " + image.getUrl());
-
-                                    List<Maps> mapses = mapsDao.queryBuilder()
-                                            .where(MapsDao.Properties.Name.eq(image.getMap()))
-                                            .list();
-
-                                    // Salvo i nodi presi dal server nel DB
-                                    com.emergencyescape.greendao.Image imageOrm = new com.emergencyescape.greendao.Image();
-
-                                    imageOrm.setUrl(image.getUrl());
-                                    imageOrm.setQuote(image.getQuota());
-                                    imageOrm.setMapId(mapses
-                                            .get(0)
-                                            .getId());
-
-
-                                    boolean insertData = true;
-
-                                    List<com.emergencyescape.greendao.Image> imageList = imageDao.loadAll();
-                                    for (com.emergencyescape.greendao.Image image1 : imageList){
-                                        if (image1.getQuote()==imageOrm.getQuote()){
-                                            insertData = false;
-                                            break;
-                                        }
-                                    }
-
-                                    if(insertData){
-                                        imageArrayList.add(imageOrm);
-                                    }
-                                }
-                        imageDao.insertInTx(imageArrayList);
-                    }
-                });
-
-    }
-
     public void refreshDb(){
         Observable<MapResponse> mapResponseObservableRaw = service.getAPI().getMap(mapName,token);
         Observable<MapResponse> mapResponseObservable = service.getMap(mapResponseObservableRaw);
-
         subscription = mapResponseObservable
                 .subscribe(new Observer<MapResponse>() {
 
@@ -838,13 +754,123 @@ public class Server2Db {
                     }
                 });
 
+    }
+
+    public void initializeDb(){
+        Observable<MapResponse> mapResponseObservableRaw = service.getAPI().getMap(mapName,token);
+        Observable<MapResponse> mapResponseObservable = service.getMap(mapResponseObservableRaw);
+        subscription = mapResponseObservable
+                .subscribe(new Observer<MapResponse>() {
+
+                    @Override
+                    public void onCompleted() {
+                        Log.v("onCompleted", "END");
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e(LOG, e.toString());
+                    }
+
+                    @Override
+                    public void onNext(MapResponse mapResponse) {
+                        try {
+                            List<Node> nodes = mapResponse.getNodes();
+                            List<Edge> edges = mapResponse.getEdges();
+                            List<Image> images = mapResponse.getImages();
+                            Date mapResponseDate = ISO8601DateParser.parse(mapResponse.getLastUpdateMap());
+                            List<Maps> mapsList = mapsDao.loadAll();
+                            Maps thisMap = mapsList.get(0);
+                            for (Maps map : mapsList) {
+                                if (map.getName().equals(mapResponse.getName())) {
+                                    thisMap = map;
+                                    break;
+                                }
+                            }
+                            thisMap.setLastUpdate(mapResponseDate);
+                            mapResponse.getLastUpdateMap();
+                            ArrayList<com.emergencyescape.greendao.Node> nodeArrayList = new ArrayList<>();
+                            for (Node node : nodes) {
+                                dropNodeTable();
+                                loadNodeTable();
+                                Log.v("onNextIterationNodeId", node.getId().toString());
+                                List<Maps> mapses = mapsDao.queryBuilder()
+                                        .where(MapsDao.Properties.Name.eq(node.getMapName()))
+                                        .list();
+
+                                // Salvo i nodi presi dal server nel DB
+                                com.emergencyescape.greendao.Node nodeOrm = new com.emergencyescape.greendao.Node();
+                                nodeOrm.setId(node.getId());
+                                nodeOrm.setCode(node.getCode());
+                                nodeOrm.setDescription(node.getDescr());
+                                nodeOrm.setQuote(node.getQuota());
+                                nodeOrm.setX(node.getX());
+                                nodeOrm.setY(node.getY());
+                                nodeOrm.setWidth(node.getWidth());
+                                nodeOrm.setType(node.getType());
+                                nodeOrm.setMapId(mapses
+                                        .get(0)
+                                        .getId()); // TODO: Sistemare questa cosa
+
+                                nodeArrayList.add(nodeOrm);
+                            }
+                            nodeDao.insertInTx(nodeArrayList);
+                            ArrayList<com.emergencyescape.greendao.Edge> edgeArrayList = new ArrayList<>();
+                            for (Edge edge : edges) {
+                                dropEdgeTable();
+                                loadEdgeTable();
+                                Log.v("onNextIterationEdgeFrom", edge.getFrom());
+                                Log.v("onNextIterationEdgeTo", edge.getTo());
 
 
+                                List<com.emergencyescape.greendao.Node> nodeDeparture = nodeDao.queryBuilder().where(NodeDao.Properties.Code.eq(edge.getFrom())).list();
+                                List<com.emergencyescape.greendao.Node> nodeDestination = nodeDao.queryBuilder().where(NodeDao.Properties.Code.eq(edge.getTo())).list();
 
 
+                                com.emergencyescape.greendao.Edge edgeOrm = new com.emergencyescape.greendao.Edge();
+                                edgeOrm.setDepartureToOne(nodeDeparture.get(0));
+                                edgeOrm.setDestinationToOne(nodeDestination.get(0));
+                                edgeOrm.setV(edge.getV());
+                                edgeOrm.setI(edge.getI());
+                                edgeOrm.setC(edge.getC());
+                                edgeOrm.setLos(edge.getLos());
+                                edgeOrm.setLength(edge.getLength());
+                                edgeOrm.setSurface(edge.getArea());
 
+                                edgeOrm.setEm_cost(edge.getEmgcost());
+                                edgeOrm.setNo_em_cost(edge.getLength());
 
+                                edgeArrayList.add(edgeOrm);
+                            }
+                            edgeDao.insertInTx(edgeArrayList);
+                            List<com.emergencyescape.greendao.Edge> edgeList = edgeDao.loadAll();
+                            ArrayList imageArrayList = new ArrayList();
+                            for (Image image : images) {
+                                dropImageTable();
+                                loadImageTable();
+                                Log.v("onNextIterFloorImage", image.getQuota() + " image url: " + image.getUrl());
 
+                                List<Maps> mapses = mapsDao.queryBuilder()
+                                        .where(MapsDao.Properties.Name.eq(image.getMap()))
+                                        .list();
+
+                                // Salvo i nodi presi dal server nel DB
+                                com.emergencyescape.greendao.Image imageOrm = new com.emergencyescape.greendao.Image();
+
+                                imageOrm.setUrl(image.getUrl());
+                                imageOrm.setQuote(image.getQuota());
+                                imageOrm.setMapId(mapses
+                                        .get(0)
+                                        .getId());
+
+                                imageArrayList.add(imageOrm);
+                            }
+                            imageDao.insertInTx(imageArrayList);
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
 
     }
 

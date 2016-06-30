@@ -16,6 +16,7 @@ import com.emergencyescape.ISO8601DateParser;
 import com.emergencyescape.MyApplication;
 import com.emergencyescape.R;
 import com.emergencyescape.Server2Db;
+import com.emergencyescape.greendao.Maps;
 import com.emergencyescape.login.LoginActivity;
 import com.emergencyescape.login.LoginPresenter;
 
@@ -386,7 +387,7 @@ public class ServerConnection
             Log.i("Get Utenti", response.toString());
 
             if (response!= null)
-                // server2Db.dropUserTable();
+                //server2Db.dropUserTable(); // Todo: reset table user
             {
 
                 for (int i = 0; i < response.length(); i++)
@@ -431,6 +432,8 @@ public class ServerConnection
 
             if (response!= null)
             {
+                server2Db.dropMapsTable();
+                server2Db.loadMapsTable();
 
                 for (int i = 0; i < response.length(); i++)
                 {
@@ -446,6 +449,9 @@ public class ServerConnection
 
                         //TODO: salva le stringhe nel db (tabella mappe)
 
+                        server2Db.addMap(nomemappa,data_aggiornamento);
+                        SessionClass sc = SessionClass.getInstance();
+                        sc.setDownloadMapFlag(MyApplication.context);
                     }
                     catch (JSONException e) { e.printStackTrace(); }
                 }
@@ -481,26 +487,26 @@ public class ServerConnection
                     JSONObject jo = new JSONObject();
 
                     String nomemappa = null;
-                    String id = null;
+                    Long id = null;
                     String code = null;
                     String descr = null;
-                    String quota = null;
-                    String x = null;
-                    String y = null;
-                    String width = null;
+                    Integer quota = null;
+                    Integer x = null;
+                    Integer y = null;
+                    Double width = null;
                     String type = null;
 
                     try
                     {
                         jo = nodo.getJSONObject(i);
                         nomemappa = jo.getString("mapName");
-                        id = jo.getString("id");
+                        id = jo.getLong("id");
                         code = jo.getString("code");
                         descr = jo.getString("descr");
-                        quota = jo.getString("quota");
-                        x = jo.getString("x");
-                        y = jo.getString("y");
-                        width = jo.getString("width");
+                        quota = jo.getInt("quota");
+                        x = jo.getInt("x");
+                        y = jo.getInt("y");
+                        width = jo.getDouble("width");
                         type = jo.getString("type");
 
                         //TODO: salva le stringhe nel db (tabella nodi)

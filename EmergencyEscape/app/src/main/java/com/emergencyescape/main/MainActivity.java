@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 
 import com.emergencyescape.R;
 import com.emergencyescape.commonbehaviour.CommonBehaviourActivity;
@@ -43,23 +44,13 @@ public class MainActivity extends CommonBehaviourActivity<MainView,MainPresenter
         boolean isFirstRun = wmbPreference.getBoolean("FIRSTRUN", true);
         if (isFirstRun)
         {
-
+            Log.v("First run initialize db","ok");
             presenter.loadServer2Db();  // Carico il DB al primo lancio dell'app
-
-
-
             SharedPreferences.Editor editor = wmbPreference.edit();
             editor.putBoolean("FIRSTRUN", false);
             editor.commit();
-
-
         }
-
-        presenter.loadServer2Db();
-
-
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-
     }
 }

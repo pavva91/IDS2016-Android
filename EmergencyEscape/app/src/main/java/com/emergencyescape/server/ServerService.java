@@ -29,22 +29,25 @@ import rx.schedulers.Schedulers;
  * Questa è la classe che implementa la logica di interazione col server (polling ecc...)
  */
 
-public class ServerService { // TODO: Per ora è grezzo e non sfrutta il caching, ogni volta esegue la get al server
+public class ServerService {
 
-    private static String baseUrl ="http://213.26.178.148/progetto/"; // Server URL
+    private static String baseUrl ="http://213.26.178.148/progetto/";
     private ServerAPI serverAPI; // Retrofit Callers Interface
     private OkHttpClient okHttpClient;
     private LruCache<Class<?>, Observable<?>> apiObservables;
 
     public ServerService(){
         this(baseUrl);
-    } // Il costruttore senza parametri richiama quello col parametro
+    }
 
+    /**
+     * Retrofit Building
+     * @param baseUrl
+     */
     public ServerService(String baseUrl){
         okHttpClient = buildClient();
         apiObservables = new LruCache<>(10);
 
-        // Creo collegamento al server
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(baseUrl)
                 .addConverterFactory(GsonConverterFactory.create())

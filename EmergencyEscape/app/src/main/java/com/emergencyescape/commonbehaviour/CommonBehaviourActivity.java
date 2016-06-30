@@ -59,11 +59,18 @@ public abstract class CommonBehaviourActivity<V extends CommonBehaviourView, P e
         if(id == R.id.action_emqr){
             refreshDB();
             setBestPathUI();
-            Intent intent = new Intent("com.google.zxing.client.android.SCAN");
-            intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
-            emergencyState = true;
-            startActivityForResult(intent, 0);
-            return true;
+            try
+            {
+                Intent intent = new Intent("com.google.zxing.client.android.SCAN");
+                intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
+                emergencyState = true;
+                startActivityForResult(intent, 0);
+                return true;
+            }
+            catch (Exception e){
+                Toast.makeText(MyApplication.context, "Per utilizzare il QR devi scaricare l'app BAR CODE SCANNER!", Toast.LENGTH_LONG).show();
+            }
+
         }
 
 
@@ -86,11 +93,18 @@ public abstract class CommonBehaviourActivity<V extends CommonBehaviourView, P e
         if(id == R.id.action_noemqr){
             refreshDB();
             setBestPathUI();
-            Intent intent = new Intent("com.google.zxing.client.android.SCAN");
-            intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
-            emergencyState = false;
-            startActivityForResult(intent, 0);
-            return true;
+            try
+            {
+                Intent intent = new Intent("com.google.zxing.client.android.SCAN");
+                intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
+                emergencyState = false;
+                startActivityForResult(intent, 0);
+
+                return true;
+            }
+            catch (Exception e){
+                Toast.makeText(MyApplication.context, "Per utilizzare il QR devi scaricare l'app BAR CODE SCANNER!", Toast.LENGTH_LONG).show();
+            }
         }
         if (id == R.id.action_settings) {
             startActivity(new Intent(this, SettingsActivity.class));
@@ -148,7 +162,9 @@ public abstract class CommonBehaviourActivity<V extends CommonBehaviourView, P e
 
             } else
             if (resultCode == RESULT_CANCELED) {
-                Toast.makeText(this,getResources().getString(R.string.error_qr),Toast.LENGTH_LONG).show();
+                //Toast.makeText(this,getResources().getString(R.string.error_qr),Toast.LENGTH_LONG).show();
+                Intent errorIntent = new Intent(this, MainActivity.class);
+                startActivity(errorIntent);
             }
         }
     }

@@ -42,8 +42,8 @@ public class SessionClass
     private static final String REGISTRATIONIDFLAG = "registrationidflag";
     private static final String REGISTRATIONID = "registrationid";
     private static final String SERVERKEY = "sessionkeyserver";
-    private static final String SESSIONKEY = "restaconnesso";
-    private static final String DOWNLOADMAPFLAG = "restaconnesso";
+    private static final String SESSIONKEY = "restaconnesso"; // todo: usciva eccezione perché sotto aveva lo stesso nome
+    private static final String DOWNLOADMAPFLAG = "restaconnesson";
     SharedPreferences sp;
     SharedPreferences.Editor editor;
 

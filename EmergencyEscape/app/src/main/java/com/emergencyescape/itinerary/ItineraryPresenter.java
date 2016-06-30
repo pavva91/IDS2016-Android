@@ -58,7 +58,7 @@ public class ItineraryPresenter extends CommonBehaviourPresenter<ItineraryView> 
     private ServerConnection serverConnection = ServerConnection.getInstance(MyApplication.context);
 
     public String getDepartureCode() {
-        String userDeparture = "";
+        String userDeparture = "1370";
         List<User> allUser = userDao.loadAll(); // select *
         for (User singleUser : allUser) {
             if(singleUser.getName().equals(userName)){
@@ -91,7 +91,7 @@ public class ItineraryPresenter extends CommonBehaviourPresenter<ItineraryView> 
     }
 
     public String getDestination() {
-        String userDestination = "";
+        String userDestination = "1370"; // TODO: Null pointer exception
         List<User> allUser = userDao.loadAll();
         for (User singleUser : allUser) {
             if(singleUser.getName().equals(userName)){
@@ -183,7 +183,7 @@ public class ItineraryPresenter extends CommonBehaviourPresenter<ItineraryView> 
     }
 
     /**
-     * Calcola il peroorso alternativo assegnando un costo infinito al primo arco del shortestPath
+     * Calcola il peroorso alternativo assegnando un costo molto grande al primo arco del shortestPath
      * @return
      */
     public Graph.CostPathPair calculateAlternativePath(){
@@ -204,8 +204,9 @@ public class ItineraryPresenter extends CommonBehaviourPresenter<ItineraryView> 
                 Comparable fromValue = fromVertex.getValue();
                 Comparable ToValue = toVertex.getValue();
 
-                if ((edgeFromValue.equals(fromValue) && edgeToValue.equals(ToValue)) || (edgeFromValue.equals(ToValue) && edgeToValue.equals(fromValue))) {
-                    edge.setCost(99999); // Valore troppo grosso con Integer.MAX_VALUE, va in overflow
+                if ((edgeFromValue.equals(fromValue) && edgeToValue.equals(ToValue)) ||
+                        (edgeFromValue.equals(ToValue) && edgeToValue.equals(fromValue))) {
+                    edge.setCost(99999);
                 }
                 modifiedEdgeList.add(edge);
                 i = i + 1;

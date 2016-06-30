@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.emergencyescape.MyApplication;
+import com.emergencyescape.Server2Db;
 import com.emergencyescape.greendao.DaoSession;
 import com.emergencyescape.greendao.User;
 import com.emergencyescape.greendao.UserDao;
@@ -34,10 +35,37 @@ public class UtenteTable
     {
         dbh = new DataBaseHelper(context);
     }
+    Server2Db server2Db = new Server2Db();
 
     //inserisce gli utentei passati dal db
-    public long inserisciUtente (String user, String salt,String psw)
+    public void inserisciUtente (String user, String salt,String psw)
     {
+        long ris;
+        server2Db.loadUserTable();
+        com.emergencyescape.greendao.User newUser = new com.emergencyescape.greendao.User();
+        newUser.setName(user);
+        newUser.setPassword(psw);
+        newUser.setSalt(salt);
+        Log.v("UserName: ", newUser.getName());
+        Log.v("Password: ", newUser.getPassword());
+        Log.v("Salt: ", newUser.getSalt());
+
+
+        boolean insertData = true;
+
+        List<User> userList = userDao.loadAll();
+        for (User user1 : userList){
+            if (user1.getPassword().equals(newUser.getPassword()) && user1.getName().equals(newUser.getName())){
+                insertData = false;
+                break;
+            }
+        }
+
+        if(insertData){
+            userDao.insert(newUser);
+        }
+
+        /*
          long ris;
          dbh.openDB();
 
@@ -56,7 +84,7 @@ public class UtenteTable
 
         dbh.close();
 
-        return ris;
+        return ris;*/
     }
 
     //verifica se l'utente è registrato
