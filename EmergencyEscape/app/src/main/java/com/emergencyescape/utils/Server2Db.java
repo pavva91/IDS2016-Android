@@ -68,16 +68,15 @@ public class Server2Db {
     private String mapName ="univpm";
     private String token = "";
     private SharedPreferences wmbPreference = PreferenceManager.getDefaultSharedPreferences(MyApplication.context);
-    int mapId =Integer.parseInt(wmbPreference.getString("map_selected",null));
+    private int mapId = Integer.parseInt(wmbPreference.getString("map_selected","1"));
 
     public boolean mapChanged(){
+        SharedPreferences wmbPreference = PreferenceManager.getDefaultSharedPreferences(MyApplication.context);
         mapId = Integer.parseInt(wmbPreference.getString("map_selected",null));
 
         boolean mapChanged = false;
         String sharedMapName = mapsDao.load((long)mapId).getName();
-        Log.v("dentro mapChanged","sono dentro");
         if(!mapName.equals(sharedMapName)){
-            Log.v("dentro if mapChanged", "sono dentro l'if");
             mapChanged = true;
         }
         return mapChanged;

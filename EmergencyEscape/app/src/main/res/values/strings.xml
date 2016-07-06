@@ -64,7 +64,7 @@
     <string name="pref_units_label">Temperature Units</string>
 
     <!-- Label for metric option in temperature unit preference [CHAR LIMIT=25] -->
-    <string name="pref_units_label_metric">Metric</string>
+    <string name="pref_units_label_metric" translatable="false">Metric</string>
 
     <!-- Label for imperial option in temperature unit preference [CHAR LIMIT=25] -->
     <string name="pref_units_label_imperial">Imperial</string>
