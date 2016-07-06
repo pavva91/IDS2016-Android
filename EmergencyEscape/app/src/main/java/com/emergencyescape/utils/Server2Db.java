@@ -10,6 +10,7 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.emergencyescape.MyApplication;
+import com.emergencyescape.businesslogic.ServerConnection;
 import com.emergencyescape.businesslogic.SessionClass;
 import com.emergencyescape.greendao.DaoSession;
 import com.emergencyescape.greendao.EdgeDao;
@@ -66,6 +67,27 @@ public class Server2Db {
 
     private String mapName ="univpm";
     private String token = "";
+    private SharedPreferences wmbPreference = PreferenceManager.getDefaultSharedPreferences(MyApplication.context);
+    int mapId =Integer.parseInt(wmbPreference.getString("map_selected",null));
+
+    public boolean mapChanged(){
+        mapId = Integer.parseInt(wmbPreference.getString("map_selected",null));
+
+        boolean mapChanged = false;
+        String sharedMapName = mapsDao.load((long)mapId).getName();
+        Log.v("dentro mapChanged","sono dentro");
+        if(!mapName.equals(sharedMapName)){
+            Log.v("dentro if mapChanged", "sono dentro l'if");
+            mapChanged = true;
+        }
+        return mapChanged;
+    }
+    public void setMap(){
+            this.mapName = mapsDao.load((long)mapId).getName();
+            ServerConnection serverConnection = ServerConnection.getInstance(MyApplication.context);
+            serverConnection.getElencoMappe(this.getToken());
+            initializeDb();
+    }
 
     public String getToken(){
         return token;
@@ -604,6 +626,11 @@ public class Server2Db {
     }
 
     public void refreshDb(){
+        if (mapChanged()){
+            setMap();
+        }else{
+
+
         Observable<MapResponse> mapResponseObservableRaw = service.getAPI().getMap(mapName,token);
         Observable<MapResponse> mapResponseObservable = service.getMap(mapResponseObservableRaw);
         subscription = mapResponseObservable
@@ -723,6 +750,7 @@ public class Server2Db {
                         }
                     }
                 });
+        }
 
     }
 

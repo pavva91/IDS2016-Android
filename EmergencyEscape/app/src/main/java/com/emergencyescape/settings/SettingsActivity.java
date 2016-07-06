@@ -6,6 +6,8 @@ import android.support.v7.widget.Toolbar;
 
 import com.emergencyescape.R;
 
+import butterknife.OnClick;
+
 public class SettingsActivity extends AppCompatActivity {
 
     @Override
@@ -22,5 +24,4 @@ public class SettingsActivity extends AppCompatActivity {
                 .replace(android.R.id.content, new SettingsFragment())
                 .commit();
     }
-
 }

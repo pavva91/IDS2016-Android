@@ -161,7 +161,6 @@ public abstract class CommonBehaviourActivity<V extends CommonBehaviourView, P e
 
             } else
             if (resultCode == RESULT_CANCELED) {
-                //Toast.makeText(this,getResources().getString(R.string.error_qr),Toast.LENGTH_LONG).show();
                 Intent errorIntent = new Intent(this, MainActivity.class);
                 startActivity(errorIntent);
             }

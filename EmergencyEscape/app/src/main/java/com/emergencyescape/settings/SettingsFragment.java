@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 
 import com.emergencyescape.R;
 
+import butterknife.OnClick;
+
 /**
  * A placeholder fragment containing a simple view.
  */
@@ -27,5 +29,7 @@ public class SettingsFragment extends PreferenceFragment {
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_settings, container, false);
     }
+
+
 
 }

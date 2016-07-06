@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name = "map_id">
-        <item>@string/map_id_0</item>
         <item>@string/map_id_1</item>
+        <item>@string/map_id_2</item>
     </string-array>
     <string-array name = "map_label">
-        <item>@string/map_value_0</item>
         <item>@string/map_value_1</item>
+        <item>@string/map_value_2</item>
     </string-array>
 </resources>

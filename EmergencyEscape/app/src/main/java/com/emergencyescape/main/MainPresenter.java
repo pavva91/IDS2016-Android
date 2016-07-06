@@ -31,7 +31,7 @@ public class MainPresenter extends CommonBehaviourPresenter<MainView> {
         server2Db.setToken();
         serverConnection.getElencoMappe(server2Db.getToken());
         server2Db.initializeDb();
-        server2Db.dropMapsTable();
+        //server2Db.dropMapsTable();
         serverConnection.getUsersList();
     }
 }
