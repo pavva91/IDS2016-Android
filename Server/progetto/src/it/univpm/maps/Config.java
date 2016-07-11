@@ -19,10 +19,10 @@ public final class Config {
 	
 	//URL del server
 	//static final String SERVER_URL = "http://localhost:8080/";//solo per debug locale
-	static final String SERVER_URL = "http://213.26.178.148/";//per server di produzione
+	static final String SERVER_URL = "http://123.456.789.123/";//per server di produzione
 	
 	//API KEY Google usata per inviare le push notification
-	static final String APIKEY = "AIzaSyCtFbV9kl_4dEZO4mIRuXhiC11QgPET8XM";
+	static final String APIKEY = "AIz3443737373rgrhdfhdfhjdf";
 	
 	//URL al quale inviare le push notification
 	static final String NOTIFICATION_URL = "https://gcm-http.googleapis.com/gcm/send";

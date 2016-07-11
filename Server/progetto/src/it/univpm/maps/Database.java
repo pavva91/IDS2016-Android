@@ -10,8 +10,8 @@ public class Database {
 	}
 	
 	//parametri di connessione al DB MySQL
-	private static final String USERNAME_DB = "univpm";
-	private static final String PASSWORD_DB = "univpm";
+	private static final String USERNAME_DB = "root";
+	private static final String PASSWORD_DB = "pwdroot";
 	private static final String IP_DB = "localhost";
 	private static final String PORT_DB = "3306";
 	private static final String URL_DB = "/progetto";
